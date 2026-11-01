@@ -1,0 +1,25 @@
+# Binarios compilados y artefactos de construccion
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.suo
+*.user
+
+# Excepcion obligatoria para librerias de referencia en lib/
+!lib/*.dll
+
+# Runtimes pesados y modelos de IA (se distribuyen en GitHub Releases)
+runtime/
+mgt-engine/runtime/
+cache/
+temp/
+*.log
+
+# Archivos temporales de render
+*.partial-*
+test_*.mp4
+chunk_*.mp4
+master_audio.wav

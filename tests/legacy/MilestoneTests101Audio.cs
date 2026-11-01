@@ -1,0 +1,8 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using Prometheus;
+class MilestoneTests101Audio {
+ static int Main(string[] args){try{var p=Store.New();SequenceCanvas.Set(p.Active,640,360);var a=Media.Inspect(Path.GetFullPath(args[0]),CancellationToken.None);p.assets.Add(a);Media.Insert(p,a.id,p.Active.tracks.First(t=>t.kind=="video").id,0);var selected=p.Active.clips.Select(c=>c.id).ToList();if(selected.Count<2)throw new Exception("La muestra no contiene vídeo y audio");var nested=NestedMedia0910.Create(p,selected,"Vídeo y audio anidados");nested.duration=Rational.Frame(1);Store.Validate(p);var flat=NestedMedia0910.Flatten(p);if(flat.Active.clips.Count(c=>flat.Active.tracks.Find(t=>t.id==c.track_id).kind=="audio")!=1)throw new Exception("Audio anidado ausente");var preflight=ExportPreflight.Inspect(p,true,0);if(!preflight.CanExport)throw new Exception("La comprobación previa rechazó el medio anidado");Media.VerifySources(flat,CancellationToken.None,false);string command=Rendering.Build(p,true,true,640,360,30,Path.GetFullPath(args[1]),0);if(!command.Contains("amix"))throw new Exception("El audio no llegó a la mezcla");using(var frame=Rendering.FrameExact(p,.2,CancellationToken.None,640,360,false))frame.Save(Path.ChangeExtension(Path.GetFullPath(args[1]),".png"));var options=ExportOptions.For(p);options.Width=640;options.Height=360;options.Fps=30;Rendering.Export(p,Path.GetFullPath(args[1]),CancellationToken.None,null,options);if(!File.Exists(Path.GetFullPath(args[1])))throw new Exception("No se creó la exportación");Console.WriteLine("PASS nested audio/render/export");return 0;}catch(Exception ex){Console.Error.WriteLine(ex);return 1;}}
+}
