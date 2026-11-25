@@ -1,0 +1,83 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.shader.rich-blur",
+  "version": 2,
+  "name": "Rich Optical Blur & Bloom",
+  "recommended": {
+    "duration": 0.75
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "blurMode",
+      "type": "select",
+      "default": "zoom-in",
+      "options": [
+        "zoom-in",
+        "zoom-out",
+        "directional"
+      ],
+      "label": "Tipo de Óptica"
+    },
+    {
+      "id": "blurDepth",
+      "type": "number",
+      "default": 1.35,
+      "min": 0.2,
+      "max": 2.5,
+      "step": 0.05,
+      "label": "Profundidad de Desenfoque"
+    },
+    {
+      "id": "bloomBoost",
+      "type": "number",
+      "default": 0.65,
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "label": "Brillo Especular (Rich Halation)"
+    },
+    {
+      "id": "angleDeg",
+      "type": "number",
+      "default": -18,
+      "min": -90,
+      "max": 90,
+      "step": 1,
+      "label": "Ángulo (Modo Direccional)"
+    },
+    {
+      "id": "samples",
+      "type": "number",
+      "default": 12,
+      "min": 6,
+      "max": 20,
+      "step": 2,
+      "label": "Capas de Muestreo Óptico"
+    },
+    {
+      "id": "halationTint",
+      "type": "color",
+      "default": "#ffae52",
+      "label": "Tinte de Halación"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const mode = params.blurMode || 'zoom-in'; const depth = params.blurDepth !== undefined ? Number(params.blurDepth) : 1.35; const bloom = params.bloomBoost !== undefined ? Number(params.bloomBoost) : 0.65; const angle = ((params.angleDeg !== undefined ? Number(params.angleDeg) : -18) * Math.PI) / 180; const samples = Math.max(4, Math.round(params.samples !== undefined ? Number(params.samples) : 12)); const tint = params.halationTint || '#ffae52'; const cx = w * 0.5; const cy = h * 0.5; const ease = p < 0.5 ? 0.5 * Math.pow(2 * p, 3.4) : 1 - 0.5 * Math.pow(2 * (1 - p), 3.4); const bell = Math.pow(Math.sin(p * Math.PI), 1.8); const blendB = Math.max(0, Math.min(1, (ease - 0.12) / 0.76)); const drawMirrored = (img, tx, ty, sx, sy, rot, alpha, comp) => { if (alpha <= 0.002) return; g.save(); g.globalCompositeOperation = comp || 'source-over'; g.globalAlpha = Math.max(0, Math.min(1, alpha)); g.translate(cx + tx, cy + ty); if (rot !== 0) g.rotate(rot); g.scale(sx, sy); if (sx >= 0.999 && sy >= 0.999 && Math.abs(tx) < 1 && Math.abs(ty) < 1) { g.drawImage(img, -cx, -cy, w, h); } else { for (let ox = -1; ox <= 1; ox++) { for (let oy = -1; oy <= 1; oy++) { if (ox !== 0 && oy !== 0 && sx >= 0.95 && sy >= 0.95) continue; g.save(); g.translate(ox * w, oy * h); g.scale(ox !== 0 ? -1 : 1, oy !== 0 ? -1 : 1); g.drawImage(img, -cx, -cy, w, h); g.restore(); } } } g.restore(); }; const renderLayer = (img, isB, masterAlpha) => { if (masterAlpha <= 0.002) return; const phase = isB ? (1 - ease) : ease; const dirSign = (mode === 'zoom-out') ? -1 : 1; let baseScale = 1; let baseTx = 0; let baseTy = 0; if (mode === 'directional') { const dist = (isB ? -(1 - ease) : ease) * w * 0.42 * depth; baseTx = Math.cos(angle) * dist; baseTy = Math.sin(angle) * dist; baseScale = 1 + bell * 0.08 * depth; } else { if (isB) { baseScale = dirSign > 0 ? Math.max(0.45, 1 - phase * 0.48 * depth) : (1 + phase * 0.85 * depth); } else { baseScale = dirSign > 0 ? (1 + phase * 0.95 * depth) : Math.max(0.45, 1 - phase * 0.48 * depth); } } drawMirrored(img, baseTx, baseTy, baseScale, baseScale, 0, masterAlpha, 'source-over'); for (let i = 1; i < samples; i++) { const norm = i / (samples - 1); const sampleAlpha = masterAlpha * (1.55 / samples) * (1 - norm * 0.45); if (mode === 'directional') { const spread = (norm - 0.5) * w * 0.28 * bell * depth; const stx = baseTx + Math.cos(angle) * spread; const sty = baseTy + Math.sin(angle) * spread; drawMirrored(img, stx, sty, baseScale * (1 + norm * 0.04 * bell), baseScale, 0, sampleAlpha, 'source-over'); } else { const sScale = baseScale * (1 + norm * 0.34 * bell * depth); const sRot = (norm - 0.5) * 0.035 * bell * depth; drawMirrored(img, 0, 0, sScale, sScale, sRot, sampleAlpha, 'source-over'); } } if (bloom > 0 && bell > 0.05) { const bloomAlpha = masterAlpha * bell * 0.28 * bloom; const bScale = baseScale * (1 + 0.14 * bell * depth); drawMirrored(img, baseTx * 1.05, baseTy * 1.05, bScale, bScale, 0, bloomAlpha, 'lighter'); } }; renderLayer(ctx.inputA, false, 1 - blendB); renderLayer(ctx.inputB, true, blendB); if (bloom > 0 && bell > 0.1) { const grad = g.createRadialGradient(cx, cy, w * 0.05, cx, cy, Math.hypot(w, h) * 0.65); grad.addColorStop(0, tint); grad.addColorStop(1, 'rgba(0,0,0,0)'); g.save(); g.globalCompositeOperation = 'screen'; g.globalAlpha = Math.pow(bell, 2.2) * 0.38 * bloom; g.fillStyle = grad; g.fillRect(0, 0, w, h); g.restore(); }",
+  "renderProfile": "gpu-canvas2d-v1",
+  "optionLabels": {
+    "blurMode": {
+      "zoom-in": "Radial Zoom-In (Hipervelocidad)",
+      "zoom-out": "Radial Zoom-Out (Compresión Óptica)",
+      "directional": "Direccional Oblicuo (Lente Anamórfico)"
+    }
+  }
+}

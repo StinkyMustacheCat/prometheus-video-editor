@@ -1,0 +1,24 @@
+{
+  "component": "curl_cffi",
+  "version": "0.16.0",
+  "wheel": "curl_cffi-0.16.0-cp310-abi3-win_amd64.whl",
+  "wheel_sha256": "e22a8212d830108e977ff394237f637238e265f5f65037d6c1ee71ea8cc03bcb",
+  "pypi_metadata": "https://pypi.org/pypi/curl_cffi/0.16.0/json",
+  "native_files": [
+    {
+      "file": "curl_cffi/_wrapper.pyd",
+      "wheel_sha256": "15cd3c31a0a20382fbdc09ff7e97b7aae6cff56a9e63967e28f10b590630e443",
+      "executable_sha256": "15cd3c31a0a20382fbdc09ff7e97b7aae6cff56a9e63967e28f10b590630e443",
+      "matches": true
+    },
+    {
+      "file": "curl_cffi.libs/libcurl-impersonate-ec8ead0e422fe4ae62a99233a63f6007.dll",
+      "wheel_sha256": "ec8ead0e422fe4ae62a99233a63f6007adc727caba97ff1f87385c00cafe200f",
+      "executable_sha256": "ec8ead0e422fe4ae62a99233a63f6007adc727caba97ff1f87385c00cafe200f",
+      "matches": true
+    }
+  ],
+  "runtime_version": "libcurl/8.21.0-IMPERSONATE BoringSSL zlib/1.3.1 brotli/1.2.0 zstd/1.5.7 WinIDN nghttp2/1.63.0 ngtcp2/1.20.0 nghttp3/1.15.0",
+  "windows_idn_backend": "WinIDN; curl_version_info libidn is NULL",
+  "resolution": "The former generic libidn2/libunistring concern was not established for this Windows executable. Source and notices for Mutagen, certifi and actual PyInstaller were already captured. Permissive native dependency notices are retained in yt-dlp THIRD_PARTY_LICENSES."
+}

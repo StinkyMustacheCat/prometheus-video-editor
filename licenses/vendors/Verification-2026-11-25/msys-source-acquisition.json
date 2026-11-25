@@ -1,0 +1,26 @@
+[
+  {
+    "file": "mingw-w64-gcc-16.1.0-5.src.tar.zst",
+    "url": "https://repo.msys2.org/mingw/sources/mingw-w64-gcc-16.1.0-5.src.tar.zst",
+    "bytes": 102479270,
+    "sha256": "947166ed372d28ab8ffa25a66bc5e37a60a42e96a686424ce58cad304fcaea15"
+  },
+  {
+    "file": "mingw-w64-libiconv-1.19-1.src.tar.zst",
+    "url": "https://repo.msys2.org/mingw/sources/mingw-w64-libiconv-1.19-1.src.tar.zst",
+    "bytes": 5131029,
+    "sha256": "74428280c17094da5b702c29b2e1a0abae59556ea5dfdd65705cc8ccc1e000fb"
+  },
+  {
+    "file": "mingw-w64-zlib-1.3.2-2.src.tar.zst",
+    "url": "https://repo.msys2.org/mingw/sources/mingw-w64-zlib-1.3.2-2.src.tar.zst",
+    "bytes": 1326375,
+    "sha256": "eef69dea52357e01b272d6fd6dc4d7c0773f71260cb7bcde6047c8c383518db3"
+  },
+  {
+    "file": "mingw-w64-winpthreads-14.0.0.r98.g19f5121a2-1.src.tar.zst",
+    "url": "https://repo.msys2.org/mingw/sources/mingw-w64-winpthreads-14.0.0.r98.g19f5121a2-1.src.tar.zst",
+    "bytes": 51762230,
+    "sha256": "b1444443b523b4e5264b40737d57f0e02eef957ca6ca05d771a033ecc8a81e4e"
+  }
+]

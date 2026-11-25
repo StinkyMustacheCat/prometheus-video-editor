@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Prometheus.Client.Dialogs.OfflineMediaDialog"
+        Title="Resolución de Medios Desconectados - Prometheus V2"
+        Width="780" Height="520"
+        MinWidth="600" MinHeight="400"
+        WindowStartupLocation="CenterOwner"
+        CanResize="True"
+        Background="{StaticResource BackgroundPureBlackBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}">
+
+    <Grid RowDefinitions="Auto,*,Auto" Margin="20">
+        <!-- CABECERA -->
+        <Border Grid.Row="0" Background="{StaticResource BackgroundPanelHeaderBrush}" BorderBrush="{StaticResource PrometheusOrangeBrush}" BorderThickness="0,0,0,2" Padding="16,12" CornerRadius="8,8,0,0">
+            <Grid ColumnDefinitions="Auto,*">
+                <TextBlock Grid.Column="0" Text="⚠️" FontSize="22" VerticalAlignment="Center" Margin="0,0,12,0" />
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                    <TextBlock Text="MEDIOS DESCONECTADOS DETECTADOS" FontSize="14" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                    <TextBlock Text="Los siguientes recursos no se encontraron en sus rutas registradas. Elige una opción de resolución." FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- LISTA DE MEDIOS FALTANTES -->
+        <Border Grid.Row="1" Background="{StaticResource BackgroundSurfaceSecondaryBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1,0,1,1" Padding="12">
+            <Grid RowDefinitions="*,Auto">
+                <ListBox Name="MissingAssetsList" Grid.Row="0" Background="Transparent" SelectionMode="Single">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Classes="capsule" Padding="10,8" Margin="0,0,0,6">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <Border Grid.Column="0" Width="4" Height="28" Background="{StaticResource PrometheusOrangeBrush}" CornerRadius="2" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                                        <TextBlock Text="{Binding AssetName}" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+                                        <TextBlock Text="{Binding ExpectedPath}" FontSize="10" Foreground="{StaticResource TextMutedBrush}" TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                    <Border Grid.Column="2" Background="#33FF8A00" BorderBrush="{StaticResource PrometheusOrangeBrush}" BorderThickness="1" CornerRadius="4" Padding="6,2" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding StatusText}" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- BOTONES DE ACCIÓN POR ELEMENTO -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,12,0,0" HorizontalAlignment="Center">
+                    <Button Name="BrowseManualButton" Classes="nle-btn" Content="📁 Examinar manual..." ToolTip.Tip="Seleccionar nueva ruta para el medio seleccionado" Padding="12,6" />
+                    <Button Name="SearchFolderButton" Classes="nle-btn" Content="🔍 Localizar por carpeta..." ToolTip.Tip="Buscar automáticamente por nombre en una carpeta" Padding="12,6" />
+                    <Button Name="KeepOfflineButton" Classes="nle-btn" Content="⏹️ Conservar como desconectado" ToolTip.Tip="Continuar con este clip marcado como offline" Padding="12,6" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- BARRA INFERIOR DE CONFIRMACIÓN -->
+        <Border Grid.Row="2" Background="{StaticResource BackgroundPanelHeaderBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,1,0,0" Padding="16,12" CornerRadius="0,0,8,8">
+            <Grid ColumnDefinitions="*,Auto,Auto">
+                <TextBlock Name="SummaryText" Text="0 medios pendientes de resolución" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                <Button Grid.Column="1" Name="CancelButton" Classes="nle-btn" Content="Cancelar apertura" Margin="0,0,8,0" Padding="16,6" />
+                <Button Grid.Column="2" Name="ApplyButton" Classes="nle-accent" Content="Continuar al espacio de trabajo" Padding="16,6" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

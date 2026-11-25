@@ -1,0 +1,74 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.physics.earthquake-impact",
+  "version": 2,
+  "name": "Seismic Earthquake & Fault Shear",
+  "recommended": {
+    "duration": 0.8
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "magnitude",
+      "type": "number",
+      "default": 1.45,
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.05,
+      "label": "Magnitud Sísmica (Richter)"
+    },
+    {
+      "id": "frequency",
+      "type": "number",
+      "default": 28.0,
+      "min": 8.0,
+      "max": 50.0,
+      "step": 1.0,
+      "label": "Frecuencia de Vibración (Hz)"
+    },
+    {
+      "id": "faultPlanks",
+      "type": "number",
+      "default": 6,
+      "min": 2,
+      "max": 14,
+      "step": 1,
+      "label": "Placas de Fractura Tectónica"
+    },
+    {
+      "id": "faultShear",
+      "type": "number",
+      "default": 0.85,
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "label": "Deslizamiento de Falla"
+    },
+    {
+      "id": "impactZoom",
+      "type": "number",
+      "default": 0.35,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Golpe de Zoom en el Corte"
+    },
+    {
+      "id": "shockTint",
+      "type": "color",
+      "default": "#ff5500",
+      "label": "Destello Sísmico"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const mag = params.magnitude !== undefined ? Number(params.magnitude) : 1.45; const freq = params.frequency !== undefined ? Number(params.frequency) : 28.0; const planks = Math.max(2, Math.round(params.faultPlanks !== undefined ? Number(params.faultPlanks) : 6)); const shear = params.faultShear !== undefined ? Number(params.faultShear) : 0.85; const zoomHit = params.impactZoom !== undefined ? Number(params.impactZoom) : 0.35; const tint = params.shockTint || '#ff5500'; const cx = w * 0.5; const cy = h * 0.5; const noise1D = (x, channel) => { const i = Math.floor(x); const f = x - i; const u = f * f * (3 - 2 * f); const a = ctx.random(i * 73 + channel * 31) * 2 - 1; const b = ctx.random((i + 1) * 73 + channel * 31) * 2 - 1; return a + (b - a) * u; }; const fbm = (t, channel) => { return noise1D(t, channel) * 0.65 + noise1D(t * 2.13, channel + 7) * 0.35; }; const impactCenter = 0.46; const dist = Math.abs(p - impactCenter); const shockEnv = Math.exp(-dist * dist * 22.0) * Math.sin(p * Math.PI); const rumbleEnv = Math.pow(Math.sin(p * Math.PI), 0.75); const totalEnv = (shockEnv * 0.75 + rumbleEnv * 0.35) * mag; const shakeX = fbm(p * freq, 1) * w * 0.085 * totalEnv; const shakeY = fbm(p * freq, 2) * h * 0.085 * totalEnv; const shakeRot = fbm(p * freq * 0.85, 3) * 0.095 * totalEnv; const scale = 1 + shockEnv * 0.28 * zoomHit + totalEnv * 0.06; const drawMirrored = (img, tx, ty, rot, sc, alpha, comp) => { if (alpha <= 0.002) return; g.save(); g.globalCompositeOperation = comp || 'source-over'; g.globalAlpha = Math.max(0, Math.min(1, alpha)); g.translate(cx + tx, cy + ty); g.rotate(rot); g.scale(sc, sc); for (let ox = -1; ox <= 1; ox++) { for (let oy = -1; oy <= 1; oy++) { if (ox !== 0 && oy !== 0 && sc >= 1.12) continue; g.save(); g.translate(ox * w, oy * h); g.scale(ox !== 0 ? -1 : 1, oy !== 0 ? -1 : 1); g.drawImage(img, -cx, -cy, w, h); g.restore(); } } g.restore(); }; const faultAngle = (ctx.random(19) - 0.5) * 0.55; const diag = Math.hypot(w, h) * 1.35; const slabH = diag / planks; for (let i = 0; i < planks; i++) { const rOffset = (ctx.random(i * 43 + 11) - 0.5) * 0.26; const localSwitch = impactCenter + rOffset * 0.65; const useB = p >= localSwitch; const src = useB ? ctx.inputB : ctx.inputA; const altDir = (i % 2 === 0 ? 1 : -1); const shearDisp = altDir * shockEnv * w * 0.14 * shear * (0.5 + ctx.random(i * 17 + 5) * 0.8); const sx = Math.cos(faultAngle) * shearDisp; const sy = Math.sin(faultAngle) * shearDisp; g.save(); g.translate(cx, cy); g.rotate(faultAngle); g.beginPath(); g.rect(-diag * 0.5, -diag * 0.5 + i * slabH - 1, diag, slabH + 2); g.rotate(-faultAngle); g.translate(-cx, -cy); g.clip(); drawMirrored(src, shakeX + sx, shakeY + sy, shakeRot, scale, 1.0, 'source-over'); if (shockEnv > 0.15) { const chromaShift = (w * 0.018 * totalEnv) * altDir; drawMirrored(src, shakeX + sx + chromaShift, shakeY + sy - chromaShift * 0.5, shakeRot * 1.1, scale * 1.015, Math.min(0.45, shockEnv * 0.38), 'screen'); } g.restore(); } if (shockEnv > 0.35) { const flash = Math.pow((shockEnv - 0.35) / 0.65, 1.8) * 0.42 * Math.min(1.5, mag); g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = tint; g.globalAlpha = flash; g.fillRect(0, 0, w, h); g.restore(); }",
+  "renderProfile": "gpu-canvas2d-v1"
+}

@@ -1,0 +1,81 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.3d.depth-vault",
+  "version": 2,
+  "name": "3D Depth Vault & Z-Slam",
+  "recommended": {
+    "duration": 0.85
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "zDirection",
+      "type": "select",
+      "default": "push-deep",
+      "options": [
+        "push-deep",
+        "pull-forward"
+      ],
+      "label": "Trayectoria en Eje Z"
+    },
+    {
+      "id": "tunnelEchoes",
+      "type": "number",
+      "default": 6,
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Capas del Túnel de Profundidad"
+    },
+    {
+      "id": "perspectiveTilt",
+      "type": "number",
+      "default": 12,
+      "min": -35,
+      "max": 35,
+      "step": 1,
+      "label": "Torsión Espacial de Cámara"
+    },
+    {
+      "id": "depthShadow",
+      "type": "number",
+      "default": 0.75,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Oclusión Ambiental (Sombra Z)"
+    },
+    {
+      "id": "slamRebound",
+      "type": "number",
+      "default": 0.55,
+      "min": 0.0,
+      "max": 1.2,
+      "step": 0.05,
+      "label": "Rebote de Impacto al Aterrizar"
+    },
+    {
+      "id": "voidTint",
+      "type": "color",
+      "default": "#090418",
+      "label": "Color de Atmósfera Profunda"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const mode = params.zDirection || 'push-deep'; const echoes = Math.max(2, Math.round(params.tunnelEchoes !== undefined ? Number(params.tunnelEchoes) : 6)); const tiltRad = ((params.perspectiveTilt !== undefined ? Number(params.perspectiveTilt) : 12) * Math.PI) / 180; const occ = params.depthShadow !== undefined ? Number(params.depthShadow) : 0.75; const rebound = params.slamRebound !== undefined ? Number(params.slamRebound) : 0.55; const voidColor = params.voidTint || '#090418'; const cx = w * 0.5; const cy = h * 0.5; const env = Math.sin(p * Math.PI); const easeInOut = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) * 0.5; const drawPlane = (img, sc, rot, ox, oy, alpha, darkFactor, shadowBlur) => { if (alpha <= 0.002 || sc <= 0.01) return; g.save(); g.globalAlpha = Math.max(0, Math.min(1, alpha)); g.translate(cx + ox, cy + oy); g.rotate(rot); g.scale(sc, sc); if (shadowBlur > 0 && occ > 0) { g.shadowColor = 'rgba(0,0,0,' + Math.min(0.9, occ * 0.85) + ')'; g.shadowBlur = shadowBlur; g.shadowOffsetY = shadowBlur * 0.35; } g.drawImage(img, -cx, -cy, w, h); if (darkFactor > 0.01) { g.shadowColor = 'transparent'; g.fillStyle = voidColor; g.globalAlpha = Math.min(0.92, darkFactor * occ) * Math.max(0, Math.min(1, alpha)); g.fillRect(-cx, -cy, w, h); } g.restore(); }; if (mode === 'push-deep') { const tA = Math.min(1, p / 0.82); const easeA = Math.pow(tA, 2.2); const scaleA = Math.max(0.12, 1 - easeA * 0.78); const rotA = -tiltRad * easeA; for (let i = echoes; i >= 1; i--) { const f = i / echoes; const eScale = scaleA + (1 - scaleA) * f * 0.85; const eRot = rotA * (1 - f * 0.7); const eAlpha = (1 - easeA * 0.85) * (0.28 / i); drawPlane(ctx.inputA, eScale * 1.06, eRot, 0, 0, eAlpha, f * 0.65, 0); } drawPlane(ctx.inputA, scaleA, rotA, 0, easeA * h * 0.04, 1 - Math.pow(Math.max(0, (p - 0.55) / 0.45), 2), easeA * 0.85, 36 * env); if (p > 0.16) { const tB = (p - 0.16) / 0.84; let scaleB = 1; let rotB = 0; if (tB < 0.62) { const u = tB / 0.62; const drop = Math.pow(1 - u, 2.8); scaleB = 1 + drop * 2.4; rotB = tiltRad * drop * 0.85; } else { const u = (tB - 0.62) / 0.38; const damp = Math.exp(-5.2 * u) * (1 - u); const wave = -Math.sin(u * Math.PI * 2.5); scaleB = 1 + wave * damp * 0.16 * rebound; rotB = wave * damp * tiltRad * 0.22 * rebound; } const alphaB = Math.min(1, Math.pow(tB / 0.28, 1.5)); drawPlane(ctx.inputB, scaleB, rotB, 0, 0, alphaB, 0, (scaleB > 1.02 ? 45 * occ : 0)); } } else { const tB = Math.min(1, p / 0.92); const springB = tB >= 1 ? 1 : (1 - Math.exp(-5.5 * tB) * Math.cos(tB * Math.PI * 2.2 * (0.5 + rebound * 0.5)) * (1 - tB)); const scaleB = Math.max(0.14, 0.18 + 0.82 * springB); const rotB = tiltRad * (1 - easeInOut); for (let i = echoes; i >= 1; i--) { const f = i / echoes; const eScale = scaleB * (1 + f * 0.55 * (1 - easeInOut)); drawPlane(ctx.inputB, eScale, rotB * (1 + f * 0.3), 0, 0, 0.22 / i, (1 - easeInOut) * 0.6, 0); } drawPlane(ctx.inputB, scaleB, rotB, 0, 0, 1, (1 - Math.min(1, scaleB)) * 0.9, 32 * env); if (p < 0.72) { const tA = p / 0.72; const zoomA = 1 + Math.pow(tA, 2.6) * 2.8; const rotA = -tiltRad * Math.pow(tA, 2.0); const alphaA = 1 - Math.pow(tA, 1.8); drawPlane(ctx.inputA, zoomA, rotA, 0, 0, alphaA, 0, 42 * occ * (1 - tA)); } }",
+  "renderProfile": "gpu-canvas2d-v1",
+  "optionLabels": {
+    "zDirection": {
+      "push-deep": "Caída al Abismo (A se hunde, B cae encima)",
+      "pull-forward": "Hiper-Avance (A te atraviesa, B surge del fondo)"
+    }
+  }
+}

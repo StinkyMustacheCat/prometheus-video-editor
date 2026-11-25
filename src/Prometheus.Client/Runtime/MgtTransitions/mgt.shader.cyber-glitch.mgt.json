@@ -1,0 +1,74 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.shader.cyber-glitch",
+  "version": 2,
+  "name": "Cyber Glitch & Data Tear",
+  "recommended": {
+    "duration": 0.7
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "sliceDensity",
+      "type": "number",
+      "default": 22,
+      "min": 6,
+      "max": 48,
+      "step": 2,
+      "label": "Densidad de Bandas (Slices)"
+    },
+    {
+      "id": "tearPower",
+      "type": "number",
+      "default": 1.35,
+      "min": 0.1,
+      "max": 2.5,
+      "step": 0.05,
+      "label": "Fuerza de Desgarro Horizontal"
+    },
+    {
+      "id": "rgbSplit",
+      "type": "number",
+      "default": 0.75,
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "label": "Separación Cromática (Cian/Magenta)"
+    },
+    {
+      "id": "quantSteps",
+      "type": "number",
+      "default": 16,
+      "min": 6,
+      "max": 30,
+      "step": 1,
+      "label": "Frecuencia de Refresco del Glitch"
+    },
+    {
+      "id": "blockCorrupt",
+      "type": "number",
+      "default": 12,
+      "min": 0,
+      "max": 28,
+      "step": 2,
+      "label": "Macro-Bloques de Corrupción"
+    },
+    {
+      "id": "accentHex",
+      "type": "color",
+      "default": "#ff0055",
+      "label": "Color de Sobrecarga"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const slices = Math.max(4, Math.round(params.sliceDensity !== undefined ? Number(params.sliceDensity) : 22)); const tear = params.tearPower !== undefined ? Number(params.tearPower) : 1.35; const rgb = params.rgbSplit !== undefined ? Number(params.rgbSplit) : 0.75; const qSteps = Math.max(4, Math.round(params.quantSteps !== undefined ? Number(params.quantSteps) : 16)); const blocks = Math.max(0, Math.round(params.blockCorrupt !== undefined ? Number(params.blockCorrupt) : 12)); const accent = params.accentHex || '#ff0055'; const env = Math.pow(Math.sin(p * Math.PI), 1.35); const stepId = Math.floor(p * qSteps); const baseImg = p < 0.5 ? ctx.inputA : ctx.inputB; g.drawImage(baseImg, 0, 0, w, h); let yCursor = 0; for (let i = 0; i < slices; i++) { const rHeight = 0.4 + ctx.random(stepId * 97 + i * 13) * 1.2; const sliceH = (i === slices - 1) ? (h - yCursor) : Math.min(h - yCursor, Math.ceil((h / slices) * rHeight)); if (sliceH <= 0) break; const rSwitch = ctx.random(stepId * 53 + i * 29); const rDisplace = (ctx.random(stepId * 71 + i * 41) - 0.5) * 2; const rTrigger = ctx.random(stepId * 89 + i * 19); const threshold = Math.pow(p, 0.85 + (rSwitch - 0.5) * 0.4); const useB = (p + (rSwitch - 0.5) * 0.58 * env) >= 0.5; const src = useB ? ctx.inputB : ctx.inputA; const isGlitched = rTrigger < (env * 0.82); const dx = isGlitched ? rDisplace * w * 0.22 * tear * env : 0; const zoomX = isGlitched && rTrigger < 0.25 ? (1 + env * 0.14) : 1; g.save(); g.beginPath(); g.rect(0, yCursor, w, sliceH); g.clip(); const drawX = dx - (w * (zoomX - 1) * 0.5); g.drawImage(src, 0, yCursor, w, sliceH, drawX, yCursor, w * zoomX, sliceH); if (dx !== 0) { const wrapX = dx > 0 ? drawX - w * zoomX : drawX + w * zoomX; g.drawImage(src, 0, yCursor, w, sliceH, wrapX, yCursor, w * zoomX, sliceH); } if (rgb > 0 && isGlitched && Math.abs(dx) > w * 0.015) { const shift = (dx * 0.45 + (rSwitch - 0.5) * w * 0.04) * rgb; g.globalCompositeOperation = 'screen'; g.globalAlpha = Math.min(0.65, env * 0.55 * rgb); g.drawImage(src, 0, yCursor, w, sliceH, drawX + shift, yCursor, w * zoomX, sliceH); g.fillStyle = (i % 2 === 0) ? '#00ffff' : accent; g.globalCompositeOperation = 'multiply'; g.globalAlpha = Math.min(0.45, env * 0.35 * rgb); g.fillRect(0, yCursor, w, sliceH); } g.restore(); yCursor += sliceH; } if (blocks > 0 && env > 0.15) { const activeBlocks = Math.ceil(blocks * env); for (let b = 0; b < activeBlocks; b++) { const seedBase = stepId * 131 + b * 37; const bx = ctx.random(seedBase + 1) * w * 0.85; const by = ctx.random(seedBase + 2) * h * 0.85; const bw = (0.06 + ctx.random(seedBase + 3) * 0.24) * w; const bh = (0.02 + ctx.random(seedBase + 4) * 0.12) * h; const sx = Math.max(0, Math.min(w - bw, bx + (ctx.random(seedBase + 5) - 0.5) * w * 0.35 * tear)); const sy = Math.max(0, Math.min(h - bh, by + (ctx.random(seedBase + 6) - 0.5) * h * 0.2 * tear)); const bImg = ctx.random(seedBase + 7) < p ? ctx.inputB : ctx.inputA; g.save(); g.drawImage(bImg, sx, sy, bw, bh, bx, by, bw, bh); if (ctx.random(seedBase + 8) < 0.35) { g.globalCompositeOperation = 'difference'; g.fillStyle = ctx.random(seedBase + 9) < 0.5 ? accent : '#00f5ff'; g.globalAlpha = 0.65 * env; g.fillRect(bx, by, bw, bh); } g.restore(); } }",
+  "renderProfile": "gpu-canvas2d-v1"
+}

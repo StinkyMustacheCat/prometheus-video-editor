@@ -1,25 +1,28 @@
-# Binarios compilados y artefactos de construccion
-bin/
-obj/
-*.exe
-*.dll
+**/bin/
+**/obj/
+.vs/
+.idea/
+dist/
+work/
+publication/
+Dependencies/
+TestResults/
+Cache/
+**/__pycache__/
+*.pyc
 *.pdb
-*.ilk
-*.suo
 *.user
-
-# Excepcion obligatoria para librerias de referencia en lib/
-!lib/*.dll
-
-# Runtimes pesados y modelos de IA (se distribuyen en GitHub Releases)
-runtime/
-mgt-engine/runtime/
-cache/
-temp/
+*.suo
 *.log
-
-# Archivos temporales de render
-*.partial-*
-test_*.mp4
-chunk_*.mp4
-master_audio.wav
+.env
+cookies*.txt
+/mcp_config.*
+/.mcp.json
+/.codex/
+/.gemini/
+*token*.secret
+*.pht
+*.phtproj
+*.assets/
+global.json.local
+/Runtime/

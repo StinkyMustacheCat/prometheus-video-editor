@@ -1,0 +1,88 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.kinetic.whip-pan-slide",
+  "version": 2,
+  "name": "Kinetic Whip Pan & Slide",
+  "recommended": {
+    "duration": 0.65
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "direction",
+      "type": "select",
+      "default": "left",
+      "options": [
+        "left",
+        "right",
+        "up",
+        "down"
+      ],
+      "label": "Dirección del Latigazo"
+    },
+    {
+      "id": "whipCycles",
+      "type": "number",
+      "default": 2,
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Pasadas de Latigazo (Rollos)"
+    },
+    {
+      "id": "blurIntensity",
+      "type": "number",
+      "default": 1.35,
+      "min": 0.2,
+      "max": 2.5,
+      "step": 0.05,
+      "label": "Intensidad de Motion Blur"
+    },
+    {
+      "id": "snapBrake",
+      "type": "number",
+      "default": 0.45,
+      "min": 0.0,
+      "max": 1.2,
+      "step": 0.05,
+      "label": "Frenado con Retroceso (Snap)"
+    },
+    {
+      "id": "blurSamples",
+      "type": "number",
+      "default": 11,
+      "min": 5,
+      "max": 19,
+      "step": 2,
+      "label": "Muestras de Desenfoque Direccional"
+    },
+    {
+      "id": "streakBoost",
+      "type": "number",
+      "default": 0.55,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Estelas de Luz de Alta Velocidad"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const dirStr = params.direction || 'left'; const cycles = Math.max(1, Math.round(params.whipCycles !== undefined ? Number(params.whipCycles) : 2)); const blurMult = params.blurIntensity !== undefined ? Number(params.blurIntensity) : 1.35; const snap = params.snapBrake !== undefined ? Number(params.snapBrake) : 0.45; const samples = Math.max(3, Math.round(params.blurSamples !== undefined ? Number(params.blurSamples) : 11)); const streakBoost = params.streakBoost !== undefined ? Number(params.streakBoost) : 0.55; const isHoriz = dirStr === 'left' || dirStr === 'right'; const sign = (dirStr === 'left' || dirStr === 'up') ? -1 : 1; const evalTrack = (t) => { const tc = Math.max(0, Math.min(1, t)); let base; if (tc < 0.5) { base = 0.5 * Math.pow(2 * tc, 4.2); } else { const u = (tc - 0.5) * 2; const expOut = 1 - Math.pow(1 - u, 4.2); const recoil = Math.sin(u * Math.PI * 2.5) * Math.pow(1 - u, 2.2) * 0.045 * snap; base = 0.5 + 0.5 * expOut + recoil; } return base * cycles; }; const pos = evalTrack(p); const dt = 0.008; const vel = Math.abs(evalTrack(Math.min(1, p + dt)) - evalTrack(Math.max(0, p - dt))) / (2 * dt * cycles); const speedNorm = Math.min(1, vel / 2.6); const shutter = speedNorm * 0.22 * blurMult * cycles; const zoomOut = 1 - speedNorm * 0.08; const stretch = 1 + speedNorm * 0.18 * blurMult; const sx = isHoriz ? stretch : zoomOut; const sy = isHoriz ? zoomOut : stretch; const cx = w * 0.5; const cy = h * 0.5; const renderStripAt = (trackPos, weight) => { const baseTile = Math.floor(trackPos); const frac = trackPos - baseTile; for (let offset = -1; offset <= 2; offset++) { const tileIndex = baseTile + offset; const rel = offset - frac; if (Math.abs(rel) > 1.35) continue; const clampedTile = Math.max(0, Math.min(cycles, tileIndex)); let useB = false; if (clampedTile >= cycles) { useB = true; } else if (clampedTile <= 0) { useB = false; } else { useB = (clampedTile / cycles) >= 0.5; } const img = useB ? ctx.inputB : ctx.inputA; const flip = (tileIndex > 0 && tileIndex < cycles && (tileIndex % 2 === 1)) ? -1 : 1; const dx = isHoriz ? sign * rel * w : 0; const dy = isHoriz ? 0 : sign * rel * h; g.save(); g.translate(cx + dx, cy + dy); g.scale(isHoriz ? flip : 1, isHoriz ? 1 : flip); g.globalAlpha = weight; g.drawImage(img, -cx, -cy, w, h); g.restore(); } }; g.save(); g.translate(cx, cy); g.scale(sx, sy); g.translate(-cx, -cy); const half = (samples - 1) * 0.5; let totalW = 0; const weights = []; for (let i = 0; i < samples; i++) { const norm = half > 0 ? (i - half) / half : 0; const wgt = Math.exp(-norm * norm * 2.2); weights.push(wgt); totalW += wgt; } for (let i = 0; i < samples; i++) { const norm = half > 0 ? (i - half) / half : 0; const samplePos = pos + norm * shutter; const wgt = (weights[i] / totalW) * (i === 0 ? 1 : Math.min(1, 1.4 / (samples * 0.45))); renderStripAt(samplePos, i === 0 ? 1 : wgt * 1.35); } if (streakBoost > 0 && speedNorm > 0.15) { g.save(); g.globalCompositeOperation = 'lighter'; const streakCount = 14; const streakAlpha = Math.pow(speedNorm, 1.6) * 0.45 * streakBoost; for (let s = 0; s < streakCount; s++) { const r1 = ctx.random(s * 17 + 3); const r2 = ctx.random(s * 31 + 7); const r3 = ctx.random(s * 43 + 11); const lane = (r1 - 0.5) * (isHoriz ? h : w) * 0.92; const len = (0.25 + r2 * 0.55) * (isHoriz ? w : h) * speedNorm; const phase = ((r3 + p * cycles * 1.7) % 1) - 0.5; const along = phase * (isHoriz ? w : h) * sign; const thick = Math.max(1.5, (2 + r1 * 6) * (1 - speedNorm * 0.4)); g.fillStyle = s % 2 === 0 ? '#ffffff' : '#80e5ff'; g.globalAlpha = streakAlpha * (0.4 + r2 * 0.6); if (isHoriz) { g.fillRect(cx + along - len * 0.5, cy + lane - thick * 0.5, len, thick); } else { g.fillRect(cx + lane - thick * 0.5, cy + along - len * 0.5, thick, len); } } g.restore(); } g.restore();",
+  "renderProfile": "gpu-canvas2d-v1",
+  "optionLabels": {
+    "direction": {
+      "left": "Izquierda (Barrido Rápido)",
+      "right": "Derecha (Barrido Rápido)",
+      "up": "Arriba (Barrido Vertical)",
+      "down": "Abajo (Barrido Vertical)"
+    }
+  }
+}

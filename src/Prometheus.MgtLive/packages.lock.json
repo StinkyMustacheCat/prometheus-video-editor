@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net8.0-windows7.0": {
+      "CefSharp.OffScreen.NETCore": {
+        "type": "Direct",
+        "requested": "[156.0.150, )",
+        "resolved": "156.0.150",
+        "contentHash": "bZWJmjcfOzg6+pFbVGBQ8ZF4gKIb/Ep5zAr55U58KcXCJVMp+bYjlPnxWEyjYyTbO2h30VmFbtD0U1Kpw8ZUJg==",
+        "dependencies": {
+          "CefSharp.Common.NETCore": "[156.0.150]"
+        }
+      },
+      "Vortice.Direct3D11": {
+        "type": "Direct",
+        "requested": "[3.8.3, )",
+        "resolved": "3.8.3",
+        "contentHash": "JgFUswu2mgrSwcd0KRF2AnfeE5VbMEgcicmxPD1g2yXyomPIHbnX3wldBNHPOzzD0URC1WJ/pO1ymfi3imZwvg==",
+        "dependencies": {
+          "SharpGen.Runtime": "2.4.2-beta",
+          "Vortice.DXGI": "3.8.3"
+        }
+      },
+      "Vortice.DXGI": {
+        "type": "Direct",
+        "requested": "[3.8.3, )",
+        "resolved": "3.8.3",
+        "contentHash": "MbAUnTeQ6WD99ctAdrj5CQO2I7oaax0Kt2eVdWSUj0bYP9Ed0726+s7dIHe4+tqhpmINW/dcPt0mNtc72o+E0w==",
+        "dependencies": {
+          "SharpGen.Runtime": "2.4.2-beta",
+          "Vortice.DirectX": "3.8.3"
+        }
+      },
+      "Acornima": {
+        "type": "Transitive",
+        "resolved": "1.9.1",
+        "contentHash": "8dzVWz1AMyCaHq1DRU+qjNGd6jZyc4BgUBhl0qqdG0y+C02f2JASQaobF+O6A9vrW2QZL5Kx2q6V/KP3Q2LU+A=="
+      },
+      "CefSharp.Common.NETCore": {
+        "type": "Transitive",
+        "resolved": "156.0.150",
+        "contentHash": "iNnn1q6xZKK59KQyzj6PTECoS2/a0wy+RTzCEYecg97Y4pwQUxyeKlz4RbfECsJaXhf22/5buDIXaqglTvYYsw==",
+        "dependencies": {
+          "chromiumembeddedframework.runtime": "[156.0.15]"
+        }
+      },
+      "chromiumembeddedframework.runtime": {
+        "type": "Transitive",
+        "resolved": "156.0.15",
+        "contentHash": "j92Q4ba/hqW43O+v5PJ9teWdJ6cq27zYFxW9gYifR+wvzjqNI7uIXCcxYmBSxM1LC6276hxbTbTP+MzmdB/azA=="
+      },
+      "Jint": {
+        "type": "Transitive",
+        "resolved": "4.18.0",
+        "contentHash": "DDFAZpJ3uvbzY6MiqchX+efNi+oj8QXKKIysB8aEqeWpfIuILvVjqYhXGvzLi10NbHWLu8G2pE+Ngwb1c5NSVw==",
+        "dependencies": {
+          "Acornima": "1.9.1"
+        }
+      },
+      "SharpGen.Runtime": {
+        "type": "Transitive",
+        "resolved": "2.4.2-beta",
+        "contentHash": "niTtWAUov1F7wZGAlVeEvW+Tnqvg5yTmhI7rxmYu2Utoyu2TbC9tWWpUpMs0PQg5lu5svoYpCAztNjxCqMFP/w==",
+        "dependencies": {
+          "System.Text.Json": "9.0.1"
+        }
+      },
+      "SharpGen.Runtime.COM": {
+        "type": "Transitive",
+        "resolved": "2.4.2-beta",
+        "contentHash": "9lxDFMiepqo3lJQzMSjECCIONeCc2f3Drokgj6HtrTLZcJSftNgcLbD6/iXYj2iphkwgrZb1oLsDOZxoFZkawQ==",
+        "dependencies": {
+          "SharpGen.Runtime": "2.4.2-beta",
+          "System.Text.Json": "9.0.1"
+        }
+      },
+      "System.IO.Pipelines": {
+        "type": "Transitive",
+        "resolved": "9.0.1",
+        "contentHash": "uXf5o8eV/gtzDQY4lGROLFMWQvcViKcF8o4Q6KpIOjloAQXrnscQSu6gTxYJMHuNJnh7szIF9AzkaEq+zDLoEg=="
+      },
+      "System.Text.Encodings.Web": {
+        "type": "Transitive",
+        "resolved": "9.0.1",
+        "contentHash": "XkspqduP2t1e1x2vBUAD/xZ5ZDvmywuUwsmB93MvyQLospJfqtX0GsR/kU0vUL2h4kmvf777z3txV2W4NrQ9Qg=="
+      },
+      "System.Text.Json": {
+        "type": "Transitive",
+        "resolved": "9.0.1",
+        "contentHash": "eqWHDZqYPv1PvuvoIIx5pF74plL3iEOZOl/0kQP+Y0TEbtgNnM2W6k8h8EPYs+LTJZsXuWa92n5W5sHTWvE3VA==",
+        "dependencies": {
+          "System.IO.Pipelines": "9.0.1",
+          "System.Text.Encodings.Web": "9.0.1"
+        }
+      },
+      "Vortice.DirectX": {
+        "type": "Transitive",
+        "resolved": "3.8.3",
+        "contentHash": "nKwSavv0w5rDF7prSefqAVPDcTyqrfZxKFMVfttiXPfm62VdA/1d+b3PhCZpW4xO7jXczXDwjQdWgD1zGsvM8w==",
+        "dependencies": {
+          "SharpGen.Runtime": "2.4.2-beta",
+          "SharpGen.Runtime.COM": "2.4.2-beta",
+          "Vortice.Mathematics": "2.1.0"
+        }
+      },
+      "Vortice.Mathematics": {
+        "type": "Transitive",
+        "resolved": "2.1.0",
+        "contentHash": "KK+SjNSuKdP+zbavekubi+vaeb1Jo4k87ZF6CMkVWjr6RjJwc8peVtmgzXXDIMy4ZC3ZISyk3llY3q65ISOkBQ=="
+      },
+      "prometheus.core": {
+        "type": "Project",
+        "dependencies": {
+          "Jint": "[4.18.0, )"
+        }
+      }
+    },
+    "net8.0-windows7.0/win-x64": {
+      "CefSharp.Common.NETCore": {
+        "type": "Transitive",
+        "resolved": "156.0.150",
+        "contentHash": "iNnn1q6xZKK59KQyzj6PTECoS2/a0wy+RTzCEYecg97Y4pwQUxyeKlz4RbfECsJaXhf22/5buDIXaqglTvYYsw==",
+        "dependencies": {
+          "chromiumembeddedframework.runtime": "[156.0.15]"
+        }
+      },
+      "chromiumembeddedframework.runtime": {
+        "type": "Transitive",
+        "resolved": "156.0.15",
+        "contentHash": "j92Q4ba/hqW43O+v5PJ9teWdJ6cq27zYFxW9gYifR+wvzjqNI7uIXCcxYmBSxM1LC6276hxbTbTP+MzmdB/azA==",
+        "dependencies": {
+          "chromiumembeddedframework.runtime.win-x64": "156.0.15"
+        }
+      },
+      "chromiumembeddedframework.runtime.win-x64": {
+        "type": "Transitive",
+        "resolved": "156.0.15",
+        "contentHash": "ppEQqOgkjPxfzcVzBukgJRY9M/2C9npnuroHu2hh6ZqZfrYl2Xtirc5F25Br8S4/eUIWUxvLBEY8VQCb8FAW0A=="
+      },
+      "System.Text.Encodings.Web": {
+        "type": "Transitive",
+        "resolved": "9.0.1",
+        "contentHash": "XkspqduP2t1e1x2vBUAD/xZ5ZDvmywuUwsmB93MvyQLospJfqtX0GsR/kU0vUL2h4kmvf777z3txV2W4NrQ9Qg=="
+      }
+    }
+  }
+}

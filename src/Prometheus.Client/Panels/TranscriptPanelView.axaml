@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Prometheus.Client.Panels.TranscriptPanelView"
+             MinWidth="300" MinHeight="250">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Background="{StaticResource BackgroundPureBlackBrush}">
+        <StackPanel Orientation="Horizontal" Spacing="5" Margin="8,8,8,4">
+            <Button Name="TranscribeButton" Classes="nle-accent" Content="Transcribir clip" Height="27" Padding="8,0" />
+            <Button Name="ImportButton" Classes="nle-btn" Content="Importar" Height="27" Padding="8,0" />
+            <Button Name="FromMediaButton" Classes="nle-btn" Content="Del medio" Height="27" Padding="8,0" />
+            <Button Name="CancelButton" Classes="nle-btn" Content="Cancelar" Height="27" Padding="8,0" IsEnabled="False" />
+        </StackPanel>
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="8,0,8,5">
+            <ComboBox Name="DocumentBox" Height="28" />
+            <ComboBox Name="ModeBox" Grid.Column="1" Width="98" Height="28" Margin="5,0,0,0" SelectedIndex="0">
+                <ComboBoxItem Content="Frases" /><ComboBoxItem Content="Palabras" />
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="2" RowDefinitions="Auto,Auto,*" Margin="8,0,8,0">
+            <TextBlock Name="InfoText" Text="Selecciona un clip con audio para transcribir." FontSize="10" TextWrapping="Wrap" Foreground="{StaticResource TextSecondaryBrush}" Margin="3,2,3,6" />
+            <TextBox Name="SearchBox" Grid.Row="1" Height="27" Margin="0,0,0,5" Watermark="Buscar en la transcripción" />
+            <ListBox Name="WordList" Grid.Row="2" Background="#131313" FontSize="11" />
+        </Grid>
+        <StackPanel Grid.Row="3" Spacing="5" Margin="8,6,8,8">
+            <TextBox Name="WordTextBox" Height="27" Watermark="Texto de la palabra o frase" />
+            <Grid ColumnDefinitions="*,*,Auto">
+                <TextBox Name="WordStartBox" Watermark="Inicio (s)" Height="27" />
+                <TextBox Name="WordEndBox" Grid.Column="1" Watermark="Fin (s)" Height="27" Margin="5,0,0,0" />
+                <Button Name="SaveWordButton" Grid.Column="2" Classes="nle-btn" Content="Guardar cambio" Height="27" Padding="7,0" Margin="5,0,0,0" />
+            </Grid>
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Button Name="ApplyButton" Classes="nle-accent" Content="Actualizar subtítulos" Height="27" Padding="8,0" />
+                <Button Name="ExportButton" Classes="nle-btn" Content="Guardar Wordline" Height="27" Padding="8,0" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

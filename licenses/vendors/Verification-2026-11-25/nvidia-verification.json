@@ -1,0 +1,351 @@
+{
+  "cuda_release": "12.6.3",
+  "official_archives": [
+    {
+      "component": "cuda_cudart",
+      "version": "12.6.77",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/windows-x86_64/cuda_cudart-windows-x86_64-12.6.77-archive.zip",
+      "archive_sha256": "7a313bc0c93b1a50bb03aa9783a199ae70c3b66e2d8084da65e8254a8577b925",
+      "notices": [
+        "cuda_cudart-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "cudart64_12.dll",
+          "component": "cuda_cudart",
+          "component_version": "12.6.77",
+          "vendor_sha256": "d954ca542b3b6bcf03cc2b798a7d00051501cf734ca751050e986af505cf9dad",
+          "local_sha256": "d954ca542b3b6bcf03cc2b798a7d00051501cf734ca751050e986af505cf9dad",
+          "matches": true,
+          "vendor_path": "cuda_cudart-windows-x86_64-12.6.77-archive/bin/cudart64_12.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "cuda_cupti",
+      "version": "12.6.80",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/windows-x86_64/cuda_cupti-windows-x86_64-12.6.80-archive.zip",
+      "archive_sha256": "6b69bad461cd54f6555a11785b6e5878407df5bdc3caeadf2ff729cf45376128",
+      "notices": [
+        "cuda_cupti-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "cupti64_2024.3.2.dll",
+          "component": "cuda_cupti",
+          "component_version": "12.6.80",
+          "vendor_sha256": "d7e6611b2f7aa8785176d3157940af41cb973ace0c4071b135f55defcd40d51b",
+          "local_sha256": "d7e6611b2f7aa8785176d3157940af41cb973ace0c4071b135f55defcd40d51b",
+          "matches": true,
+          "vendor_path": "cuda_cupti-windows-x86_64-12.6.80-archive/lib/cupti64_2024.3.2.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "cuda_nvrtc",
+      "version": "12.6.85",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/windows-x86_64/cuda_nvrtc-windows-x86_64-12.6.85-archive.zip",
+      "archive_sha256": "b1221a95a3758561bc73c56905743730f7459cbaff54a4870aa899fa3489219e",
+      "notices": [
+        "cuda_nvrtc-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "nvrtc-builtins64_126.dll",
+          "component": "cuda_nvrtc",
+          "component_version": "12.6.85",
+          "vendor_sha256": "49b2d9298a97425f32bd74767ed784d702c2831a132459e254b49144ecf23c02",
+          "local_sha256": "49b2d9298a97425f32bd74767ed784d702c2831a132459e254b49144ecf23c02",
+          "matches": true,
+          "vendor_path": "cuda_nvrtc-windows-x86_64-12.6.85-archive/bin/nvrtc-builtins64_126.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "nvrtc64_120_0.alt.dll",
+          "component": "cuda_nvrtc",
+          "component_version": "12.6.85",
+          "vendor_sha256": "aeec38166605a19898caaf238ba9afeccaa7954760f324362be7f052aa3da0d6",
+          "local_sha256": "aeec38166605a19898caaf238ba9afeccaa7954760f324362be7f052aa3da0d6",
+          "matches": true,
+          "vendor_path": "cuda_nvrtc-windows-x86_64-12.6.85-archive/bin/nvrtc64_120_0.alt.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "nvrtc64_120_0.dll",
+          "component": "cuda_nvrtc",
+          "component_version": "12.6.85",
+          "vendor_sha256": "01700cdf0f7f566439260201a8b7ee57f914b56f639770f83feb0d1f2a078567",
+          "local_sha256": "01700cdf0f7f566439260201a8b7ee57f914b56f639770f83feb0d1f2a078567",
+          "matches": true,
+          "vendor_path": "cuda_nvrtc-windows-x86_64-12.6.85-archive/bin/nvrtc64_120_0.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "libcublas",
+      "version": "12.6.4.1",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/libcublas/windows-x86_64/libcublas-windows-x86_64-12.6.4.1-archive.zip",
+      "archive_sha256": "1a87ec80f8c0e5a39badc87010d479930c5b63abd788b3a05bd688a5980a3d07",
+      "notices": [
+        "libcublas-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "cublas64_12.dll",
+          "component": "libcublas",
+          "component_version": "12.6.4.1",
+          "vendor_sha256": "01d8172b25d8e2d2cb6a276e76e719f5908c6124f484c8c8ca310fbe7b6634f3",
+          "local_sha256": "01d8172b25d8e2d2cb6a276e76e719f5908c6124f484c8c8ca310fbe7b6634f3",
+          "matches": true,
+          "vendor_path": "libcublas-windows-x86_64-12.6.4.1-archive/bin/cublas64_12.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cublasLt64_12.dll",
+          "component": "libcublas",
+          "component_version": "12.6.4.1",
+          "vendor_sha256": "0d59d264782cec2782b9ac72483e53c9ba485a9d3a1e19b34071a17b8152102e",
+          "local_sha256": "0d59d264782cec2782b9ac72483e53c9ba485a9d3a1e19b34071a17b8152102e",
+          "matches": true,
+          "vendor_path": "libcublas-windows-x86_64-12.6.4.1-archive/bin/cublasLt64_12.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "libcufft",
+      "version": "11.3.0.4",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/libcufft/windows-x86_64/libcufft-windows-x86_64-11.3.0.4-archive.zip",
+      "archive_sha256": "7b3c75e90a907b3a2d215f7c846d67b684c6ddb76369d1bced67d2cdd411014b",
+      "notices": [
+        "libcufft-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "cufft64_11.dll",
+          "component": "libcufft",
+          "component_version": "11.3.0.4",
+          "vendor_sha256": "cf3fdfe46470f694f9a1a6895ea2deb57d49059d08acfe5e12769ab3fcdc5320",
+          "local_sha256": "cf3fdfe46470f694f9a1a6895ea2deb57d49059d08acfe5e12769ab3fcdc5320",
+          "matches": true,
+          "vendor_path": "libcufft-windows-x86_64-11.3.0.4-archive/bin/cufft64_11.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cufftw64_11.dll",
+          "component": "libcufft",
+          "component_version": "11.3.0.4",
+          "vendor_sha256": "07a6b785dbc1e3da5405a36599528f9ab7498ab4cd345a396d90aa0e4216a0c7",
+          "local_sha256": "07a6b785dbc1e3da5405a36599528f9ab7498ab4cd345a396d90aa0e4216a0c7",
+          "matches": true,
+          "vendor_path": "libcufft-windows-x86_64-11.3.0.4-archive/bin/cufftw64_11.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "libcurand",
+      "version": "10.3.7.77",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/libcurand/windows-x86_64/libcurand-windows-x86_64-10.3.7.77-archive.zip",
+      "archive_sha256": "f4554a9bbc933118ff7cde51db2664e17b23ffb5d32715157bee4564bba8bfd7",
+      "notices": [
+        "libcurand-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "curand64_10.dll",
+          "component": "libcurand",
+          "component_version": "10.3.7.77",
+          "vendor_sha256": "0704875170e99155d74d533b50ade32ead16bc62f1b86e35c10640eaac4e08c9",
+          "local_sha256": "0704875170e99155d74d533b50ade32ead16bc62f1b86e35c10640eaac4e08c9",
+          "matches": true,
+          "vendor_path": "libcurand-windows-x86_64-10.3.7.77-archive/bin/curand64_10.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "libcusolver",
+      "version": "11.7.1.2",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/windows-x86_64/libcusolver-windows-x86_64-11.7.1.2-archive.zip",
+      "archive_sha256": "9999cbbf5d3789bb766ed3336dfb8d9be02832ffc5f36b1c37b9aa099ab47604",
+      "notices": [
+        "libcusolver-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "cusolver64_11.dll",
+          "component": "libcusolver",
+          "component_version": "11.7.1.2",
+          "vendor_sha256": "ff4189c2c50ac95bde19cab8e0ae00587ffaeb4bfecb94a028da052a8d2686a1",
+          "local_sha256": "ff4189c2c50ac95bde19cab8e0ae00587ffaeb4bfecb94a028da052a8d2686a1",
+          "matches": true,
+          "vendor_path": "libcusolver-windows-x86_64-11.7.1.2-archive/bin/cusolver64_11.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cusolverMg64_11.dll",
+          "component": "libcusolver",
+          "component_version": "11.7.1.2",
+          "vendor_sha256": "e4131f30f911e19ab4afc3a65cc6aba52d0be16e1a52d0ff4e10432d70e30114",
+          "local_sha256": "e4131f30f911e19ab4afc3a65cc6aba52d0be16e1a52d0ff4e10432d70e30114",
+          "matches": true,
+          "vendor_path": "libcusolver-windows-x86_64-11.7.1.2-archive/bin/cusolverMg64_11.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "libcusparse",
+      "version": "12.5.4.2",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/windows-x86_64/libcusparse-windows-x86_64-12.5.4.2-archive.zip",
+      "archive_sha256": "ab409eee74ab63d5f2e78473d5901c0ce4d414161a1b30838d4e0dc857b2452f",
+      "notices": [
+        "libcusparse-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "cusparse64_12.dll",
+          "component": "libcusparse",
+          "component_version": "12.5.4.2",
+          "vendor_sha256": "dffd92820ed8f36cd11f59aec998a7b8fb357a87c014496c193dde8b082b7b33",
+          "local_sha256": "dffd92820ed8f36cd11f59aec998a7b8fb357a87c014496c193dde8b082b7b33",
+          "matches": true,
+          "vendor_path": "libcusparse-windows-x86_64-12.5.4.2-archive/bin/cusparse64_12.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "libnvjitlink",
+      "version": "12.6.85",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/windows-x86_64/libnvjitlink-windows-x86_64-12.6.85-archive.zip",
+      "archive_sha256": "035445b0be5f7cf4b7ee26f0a476de9d25322857b728df270bb11f3e61d0623f",
+      "notices": [
+        "libnvjitlink-LICENSE"
+      ],
+      "dlls": [
+        {
+          "file": "nvJitLink_120_0.dll",
+          "component": "libnvjitlink",
+          "component_version": "12.6.85",
+          "vendor_sha256": "8bdfe39adb72bf4fd7ed665dc242df1e48da015b641651183d35e9a7db76abe8",
+          "local_sha256": "8bdfe39adb72bf4fd7ed665dc242df1e48da015b641651183d35e9a7db76abe8",
+          "matches": true,
+          "vendor_path": "libnvjitlink-windows-x86_64-12.6.85-archive/bin/nvJitLink_120_0.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    },
+    {
+      "component": "cuDNN",
+      "version": "9.10.2.21",
+      "archive_sha256": "c1a4567d822ebda7373fa1f19255dff4942302de741f830160b6c7d1fb31af23",
+      "dlls": [
+        {
+          "file": "cudnn64_9.dll",
+          "component": "cuDNN",
+          "component_version": "9.10.2.21",
+          "vendor_sha256": "9edbcdff73b0af070eb160b2ce66e59feca04aa017351d8eedcc5e8e149967d2",
+          "local_sha256": "9edbcdff73b0af070eb160b2ce66e59feca04aa017351d8eedcc5e8e149967d2",
+          "matches": true,
+          "vendor_path": "cudnn-windows-x86_64-9.10.2.21_cuda12-archive/bin/cudnn64_9.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cudnn_adv64_9.dll",
+          "component": "cuDNN",
+          "component_version": "9.10.2.21",
+          "vendor_sha256": "f202e8ff36209ac4292fe2ef79d4539487495b3b948f0c978cc63298f43a1850",
+          "local_sha256": "f202e8ff36209ac4292fe2ef79d4539487495b3b948f0c978cc63298f43a1850",
+          "matches": true,
+          "vendor_path": "cudnn-windows-x86_64-9.10.2.21_cuda12-archive/bin/cudnn_adv64_9.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cudnn_cnn64_9.dll",
+          "component": "cuDNN",
+          "component_version": "9.10.2.21",
+          "vendor_sha256": "3f03dec3b81f137f049e1d1c06ff469248eef54ff9424b3b9045fc0f69559d1a",
+          "local_sha256": "3f03dec3b81f137f049e1d1c06ff469248eef54ff9424b3b9045fc0f69559d1a",
+          "matches": true,
+          "vendor_path": "cudnn-windows-x86_64-9.10.2.21_cuda12-archive/bin/cudnn_cnn64_9.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cudnn_engines_precompiled64_9.dll",
+          "component": "cuDNN",
+          "component_version": "9.10.2.21",
+          "vendor_sha256": "ebc2c1f74366b029a4350f7f9a3b109ccd5aa9b4ae02527950793dd29f7b74fb",
+          "local_sha256": "ebc2c1f74366b029a4350f7f9a3b109ccd5aa9b4ae02527950793dd29f7b74fb",
+          "matches": true,
+          "vendor_path": "cudnn-windows-x86_64-9.10.2.21_cuda12-archive/bin/cudnn_engines_precompiled64_9.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cudnn_engines_runtime_compiled64_9.dll",
+          "component": "cuDNN",
+          "component_version": "9.10.2.21",
+          "vendor_sha256": "93ab6351ca0f2b6ca842f83d284e56c427525778c14657229801a13cf8121bd8",
+          "local_sha256": "93ab6351ca0f2b6ca842f83d284e56c427525778c14657229801a13cf8121bd8",
+          "matches": true,
+          "vendor_path": "cudnn-windows-x86_64-9.10.2.21_cuda12-archive/bin/cudnn_engines_runtime_compiled64_9.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cudnn_graph64_9.dll",
+          "component": "cuDNN",
+          "component_version": "9.10.2.21",
+          "vendor_sha256": "a933efeb280a3252297f92d79f7e83003bcbc6f665872d11645d1dbbab9cb598",
+          "local_sha256": "a933efeb280a3252297f92d79f7e83003bcbc6f665872d11645d1dbbab9cb598",
+          "matches": true,
+          "vendor_path": "cudnn-windows-x86_64-9.10.2.21_cuda12-archive/bin/cudnn_graph64_9.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cudnn_heuristic64_9.dll",
+          "component": "cuDNN",
+          "component_version": "9.10.2.21",
+          "vendor_sha256": "458175f12771a35de0ea39c04250d727c2424d42a7ffe0bc987ae81204748fba",
+          "local_sha256": "458175f12771a35de0ea39c04250d727c2424d42a7ffe0bc987ae81204748fba",
+          "matches": true,
+          "vendor_path": "cudnn-windows-x86_64-9.10.2.21_cuda12-archive/bin/cudnn_heuristic64_9.dll",
+          "matches_installed_wheel_record": true
+        },
+        {
+          "file": "cudnn_ops64_9.dll",
+          "component": "cuDNN",
+          "component_version": "9.10.2.21",
+          "vendor_sha256": "851d8f4191a24b322b0be738d191a3159455f0da4db47a19f5cc7ad6e55edf61",
+          "local_sha256": "851d8f4191a24b322b0be738d191a3159455f0da4db47a19f5cc7ad6e55edf61",
+          "matches": true,
+          "vendor_path": "cudnn-windows-x86_64-9.10.2.21_cuda12-archive/bin/cudnn_ops64_9.dll",
+          "matches_installed_wheel_record": true
+        }
+      ]
+    }
+  ],
+  "aliases": [],
+  "missing_files": [],
+  "all_listed_vendor_binaries_match": true,
+  "all_files_mapped": true,
+  "scope": "Technical origin, integrity and component mapping. Terms and application distribution conditions remain applicable.",
+  "additional_runtime_copies": [
+    {
+      "file": "Lib/site-packages/ctranslate2/cudnn64_9.dll",
+      "sha256": "9edbcdff73b0af070eb160b2ce66e59feca04aa017351d8eedcc5e8e149967d2",
+      "matches_verified_official_file": true,
+      "component": "cuDNN"
+    },
+    {
+      "file": "Lib/site-packages/torchvision/cudart64_12.dll",
+      "sha256": "d954ca542b3b6bcf03cc2b798a7d00051501cf734ca751050e986af505cf9dad",
+      "matches_verified_official_file": true,
+      "component": "cuda_cudart"
+    }
+  ],
+  "alternate_filename_note": "nvrtc64_120_0.alt.dll is directly present under its own name in the official CUDA NVRTC 12.6.85 archive; no renamed-file inference is needed."
+}

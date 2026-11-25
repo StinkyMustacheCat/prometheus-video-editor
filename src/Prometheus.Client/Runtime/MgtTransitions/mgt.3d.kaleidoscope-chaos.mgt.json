@@ -1,0 +1,74 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.3d.kaleidoscope-chaos",
+  "version": 2,
+  "name": "Kaleidoscope & Fractal Chaos",
+  "recommended": {
+    "duration": 0.95
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "mirrors",
+      "type": "number",
+      "default": 8,
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "label": "Espejos del Caleidoscopio (Pares)"
+    },
+    {
+      "id": "chaosSpin",
+      "type": "number",
+      "default": 1.35,
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.05,
+      "label": "Velocidad de Torsión Fractal"
+    },
+    {
+      "id": "ringSplit",
+      "type": "number",
+      "default": 0.75,
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "label": "Contra-Rotación de Anillo Interno"
+    },
+    {
+      "id": "prismZoom",
+      "type": "number",
+      "default": 1.45,
+      "min": 1.0,
+      "max": 2.4,
+      "step": 0.05,
+      "label": "Inmersión en el Prisma"
+    },
+    {
+      "id": "seamGlow",
+      "type": "number",
+      "default": 0.55,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Brillo en Aristas de Cristal"
+    },
+    {
+      "id": "crystalColor",
+      "type": "color",
+      "default": "#b84dff",
+      "label": "Color de Refracción"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const segs = Math.max(4, Math.round((params.mirrors !== undefined ? Number(params.mirrors) : 8) / 2) * 2); const spinMult = params.chaosSpin !== undefined ? Number(params.chaosSpin) : 1.35; const ringCounter = params.ringSplit !== undefined ? Number(params.ringSplit) : 0.75; const zoomMax = params.prismZoom !== undefined ? Number(params.prismZoom) : 1.45; const glow = params.seamGlow !== undefined ? Number(params.seamGlow) : 0.55; const crystal = params.crystalColor || '#b84dff'; const cx = w * 0.5; const cy = h * 0.5; const maxR = Math.hypot(cx, cy) * 1.15; const env = Math.pow(Math.sin(p * Math.PI), 1.25); const smoothP = p * p * (3 - 2 * p); const baseImg = p < 0.5 ? ctx.inputA : ctx.inputB; g.drawImage(baseImg, 0, 0, w, h); const drawTiledSource = (img, rot, sc, driftX, driftY, alpha) => { if (alpha <= 0.002) return; g.save(); g.globalAlpha = Math.max(0, Math.min(1, alpha)); g.translate(driftX, driftY); g.rotate(rot); g.scale(sc, sc); for (let ox = -1; ox <= 1; ox++) { for (let oy = -1; oy <= 1; oy++) { if (ox !== 0 && oy !== 0 && sc >= 1.35) continue; g.save(); g.translate(ox * w, oy * h); g.scale(ox !== 0 ? -1 : 1, oy !== 0 ? -1 : 1); g.drawImage(img, -cx, -cy, w, h); g.restore(); } } g.restore(); }; const renderKaleidoRing = (innerR, outerR, ringSign, ringBlendOffset) => { const stepAngle = (Math.PI * 2) / segs; const overlap = 0.012; const wheelRot = (smoothP - 0.5) * Math.PI * 1.1 * spinMult * ringSign * env; const sampleSpinA = smoothP * Math.PI * 0.85 * spinMult * ringSign; const sampleSpinB = -(1 - smoothP) * Math.PI * 0.85 * spinMult * ringSign; const sc = 1 + (zoomMax - 1) * env + (ringSign < 0 ? 0.15 * env : 0); const drift = Math.sin(p * Math.PI) * w * 0.14 * spinMult * ringSign; const localBlendB = Math.max(0, Math.min(1, (smoothP - 0.22 + ringBlendOffset) / 0.56)); g.save(); g.translate(cx, cy); g.beginPath(); g.arc(0, 0, outerR, 0, Math.PI * 2, false); if (innerR > 0) { g.arc(0, 0, innerR, 0, Math.PI * 2, true); } g.clip(); for (let i = 0; i < segs; i++) { const a0 = wheelRot + i * stepAngle - overlap; const a1 = wheelRot + (i + 1) * stepAngle + overlap; const midA = wheelRot + (i + 0.5) * stepAngle; const mirrorFlip = (i % 2 === 1) ? -1 : 1; g.save(); g.beginPath(); g.moveTo(0, 0); g.arc(0, 0, outerR * 1.15, a0, a1); g.closePath(); g.clip(); g.rotate(midA); g.scale(1, mirrorFlip); g.rotate(-midA); if (localBlendB < 1) { drawTiledSource(ctx.inputA, sampleSpinA, sc, drift, drift * 0.4, (1 - localBlendB) * Math.min(1, env * 1.65)); } if (localBlendB > 0) { drawTiledSource(ctx.inputB, sampleSpinB, sc, -drift, -drift * 0.4, localBlendB * Math.min(1, env * 1.65)); } g.restore(); if (glow > 0 && env > 0.08) { g.save(); g.rotate(wheelRot + i * stepAngle); g.strokeStyle = crystal; g.lineWidth = Math.max(1.5, 4 * env * glow); g.globalCompositeOperation = 'screen'; g.globalAlpha = env * 0.45 * glow; g.beginPath(); g.moveTo(innerR, 0); g.lineTo(outerR, 0); g.stroke(); g.restore(); } } if (glow > 0 && innerR > 2 && env > 0.08) { g.save(); g.strokeStyle = '#ffffff'; g.lineWidth = Math.max(2, 5 * env * glow); g.globalCompositeOperation = 'lighter'; g.globalAlpha = env * 0.4 * glow; g.beginPath(); g.arc(0, 0, innerR, 0, Math.PI * 2); g.stroke(); g.restore(); } g.restore(); }; const splitR = maxR * (0.42 + 0.12 * Math.sin(p * Math.PI)) * env; renderKaleidoRing(splitR, maxR * Math.min(1, env * 1.45), 1, -0.08); if (ringCounter > 0 && splitR > 4) { renderKaleidoRing(0, splitR, -ringCounter, 0.12); }",
+  "renderProfile": "gpu-canvas2d-v1"
+}

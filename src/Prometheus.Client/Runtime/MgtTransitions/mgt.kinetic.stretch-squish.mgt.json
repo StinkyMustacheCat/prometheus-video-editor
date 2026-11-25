@@ -1,0 +1,79 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.kinetic.stretch-squish",
+  "version": 3,
+  "name": "Anamorphic Stretch & Squish",
+  "recommended": {
+    "duration": 0.85
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "axis",
+      "type": "select",
+      "default": "horizontal",
+      "options": [
+        "horizontal",
+        "horizontal-rev",
+        "vertical",
+        "vertical-rev"
+      ],
+      "label": "Dirección de Impacto"
+    },
+    {
+      "id": "elasticity",
+      "type": "number",
+      "default": 1.55,
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.05,
+      "label": "Deformación Elástica (Squash/Stretch)"
+    },
+    {
+      "id": "jelloFreq",
+      "type": "number",
+      "default": 18.0,
+      "min": 6.0,
+      "max": 30.0,
+      "step": 0.5,
+      "label": "Frecuencia de Gelatina"
+    },
+    {
+      "id": "skewForce",
+      "type": "number",
+      "default": 0.28,
+      "min": 0.0,
+      "max": 0.75,
+      "step": 0.02,
+      "label": "Inclinación Aerodinámica (Skew)"
+    },
+    {
+      "id": "smearBlur",
+      "type": "number",
+      "default": 0.65,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Barrido Elástico en el Corte (Smear)"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const axis = params.axis || 'horizontal'; const elasticity = params.elasticity !== undefined ? Number(params.elasticity) : 1.55; const freq = params.jelloFreq !== undefined ? Number(params.jelloFreq) : 18.0; const skewForce = params.skewForce !== undefined ? Number(params.skewForce) : 0.28; const smear = params.smearBlur !== undefined ? Number(params.smearBlur) : 0.65; const isHoriz = axis.indexOf('horizontal') === 0; const dir = axis.indexOf('-rev') !== -1 ? -1 : 1; const cx = w * 0.5; const cy = h * 0.5; const drawMirroredTile = (img, tx, ty, sx, sy, kx, ky, alpha) => { if (alpha <= 0.001) return; const coverBoost = 1 + Math.abs(kx) * (h / w) * 1.05 + Math.abs(ky) * (w / h) * 1.05; const finalSx = sx * coverBoost; const finalSy = sy * coverBoost; g.save(); g.globalAlpha = Math.max(0, Math.min(1, alpha)); g.translate(cx + tx, cy + ty); g.transform(finalSx, ky, kx, finalSy, 0, 0); for (let ox = -1; ox <= 1; ox++) { for (let oy = -1; oy <= 1; oy++) { if (ox !== 0 && oy !== 0) continue; g.save(); g.translate(ox * w, oy * h); g.scale(ox !== 0 ? -1 : 1, oy !== 0 ? -1 : 1); g.drawImage(img, -cx, -cy, w, h); g.restore(); } } g.restore(); }; const switchP = 0.42; if (p < switchP) { const tA = p / switchP; let moveA = 0; let stretchA = 1; let squashA = 1; let skewA = 0; if (tA < 0.35) { const ant = tA / 0.35; const wave = Math.sin(ant * Math.PI); moveA = -dir * 0.055 * wave * elasticity; stretchA = 1 - 0.22 * wave * elasticity; squashA = 1 + 0.26 * wave * elasticity; skewA = -dir * 0.14 * wave * skewForce; } else { const u = (tA - 0.35) / 0.65; const accel = Math.pow(u, 3.2); moveA = dir * accel * 0.95; stretchA = 1 + Math.pow(u, 1.8) * 1.35 * elasticity; squashA = 1 / (1 + Math.pow(u, 2.0) * 0.38 * elasticity); skewA = dir * Math.pow(u, 1.6) * skewForce; } const sx = isHoriz ? Math.max(0.25, stretchA) : Math.max(0.4, squashA); const sy = isHoriz ? Math.max(0.4, squashA) : Math.max(0.25, stretchA); const tx = isHoriz ? moveA * w : 0; const ty = isHoriz ? 0 : moveA * h; const kx = isHoriz ? skewA : 0; const ky = isHoriz ? 0 : skewA; if (smear > 0 && tA > 0.45) { const velFactor = (tA - 0.45) / 0.55; const samples = 5; for (let i = samples; i >= 1; i--) { const f = (i / samples) * velFactor * 0.14 * smear; const sStep = 1 + (i / samples) * 0.12 * smear * velFactor; drawMirroredTile(ctx.inputA, tx - (isHoriz ? dir * f * w : 0), ty - (isHoriz ? 0 : dir * f * h), sx * (isHoriz ? sStep : 1), sy * (isHoriz ? 1 : sStep), kx, ky, (0.28 / i) * smear); } } drawMirroredTile(ctx.inputA, tx, ty, sx, sy, kx, ky, 1); } else { const tB = (p - switchP) / (1 - switchP); const impactT = 0.18; let moveB = 0; let majorB = 1; let minorB = 1; let skewB = 0; if (tB < impactT) { const u = 1 - (tB / impactT); const ease = Math.pow(u, 2.4); moveB = -dir * ease * 0.85; majorB = 1 + ease * 1.15 * elasticity; minorB = 1 / (1 + ease * 0.32 * elasticity); skewB = -dir * ease * skewForce * 1.1; } else { const post = (tB - impactT) / (1 - impactT); const damp = Math.exp(-5.6 * post) * Math.pow(1 - post, 1.2); const wave = -Math.cos(post * freq); const jello = wave * damp * 0.42 * elasticity; majorB = Math.max(0.38, 1 + jello); minorB = 1 / Math.sqrt(majorB); moveB = dir * Math.sin(post * freq) * damp * 0.055 * elasticity; skewB = dir * Math.sin(post * freq) * damp * skewForce * 0.55; } const sx = isHoriz ? majorB : minorB; const sy = isHoriz ? minorB : majorB; const tx = isHoriz ? moveB * w : 0; const ty = isHoriz ? 0 : moveB * h; const kx = isHoriz ? skewB : 0; const ky = isHoriz ? 0 : skewB; if (smear > 0 && tB < 0.35) { const velFactor = 1 - (tB / 0.35); const samples = 5; for (let i = samples; i >= 1; i--) { const f = (i / samples) * velFactor * 0.14 * smear; const sStep = 1 + (i / samples) * 0.12 * smear * velFactor; drawMirroredTile(ctx.inputB, tx - (isHoriz ? dir * f * w : 0), ty - (isHoriz ? 0 : dir * f * h), sx * (isHoriz ? sStep : 1), sy * (isHoriz ? 1 : sStep), kx, ky, (0.28 / i) * smear); } } drawMirroredTile(ctx.inputB, tx, ty, sx, sy, kx, ky, 1); }",
+  "renderProfile": "gpu-canvas2d-v1",
+  "optionLabels": {
+    "axis": {
+      "horizontal": "Horizontal (Izquierda a Derecha)",
+      "horizontal-rev": "Horizontal Inverso (Derecha a Izquierda)",
+      "vertical": "Vertical (Arriba a Abajo)",
+      "vertical-rev": "Vertical Inverso (Abajo a Arriba)"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.shader.vhs-damage",
+  "version": 2,
+  "name": "VHS Analog Tape Damage",
+  "recommended": {
+    "duration": 0.95
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "trackingRoll",
+      "type": "number",
+      "default": 1.0,
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.1,
+      "label": "Salto Vertical de Cabezal (Roll)"
+    },
+    {
+      "id": "tapeWave",
+      "type": "number",
+      "default": 1.25,
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.05,
+      "label": "Ondulación de Cinta (Jitter)"
+    },
+    {
+      "id": "staticBar",
+      "type": "number",
+      "default": 0.75,
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "label": "Grosor de Barra de Ruido Magnético"
+    },
+    {
+      "id": "colorBleed",
+      "type": "number",
+      "default": 0.85,
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "label": "Sangrado de Color Analógico"
+    },
+    {
+      "id": "scanlines",
+      "type": "number",
+      "default": 0.45,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Intensidad de Líneas CRT"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const rollMult = params.trackingRoll !== undefined ? Number(params.trackingRoll) : 1.0; const waveMult = params.tapeWave !== undefined ? Number(params.tapeWave) : 1.25; const staticAmt = params.staticBar !== undefined ? Number(params.staticBar) : 0.75; const bleed = params.colorBleed !== undefined ? Number(params.colorBleed) : 0.85; const scan = params.scanlines !== undefined ? Number(params.scanlines) : 0.45; const env = Math.sin(p * Math.PI); const envSharp = Math.pow(env, 1.5); const qFrame = Math.floor(p * 24); const smoothP = p * p * (3 - 2 * p); const rollOffset = ((smoothP * Math.max(1, Math.round(rollMult))) % 1) * h; const barCenterY = p * (h * 1.3) - h * 0.15; const barHalfH = h * 0.14 * staticAmt * (0.4 + env * 0.8); const bands = 36; const bandH = Math.ceil(h / bands); for (let i = 0; i < bands; i++) { const y = i * bandH; const curH = Math.min(bandH, h - y); if (curH <= 0) break; const normY = y / h; const distBar = Math.abs((y + curH * 0.5) - barCenterY); const nearBar = barHalfH > 0 ? Math.max(0, 1 - distBar / (barHalfH * 1.8)) : 0; const rNoise = (ctx.random(qFrame * 61 + i * 17) - 0.5) * 2; const wave = Math.sin(normY * 14 + p * 22) * w * 0.016 * waveMult * envSharp; const tear = nearBar * nearBar * rNoise * w * 0.16 * waveMult; const dx = wave + tear; const sampleY = (y + rollOffset) % h; const wrappedA = (y + rollOffset) >= h; let useB = p >= 0.5; if (rollMult >= 0.5) { useB = p >= 0.5 ? true : wrappedA; } else { useB = (y + curH * 0.5) <= barCenterY; } const src = useB ? ctx.inputB : ctx.inputA; const srcH = Math.min(curH, h - sampleY); g.save(); g.beginPath(); g.rect(0, y, w, curH); g.clip(); g.drawImage(src, 0, sampleY, w, srcH, dx, y, w, curH); if (dx !== 0) { g.drawImage(src, 0, sampleY, w, srcH, dx > 0 ? dx - w : dx + w, y, w, curH); } if (bleed > 0 && env > 0.05) { const bleedShift = (w * 0.018 * bleed * envSharp) + Math.abs(tear) * 0.35; g.globalCompositeOperation = 'screen'; g.globalAlpha = Math.min(0.55, 0.32 * bleed * env + nearBar * 0.25); g.drawImage(src, 0, sampleY, w, srcH, dx + bleedShift, y, w, curH); } g.restore(); } if (staticAmt > 0 && barHalfH > 1) { const lines = 28; for (let s = 0; s < lines; s++) { const r1 = ctx.random(qFrame * 103 + s * 23); const r2 = ctx.random(qFrame * 107 + s * 31); const ly = barCenterY + (r1 - 0.5) * barHalfH * 2; if (ly < 0 || ly > h) continue; const lh = Math.max(1.5, r2 * 5 * staticAmt); const lx = (ctx.random(qFrame * 113 + s * 41) - 0.15) * w; const lw = (0.35 + ctx.random(qFrame * 127 + s * 53) * 0.85) * w; g.save(); g.globalCompositeOperation = 'screen'; g.fillStyle = s % 3 === 0 ? '#d8f8ff' : '#ffffff'; g.globalAlpha = (1 - Math.abs(r1 - 0.5) * 1.8) * 0.75 * env; g.fillRect(lx, ly, lw, lh); g.restore(); } } if (scan > 0) { g.save(); g.fillStyle = '#050208'; const stepY = Math.max(3, Math.round(h / 140)); g.globalAlpha = scan * (0.18 + env * 0.25); for (let sy = 0; sy < h; sy += stepY * 2) { g.fillRect(0, sy, w, stepY); } g.restore(); }",
+  "renderProfile": "gpu-canvas2d-v1"
+}

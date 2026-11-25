@@ -1,0 +1,81 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.3d.flip-spin",
+  "version": 2,
+  "name": "3D Prism Flip & Kinetic Spin",
+  "recommended": {
+    "duration": 0.9
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "spinAxis",
+      "type": "select",
+      "default": "axis-y",
+      "options": [
+        "axis-y",
+        "axis-x"
+      ],
+      "label": "Eje de Rotación 3D"
+    },
+    {
+      "id": "slatCount",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 16,
+      "step": 1,
+      "label": "Divisiones del Prisma (1 = Bloque Único)"
+    },
+    {
+      "id": "cascadeLag",
+      "type": "number",
+      "default": 0.38,
+      "min": 0.0,
+      "max": 0.75,
+      "step": 0.02,
+      "label": "Desfase en Cascada (Stagger)"
+    },
+    {
+      "id": "halfTurns",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 3,
+      "step": 2,
+      "label": "Medias Vueltas (1 = 180°, 3 = 540°)"
+    },
+    {
+      "id": "perspectiveDepth",
+      "type": "number",
+      "default": 0.55,
+      "min": 0.1,
+      "max": 1.2,
+      "step": 0.05,
+      "label": "Profundidad Trapezoidal 3D"
+    },
+    {
+      "id": "edgeHighlight",
+      "type": "color",
+      "default": "#00f0ff",
+      "label": "Color de Canto Metálico"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const isY = (params.spinAxis || 'axis-y') === 'axis-y'; const slats = Math.max(1, Math.round(params.slatCount !== undefined ? Number(params.slatCount) : 5)); const lag = slats === 1 ? 0 : (params.cascadeLag !== undefined ? Number(params.cascadeLag) : 0.38); const turns = Math.max(1, Math.round(params.halfTurns !== undefined ? Number(params.halfTurns) : 1)) | 1; const persp = params.perspectiveDepth !== undefined ? Number(params.perspectiveDepth) : 0.55; const edgeCol = params.edgeHighlight || '#00f0ff'; const cx = w * 0.5; const cy = h * 0.5; const backdrop = p < 0.5 ? ctx.inputA : ctx.inputB; g.save(); g.translate(cx, cy); g.scale(1.08, 1.08); g.globalAlpha = 0.28; g.drawImage(backdrop, -cx, -cy, w, h); g.fillStyle = '#06040c'; g.globalAlpha = 0.65; g.fillRect(-cx, -cy, w, h); g.restore(); const springEase = (t) => { if (t <= 0) return 0; if (t >= 1) return 1; if (t < 0.72) { const u = t / 0.72; return 1.06 * (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) * 0.5); } const u = (t - 0.72) / 0.28; return 1 + Math.cos(u * Math.PI * 1.5) * Math.exp(-3.8 * u) * 0.06 * (1 - u); }; const order = []; for (let i = 0; i < slats; i++) { const delay = slats > 1 ? (i / (slats - 1)) * lag : 0; const span = Math.max(0.15, 1 - lag); const localP = Math.max(0, Math.min(1, (p - delay) / span)); const theta = springEase(localP) * Math.PI * turns; const zDepth = Math.abs(Math.sin(theta)); order.push({ i, localP, theta, zDepth }); } order.sort((a, b) => a.zDepth - b.zDepth); for (let k = 0; k < order.length; k++) { const item = order[k]; const i = item.i; const theta = item.theta; const cosT = Math.cos(theta); const sinT = Math.sin(theta); const showB = cosT < 0; const img = showB ? ctx.inputB : ctx.inputA; const absCos = Math.max(0.018, Math.abs(cosT)); const zPull = 1 - Math.abs(sinT) * 0.16 * persp; const sliceSize = (isY ? w : h) / slats; const sliceStart = i * sliceSize; const sliceCenter = sliceStart + sliceSize * 0.5; const subStrips = 8; const subSize = (isY ? h : w) / subStrips; g.save(); for (let s = 0; s < subStrips; s++) { const sNorm = ((s + 0.5) / subStrips) - 0.5; const trapScale = Math.max(0.25, 1 + sinT * sNorm * 0.34 * persp) * zPull; const subStart = s * subSize; g.save(); if (isY) { g.translate(sliceCenter, cy); g.scale(absCos * trapScale, zPull); g.beginPath(); g.rect(-sliceSize * 0.51, subStart - cy - 0.8, sliceSize * 1.02, subSize + 1.6); g.clip(); g.drawImage(img, -sliceCenter, -cy, w, h); } else { g.translate(cx, sliceCenter); g.scale(zPull, absCos * trapScale); g.beginPath(); g.rect(subStart - cx - 0.8, -sliceSize * 0.51, subSize + 1.6, sliceSize * 1.02); g.clip(); g.drawImage(img, -cx, -sliceCenter, w, h); } g.restore(); } const shade = (1 - Math.abs(cosT)) * 0.68; g.save(); if (isY) { g.translate(sliceCenter, cy); g.scale(absCos * zPull, zPull); g.fillStyle = sinT > 0 ? '#000000' : edgeCol; g.globalAlpha = sinT > 0 ? shade : shade * 0.45; g.fillRect(-sliceSize * 0.5, -cy, sliceSize, h); if (Math.abs(cosT) < 0.22) { const rim = Math.max(2, (1 - Math.abs(cosT) / 0.22) * 8 * persp); g.fillStyle = edgeCol; g.globalAlpha = 0.9; g.fillRect(sinT > 0 ? sliceSize * 0.5 - rim : -sliceSize * 0.5, -cy, rim, h); } } else { g.translate(cx, sliceCenter); g.scale(zPull, absCos * zPull); g.fillStyle = sinT > 0 ? '#000000' : edgeCol; g.globalAlpha = sinT > 0 ? shade : shade * 0.45; g.fillRect(-cx, -sliceSize * 0.5, w, sliceSize); if (Math.abs(cosT) < 0.22) { const rim = Math.max(2, (1 - Math.abs(cosT) / 0.22) * 8 * persp); g.fillStyle = edgeCol; g.globalAlpha = 0.9; g.fillRect(-cx, sinT > 0 ? sliceSize * 0.5 - rim : -sliceSize * 0.5, w, rim); } } g.restore(); g.restore(); }",
+  "renderProfile": "gpu-canvas2d-v1",
+  "optionLabels": {
+    "spinAxis": {
+      "axis-y": "Eje Y (Giro Horizontal de Moneda/Carta)",
+      "axis-x": "Eje X (Volteo Vertical de Tablero)"
+    }
+  }
+}

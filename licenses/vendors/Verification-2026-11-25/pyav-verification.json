@@ -1,0 +1,467 @@
+{
+  "wheel": "av-18.1.0-cp311-abi3-win_amd64.whl",
+  "wheel_sha256": "ea1480b7a8d5405cb5f382b344731bf125fd2c1c6fae3964f6c48595628387ff",
+  "matches_official_pypi_digest": true,
+  "vendor_release": "8.1.2-1",
+  "vendor_source_commit": "a71bf9279f7a4659154b68ba6783e89be460bcd5",
+  "source_commit_basis": "Official release index and matching GitHub Actions run 28393781929; archived source fetched by commit. Direct tag and binary URL currently return 404, which does not remove the archived commit source.",
+  "license_route": "GPL redistribution route offered by upstream; BSD-3-Clause retained for PyAV source. No reliance on undocumented commercial exceptions.",
+  "native_files": [
+    {
+      "file": "av/bitstream.pyd",
+      "wheel_sha256": "3277f0f5abd59e71826f07de264dab001a1bc0b6f7b95cacb65fcac54896d90a",
+      "installed_sha256": "3277f0f5abd59e71826f07de264dab001a1bc0b6f7b95cacb65fcac54896d90a",
+      "matches": true
+    },
+    {
+      "file": "av/buffer.pyd",
+      "wheel_sha256": "c0b70eccfa773196c7b7f3feecaa6f5c3b111a42099e2421166d656084d09015",
+      "installed_sha256": "c0b70eccfa773196c7b7f3feecaa6f5c3b111a42099e2421166d656084d09015",
+      "matches": true
+    },
+    {
+      "file": "av/device.pyd",
+      "wheel_sha256": "eb542faf9c13d3312539f0a8645af5b86c7104b062f9717f786cd7a52f25f768",
+      "installed_sha256": "eb542faf9c13d3312539f0a8645af5b86c7104b062f9717f786cd7a52f25f768",
+      "matches": true
+    },
+    {
+      "file": "av/dictionary.pyd",
+      "wheel_sha256": "21a513157b6ae517bf45af01a54b9e0f5af63b2fd5333bebd0db351141595068",
+      "installed_sha256": "21a513157b6ae517bf45af01a54b9e0f5af63b2fd5333bebd0db351141595068",
+      "matches": true
+    },
+    {
+      "file": "av/error.pyd",
+      "wheel_sha256": "b03d2bedd87a40f12d712d791ebcaced177d1126bb1356c0c19c26e2d3c20429",
+      "installed_sha256": "b03d2bedd87a40f12d712d791ebcaced177d1126bb1356c0c19c26e2d3c20429",
+      "matches": true
+    },
+    {
+      "file": "av/format.pyd",
+      "wheel_sha256": "a4a10ecf6118d6b6a78b8cb60e3ccbd6e7a8e74314b1f728384c6e441760ee97",
+      "installed_sha256": "a4a10ecf6118d6b6a78b8cb60e3ccbd6e7a8e74314b1f728384c6e441760ee97",
+      "matches": true
+    },
+    {
+      "file": "av/frame.pyd",
+      "wheel_sha256": "19b26fc869f35bf4cdc823f5371fe357aa2833d29aabb311f11d7831aef98def",
+      "installed_sha256": "19b26fc869f35bf4cdc823f5371fe357aa2833d29aabb311f11d7831aef98def",
+      "matches": true
+    },
+    {
+      "file": "av/index.pyd",
+      "wheel_sha256": "6ce35fe62976ce29be74e18026231adf4b99eff9e08ee7fff03b6746dcf79d46",
+      "installed_sha256": "6ce35fe62976ce29be74e18026231adf4b99eff9e08ee7fff03b6746dcf79d46",
+      "matches": true
+    },
+    {
+      "file": "av/logging.pyd",
+      "wheel_sha256": "e25ee4fbbe3fc6444292b00aae9b4594ed44b67e29f901ad4c7f9e17aca7c930",
+      "installed_sha256": "e25ee4fbbe3fc6444292b00aae9b4594ed44b67e29f901ad4c7f9e17aca7c930",
+      "matches": true
+    },
+    {
+      "file": "av/opaque.pyd",
+      "wheel_sha256": "01f4fa6fc6923af682fa969beb63511ae3f784d9b648627fcb13345bfa8fee68",
+      "installed_sha256": "01f4fa6fc6923af682fa969beb63511ae3f784d9b648627fcb13345bfa8fee68",
+      "matches": true
+    },
+    {
+      "file": "av/packet.pyd",
+      "wheel_sha256": "2db7b19f55c0a0a97f1d72d22a8d930f9c9012d9d9c0d14fdc998c92bb78f7fd",
+      "installed_sha256": "2db7b19f55c0a0a97f1d72d22a8d930f9c9012d9d9c0d14fdc998c92bb78f7fd",
+      "matches": true
+    },
+    {
+      "file": "av/plane.pyd",
+      "wheel_sha256": "d4caf7fed366fdee2c57adc03fb018035d46091654c884c90ecb28489c9cef69",
+      "installed_sha256": "d4caf7fed366fdee2c57adc03fb018035d46091654c884c90ecb28489c9cef69",
+      "matches": true
+    },
+    {
+      "file": "av/rational.pyd",
+      "wheel_sha256": "4d82a67d6fd770e344af87cac19bbf042045d329ead85acada6a96b9d8702460",
+      "installed_sha256": "4d82a67d6fd770e344af87cac19bbf042045d329ead85acada6a96b9d8702460",
+      "matches": true
+    },
+    {
+      "file": "av/stream.pyd",
+      "wheel_sha256": "dcba76f21ead0bc7cdcecbf8f59f4e6839ef834251359780af3113bb0311408f",
+      "installed_sha256": "dcba76f21ead0bc7cdcecbf8f59f4e6839ef834251359780af3113bb0311408f",
+      "matches": true
+    },
+    {
+      "file": "av/utils.pyd",
+      "wheel_sha256": "85bea4074088698336853a1506f37ce4f4e2277d8d1138e800aff98d0611ef27",
+      "installed_sha256": "85bea4074088698336853a1506f37ce4f4e2277d8d1138e800aff98d0611ef27",
+      "matches": true
+    },
+    {
+      "file": "av/_core.pyd",
+      "wheel_sha256": "25d669349bb0f9763b00c9e9fabc2028657e6c1bfc61fcc2e50beca0903f1788",
+      "installed_sha256": "25d669349bb0f9763b00c9e9fabc2028657e6c1bfc61fcc2e50beca0903f1788",
+      "matches": true
+    },
+    {
+      "file": "av/audio/codeccontext.pyd",
+      "wheel_sha256": "21071a8d7c7e70371a70d6576bfe6d2a60a27fb296ff290249d027d6f1ad8f61",
+      "installed_sha256": "21071a8d7c7e70371a70d6576bfe6d2a60a27fb296ff290249d027d6f1ad8f61",
+      "matches": true
+    },
+    {
+      "file": "av/audio/fifo.pyd",
+      "wheel_sha256": "1872c6a588dbdefd603eb0a43796693b45073669913502fb4bc9193ca196f2a1",
+      "installed_sha256": "1872c6a588dbdefd603eb0a43796693b45073669913502fb4bc9193ca196f2a1",
+      "matches": true
+    },
+    {
+      "file": "av/audio/format.pyd",
+      "wheel_sha256": "c19acceccba205853ab1e7dae81782a6ce8cf92d1216d79431ee652ce07d4061",
+      "installed_sha256": "c19acceccba205853ab1e7dae81782a6ce8cf92d1216d79431ee652ce07d4061",
+      "matches": true
+    },
+    {
+      "file": "av/audio/frame.pyd",
+      "wheel_sha256": "f80a1a55e01577074cf4f092e486f1fdd7be96e75d85bdc239ec369affd142ee",
+      "installed_sha256": "f80a1a55e01577074cf4f092e486f1fdd7be96e75d85bdc239ec369affd142ee",
+      "matches": true
+    },
+    {
+      "file": "av/audio/layout.pyd",
+      "wheel_sha256": "6dcd2f5a1f7e8b658d395438600352971cde9ee91de87d3f4d71f546ef8edae2",
+      "installed_sha256": "6dcd2f5a1f7e8b658d395438600352971cde9ee91de87d3f4d71f546ef8edae2",
+      "matches": true
+    },
+    {
+      "file": "av/audio/plane.pyd",
+      "wheel_sha256": "2492c6966023e671276eeeed9afa9680da02e14e8e2508cd6db41e45c84ed16a",
+      "installed_sha256": "2492c6966023e671276eeeed9afa9680da02e14e8e2508cd6db41e45c84ed16a",
+      "matches": true
+    },
+    {
+      "file": "av/audio/resampler.pyd",
+      "wheel_sha256": "bef8646dec1270e2aa094b83811224bed9fda2b5d5afe51d2ebb28f0ec0a3f49",
+      "installed_sha256": "bef8646dec1270e2aa094b83811224bed9fda2b5d5afe51d2ebb28f0ec0a3f49",
+      "matches": true
+    },
+    {
+      "file": "av/audio/stream.pyd",
+      "wheel_sha256": "ee2756d1851388e6ae5a9e0b053122a601ced785aaa3f7017b0c9df7491b057e",
+      "installed_sha256": "ee2756d1851388e6ae5a9e0b053122a601ced785aaa3f7017b0c9df7491b057e",
+      "matches": true
+    },
+    {
+      "file": "av/codec/codec.pyd",
+      "wheel_sha256": "4353e90e3bda30e2000583aca39cbd2aa1b8a1174ac80c2b7dedc1ac5ec3b443",
+      "installed_sha256": "4353e90e3bda30e2000583aca39cbd2aa1b8a1174ac80c2b7dedc1ac5ec3b443",
+      "matches": true
+    },
+    {
+      "file": "av/codec/context.pyd",
+      "wheel_sha256": "50f66dc7cdd992be51c159134c5f469beb76a4d3a114c514b51e3a8fe19577a3",
+      "installed_sha256": "50f66dc7cdd992be51c159134c5f469beb76a4d3a114c514b51e3a8fe19577a3",
+      "matches": true
+    },
+    {
+      "file": "av/codec/hwaccel.pyd",
+      "wheel_sha256": "d74b0048b9277cc84837f26d39087a29c483c26c0ba15c39c75258d2ec8b95da",
+      "installed_sha256": "d74b0048b9277cc84837f26d39087a29c483c26c0ba15c39c75258d2ec8b95da",
+      "matches": true
+    },
+    {
+      "file": "av/container/core.pyd",
+      "wheel_sha256": "93547e184b60efdbda531b0aabd47a2ae4881a05d4db6d3c6ba45e92e051cd32",
+      "installed_sha256": "93547e184b60efdbda531b0aabd47a2ae4881a05d4db6d3c6ba45e92e051cd32",
+      "matches": true
+    },
+    {
+      "file": "av/container/input.pyd",
+      "wheel_sha256": "c3bdfae2d75b08b78fdd36159ae74e48ad7cd8bbd627bca005033ab4f6404643",
+      "installed_sha256": "c3bdfae2d75b08b78fdd36159ae74e48ad7cd8bbd627bca005033ab4f6404643",
+      "matches": true
+    },
+    {
+      "file": "av/container/output.pyd",
+      "wheel_sha256": "c85278fa35483b70d94af5276ca9ec90cf5276bc3970c6537951354673a9abdc",
+      "installed_sha256": "c85278fa35483b70d94af5276ca9ec90cf5276bc3970c6537951354673a9abdc",
+      "matches": true
+    },
+    {
+      "file": "av/container/pyio.pyd",
+      "wheel_sha256": "26b9e5f6a63328fe4c35fb1b7c0cc2654af865fdab14ced2550dcc3fb56183e1",
+      "installed_sha256": "26b9e5f6a63328fe4c35fb1b7c0cc2654af865fdab14ced2550dcc3fb56183e1",
+      "matches": true
+    },
+    {
+      "file": "av/container/streams.pyd",
+      "wheel_sha256": "ed0e2d8927a75aed0553b2729523647275db1dfab7a69ad25fd1b6a6dd13f066",
+      "installed_sha256": "ed0e2d8927a75aed0553b2729523647275db1dfab7a69ad25fd1b6a6dd13f066",
+      "matches": true
+    },
+    {
+      "file": "av/filter/context.pyd",
+      "wheel_sha256": "d2c077b9c29ce268d5fa3a526052a4e135a96cbecb69c0fc261cab14a1bb957b",
+      "installed_sha256": "d2c077b9c29ce268d5fa3a526052a4e135a96cbecb69c0fc261cab14a1bb957b",
+      "matches": true
+    },
+    {
+      "file": "av/filter/filter.pyd",
+      "wheel_sha256": "1d51964274998bb5b503937e2de9975d60e5198125ef7836957fa47ea458b26a",
+      "installed_sha256": "1d51964274998bb5b503937e2de9975d60e5198125ef7836957fa47ea458b26a",
+      "matches": true
+    },
+    {
+      "file": "av/filter/graph.pyd",
+      "wheel_sha256": "d9ea2a3aa35cac97f5e385cb0bb47e5e25be2f18ec9dbeef15ab3bef7fbe09d6",
+      "installed_sha256": "d9ea2a3aa35cac97f5e385cb0bb47e5e25be2f18ec9dbeef15ab3bef7fbe09d6",
+      "matches": true
+    },
+    {
+      "file": "av/filter/link.pyd",
+      "wheel_sha256": "c1d8626838d424e2c81e69ab5f1298dcf317277257ade1f281b551bd547b1aa1",
+      "installed_sha256": "c1d8626838d424e2c81e69ab5f1298dcf317277257ade1f281b551bd547b1aa1",
+      "matches": true
+    },
+    {
+      "file": "av/filter/loudnorm.pyd",
+      "wheel_sha256": "f9927671ae5aa68ba8b26b966ad0a2b189cd570590a80b5ba0275064db8c55e8",
+      "installed_sha256": "f9927671ae5aa68ba8b26b966ad0a2b189cd570590a80b5ba0275064db8c55e8",
+      "matches": true
+    },
+    {
+      "file": "av/sidedata/encparams.pyd",
+      "wheel_sha256": "465a09cfa3334c0e9634e23fb7349ba237879098238e1539e252411893f5a0d4",
+      "installed_sha256": "465a09cfa3334c0e9634e23fb7349ba237879098238e1539e252411893f5a0d4",
+      "matches": true
+    },
+    {
+      "file": "av/sidedata/motionvectors.pyd",
+      "wheel_sha256": "4de475251e478ffa21563f9ea69c68f64f67344cba91bd1d1ce02877812af843",
+      "installed_sha256": "4de475251e478ffa21563f9ea69c68f64f67344cba91bd1d1ce02877812af843",
+      "matches": true
+    },
+    {
+      "file": "av/sidedata/sidedata.pyd",
+      "wheel_sha256": "438dda9bec7a1b062c3021676eacdef5f16f9823c898758922c39881421b9b4d",
+      "installed_sha256": "438dda9bec7a1b062c3021676eacdef5f16f9823c898758922c39881421b9b4d",
+      "matches": true
+    },
+    {
+      "file": "av/subtitles/codeccontext.pyd",
+      "wheel_sha256": "2a43955af37b2a7b2bf1741e0cc42cf8dc6ff8efed4e1dd431d359d38c5cf4ec",
+      "installed_sha256": "2a43955af37b2a7b2bf1741e0cc42cf8dc6ff8efed4e1dd431d359d38c5cf4ec",
+      "matches": true
+    },
+    {
+      "file": "av/subtitles/stream.pyd",
+      "wheel_sha256": "7ee6782ddd100dc290ad9871684a14ba670742146a134d2c4ba24e0381accad7",
+      "installed_sha256": "7ee6782ddd100dc290ad9871684a14ba670742146a134d2c4ba24e0381accad7",
+      "matches": true
+    },
+    {
+      "file": "av/subtitles/subtitle.pyd",
+      "wheel_sha256": "68abd3b3626acb404f75ecfd0e773ed33deebf1f58c7220c9ba99a3c6db9f1a7",
+      "installed_sha256": "68abd3b3626acb404f75ecfd0e773ed33deebf1f58c7220c9ba99a3c6db9f1a7",
+      "matches": true
+    },
+    {
+      "file": "av/video/codeccontext.pyd",
+      "wheel_sha256": "b7216176e1fc7014f62f85af34c3d879a9037462980cfeb843b966c218231c5d",
+      "installed_sha256": "b7216176e1fc7014f62f85af34c3d879a9037462980cfeb843b966c218231c5d",
+      "matches": true
+    },
+    {
+      "file": "av/video/format.pyd",
+      "wheel_sha256": "e700da2b012b04bdfa0111c6515b04ef6d729db7df2bd01d95e1e36093b585d8",
+      "installed_sha256": "e700da2b012b04bdfa0111c6515b04ef6d729db7df2bd01d95e1e36093b585d8",
+      "matches": true
+    },
+    {
+      "file": "av/video/frame.pyd",
+      "wheel_sha256": "795cbc8fb5ab47eef644128f184151fb6fe3115b449f732bb6fa81befb231ad1",
+      "installed_sha256": "795cbc8fb5ab47eef644128f184151fb6fe3115b449f732bb6fa81befb231ad1",
+      "matches": true
+    },
+    {
+      "file": "av/video/plane.pyd",
+      "wheel_sha256": "4f75d521534967de75f62acefe50b53dd58442152cf186c3e770186340301c66",
+      "installed_sha256": "4f75d521534967de75f62acefe50b53dd58442152cf186c3e770186340301c66",
+      "matches": true
+    },
+    {
+      "file": "av/video/reformatter.pyd",
+      "wheel_sha256": "c432512fd625317df6f6c32ec65ed8dcdac9ed5f48b262e8fa5dc627f1a2b129",
+      "installed_sha256": "c432512fd625317df6f6c32ec65ed8dcdac9ed5f48b262e8fa5dc627f1a2b129",
+      "matches": true
+    },
+    {
+      "file": "av/video/stream.pyd",
+      "wheel_sha256": "668a6af479595e8466bb1c9f8b74a845ae1b9a209baef7a07fed6548e46fa435",
+      "installed_sha256": "668a6af479595e8466bb1c9f8b74a845ae1b9a209baef7a07fed6548e46fa435",
+      "matches": true
+    },
+    {
+      "file": "av.libs/avcodec-62-984de33114b7fa384296817dec999c9d.dll",
+      "wheel_sha256": "777704d8914bb99e5d78f3a0e7424031b5376621f2e7c60e83b84e77fcc7e2d7",
+      "installed_sha256": "777704d8914bb99e5d78f3a0e7424031b5376621f2e7c60e83b84e77fcc7e2d7",
+      "matches": true
+    },
+    {
+      "file": "av.libs/avdevice-62-bf7a3ffbb6a4b577f24a39ea98a958d5.dll",
+      "wheel_sha256": "f97c1c7539fddbf5d713c0904bb4340f9000705bdb2d950338f6b39dba20cb3a",
+      "installed_sha256": "f97c1c7539fddbf5d713c0904bb4340f9000705bdb2d950338f6b39dba20cb3a",
+      "matches": true
+    },
+    {
+      "file": "av.libs/avfilter-11-aef80fc767dc77e0319469b5bdcdf998.dll",
+      "wheel_sha256": "26e5bd7b01ad8874db7842c03f4ee0fa1466f1192f2f245c1cdccc8acb81ebd2",
+      "installed_sha256": "26e5bd7b01ad8874db7842c03f4ee0fa1466f1192f2f245c1cdccc8acb81ebd2",
+      "matches": true
+    },
+    {
+      "file": "av.libs/avformat-62-b6d6bb16ff0b7753371e2d0b285c9dc0.dll",
+      "wheel_sha256": "a3494c5304c387518e0d5136ed9bf5e5fc1a3b227ce3f380357149ee09717ff2",
+      "installed_sha256": "a3494c5304c387518e0d5136ed9bf5e5fc1a3b227ce3f380357149ee09717ff2",
+      "matches": true
+    },
+    {
+      "file": "av.libs/avutil-60-cc1777f859dcfd98b8019bdf459e774e.dll",
+      "wheel_sha256": "ff4aae43357698825fa5392764d3b680e36c1846b75677bdbf313d8c141ece6d",
+      "installed_sha256": "ff4aae43357698825fa5392764d3b680e36c1846b75677bdbf313d8c141ece6d",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libdav1d-959ebc1340f7dfcbcf8e299a26281738.dll",
+      "wheel_sha256": "959ebc1340f7dfcbcf8e299a26281738d73b53c2da0a3ceb1a1df80ac0c41b4b",
+      "installed_sha256": "959ebc1340f7dfcbcf8e299a26281738d73b53c2da0a3ceb1a1df80ac0c41b4b",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libgcc_s_seh-1-4c0a762e4178b574f72d1ef1f8bb5fc9.dll",
+      "wheel_sha256": "99a25df00a49a5e1ff131533416faa8d4686dd09a9a800633bc56ce93f69b5a6",
+      "installed_sha256": "99a25df00a49a5e1ff131533416faa8d4686dd09a9a800633bc56ce93f69b5a6",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libiconv-2-6ce5f4ff92ada49d6f23a8e413455502.dll",
+      "wheel_sha256": "6ce5f4ff92ada49d6f23a8e4134555028a60cbf22ac4bb5ac78b12a2727676ec",
+      "installed_sha256": "6ce5f4ff92ada49d6f23a8e4134555028a60cbf22ac4bb5ac78b12a2727676ec",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libmp3lame-0-da02696cc34a9bbc1d1d4f67a85cfbef.dll",
+      "wheel_sha256": "da02696cc34a9bbc1d1d4f67a85cfbef40a699da443aadb03551d960d2909ea7",
+      "installed_sha256": "da02696cc34a9bbc1d1d4f67a85cfbef40a699da443aadb03551d960d2909ea7",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libopencore-amrnb-0-b8933128305cd084d40426d0d2c0d9ef.dll",
+      "wheel_sha256": "b8933128305cd084d40426d0d2c0d9ef8c9a52b10a383aac7ec24fed03f499ad",
+      "installed_sha256": "b8933128305cd084d40426d0d2c0d9ef8c9a52b10a383aac7ec24fed03f499ad",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libopencore-amrwb-0-49da3acfc50704f92538d74aca03c3b8.dll",
+      "wheel_sha256": "49da3acfc50704f92538d74aca03c3b838195ae4de88be98667e869c2aba0477",
+      "installed_sha256": "49da3acfc50704f92538d74aca03c3b838195ae4de88be98667e869c2aba0477",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libopus-0-4369edc456631a3cc933d7918747e5d2.dll",
+      "wheel_sha256": "4369edc456631a3cc933d7918747e5d2d111056dbc8a85b01330b5a53c062d44",
+      "installed_sha256": "4369edc456631a3cc933d7918747e5d2d111056dbc8a85b01330b5a53c062d44",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libsharpyuv-8b869e30854bf3db317a2a93d0782c3d.dll",
+      "wheel_sha256": "8b869e30854bf3db317a2a93d0782c3df2e9a03d1360320815257f0cbd306c63",
+      "installed_sha256": "8b869e30854bf3db317a2a93d0782c3df2e9a03d1360320815257f0cbd306c63",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libstdc++-6-2d5c346d47ad531ef9f5185db0e8cef3.dll",
+      "wheel_sha256": "80c66b5220c554aa61b72cce0e9322547d111f81179792dde4d9a645255d0e5a",
+      "installed_sha256": "80c66b5220c554aa61b72cce0e9322547d111f81179792dde4d9a645255d0e5a",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libSvtAv1Enc-c4dd99c98ddcdb013e820dbd68a30e26.dll",
+      "wheel_sha256": "c4dd99c98ddcdb013e820dbd68a30e26472894f1d788e2862376e0404542f045",
+      "installed_sha256": "c4dd99c98ddcdb013e820dbd68a30e26472894f1d788e2862376e0404542f045",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libvpl-969a52d626b0390fc34f6a4fb0b08d7e.dll",
+      "wheel_sha256": "96a2ee0b9d4645791485f0f897fd4ea4d77f324e11918dbc10466fc949f7dca4",
+      "installed_sha256": "96a2ee0b9d4645791485f0f897fd4ea4d77f324e11918dbc10466fc949f7dca4",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libvpx-1-d869f8b2cb42d58b35545ffbfb0f7509.dll",
+      "wheel_sha256": "e0be857ba4f86709addb42c5e81fef2f565faf52c13fdb982f393ff74d92a0ca",
+      "installed_sha256": "e0be857ba4f86709addb42c5e81fef2f565faf52c13fdb982f393ff74d92a0ca",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libwebp-4bf4e57964c7a01c09ce39470d6b67ca.dll",
+      "wheel_sha256": "5f044e8cf8d0347fdd4d5fff197a64c20b9e2356ee1dd84c11a19638fd9901eb",
+      "installed_sha256": "5f044e8cf8d0347fdd4d5fff197a64c20b9e2356ee1dd84c11a19638fd9901eb",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libwebpmux-9cf6581f8709616d9591befbb1a2264b.dll",
+      "wheel_sha256": "8394a4928195acdde4d7a5c3cc1f11b581890d061ca4b25ac35c8745376d06ae",
+      "installed_sha256": "8394a4928195acdde4d7a5c3cc1f11b581890d061ca4b25ac35c8745376d06ae",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libwinpthread-1-02332fab016bf884a2a7a7b2ece22ffe.dll",
+      "wheel_sha256": "02332fab016bf884a2a7a7b2ece22ffe1dea58d56609f913026c22697dd950bc",
+      "installed_sha256": "02332fab016bf884a2a7a7b2ece22ffe1dea58d56609f913026c22697dd950bc",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libx264-165-f3a909470ddc2d85ed21eda3d0fb7954.dll",
+      "wheel_sha256": "f3a909470ddc2d85ed21eda3d0fb795404382727c59efa502e3b71cb5ef1aebc",
+      "installed_sha256": "f3a909470ddc2d85ed21eda3d0fb795404382727c59efa502e3b71cb5ef1aebc",
+      "matches": true
+    },
+    {
+      "file": "av.libs/libx265-efe48a158520a59ef99c0a0b3eb835ae.dll",
+      "wheel_sha256": "57b1a6cad779aa841985cbdc22539802dd0c15f5832f1783bf38e72e09929f60",
+      "installed_sha256": "57b1a6cad779aa841985cbdc22539802dd0c15f5832f1783bf38e72e09929f60",
+      "matches": true
+    },
+    {
+      "file": "av.libs/swresample-6-0158536d5c4197d7d623445553ce9472.dll",
+      "wheel_sha256": "44b6c43045b783970832cd5cac9b3a7250a79476ca34cf90c98f02428749c8b0",
+      "installed_sha256": "44b6c43045b783970832cd5cac9b3a7250a79476ca34cf90c98f02428749c8b0",
+      "matches": true
+    },
+    {
+      "file": "av.libs/swscale-9-0c9886c118598c54e159ef2267ff99f3.dll",
+      "wheel_sha256": "134b9ba046e46a4391a63d391635a0fc2ba12769295ffc0ffd9b2e78f1376472",
+      "installed_sha256": "134b9ba046e46a4391a63d391635a0fc2ba12769295ffc0ffd9b2e78f1376472",
+      "matches": true
+    },
+    {
+      "file": "av.libs/zlib1-79e0c4f9db71cb511398c504b832d395.dll",
+      "wheel_sha256": "79e0c4f9db71cb511398c504b832d395ba0fdee530f98efd1f861dd96de2ceb2",
+      "installed_sha256": "79e0c4f9db71cb511398c504b832d395ba0fdee530f98efd1f861dd96de2ceb2",
+      "matches": true
+    }
+  ],
+  "all_native_files_match_official_wheel": true,
+  "repair_tool": "delvewheel 1.13.0, source archive captured",
+  "msys_sources": [
+    "mingw-w64-gcc-16.1.0-5.src.tar.zst",
+    "mingw-w64-libiconv-1.19-1.src.tar.zst",
+    "mingw-w64-zlib-1.3.2-2.src.tar.zst",
+    "mingw-w64-winpthreads-14.0.0.r98.g19f5121a2-1.src.tar.zst"
+  ],
+  "limitations": [
+    "No bit-identical rebuild was performed. MSYS DLL executable sections match official packages; whole-file hashes differ as expected after strip and delvewheel repair.",
+    "Two adjacent winpthreads package revisions have matching executable sections; both source snapshots will be preserved. Winpthreads is MIT AND BSD-3-Clause-Clear, not LGPL."
+  ]
+}

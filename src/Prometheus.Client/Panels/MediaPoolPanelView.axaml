@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="Prometheus.Client.Panels.MediaPoolPanelView">
+    <Grid Name="RootGrid" RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" Background="#000000">
+        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Margin="6,5,6,3">
+            <Button Name="AddButton" Grid.Column="0" Content="+ Añadir" Height="27" Padding="7,2" ToolTip.Tip="Importar o crear medios" />
+            <TextBox Name="SearchBox" Grid.Column="1" Watermark="Buscar medios…" MinWidth="0" Height="27" Margin="5,0,0,0" />
+            <Button Name="FilterButton" Grid.Column="2" Content="Todos ▾" Height="27" Padding="6,0" Margin="5,0,0,0" ToolTip.Tip="Filtrar medios" />
+            <Button Name="SearchButton" Grid.Column="3" Content="⌕" Width="27" Height="27" IsVisible="False" ToolTip.Tip="Buscar medios" />
+        </Grid>
+        <TextBox Name="ExpandedSearchBox" Grid.Row="1" Watermark="Buscar medios…" IsVisible="False" Margin="6,0,6,4" Height="27" />
+        <Grid Grid.Row="2" RowDefinitions="Auto,2" Margin="6,0,6,2">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto,Auto">
+                <ScrollViewer Name="FolderTabScroll" Grid.Column="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                    <StackPanel Name="FolderBar" Orientation="Horizontal" Spacing="0" />
+                </ScrollViewer>
+                <Button Name="AddFolderTabButton" Grid.Column="1" Content="+" Padding="0" Width="26" Height="30" Margin="3,0,0,0" ToolTip.Tip="Nueva carpeta" />
+                <Button Name="PreviousFolderButton" Grid.Column="3" Content="‹" Padding="0" Width="24" Height="30" IsVisible="False" ToolTip.Tip="Carpetas anteriores" />
+                <Button Name="NextFolderButton" Grid.Column="4" Content="›" Padding="0" Width="24" Height="30" IsVisible="False" ToolTip.Tip="Carpetas siguientes" />
+            </Grid>
+            <Border Grid.Row="1" Background="#4A4A4A" />
+        </Grid>
+        <Grid Name="MediaListHeader" Grid.Row="3" ColumnDefinitions="*,80" Height="27" Margin="6,0,6,0"
+              Background="#101010" IsVisible="True">
+            <TextBlock Name="MediaHeadName" Grid.Column="0" Text="Nombre" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="#BEBEBE" FontSize="10" />
+            <TextBlock Name="MediaHeadOrigin" Grid.Column="1" Text="Creador / origen" IsVisible="False" VerticalAlignment="Center" Foreground="#BEBEBE" FontSize="10" />
+            <TextBlock Name="MediaHeadDuration" Grid.Column="1" Text="Duración" VerticalAlignment="Center" Foreground="#BEBEBE" FontSize="10" />
+            <TextBlock Name="MediaHeadType" Grid.Column="3" Text="Tipo" IsVisible="False" VerticalAlignment="Center" Foreground="#BEBEBE" FontSize="10" />
+        </Grid>
+        <ScrollViewer Grid.Row="4" DragDrop.AllowDrop="True" Name="MediaScroll" Background="#000000" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <Canvas Name="MediaCanvas" Background="#000000" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        </ScrollViewer>
+        <Border Name="LinkShelfOverlay" Grid.Row="4" IsVisible="False" Width="440" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                Background="#080808" BorderBrush="#B56A00" BorderThickness="0,1,1,1" CornerRadius="0,4,4,0">
+            <ContentControl Name="LinkShelfHost" />
+        </Border>
+        <Border Grid.Row="5" Background="#000000" BorderBrush="#282828" BorderThickness="0,1,0,0" Padding="6,4">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                <Button Name="LinkShelfButton" Grid.Column="0" Content="Enlaces" Height="25" Padding="6,0" ToolTip.Tip="Mostrar u ocultar la Bandeja de enlaces" />
+                <Button Name="ViewButton" Grid.Column="1" Content="Vista ▾" Height="25" Padding="6,0" Margin="5,0,0,0" ToolTip.Tip="Vista y tamaño" />
+                <Button Name="MoreButton" Grid.Column="2" Content="⋯" Width="27" Height="25" Margin="5,0,0,0" ToolTip.Tip="Orden y opciones de medios" />
+                <TextBlock Name="CountLabel" Grid.Column="4" VerticalAlignment="Center" Foreground="#888888" FontSize="10" Margin="3,0,0,0" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

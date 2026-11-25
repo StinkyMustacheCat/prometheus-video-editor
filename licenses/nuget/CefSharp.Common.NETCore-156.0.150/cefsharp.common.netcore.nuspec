@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="5.0.0">
+    <id>CefSharp.Common.NETCore</id>
+    <version>156.0.150</version>
+    <authors>The CefSharp Authors</authors>
+    <owners>The CefSharp Authors</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <projectUrl>https://github.com/cefsharp/CefSharp</projectUrl>
+    <description>The CefSharp Chromium-based browser component ('Core' and common 'Element' components, needed by both WPF, WinForms and OffScreen implementations).</description>
+    <copyright>Copyright © The CefSharp Authors</copyright>
+    <tags>chrome browser chromium-embedded</tags>
+    <repository type="git" url="https://github.com/cefsharp/CefSharp.git" branch="cefsharp/156" commit="f4cd42eb4043d67a4a8153a4c6b66a315a2da0b3" />
+    <dependencies>
+      <group targetFramework=".NETFramework6.0">
+        <dependency id="chromiumembeddedframework.runtime" version="[156.0.15]" include="Runtime,Native,Build,BuildTransitive" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

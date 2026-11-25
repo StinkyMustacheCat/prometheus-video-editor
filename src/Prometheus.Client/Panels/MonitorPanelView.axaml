@@ -1,0 +1,99 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Prometheus.Client.Panels.MonitorPanelView">
+    <Grid RowDefinitions="Auto,*,Auto" Background="{StaticResource BackgroundPureBlackBrush}">
+        <!-- BARRA SUPERIOR DE PARÁMETROS DEL MONITOR -->
+        <Border Name="MonitorTopBar" Grid.Row="0" Background="{StaticResource BackgroundPanelHeaderBrush}" Padding="8,4" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="*,Auto,Auto">
+                <!-- SELECTOR DE CALIDAD -->
+                <StackPanel Grid.Column="0" IsVisible="False">
+                    <ComboBox Name="PreviewQualityBox" SelectedIndex="2">
+                        <ComboBoxItem Content="Baja (320 px)" />
+                        <ComboBoxItem Content="Media (640 px)" />
+                        <ComboBoxItem Content="Alta (original)" />
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- SELECTOR DE FPS -->
+                <StackPanel Grid.Column="0" IsVisible="False">
+                    <ComboBox Name="PreviewFpsBox" SelectedIndex="2">
+                        <ComboBoxItem Content="15 FPS" />
+                        <ComboBoxItem Content="30 FPS" />
+                        <ComboBoxItem Content="60 FPS" />
+                    </ComboBox>
+                </StackPanel>
+
+                <ToggleButton Grid.Column="1" Name="AnchorGizmoToggle" IsChecked="False" Height="24" Padding="8,2" FontSize="10" Margin="0,0,7,0" Background="{StaticResource BackgroundSurfaceSecondaryBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" ToolTip.Tip="Mostrar y mover el anclaje; Ctrl lo muestra temporalmente">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <TextBlock Text="⊕" FontSize="13" />
+                        <TextBlock Text="Anclaje" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" />
+                    </StackPanel>
+                </ToggleButton>
+
+                <!-- CONMUTADOR DE GIZMO -->
+                <ToggleButton Grid.Column="2" Name="TransformGizmoToggle" IsChecked="False" Height="24" Padding="8,2" FontSize="10" Background="{StaticResource BackgroundSurfaceSecondaryBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" ToolTip.Tip="Mover y escalar el medio seleccionado en la previsualización">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <TextBlock Text="◇" FontSize="13" />
+                        <TextBlock Text="Transformar" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" />
+                    </StackPanel>
+                </ToggleButton>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Name="ViewportHost" Background="#040404" ClipToBounds="True">
+            <Border Name="SequenceFrame" Background="Black" ClipToBounds="True"
+                    HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid>
+                    <Image Name="PreviewImage" Stretch="Uniform" />
+                    <Grid Name="NestedLayerHost" IsVisible="False" ClipToBounds="True" />
+                    <Canvas Name="SamMaskCanvas" ClipToBounds="True" IsHitTestVisible="False" IsVisible="False">
+                        <Image Name="SamMaskOverlay" Stretch="Fill" IsHitTestVisible="False" />
+                    </Canvas>
+                    <Canvas Name="ShapeDraftCanvas" ClipToBounds="True" IsHitTestVisible="False" IsVisible="False" />
+                    <Canvas Name="TransformOverlay" IsVisible="False" Background="Transparent">
+                        <Rectangle Name="TransformOutline" Stroke="#FFAC45" StrokeThickness="1.5" StrokeDashArray="4,3" IsHitTestVisible="False" />
+                        <Line Name="TransformRotateStem" Stroke="#FFAC45" StrokeThickness="1" IsHitTestVisible="False" />
+                        <Border Name="TransformHandleNW" Width="8" Height="8" Background="#FFAC45" IsHitTestVisible="False" />
+                        <Border Name="TransformHandleNE" Width="8" Height="8" Background="#FFAC45" IsHitTestVisible="False" />
+                        <Border Name="TransformHandleSW" Width="8" Height="8" Background="#FFAC45" IsHitTestVisible="False" />
+                        <Border Name="TransformHandleSE" Width="8" Height="8" Background="#FFAC45" IsHitTestVisible="False" />
+                        <Border Name="TransformHandleN" Width="8" Height="8" Background="#FFAC45" IsHitTestVisible="False" />
+                        <Border Name="TransformHandleS" Width="8" Height="8" Background="#FFAC45" IsHitTestVisible="False" />
+                        <Border Name="TransformHandleW" Width="8" Height="8" Background="#FFAC45" IsHitTestVisible="False" />
+                        <Border Name="TransformHandleE" Width="8" Height="8" Background="#FFAC45" IsHitTestVisible="False" />
+                        <Border Name="TransformRotateHandle" Width="12" Height="12" CornerRadius="6" Background="#FFAC45" BorderBrush="Black" BorderThickness="2" IsHitTestVisible="False" />
+                        <Border Name="TransformAnchorHandle" Width="14" Height="14" CornerRadius="7" Background="#FF8A00" BorderBrush="Black" BorderThickness="2" IsHitTestVisible="False" IsVisible="False" />
+                    </Canvas>
+                    <Canvas ClipToBounds="True" IsHitTestVisible="False">
+                        <Rectangle Name="TextDraftRectangle" IsVisible="False" Stroke="#FFAC45"
+                                   StrokeThickness="1.5" StrokeDashArray="4,3" Fill="#18FFAC45" />
+                    </Canvas>
+                </Grid>
+            </Border>
+            <TextBlock Name="PreviewMessage" Text="Importa un medio y añádelo a la línea de tiempo"
+                       Foreground="#888888" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Border Name="ChromaPickHint" IsVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Margin="12" Background="#E8101010" BorderBrush="#FF8A00" BorderThickness="1"
+                    CornerRadius="4" Padding="9,5" IsHitTestVisible="False">
+                <TextBlock Text="Gotero activo · clic: color · Ctrl+clic: promedio 5×5 · Esc: cancelar"
+                           FontSize="10" Foreground="White" />
+            </Border>
+        </Grid>
+
+        <!-- CONTROLES DE VISTA Y CAPTURA -->
+        <Border Name="MonitorBottomBar" Grid.Row="2" Background="{StaticResource BackgroundPanelHeaderBrush}" Padding="8,6" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,1,0,0">
+            <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Button Name="SamApplyButton" Classes="nle-btn" Content="Aplicar máscara" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Guardar la máscara de este fotograma en el proyecto; se verá también al exportarlo." />
+                    <Button Name="SamTrackButton" Classes="nle-btn" Content="Seguir movimiento" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Seguir la máscara de este fotograma por el clip en segundo plano." />
+                    <Button Name="SamCancelTrackButton" Classes="nle-btn" Content="Cancelar SAM" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Detener el seguimiento de movimiento sin cambiar el proyecto." />
+                    <Button Name="SamRemoveButton" Classes="nle-btn" Content="Quitar máscara" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Quitar la máscara guardada en este fotograma. Se puede deshacer." />
+                    <Button Name="SamRemoveTrackButton" Classes="nle-btn" Content="Quitar seguimiento" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Quitar el seguimiento del clip; se puede deshacer." />
+                    <Button Name="CaptureFrameButton" Classes="nle-btn" Content="Capturar ▾" Height="24" Margin="0,0,6,0" ToolTip.Tip="Acciones y ajustes de captura del fotograma" />
+                    <Button Name="MonitorFitButton" Classes="nle-btn" Content="Ajustar" Height="24" Margin="0,0,6,0" ToolTip.Tip="Ajustar el montaje al monitor" />
+                    <TextBlock Text="Zoom:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                    <Slider Name="MonitorZoomSlider" Minimum="10" Maximum="400" Value="100" Width="88" VerticalAlignment="Center" ToolTip.Tip="Zoom del monitor: 10–400 %. Ctrl + rueda acerca sobre el cursor; botón central desplaza." />
+                    <TextBlock Name="MonitorZoomValue" Text="Fit" MinWidth="48" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

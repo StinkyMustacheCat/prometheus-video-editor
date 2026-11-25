@@ -1,0 +1,396 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Prometheus.Client.Panels"
+             x:Class="Prometheus.Client.Panels.PropertiesPanelView">
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Background="{StaticResource BackgroundPureBlackBrush}">
+        <!-- HEADER DEL INSPECTOR -->
+        <Border Grid.Row="0" Background="{StaticResource BackgroundPanelHeaderBrush}" Padding="10,6" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,0,1">
+            <TextBlock Text="CONTROLES DE MEDIO" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" />
+        </Border>
+
+        <Border Name="SummaryCapsule" Grid.Row="1" Background="#080808" Padding="10,5" IsVisible="False">
+            <StackPanel Spacing="1">
+                <TextBlock Name="SummaryName" Text="Selecciona un medio" FontSize="11" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                <TextBlock Name="SummaryDetails" FontSize="9" Foreground="{StaticResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+        </Border>
+        <Grid Name="InspectorTabsHost" Grid.Row="2" RowDefinitions="Auto,2" Background="#080808" Margin="8,5,8,0">
+            <StackPanel Name="SectionTabBar" Orientation="Horizontal" Spacing="0" HorizontalAlignment="Left">
+                <Button Name="AllTab" Content="Todos" Height="29" Padding="11,0" FontSize="11" CornerRadius="9,9,0,0" BorderThickness="1,1,1,0" />
+                <Button Name="BasicsTab" Content="Básicos" Height="29" Padding="11,0" FontSize="11" CornerRadius="9,9,0,0" BorderThickness="1,1,1,0" Margin="-3,0,0,0" />
+                <Button Name="VisualTab" Content="Visual" Height="29" Padding="11,0" FontSize="11" CornerRadius="9,9,0,0" BorderThickness="1,1,1,0" Margin="-3,0,0,0" />
+                <Button Name="AudioTab" Content="Audio" Height="29" Padding="11,0" FontSize="11" CornerRadius="9,9,0,0" BorderThickness="1,1,1,0" Margin="-3,0,0,0" />
+            </StackPanel>
+            <Border Grid.Row="1" Background="#5A5A5A" />
+        </Grid>
+
+        <ScrollViewer Name="TransitionControls" Grid.Row="3" Padding="10" IsVisible="False">
+            <StackPanel Spacing="8">
+            <TextBlock Text="Tipo" FontSize="11" />
+            <ComboBox Name="TransitionKind" HorizontalAlignment="Stretch" />
+            <TextBlock Name="TransitionDurationLabel" Text="Duración en fotogramas" FontSize="11" />
+            <NumericUpDown Name="TransitionDuration" Minimum="2" Increment="1" FormatString="0" />
+            <TextBlock Name="TransitionHint" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" TextWrapping="Wrap" />
+            <Button Name="TransitionApply" Classes="nle-accent" Content="Aplicar ajuste" />
+            <StackPanel Name="TransitionParameterRows" Spacing="8" />
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Name="InspectorScroll" Grid.Row="3" Padding="10">
+            <StackPanel Name="InspectorCapsules" Spacing="5">
+                <TextBlock Name="EmptySectionText" IsVisible="False" Foreground="{StaticResource TextSecondaryBrush}" FontSize="11" Margin="4,8" />
+                <Border Name="SubtitleAnimationCapsule" Classes="capsule inspector-card" IsVisible="False">
+                    <StackPanel Spacing="7">
+                        <TextBlock Text="Animación MGT de subtítulos" Classes="capsule-title" />
+                        <local:SubtitleAnimationEditor />
+                    </StackPanel>
+                </Border>
+                <Border Name="TextCapsule" Classes="capsule inspector-card" IsVisible="False">
+                    <StackPanel Spacing="7">
+                        <TextBlock Text="Texto" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                        <TextBox Name="TextContentBox" AcceptsReturn="True" TextWrapping="Wrap" Height="78" MaxLength="2000" Watermark="Texto en pantalla" FontSize="11" />
+                        <TextBlock Text="Fuente" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" />
+                        <TextBox Name="TextFontBox" FontSize="10" Height="25" Watermark="Arial" />
+                        <Grid ColumnDefinitions="70,*,38">
+                            <TextBlock Text="Tamaño" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="TextSizeSlider" Grid.Column="1" Minimum="8" Maximum="400" Value="72" />
+                            <TextBlock Name="TextSizeValue" Grid.Column="2" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="70,*">
+                            <TextBlock Text="Color" FontSize="10" VerticalAlignment="Center" />
+                            <local:ColorField Name="TextColorBox" Grid.Column="1" />
+                        </Grid>
+                        <Grid ColumnDefinitions="70,*,38">
+                            <TextBlock Text="Contorno" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="TextOutlineSlider" Grid.Column="1" Minimum="0" Maximum="16" Value="4" />
+                            <TextBlock Name="TextOutlineValue" Grid.Column="2" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="70,*">
+                            <TextBlock Text="Color borde" FontSize="10" VerticalAlignment="Center" />
+                            <local:ColorField Name="TextOutlineColorBox" Grid.Column="1" />
+                        </Grid>
+                        <Grid ColumnDefinitions="70,*,38">
+                            <TextBlock Text="Sombra" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="TextShadowSlider" Grid.Column="1" Minimum="0" Maximum="1" Value="0.35" />
+                            <TextBlock Name="TextShadowValue" Grid.Column="2" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="70,*">
+                            <TextBlock Text="Alinear" FontSize="10" VerticalAlignment="Center" />
+                            <ComboBox Name="TextAlignmentBox" Grid.Column="1" FontSize="10" Height="25" SelectedIndex="1">
+                                <ComboBoxItem Content="Izquierda" /><ComboBoxItem Content="Centro" /><ComboBoxItem Content="Derecha" />
+                            </ComboBox>
+                        </Grid>
+                        <Grid ColumnDefinitions="70,*,38">
+                            <TextBlock Text="Posición X" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="TextXSlider" Grid.Column="1" Minimum="0" Maximum="1" Value="0.5" />
+                            <TextBlock Name="TextXValue" Grid.Column="2" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="70,*,38">
+                            <TextBlock Text="Posición Y" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="TextYSlider" Grid.Column="1" Minimum="0" Maximum="1" Value="0.5" />
+                            <TextBlock Name="TextYValue" Grid.Column="2" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="70,*,38">
+                            <TextBlock Text="Ancho" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="TextWidthSlider" Grid.Column="1" Minimum="0.02" Maximum="1" Value="0.88" />
+                            <TextBlock Name="TextWidthValue" Grid.Column="2" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <TextBlock Text="Animación · ajustable luego en Fotogramas clave" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" />
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <Button Name="TextFadeInButton" Classes="nle-btn" Content="Aparecer" FontSize="10" Height="25" />
+                            <Button Name="TextFadeOutButton" Classes="nle-btn" Content="Desvanecer" FontSize="10" Height="25" />
+                            <Button Name="TextSlideInButton" Classes="nle-btn" Content="Deslizar" FontSize="10" Height="25" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Border Name="MgtParametersCapsule" Classes="capsule inspector-card" IsVisible="False">
+                    <StackPanel Spacing="7">
+                        <TextBlock Text="Parámetros MGT" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                        <TextBlock Text="Los cambios se ven en el monitor y pertenecen solo a este clip." FontSize="10" TextWrapping="Wrap" Foreground="{StaticResource TextSecondaryBrush}" />
+                        <StackPanel Name="MgtParameterRows" Spacing="7" />
+                    </StackPanel>
+                </Border>
+                <!-- CÁPSULA 1: ENCUADRE DE IMAGEN -->
+                <Border Name="FramingCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Modo de Encuadre" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                        <ComboBox Name="FramingBox" SelectedIndex="0" FontSize="10" Height="26" Padding="6,2" HorizontalAlignment="Stretch">
+                            <ComboBoxItem Content="Escalar al lienzo (Fit)" />
+                            <ComboBoxItem Content="Encajar al ancho (Width)" />
+                            <ComboBoxItem Content="Encajar a la altura (Height)" />
+                            <ComboBoxItem Content="Adaptar (Fill)" />
+                            <ComboBoxItem Content="Deformar (Stretch)" />
+                        </ComboBox>
+                    </StackPanel>
+                </Border>
+
+                <!-- CÁPSULA 2: POSICIÓN ESPACIAL (X / Y AGRUPADOS) -->
+                <Border Name="PositionCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Posición y orientación" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                            <Button Name="ResetPositionButton" Grid.Column="1" Content="↺" Width="23" Height="22" Padding="0" ToolTip.Tip="Restablecer posición y rotación" />
+                        </Grid>
+                        
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Posición X:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="PosXSlider" Grid.Column="1" Minimum="-1.0" Maximum="1.0" Value="0.0" />
+                            <TextBlock Name="PosXText" Grid.Column="2" Text="0.00" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Posición Y:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="PosYSlider" Grid.Column="1" Minimum="-1.0" Maximum="1.0" Value="0.0" />
+                            <TextBlock Name="PosYText" Grid.Column="2" Text="0.00" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,58">
+                            <TextBlock Text="Rotación:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="RotationSlider" Grid.Column="1" Minimum="-180" Maximum="180" Value="0" />
+                            <TextBox Name="RotationText" Grid.Column="2" Text="0" FontSize="10" Height="24" Padding="2,1" ToolTip.Tip="Ángulo acumulado en grados; admite varias vueltas" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Name="AnchorCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Punto de anclaje" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                            <Button Name="ResetAnchorButton" Grid.Column="1" Content="↺" Width="23" Height="22" Padding="0" ToolTip.Tip="Restablecer anclaje al centro" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Anclaje X:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="AnchorXSlider" Grid.Column="1" Minimum="0" Maximum="1" Value="0.5" />
+                            <TextBlock Name="AnchorXText" Grid.Column="2" Text="50%" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Anclaje Y:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="AnchorYSlider" Grid.Column="1" Minimum="0" Maximum="1" Value="0.5" />
+                            <TextBlock Name="AnchorYText" Grid.Column="2" Text="50%" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- CÁPSULA 3: ESCALA Y PROPORCIÓN (X / Y + BLOQUEO AGRUPADOS) -->
+                <Border Name="ScaleCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <TextBlock Text="Escala y Dimensiones" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" VerticalAlignment="Center" />
+                            <ToggleButton Name="AspectLockToggle" Grid.Column="1" IsChecked="True" ToolTip.Tip="Bloquear relación de aspecto" Height="22" Padding="8,2" FontSize="10">
+                                <TextBlock Text="Vínculo X/Y" FontSize="10" />
+                            </ToggleButton>
+                            <Button Name="ResetScaleButton" Grid.Column="2" Content="↺" Width="23" Height="22" Padding="0" Margin="5,0,0,0" ToolTip.Tip="Restablecer escala X/Y" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Escala X:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="ScaleXSlider" Grid.Column="1" Minimum="0.01" Maximum="4.00" Value="1.0" />
+                            <TextBlock Name="ScaleXText" Grid.Column="2" Text="100%" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Escala Y:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="ScaleYSlider" Grid.Column="1" Minimum="0.01" Maximum="4.00" Value="1.0" />
+                            <TextBlock Name="ScaleYText" Grid.Column="2" Text="100%" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- CÁPSULA 4: COMPOSICIÓN Y FUSIÓN (OPACIDAD + MODO FUSIÓN) -->
+                <Border Name="CompositionCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Composición y Capas" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                            <Button Name="ResetOpacityButton" Grid.Column="1" Content="↺" Width="23" Height="22" Padding="0" ToolTip.Tip="Restablecer opacidad" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Opacidad:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="OpacitySlider" Grid.Column="1" Minimum="0.0" Maximum="1.0" Value="1.0" />
+                            <TextBlock Name="OpacityText" Grid.Column="2" Text="100%" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="75,*">
+                            <TextBlock Text="Fusión:" FontSize="10" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" />
+                            <ComboBox Name="ClipBlendModeBox" Grid.Column="1" FontSize="10" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Combina el medio con las capas inferiores. En anidados, el fondo es el del grupo; los efectos de pista se aplican antes de la fusión." />
+                        </Grid>
+
+                    </StackPanel>
+                </Border>
+
+                <Border Name="MaskTargetCapsule" Classes="capsule inspector-card" IsVisible="False">
+                    <StackPanel Spacing="7">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Máscaras" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                            <Button Name="MaskAddSamButton" Grid.Column="1" Classes="nle-btn" Content="+ SAM" FontSize="10" Height="24" ToolTip.Tip="Crear otra máscara SAM independiente en este medio" />
+                        </Grid>
+                        <StackPanel Name="MaskLayerRows" Spacing="3" />
+                        <TextBox Name="MaskNameBox" Watermark="Nombre de la máscara" FontSize="10" Height="25" />
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <ComboBox Name="MaskBlendBox" FontSize="10" Height="25" ToolTip.Tip="Cómo se combina con las máscaras anteriores">
+                                <ComboBoxItem Content="Añadir" />
+                                <ComboBoxItem Content="Restar" />
+                                <ComboBoxItem Content="Intersecar" />
+                            </ComboBox>
+                            <Button Name="MaskUpButton" Grid.Column="1" Classes="nle-btn" Content="↑" Width="25" Height="25" ToolTip.Tip="Subir máscara" />
+                            <Button Name="MaskDownButton" Grid.Column="2" Classes="nle-btn" Content="↓" Width="25" Height="25" ToolTip.Tip="Bajar máscara" />
+                            <Button Name="MaskDeleteButton" Grid.Column="3" Classes="nle-btn" Content="✕" Width="25" Height="25" ToolTip.Tip="Quitar solo la máscara seleccionada" />
+                        </Grid>
+                        <StackPanel Name="MaskShapeAnimationPanel" Spacing="4" IsVisible="False">
+                            <TextBlock Name="MaskShapeKeyframeText" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" />
+                            <Grid ColumnDefinitions="*,*">
+                                <Button Name="MaskShapeAddKeyButton" Classes="nle-btn" Content="+ Clave aquí" FontSize="10" Height="25" ToolTip.Tip="Guardar la forma en la posición actual del cabezal" />
+                                <Button Name="MaskShapeRemoveKeyButton" Grid.Column="1" Classes="nle-btn" Content="Quitar clave" FontSize="10" Height="25" ToolTip.Tip="Quitar la clave de forma en esta posición" />
+                            </Grid>
+                        </StackPanel>
+                        <TextBlock Text="Aplicar máscara a" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" />
+                        <ComboBox Name="MaskTargetBox" FontSize="10" Height="26" Padding="6,2" HorizontalAlignment="Stretch"
+                                  ToolTip.Tip="Elige opacidad o un efecto de vídeo activo. La máscara limita solo el efecto elegido." />
+                        <Grid ColumnDefinitions="80,*,38">
+                            <TextBlock Text="Suavizar" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="MaskFeatherSlider" Grid.Column="1" Minimum="0" Maximum="20" Value="0" />
+                            <TextBlock Name="MaskFeatherText" Grid.Column="2" Text="0 px" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="80,*,38">
+                            <TextBlock Text="Expandir" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="MaskExpandSlider" Grid.Column="1" Minimum="-20" Maximum="20" Value="0" />
+                            <TextBlock Name="MaskExpandText" Grid.Column="2" Text="0 px" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <CheckBox Name="MaskInvertCheck" Content="Invertir máscara" FontSize="10" />
+                        <TextBlock Name="MaskStatusText" FontSize="10" TextWrapping="Wrap" Foreground="{StaticResource PrometheusOrangeBrush}" IsVisible="False" />
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Name="AppliedEffectsHint" Text="Arrastra efectos desde el panel Efectos para añadirlos a este medio" TextWrapping="Wrap" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="4,8" IsVisible="False" />
+                <StackPanel Name="VisualEffectChain" Spacing="4" />
+                <Border Name="BasicColorCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <TextBlock Text="Corrección básica" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                            <ToggleButton Name="BasicColorToggle" Grid.Column="1" Content="Activo" FontSize="10" Height="22" />
+                            <Button Name="ResetBasicColorButton" Grid.Column="2" Content="↺" Width="23" Height="22" Padding="0" Margin="5,0,0,0" ToolTip.Tip="Restablecer brillo, contraste y saturación" />
+                            <Button Name="RemoveBasicColorButton" Grid.Column="3" Content="×" Width="23" Height="22" Padding="0" Margin="5,0,0,0" ToolTip.Tip="Quitar efecto del medio" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Brillo:" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="BrightnessSlider" Grid.Column="1" Minimum="-1" Maximum="1" Value="0" />
+                            <TextBlock Name="BrightnessText" Grid.Column="2" Text="0.00" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Contraste:" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="ContrastSlider" Grid.Column="1" Minimum="0" Maximum="2" Value="1" />
+                            <TextBlock Name="ContrastText" Grid.Column="2" Text="1.00" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Saturación:" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="SaturationSlider" Grid.Column="1" Minimum="0" Maximum="3" Value="1" />
+                            <TextBlock Name="SaturationText" Grid.Column="2" Text="1.00" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Name="ExposureCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <TextBlock Text="Exposición" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                            <ToggleButton Name="ExposureToggle" Grid.Column="1" Content="Activo" FontSize="10" Height="22" />
+                            <Button Name="ResetExposureButton" Grid.Column="2" Content="↺" Width="23" Height="22" Padding="0" Margin="5,0,0,0" ToolTip.Tip="Restablecer exposición" />
+                            <Button Name="RemoveExposureButton" Grid.Column="3" Content="×" Width="23" Height="22" Padding="0" Margin="5,0,0,0" ToolTip.Tip="Quitar efecto del medio" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Pasos:" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="ExposureStopsSlider" Grid.Column="1" Minimum="-3" Maximum="3" Value="0" />
+                            <TextBlock Name="ExposureStopsText" Grid.Column="2" Text="0.00" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Negro:" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="ExposureBlackSlider" Grid.Column="1" Minimum="-0.5" Maximum="0.5" Value="0" />
+                            <TextBlock Name="ExposureBlackText" Grid.Column="2" Text="0.00" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Name="LevelsCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <TextBlock Text="Niveles" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                            <ToggleButton Name="LevelsToggle" Grid.Column="1" Content="Activo" FontSize="10" Height="22" />
+                            <Button Name="ResetLevelsButton" Grid.Column="2" Content="↺" Width="23" Height="22" Padding="0" Margin="5,0,0,0" ToolTip.Tip="Restablecer niveles" />
+                            <Button Name="RemoveLevelsButton" Grid.Column="3" Content="×" Width="23" Height="22" Padding="0" Margin="5,0,0,0" ToolTip.Tip="Quitar efecto del medio" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Negro:" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="LevelsBlackSlider" Grid.Column="1" Minimum="-0.5" Maximum="0.9" Value="0" />
+                            <TextBlock Name="LevelsBlackText" Grid.Column="2" Text="0.00" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Blanco:" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="LevelsWhiteSlider" Grid.Column="1" Minimum="0.1" Maximum="1.5" Value="1" />
+                            <TextBlock Name="LevelsWhiteText" Grid.Column="2" Text="1.00" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Gamma:" FontSize="10" VerticalAlignment="Center" />
+                            <Slider Name="LevelsGammaSlider" Grid.Column="1" Minimum="0.1" Maximum="5" Value="1" />
+                            <TextBlock Name="LevelsGammaText" Grid.Column="2" Text="1.00" FontSize="10" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Name="MonochromeCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <TextBlock Text="Blanco y negro" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                            <ToggleButton Name="MonochromeToggle" Grid.Column="1" Content="Activo" FontSize="10" Height="22" />
+                            <Button Name="RemoveMonochromeButton" Grid.Column="2" Content="×" Width="23" Height="22" Padding="0" Margin="5,0,0,0" ToolTip.Tip="Quitar efecto del medio" />
+                        </Grid>
+                        <TextBlock Text="Escala de grises" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" />
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Name="MotionEffectsHost" Spacing="10" />
+                <StackPanel Name="ColorEffectsHost" Spacing="10" />
+                <StackPanel Name="ImageEffectsHost" Spacing="10" />
+
+                <!-- CÁPSULA 5: PARÁMETROS ACÚSTICOS (GANANCIA + BALANCE) -->
+                <Border Name="AudioCapsule" Classes="capsule inspector-card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Parámetros de Audio" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Ganancia:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="GainSlider" Grid.Column="1" Minimum="-60.0" Maximum="12.0" Value="0.0" />
+                            <TextBlock Name="GainText" Grid.Column="2" Text="0 dB" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="75,*,40">
+                            <TextBlock Text="Balance:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Name="BalanceSlider" Grid.Column="1" Minimum="-1.0" Maximum="1.0" Value="0.0" />
+                            <TextBlock Name="BalanceText" Grid.Column="2" Text="C" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <StackPanel Name="AudioEffectsHost" Spacing="10" />
+                <StackPanel Name="AudioEffectChain" Spacing="4" />
+            </StackPanel>
+        </ScrollViewer>
+        <Border Name="InspectorKeyframeHost" Grid.Row="4" Background="#101010" BorderBrush="#333333" BorderThickness="0,1,0,0">
+            <StackPanel>
+                <Button Name="KeyframeDrawerToggle" Content="Fotogramas clave  ⌃" Height="27" Padding="10,2"
+                        HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" FontSize="10" />
+                <Grid Name="KeyframeDrawerBody" RowDefinitions="Auto,Auto,Auto,*" Height="170">
+                    <TextBlock Name="KeyframeTimeLabel" Grid.Row="0" Margin="9,3" FontSize="10"
+                               Foreground="{StaticResource TextSecondaryBrush}" Text="Selecciona un medio" />
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="4" Margin="8,0,8,0">
+                        <Button Name="KeyframeZoomOut" Content="−" Height="22" Width="25" Padding="0" ToolTip.Tip="Alejar claves" />
+                        <Button Name="KeyframeZoomIn" Content="+" Height="22" Width="25" Padding="0" ToolTip.Tip="Acercar claves" />
+                        <Button Name="KeyframeFit" Content="Encuadrar claves" Height="22" FontSize="10" Padding="7,0" />
+                    </StackPanel>
+                    <Slider Name="KeyframePan" Grid.Row="2" Minimum="0" Maximum="1" Margin="8,1"
+                            ToolTip.Tip="Desplazar la vista de fotogramas clave" />
+                    <ScrollViewer Name="KeyframeScroll" Grid.Row="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Name="KeyframeRows" Spacing="2" Margin="7,0,7,5" />
+                    </ScrollViewer>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

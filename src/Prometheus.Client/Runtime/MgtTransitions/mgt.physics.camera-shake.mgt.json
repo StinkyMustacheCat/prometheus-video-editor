@@ -1,0 +1,68 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.physics.camera-shake",
+  "version": 2,
+  "name": "Handheld Camera Shake & Whip Impact",
+  "recommended": {
+    "duration": 0.75
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "joltPower",
+      "type": "number",
+      "default": 1.35,
+      "min": 0.2,
+      "max": 2.5,
+      "step": 0.05,
+      "label": "Fuerza del Empujón de Cámara"
+    },
+    {
+      "id": "dutchTilt",
+      "type": "number",
+      "default": 16,
+      "min": 0,
+      "max": 45,
+      "step": 1,
+      "label": "Torsión de Muñeca (Dutch Roll °)"
+    },
+    {
+      "id": "handheldCadence",
+      "type": "number",
+      "default": 11.0,
+      "min": 4.0,
+      "max": 24.0,
+      "step": 0.5,
+      "label": "Frecuencia de Pulso Orgánico"
+    },
+    {
+      "id": "shutterSamples",
+      "type": "number",
+      "default": 7,
+      "min": 1,
+      "max": 13,
+      "step": 2,
+      "label": "Muestras de Obturador (Motion Blur)"
+    },
+    {
+      "id": "lensVignette",
+      "type": "number",
+      "default": 0.55,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Viñeta Óptica de Impacto"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const jolt = params.joltPower !== undefined ? Number(params.joltPower) : 1.35; const tiltRad = ((params.dutchTilt !== undefined ? Number(params.dutchTilt) : 16) * Math.PI) / 180; const cadence = params.handheldCadence !== undefined ? Number(params.handheldCadence) : 11.0; const samples = Math.max(1, Math.round(params.shutterSamples !== undefined ? Number(params.shutterSamples) : 7)); const vig = params.lensVignette !== undefined ? Number(params.lensVignette) : 0.55; const cx = w * 0.5; const cy = h * 0.5; const dirX = ctx.random(7) > 0.5 ? 1 : -1; const dirY = ctx.random(13) > 0.5 ? 1 : -1; const evalRig = (t) => { const tc = Math.max(0, Math.min(1, t)); const cut = 0.44; let env = 0; let kick = 0; if (tc < cut) { const u = tc / cut; env = Math.pow(u, 2.8); kick = Math.pow(u, 3.6); } else { const u = (tc - cut) / (1 - cut); env = Math.exp(-4.2 * u) * (1 - u); kick = Math.cos(u * cadence * 1.45) * env; } const swayX = (Math.sin(tc * cadence) * 0.55 + Math.cos(tc * cadence * 2.3 + 1.2) * 0.45) * env; const swayY = (Math.cos(tc * cadence * 1.3) * 0.6 + Math.sin(tc * cadence * 2.7 + 0.7) * 0.4) * env; const tx = (dirX * kick * 0.24 + swayX * 0.12) * w * jolt; const ty = (dirY * kick * 0.18 + swayY * 0.11) * h * jolt; const rot = (dirX * kick * 0.75 + swayX * 0.45) * tiltRad * Math.min(1.6, jolt); const sc = 1 + env * 0.22 * jolt; return { tx, ty, rot, sc, env }; }; const drawMirrored = (img, state, alpha) => { if (alpha <= 0.002) return; g.save(); g.globalAlpha = Math.max(0, Math.min(1, alpha)); g.translate(cx + state.tx, cy + state.ty); g.rotate(state.rot); g.scale(state.sc, state.sc); for (let ox = -1; ox <= 1; ox++) { for (let oy = -1; oy <= 1; oy++) { if (ox !== 0 && oy !== 0 && state.sc >= 1.15) continue; g.save(); g.translate(ox * w, oy * h); g.scale(ox !== 0 ? -1 : 1, oy !== 0 ? -1 : 1); g.drawImage(img, -cx, -cy, w, h); g.restore(); } } g.restore(); }; const centerState = evalRig(p); const shutterSpan = 0.045 * centerState.env * jolt; const cutStart = 0.38; const cutEnd = 0.50; const blendB = p <= cutStart ? 0 : (p >= cutEnd ? 1 : (p - cutStart) / (cutEnd - cutStart)); for (let i = 0; i < samples; i++) { const norm = samples > 1 ? (i / (samples - 1)) - 0.5 : 0; const sampleT = p + norm * shutterSpan; const st = evalRig(sampleT); const weight = i === 0 ? 1.0 : (1.5 / samples); if (blendB < 1) { drawMirrored(ctx.inputA, st, weight * (1 - blendB)); } if (blendB > 0) { drawMirrored(ctx.inputB, st, weight * blendB); } } if (vig > 0 && centerState.env > 0.05) { const innerR = Math.min(w, h) * (0.35 - centerState.env * 0.12); const outerR = Math.hypot(w, h) * 0.55; const grad = g.createRadialGradient(cx, cy, Math.max(10, innerR), cx, cy, outerR); grad.addColorStop(0, 'rgba(0,0,0,0)'); grad.addColorStop(1, 'rgba(0,0,0,' + Math.min(0.85, centerState.env * vig * 0.9) + ')'); g.save(); g.fillStyle = grad; g.fillRect(0, 0, w, h); g.restore(); }",
+  "renderProfile": "gpu-canvas2d-v1"
+}

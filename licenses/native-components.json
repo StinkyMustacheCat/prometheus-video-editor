@@ -1,0 +1,1407 @@
+{
+  "release": "3.19.9",
+  "components": [
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-aom",
+      "version": "3.15.3-1",
+      "license": [
+        "spdx:BSD-2-Clause"
+      ],
+      "source_archive": "mingw-w64-aom-3.15.3-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-aom",
+      "archive_sha256": "58707d672f7ee2dfe259b4cc1e1fc4d1d00f7fbda659e01e76fb404ccc65b4c9"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-brotli",
+      "version": "1.2.1-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-brotli-1.2.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-brotli",
+      "archive_sha256": "3163fae24021624b49d3372a6a7fe05c0f3e01b301e65fcbcb3a95557019fb2d"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-bzip2",
+      "version": "1.0.8-4",
+      "license": [
+        "custom"
+      ],
+      "source_archive": "mingw-w64-bzip2-1.0.8-4.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-bzip2",
+      "archive_sha256": "123768f30ae14ba654a6feb70f8526146a331bc85f831a91a549ffb3f6cbffc7"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-ca-certificates",
+      "version": "20260816-6",
+      "license": [
+        "MPL",
+        "GPL"
+      ],
+      "source_archive": "mingw-w64-ca-certificates-20260816-6.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-ca-certificates",
+      "archive_sha256": "521b693e46e70726697fb500c4ce8b47d1b219fdd7248aba0f6150caf4b499a2"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-cairo",
+      "version": "1.18.6-2",
+      "license": [
+        "spdx:LGPL-2.1-or-later OR MPL-1.1"
+      ],
+      "source_archive": "mingw-w64-cairo-1.18.6-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-cairo",
+      "archive_sha256": "937a911b5efd6388b4ed8e6e268bbc4985db2f897648fb60de57ae4bc7fac7d6"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-cc-libs",
+      "version": "16.2.0-7",
+      "license": [
+        "spdx:GPL-3.0-or-later WITH GCC-exception-3.1 AND GFDL-1.3-or-later"
+      ],
+      "source_archive": "mingw-w64-gcc-16.2.0-7.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-cc-libs",
+      "archive_sha256": "3d9d4492e35157087ab0db79b2aa0610909d5f6e18bfdc1035dd4a24544cc577"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-curl",
+      "version": "8.23.0-3",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-curl-8.23.0-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-curl",
+      "archive_sha256": "bae0baa3e2f0e173ed14b9c7679cee1e327cf4540d8a89d8f7134a8456427b2a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-dav1d",
+      "version": "1.5.5-1",
+      "license": [
+        "spdx:BSD-2-Clause"
+      ],
+      "source_archive": "mingw-w64-dav1d-1.5.5-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-dav1d",
+      "archive_sha256": "b0927f93430f792d9e53c1748023f238928ab01d7c16f20bc8026cad4d295bc4"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-expat",
+      "version": "2.10.0-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-expat-2.10.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-expat",
+      "archive_sha256": "5db410fd909aa6b25e063d720ed36211efaf2de6c39a9e984cf0f494a4f573d3"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-fontconfig",
+      "version": "2.18.4-1",
+      "license": [
+        "custom"
+      ],
+      "source_archive": "mingw-w64-fontconfig-2.18.4-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-fontconfig",
+      "archive_sha256": "9fc63012ff6cd8799bf0f43ad4ebbc22012fc8d4770a5f024ad7fc911a6c600a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-freetype",
+      "version": "2.15.0-1",
+      "license": [
+        "spdx:GPL-2.0-or-later OR FTL"
+      ],
+      "source_archive": "mingw-w64-freetype-2.15.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-freetype",
+      "archive_sha256": "426bd4e0e979118682be881ace475ef4d3ff1668084ac796350fb7e0504b82ef"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-frei0r-plugins",
+      "version": "3.7.1-1",
+      "license": [
+        "spdx:GPL-2.0-or-later"
+      ],
+      "source_archive": "mingw-w64-frei0r-plugins-3.7.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-frei0r-plugins",
+      "archive_sha256": "1f2aa89c173ca0fdc8c63ca091087e7e7886e99d5ba1834a74f9a6f1ced1590f"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-fribidi",
+      "version": "1.0.18-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-fribidi-1.0.18-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-fribidi",
+      "archive_sha256": "0855a60a2060e2d07d71531839fcd05ef75043c93b8feeede2087533c5bc9b64"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-gdk-pixbuf2",
+      "version": "2.44.8-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-gdk-pixbuf2-2.44.8-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-gdk-pixbuf2",
+      "archive_sha256": "2ae126427a404cbcac69f9995f71e7deea8733e0962d84bde0ac9bce46ed45b6"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-gettext-runtime",
+      "version": "1.0-1",
+      "license": [
+        "spdx:GPL-3.0-or-later AND LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-gettext-1.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-gettext-runtime",
+      "archive_sha256": "be68d7f260633284b910c588c6d82ee304a81c8817a686d2cd9df83f872c27af"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-ggml",
+      "version": "1.0.0-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-ggml-1.0.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-ggml",
+      "archive_sha256": "ef669832224b55279599638e6e30959fe09355f05714ec937c3a756d503c37df"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-giflib",
+      "version": "6.1.3-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-giflib-6.1.3-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-giflib",
+      "archive_sha256": "bfa540ab9892bbc5161e3f81fcfb0ca71f44bd2e00478b5df79f899825c523f5"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-glib2",
+      "version": "2.90.1-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-glib2-2.90.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-glib2",
+      "archive_sha256": "152ba3b2cfb35feebc0fcb690889b16a6f0c2b89ced52e65aea45d089f86d219"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-glslang",
+      "version": "16.6.0-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-glslang-16.6.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-glslang",
+      "archive_sha256": "cede283d63670793d3c4bd7934ae26d8f1523476a304f98d3a3a13c2598dbfef"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-gmp",
+      "version": "6.3.0-2",
+      "license": [
+        "LGPL3",
+        "GPL"
+      ],
+      "source_archive": "mingw-w64-gmp-6.3.0-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-gmp",
+      "archive_sha256": "8924433974c4add46cb46ea4f6ef283b5c5139d3f552375115b5580f855015cc"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-gnutls",
+      "version": "3.8.14-1",
+      "license": [
+        "spdx:GPL-3.0-or-later",
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-gnutls-3.8.14-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-gnutls",
+      "archive_sha256": "5aa219d1efdb448d4d3e738d2dae277d0352493695604c66db107bfbf1b475c1"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-graphite2",
+      "version": "1.3.15-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-graphite2-1.3.15-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-graphite2",
+      "archive_sha256": "6ad20d6c16e559f7c4b06fe71248e1201c7edf494d04e5721ed7f9b3f7fd1f74"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-gsm",
+      "version": "1.0.24-1",
+      "license": [
+        "custom"
+      ],
+      "source_archive": "mingw-w64-gsm-1.0.24-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-gsm",
+      "archive_sha256": "211f6cd25563324fe603e3dc803950c19b962765a13a268fbff212c2761ba247"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-harfbuzz",
+      "version": "15.2.0-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-harfbuzz-15.2.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-harfbuzz",
+      "archive_sha256": "16690e14ac19d048cc2c13b9b44b13c4343f2625c9a522c5ddbf7482f848fac6"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-highway",
+      "version": "1.4.0-3",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-highway-1.4.0-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-highway",
+      "archive_sha256": "f75b4c243dacfed39dc9ce4c841f97cc09508fc09a94bd2fb8742552885a0c58"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-imath",
+      "version": "3.2.3-3",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-imath-3.2.3-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-imath",
+      "archive_sha256": "a50265c8c81fffbe91940cb89af6cc77bcd9d61473c63e91886aec095b9c9d49"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-jbigkit",
+      "version": "2.1-6",
+      "license": [
+        "spdx:GPL-2.0"
+      ],
+      "source_archive": "mingw-w64-jbigkit-2.1-6.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-jbigkit",
+      "archive_sha256": "3db9e32abca5d208920a096e5ae01952f2d8a361780428b9646b6da6750f7321"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-lame",
+      "version": "4.0-1",
+      "license": [
+        "LGPL"
+      ],
+      "source_archive": "mingw-w64-lame-4.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-lame",
+      "archive_sha256": "78108b2c16d67add4910e1c3e7f599a1775edbf2ee51465587aa64e3da8b6070"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-lcms2",
+      "version": "2.20-1",
+      "license": [
+        "spdx:MIT AND GPL-3.0-or-later"
+      ],
+      "source_archive": "mingw-w64-lcms2-2.20-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-lcms2",
+      "archive_sha256": "b2149919d54ac2520f1897e7fbe2bda9931c797b54fe9272f56857928d351d42"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-lerc",
+      "version": "4.1.1-1",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-lerc-4.1.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-lerc",
+      "archive_sha256": "5bc170650bc02812a7c674a5f7b8ff2781b4bfa259ab2da2264c3008e2a04c72"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libass",
+      "version": "0.17.5-1",
+      "license": [
+        "spdx:ISC"
+      ],
+      "source_archive": "mingw-w64-libass-0.17.5-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libass",
+      "archive_sha256": "11966a8df12b99454ac552c587f58c4ea81bb040bad1cfdd219bf2f50f567f8d"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libbluray",
+      "version": "1.5.0-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-libbluray-1.5.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libbluray",
+      "archive_sha256": "044b58f3f6d9b3eea3649dde055576331b2e8a6baa59f36ad88b8fb733ddb8f9"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libcaca",
+      "version": "0.99.beta20-8",
+      "license": [
+        "LGPL"
+      ],
+      "source_archive": "mingw-w64-libcaca-0.99.beta20-8.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libcaca",
+      "archive_sha256": "c07a0cab007ed74f9799f7a8ef79cf2ae762d1e89d006e121f3f9f643aac0e32"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libdatrie",
+      "version": "0.2.14-1",
+      "license": [
+        "LGPL"
+      ],
+      "source_archive": "mingw-w64-libdatrie-0.2.14-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libdatrie",
+      "archive_sha256": "fbbf30e9a911c1139ba5c38c5ae008309dd912f6c6b1e05f4310ec698e1b1339"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libdeflate",
+      "version": "1.26-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-libdeflate-1.26-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libdeflate",
+      "archive_sha256": "aa0d9b5e2d0413d5e01745a48ef0c8fa293172d48c13f87b61ada627ab7407ad"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libdovi",
+      "version": "3.4.0-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-libdovi-3.4.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libdovi",
+      "archive_sha256": "371c8c7474c15d99b011e193d0413788a5d52098a3aee258c3977b78c5dda056"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libexif",
+      "version": "0.6.26-1",
+      "license": [
+        "LGPL-2.1"
+      ],
+      "source_archive": "mingw-w64-libexif-0.6.26-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libexif",
+      "archive_sha256": "28e04d159aae040adf9a30b0eb46af58ff6fadcbcac349ea44f01c2574afe966"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libffi",
+      "version": "3.8.1-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-libffi-3.8.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libffi",
+      "archive_sha256": "92ba29c4a632a01affff6cb48617bcb62d65c02bfe6df2ed27fb087a9ba51de3"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libgcc",
+      "version": "16.2.0-7",
+      "license": [
+        "spdx:GPL-3.0-or-later WITH GCC-exception-3.1 AND GFDL-1.3-or-later"
+      ],
+      "source_archive": "mingw-w64-gcc-16.2.0-7.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libgcc",
+      "archive_sha256": "6d1311b397ba33be542fd46bae3de60338bfd967e95e221847f01269e98983b8"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libgfortran",
+      "version": "16.2.0-7",
+      "license": [
+        "spdx:GPL-3.0-or-later WITH GCC-exception-3.1 AND GFDL-1.3-or-later"
+      ],
+      "source_archive": "mingw-w64-gcc-16.2.0-7.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libgfortran",
+      "archive_sha256": "983ff313b84dc53d903d7f62d8bf56f5b4f045ac8d3aa3470b26d29578e8625d"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libgme",
+      "version": "0.6.5-3",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-libgme-0.6.5-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libgme",
+      "archive_sha256": "f6b46610f138ec452fa857932a16f0484bb8ab3636ee6488ae7552da082f9dc6"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libgomp",
+      "version": "16.2.0-7",
+      "license": [
+        "spdx:GPL-3.0-or-later WITH GCC-exception-3.1 AND GFDL-1.3-or-later"
+      ],
+      "source_archive": "mingw-w64-gcc-16.2.0-7.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libgomp",
+      "archive_sha256": "4c5b9fdf1bb8ca44d7563498b90680af113de0682c54d6817b37aac083d30eaf"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libiconv",
+      "version": "1.19.1-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later",
+        "documentation:spdx:GPL-3.0-or-later"
+      ],
+      "source_archive": "mingw-w64-libiconv-1.19.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libiconv",
+      "archive_sha256": "50e915aa36fdbe6c84acc8954e939275609ba051cdb4eeeff3884453c28efde0"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libidn2",
+      "version": "2.3.8-5",
+      "license": [
+        "spdx:GPL-2.0-or-later",
+        "spdx:LGPL-3.0-or-later"
+      ],
+      "source_archive": "mingw-w64-libidn2-2.3.8-5.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libidn2",
+      "archive_sha256": "988a94544c71fd425edc9f6aea57dcd90f73057cf046a2d78c6cd5ac7d381af8"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libjpeg-turbo",
+      "version": "3.2.1-1",
+      "license": [
+        "custom:BSD-like"
+      ],
+      "source_archive": "mingw-w64-libjpeg-turbo-3.2.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libjpeg-turbo",
+      "archive_sha256": "26474b95df3cb70abae8c74653d0ab0eb7ae22eeb2c2342c0d54313998a96b04"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libjxl",
+      "version": "0.13.0-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-libjxl-0.13.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libjxl",
+      "archive_sha256": "57b3181a0854aa362d3f40cec9aa1aa8292864e79ec0b911cfb090e1e4a34563"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-liblc3",
+      "version": "1.1.3-1",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-liblc3-1.1.3-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-liblc3",
+      "archive_sha256": "472e5356d6c6484944c2980c9b63a7fe5d23e8535ee1b6e9031cf83bfe1ca24f"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libmodplug",
+      "version": "0.8.9.2-1",
+      "license": [
+        "PublicDomain"
+      ],
+      "source_archive": "mingw-w64-libmodplug-0.8.9.2-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libmodplug",
+      "archive_sha256": "32a81f431ca1842234fe0ca3c4a0bd67bccb5e892026d6d94d5142f0624c04e2"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libmysofa",
+      "version": "1.3.5-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-libmysofa-1.3.5-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libmysofa",
+      "archive_sha256": "3f5eddb81f8820828fe215254309f5243b3c4c703ef519359d5e5da7df80326f"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libogg",
+      "version": "1.3.6-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-libogg-1.3.6-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libogg",
+      "archive_sha256": "7ef9ec16403e1489a37c3a5ce58b083408ba694c6882e673639e2250df98bb8b"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libplacebo",
+      "version": "7.387.0-1",
+      "license": [
+        "LGPL2.1"
+      ],
+      "source_archive": "mingw-w64-libplacebo-7.387.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libplacebo",
+      "archive_sha256": "1d473b23b2b9a39403276734e39f8368593151b658729b4d18b827ff0072a3bf"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libpng",
+      "version": "1.6.59-2",
+      "license": [
+        "custom"
+      ],
+      "source_archive": "mingw-w64-libpng-1.6.59-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libpng",
+      "archive_sha256": "8cf4e17ed9f592d23a5d1f1f8875c6a8da42eaf7772a997908565e94131cfc20"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libpsl",
+      "version": "0.21.5-3",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-libpsl-0.21.5-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libpsl",
+      "archive_sha256": "2a86f7ce3cd3fabff7eb8e5c0d3eb1134808881a44c3838e1b518b75cb402e35"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libquadmath",
+      "version": "16.2.0-7",
+      "license": [
+        "spdx:LGPL-2.1-or-later AND GFDL-1.2-or-later"
+      ],
+      "source_archive": "mingw-w64-gcc-16.2.0-7.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libquadmath",
+      "archive_sha256": "3f01a34d40f535a38164660b93feeed7acbd5b481ad9246b85a9af28c5e11a81"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-librsvg",
+      "version": "2.63.4-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-librsvg-2.63.4-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-librsvg",
+      "archive_sha256": "1d5d911933adf3f22c16c79619d3401a78eb20e5f0c33acba46f3001756a856d"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libsoxr",
+      "version": "0.1.3-6",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-libsoxr-0.1.3-6.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libsoxr",
+      "archive_sha256": "7407907de26abc8edccaecd59269d8faad9e46db20d1e5f6e1b7bc9fac1ba9ee"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libssh",
+      "version": "0.12.2-2",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-libssh-0.12.2-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libssh",
+      "archive_sha256": "0ccd3dbe0a0b77e178699f0ab1429696dae39ce9e58156ac4d0e5f36e41d7ccd"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libssh2",
+      "version": "1.11.1-4",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-libssh2-1.11.1-4.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libssh2",
+      "archive_sha256": "8ffbe55f91bf85fda6b52a40db4d0ea100efd68dc8c7aede21db8cfdf0a9c50a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libstdc++",
+      "version": "16.2.0-7",
+      "license": [
+        "spdx:GPL-3.0-or-later WITH GCC-exception-3.1 AND GFDL-1.3-or-later"
+      ],
+      "source_archive": "mingw-w64-gcc-16.2.0-7.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libstdc++",
+      "archive_sha256": "578db695632bdb5bafd716958c4caa62560f3de2633680b258ae6f684201276d"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libsystre",
+      "version": "1.0.2-3",
+      "license": [
+        "spdx:BSD-2-Clause"
+      ],
+      "source_archive": "mingw-w64-libsystre-1.0.2-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libsystre",
+      "archive_sha256": "ea20a54127fe2a606ef0f2bef62b1abef77710840b661b832a933b4020bfe316"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libtasn1",
+      "version": "4.21.0-2",
+      "license": [
+        "spdx:GPL-3.0-or-later AND LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-libtasn1-4.21.0-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libtasn1",
+      "archive_sha256": "7d94db68f81200cc9f72dc87fb6cecbaf9776b61d395aa611936d9c365bfb87c"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libthai",
+      "version": "0.1.30-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-libthai-0.1.30-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libthai",
+      "archive_sha256": "e8cfad91934e24e9a88221b66f2d1c5a310c952ef86631107a632d3ff1738211"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libtheora",
+      "version": "1.2.0-2",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-libtheora-1.2.0-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libtheora",
+      "archive_sha256": "447a0474ea341dc8ab5ec5a39e1a78033ce824f7dfe0daaa9181b96d49678ad5"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libtiff",
+      "version": "4.7.2-2",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-libtiff-4.7.2-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libtiff",
+      "archive_sha256": "e330307e569ea912f6911d6ceae994d96ac68c27b4860c1f805ce9078439786c"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libtre",
+      "version": "0.9.0-2",
+      "license": [
+        "BSD"
+      ],
+      "source_archive": "mingw-w64-libtre-0.9.0-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libtre",
+      "archive_sha256": "c4051508d063258e1e02dd29615edb7d73c5c5f582ae42795fdd92e7ddce506b"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libunibreak",
+      "version": "7.0-1",
+      "license": [
+        "spdx:Zlib"
+      ],
+      "source_archive": "mingw-w64-libunibreak-7.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libunibreak",
+      "archive_sha256": "ec35669473cad90472a97cdf60f0dc4292383c7dab7bad348ec22c45134c1bce"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libunistring",
+      "version": "1.5-1",
+      "license": [
+        "spdx:LGPL-3.0-or-later OR GPL-3.0-or-later"
+      ],
+      "source_archive": "mingw-w64-libunistring-1.5-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libunistring",
+      "archive_sha256": "0738a318261d8c7f77e47453d97aac9039f1c7b6068e64b2037005ae9f6a5859"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libva",
+      "version": "2.24.1-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-libva-2.24.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libva",
+      "archive_sha256": "956243be458339aa2299e554386e5451ff915e93fb44f622a88318175dcafd8c"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libvorbis",
+      "version": "1.3.7-3",
+      "license": [
+        "custom"
+      ],
+      "source_archive": "mingw-w64-libvorbis-1.3.7-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libvorbis",
+      "archive_sha256": "3d68dc3ccb32f0ea230a4bbc19c8fd440893058437c49864c4e26b12d6cb078a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libvpl",
+      "version": "2.17.0-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-libvpl-2.17.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libvpl",
+      "archive_sha256": "3899c8e75e9b62cfff8b0987d70da3e2c142a075b94af45d868c3453d86aaece"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libvpx",
+      "version": "1.17.0-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-libvpx-1.17.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libvpx",
+      "archive_sha256": "59801c4a1a8cc76211a16f355121632ebc52e2f7eefb592e9b6885d81833e476"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libwebp",
+      "version": "1.6.0-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-libwebp-1.6.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libwebp",
+      "archive_sha256": "360b1690d41eb497dfe50526460a2424600a6a806cbb76c5b0fec9f14623ac59"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libwinpthread",
+      "version": "14.0.0.r598.ge3d18511f-1",
+      "license": [
+        "spdx:MIT AND BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-winpthreads-14.0.0.r598.ge3d18511f-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libwinpthread",
+      "archive_sha256": "942a62a3ecafbb4f5a80016685a0e3002a8de903012eed49c213e4f5b693668a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libx264",
+      "version": "0.165.r3222.b35605a-3",
+      "license": [
+        "custom"
+      ],
+      "source_archive": "mingw-w64-x264-0.165.r3222.b35605a-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libx264",
+      "archive_sha256": "d034c2a4bc8966b8301d48bde2b9d251057683717c17a03dbc402d160cc0e726"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-libxml2",
+      "version": "2.15.4-3",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-libxml2-2.15.4-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-libxml2",
+      "archive_sha256": "5939674e6519082e2cb990f70ff0156a08876f85722d1178a3fdd7839fc38fb3"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-llama.cpp",
+      "version": "1~1.0.0-2",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-llama.cpp-1~1.0.0-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-llama.cpp",
+      "archive_sha256": "d6a9400853daac137a5b9113ab5b60f323f35b5e901b51b7bb33b4ea7b0daed6"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-lzo2",
+      "version": "2.10-3",
+      "license": [
+        "spdx:GPL-2.0-or-later"
+      ],
+      "source_archive": "mingw-w64-lzo2-2.10-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-lzo2",
+      "archive_sha256": "445115c31e91486801af9493278c0eb86c6194c2644a54e92d5afac10edea630"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-mpdecimal",
+      "version": "4.0.1-3",
+      "license": [
+        "spdx:BSD-2-Clause"
+      ],
+      "source_archive": "mingw-w64-mpdecimal-4.0.1-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-mpdecimal",
+      "archive_sha256": "8da7e7f78434f188664c4d2779c03ea7a80f7f5837a115834ab734b352a613e5"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-mpg123",
+      "version": "1.33.7-1",
+      "license": [
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-mpg123-1.33.7-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-mpg123",
+      "archive_sha256": "2928cf82017d27d394f383abadbae3137e3c0123a0c635b81f8192b62b8c1745"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-ncurses",
+      "version": "6.6-5",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-ncurses-6.6-5.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-ncurses",
+      "archive_sha256": "e5fe94f481b71cf2cdb9220470480954c619ede961c89fc9d2108d992f40e1d6"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-nettle",
+      "version": "4.0-1",
+      "license": [
+        "spdx:GPL-2.0-or-later",
+        "spdx:LGPL-3.0-or-later"
+      ],
+      "source_archive": "mingw-w64-nettle-4.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-nettle",
+      "archive_sha256": "505773abfb4f3af514012e2926c11db6365299c7eda141d958a065740740dc86"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-nghttp2",
+      "version": "1.71.0-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-nghttp2-1.71.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-nghttp2",
+      "archive_sha256": "e868085eed6dd47d81fe19e5048477f8ca0dcc8b8bd3b74a8181b063b6609c6f"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-nghttp3",
+      "version": "1.19.0-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-nghttp3-1.19.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-nghttp3",
+      "archive_sha256": "9c10bf707c2adcef0bce9ade9d3cab96249b5cbd8088c7002770041003aa49d3"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-ngtcp2",
+      "version": "1.26.0-3",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-ngtcp2-1.26.0-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-ngtcp2",
+      "archive_sha256": "490a49567fad619770ba74876d208768b03c2670bba7a1c45488a50ad700635a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-openal",
+      "version": "1.25.2-1",
+      "license": [
+        "spdx:GPL-2.0-or-later"
+      ],
+      "source_archive": "mingw-w64-openal-1.25.2-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-openal",
+      "archive_sha256": "bef6595b1b4855d8256e91a5d25a3ff67ea3f28519d54a6783e311a6f980d60e"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-openblas",
+      "version": "0.3.34-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-openblas-0.3.34-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-openblas",
+      "archive_sha256": "cac7623e6b0f07a7ad72fa2e6d4e346e9025fc14d0ccb68d0b79a50765f05e88"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-opencl-icd",
+      "version": "2026.05.29-1",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-opencl-icd-2026.05.29-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-opencl-icd",
+      "archive_sha256": "8e766055b566ec1aeeb5394ec4e2fb913f6de0539ead68288cce90ecacb37f6c"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-opencore-amr",
+      "version": "0.1.6-1",
+      "license": [
+        "Apache"
+      ],
+      "source_archive": "mingw-w64-opencore-amr-0.1.6-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-opencore-amr",
+      "archive_sha256": "39cec71d74f94d63cca90f22e6810818248c15fb2a6bf1ee544dde4cd6e2d1a4"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-openexr",
+      "version": "3.5.5-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-openexr-3.5.5-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-openexr",
+      "archive_sha256": "56e81fd9e05167b53deaa031f3088c9efbf1c554b3af2ff9d7fa15527c3e25bb"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-openjpeg2",
+      "version": "2.5.4-2",
+      "license": [
+        "spdx:BSD-2-Clause"
+      ],
+      "source_archive": "mingw-w64-openjpeg2-2.5.4-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-openjpeg2",
+      "archive_sha256": "32f8f5dc7df9f1f2d57157717136fbba431e15bc000420c953c00ffdf76ecde4"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-openjph",
+      "version": "0.33.0-1",
+      "license": [
+        "spdx:BSD-2-Clause"
+      ],
+      "source_archive": "mingw-w64-openjph-0.33.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-openjph",
+      "archive_sha256": "4d378ea9ce323e55283643911c6ae363747a24ce2710cf3cf22372257d6c9770"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-openssl",
+      "version": "4.1.0-1",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-openssl-4.1.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-openssl",
+      "archive_sha256": "d23a605bd7543ea1143324fd70f4db40d26b588321c6e4e8cdcadf9d15998daf"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-opus",
+      "version": "1.6.1-2",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-opus-1.6.1-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-opus",
+      "archive_sha256": "fae981c518ed1ff2c5264eb5a0d590ec1d2ebb222defb2253ca85b2154fd8c04"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-p11-kit",
+      "version": "0.26.6-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-p11-kit-0.26.6-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-p11-kit",
+      "archive_sha256": "567fdc960efccf1ca50f54b044d10efd1fb396b678e62b430120d7d2ef2b3dda"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-pango",
+      "version": "1.58.2-1",
+      "license": [
+        "spdx:LGPL-2.1"
+      ],
+      "source_archive": "mingw-w64-pango-1.58.2-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-pango",
+      "archive_sha256": "6aa68db02f6158dba802da406d25b29650011beb2d5d1b0a0050081e19874e57"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-pcre2",
+      "version": "10.49-2",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-pcre2-10.49-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-pcre2",
+      "archive_sha256": "60211e4d11e0a891f9a55d8bbe8702c4cddace3a68967ac8eb82f1cffdcfca5f"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-pixman",
+      "version": "0.46.4-3",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-pixman-0.46.4-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-pixman",
+      "archive_sha256": "435715dd1ca4c55873cf3c38d644615196bc2d238e3366f8ff81cc0811260eb2"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-python",
+      "version": "3.14.10-4",
+      "license": [
+        "spdx:PSF-2.0"
+      ],
+      "source_archive": "mingw-w64-python-3.14.10-4.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-python",
+      "archive_sha256": "aee40790d3c0a0c8afddaf84ed35eb44149c4e2b26834bb4d09434eca12154ea"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-python-packaging",
+      "version": "26.3-1",
+      "license": [
+        "spdx:Apache-2.0",
+        "spdx:BSD-2-Clause"
+      ],
+      "source_archive": "mingw-w64-python-packaging-26.3-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-python-packaging",
+      "archive_sha256": "69e6eff5c623ebd1cc3cfca13d8bbc6c70b0ca1dfbc3704b251478a30a25b20e"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-rav1e",
+      "version": "0.8.1-1",
+      "license": [
+        "spdx:BSD-2-Clause"
+      ],
+      "source_archive": "mingw-w64-rav1e-0.8.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-rav1e",
+      "archive_sha256": "15b2f19460ec7a19f19fbad2861d00104545ccd371e4f861de4d068e25e7a1c7"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-rtmpdump",
+      "version": "2.6-2",
+      "license": [
+        "spdx:GPL-2.0-or-later",
+        "spdx:LGPL-2.1-or-later"
+      ],
+      "source_archive": "mingw-w64-rtmpdump-2.6-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-rtmpdump",
+      "archive_sha256": "813755ca816c79c4bd765082238f66a44a94d87780a429a3a38e232ab69967bd"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-sdl2-compat",
+      "version": "2.32.74-5",
+      "license": [
+        "spdx:Zlib"
+      ],
+      "source_archive": "mingw-w64-sdl2-compat-2.32.74-5.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-sdl2-compat",
+      "archive_sha256": "ed032e95719bb9333152a9665a085b58461733978c9c0ea00dbdbcef4688e044"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-sdl3",
+      "version": "3.4.20-1",
+      "license": [
+        "spdx:Zlib"
+      ],
+      "source_archive": "mingw-w64-sdl3-3.4.20-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-sdl3",
+      "archive_sha256": "7dc0b32dd01cf7fdd256da2363a7497c6b1ba5a89364d3bb383d4c7cae6ed10b"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-shaderc",
+      "version": "2026.4-1",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-shaderc-2026.4-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-shaderc",
+      "archive_sha256": "8af380b68ba3cbb0abcd70eb17a1bb84fc7925915fd1a7a5d570cd1da8d0c2dc"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-speex",
+      "version": "1.2.1-1",
+      "license": [
+        "BSD"
+      ],
+      "source_archive": "mingw-w64-speex-1.2.1-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-speex",
+      "archive_sha256": "28abd57d2f49aeb60d667a5d3e3f04293995d539c9bafd3f98a0365fb8bf236a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-speexdsp",
+      "version": "1.2.1-2",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-speexdsp-1.2.1-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-speexdsp",
+      "archive_sha256": "c34c5a5f3b3a947fe3c5d0108346964b5ac026e6143f987bdd9e5726d890a29c"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-spirv-cross",
+      "version": "1~1.4.363.0-1",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-spirv-cross-1~1.4.363.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-spirv-cross",
+      "archive_sha256": "191494c8a289c246985cad164d9526c315621b976229e547d8b22bccd11e53d5"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-spirv-tools",
+      "version": "3~1.4.363.0-1",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-spirv-tools-3~1.4.363.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-spirv-tools",
+      "archive_sha256": "c9fde26d5dafa8f175de4914fc81e38335d3cf58740445c8fec07232e11b7916"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-sqlite",
+      "version": "3.54.1-2",
+      "license": [
+        "PublicDomain"
+      ],
+      "source_archive": "mingw-w64-sqlite-3.54.1-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-sqlite",
+      "archive_sha256": "24e84a64427b44c94407873d53b6c98613682225c46696c0c5dbb5d9a1924182"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-srt",
+      "version": "1.5.7-2",
+      "license": [
+        "spdx:MPL-2.0"
+      ],
+      "source_archive": "mingw-w64-srt-1.5.7-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-srt",
+      "archive_sha256": "403035060c1cc8cb57d660ca6a7bc1700b8f674449890e12ebe72da04e1f631d"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-svt-av1",
+      "version": "4.3.0-1",
+      "license": [
+        "spdx:BSD-3-Clause-Clear"
+      ],
+      "source_archive": "mingw-w64-svt-av1-4.3.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-svt-av1",
+      "archive_sha256": "622ed43b126f6f595ced1d2f65a585ad879d311b48207d43dc3564b530509ae4"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-tcl",
+      "version": "8.6.18-1",
+      "license": [
+        "custom"
+      ],
+      "source_archive": "mingw-w64-tcl-8.6.18-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-tcl",
+      "archive_sha256": "d95289300fd8e16bd5cb241b9928a256695aeebeca2885deef3326cd4a4d5ba8"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-tk",
+      "version": "8.6.18-1",
+      "license": [
+        "custom"
+      ],
+      "source_archive": "mingw-w64-tk-8.6.18-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-tk",
+      "archive_sha256": "42aa79962e1679dd55e93f79a25dc1e50c7235f143ab501b3ec68debd0d32a3e"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-tzdata",
+      "version": "2026f-1",
+      "license": [
+        "custom: public domain"
+      ],
+      "source_archive": "mingw-w64-tzdata-2026f-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-tzdata",
+      "archive_sha256": "ee33831fd41045555220d250a816a2a3a57116f8b1fb7f574bf3db7079299da2"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-vid.stab",
+      "version": "1.1.2-1",
+      "license": [
+        "spdx:GPL-2.0-or-later"
+      ],
+      "source_archive": "mingw-w64-vid.stab-1.1.2-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-vid.stab",
+      "archive_sha256": "e544dd061e37a12f466ed1b3040446155190406d306f7808bb0673dad3e0fd5a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-vulkan-loader",
+      "version": "1~1.4.363.0-1",
+      "license": [
+        "spdx:Apache-2.0"
+      ],
+      "source_archive": "mingw-w64-vulkan-loader-1~1.4.363.0-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-vulkan-loader",
+      "archive_sha256": "281fa31b1a023485d4fd04a092a8b5e9ca2f59804df7fcf9f2d4e5aaa5438af0"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-whisper.cpp",
+      "version": "1~1.9.5.r334.g5922450fb-1",
+      "license": [
+        "spdx:MIT"
+      ],
+      "source_archive": "mingw-w64-whisper.cpp-1~1.9.5.r334.g5922450fb-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-whisper.cpp",
+      "archive_sha256": "102d1c60631cf899361042aba32e5c306898a0fecccf1c96379ba255f6cf8231"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-wineditline",
+      "version": "2.208-1",
+      "license": [
+        "spdx:BSD-3-Clause"
+      ],
+      "source_archive": "mingw-w64-wineditline-2.208-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-wineditline",
+      "archive_sha256": "dfe7fab66632eececc73d84053eae2be8dd2146ecefe0fc2133277706084d7ea"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-x265",
+      "version": "4.3-1",
+      "license": [
+        "GPL"
+      ],
+      "source_archive": "mingw-w64-x265-4.3-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-x265",
+      "archive_sha256": "bf952eec0a847a2dc10bbbe6d029d8a898e473c1ddb6842f11d789449863e40a"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-xvidcore",
+      "version": "1.3.7-5",
+      "license": [
+        "GPL"
+      ],
+      "source_archive": "mingw-w64-xvidcore-1.3.7-5.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-xvidcore",
+      "archive_sha256": "e1f9555a92a143f10b015e6f180c7de8a2e832e57b1bb5df950778984a2d4afe"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-xz",
+      "version": "5.8.4-1",
+      "license": [
+        "spdx:0BSD AND LGPL-2.1-or-later AND GPL-2.0-or-later"
+      ],
+      "source_archive": "mingw-w64-xz-5.8.4-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-xz",
+      "archive_sha256": "2de0f26da60b7ff7aa192a226330d7de6b1099cb9b9f9de4145affb80146bbc8"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-zimg",
+      "version": "3.0.6-3",
+      "license": [
+        "spdx:WTFPL"
+      ],
+      "source_archive": "mingw-w64-zimg-3.0.6-3.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-zimg",
+      "archive_sha256": "70d46458851c51b27faf4befe4c946d386836487156209541cc2dec4aade5fdc"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-zlib",
+      "version": "1.4-2",
+      "license": [
+        "spdx:Zlib"
+      ],
+      "source_archive": "mingw-w64-zlib-1.4-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-zlib",
+      "archive_sha256": "2a065fb3311d6c08bd2c7431a092b912ade08a83954474e06ea4eb0479d908cd"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-zstd",
+      "version": "1.5.7-2",
+      "license": [
+        "spdx:BSD-3-Clause OR GPL-2.0-or-later"
+      ],
+      "source_archive": "mingw-w64-zstd-1.5.7-2.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-zstd",
+      "archive_sha256": "1add6705b344664f6aca108c85f79ab5bdd9e1162662bb06a4cf40a34f6e0907"
+    },
+    {
+      "ecosystem": "MSYS2",
+      "id": "mingw-w64-x86_64-zvbi",
+      "version": "0.2.46-1",
+      "license": [
+        "spdx:GPL-2.0-or-later AND BSD-2-Clause AND LGPL-2.1-or-later AND MIT"
+      ],
+      "source_archive": "mingw-w64-zvbi-0.2.46-1.src.tar.zst",
+      "notices": "licenses/vendors/FFmpeg-3.19.9/MSYS2/mingw-w64-x86_64-zvbi",
+      "archive_sha256": "8f5d5bc3ea5ae971c18e2a87db0fd06d655fc037a8c90dbb9262e9f178566bea"
+    },
+    {
+      "ecosystem": "native",
+      "id": "FFmpeg",
+      "version": "9.1-prometheus-3.19.9",
+      "license": [
+        "GPL-3.0-or-later"
+      ],
+      "source_archive": "ffmpeg-9.1.tar.xz"
+    },
+    {
+      "ecosystem": "native",
+      "id": "Rubber Band Library",
+      "version": "4.0.0",
+      "license": [
+        "GPL-2.0-or-later"
+      ],
+      "source_archive": "rubberband-4.0.0.tar.gz"
+    }
+  ],
+  "note": "Companion-library distribution inventory. The file manifest identifies actual delivered DLLs; source archives retain individual notices."
+}

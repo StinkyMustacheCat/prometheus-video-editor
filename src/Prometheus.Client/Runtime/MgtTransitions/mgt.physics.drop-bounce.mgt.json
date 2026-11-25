@@ -1,0 +1,79 @@
+{
+  "kind": "transition",
+  "contractVersion": 1,
+  "id": "mgt.physics.drop-bounce",
+  "version": 2,
+  "name": "Gravity Drop & Heavy Bounce",
+  "recommended": {
+    "duration": 0.9
+  },
+  "duration": {
+    "min": 0.1,
+    "max": 3.0,
+    "adaptation": "stretch"
+  },
+  "output": {
+    "alpha": "straight",
+    "colorSpace": "srgb-bt709-sdr"
+  },
+  "parameters": [
+    {
+      "id": "dropOrigin",
+      "type": "select",
+      "default": "top",
+      "options": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
+      "label": "Dirección de Caída"
+    },
+    {
+      "id": "bounciness",
+      "type": "number",
+      "default": 1.25,
+      "min": 0.2,
+      "max": 2.2,
+      "step": 0.05,
+      "label": "Altura de Rebote (Restitución)"
+    },
+    {
+      "id": "impactSquash",
+      "type": "number",
+      "default": 0.45,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Aplastamiento al Chocar"
+    },
+    {
+      "id": "crushA",
+      "type": "number",
+      "default": 0.75,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Compresión del Clip Saliente (A)"
+    },
+    {
+      "id": "shadowDepth",
+      "type": "number",
+      "default": 0.65,
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "label": "Sombra de Colisión"
+    }
+  ],
+  "render": "const canvas = ctx.root.querySelector('#mgt-canvas'); const w = ctx.width; const h = ctx.height; if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; } const g = canvas.getContext('2d'); g.clearRect(0, 0, w, h); const p = Math.max(0, Math.min(1, ctx.progress)); if (p <= 0) { g.drawImage(ctx.inputA, 0, 0, w, h); return; } if (p >= 1) { g.drawImage(ctx.inputB, 0, 0, w, h); return; } const params = ctx.params || {}; const origin = params.dropOrigin || 'top'; const bounceMult = params.bounciness !== undefined ? Number(params.bounciness) : 1.25; const squashAmt = params.impactSquash !== undefined ? Number(params.impactSquash) : 0.45; const crushAmt = params.crushA !== undefined ? Number(params.crushA) : 0.75; const shadowAmt = params.shadowDepth !== undefined ? Number(params.shadowDepth) : 0.65; const isVert = origin === 'top' || origin === 'bottom'; const sign = (origin === 'top' || origin === 'left') ? 1 : -1; const t1 = 1 / 2.75; const t2 = 2 / 2.75; const t3 = 2.5 / 2.75; let bounceDist = 0; let impactSpike = 0; if (p < t1) { const u = p / t1; bounceDist = 1 - u * u; } else if (p < t2) { const u = (p - t1) / (t2 - t1) * 2 - 1; bounceDist = (1 - u * u) * 0.24 * bounceMult; impactSpike = Math.exp(-Math.pow((p - t1) * 26, 2)); } else if (p < t3) { const u = (p - t2) / (t3 - t2) * 2 - 1; bounceDist = (1 - u * u) * 0.065 * bounceMult; impactSpike = Math.exp(-Math.pow((p - t2) * 34, 2)) * 0.55; } else { const u = (p - t3) / (1 - t3) * 2 - 1; bounceDist = (1 - u * u) * 0.015 * bounceMult; impactSpike = Math.exp(-Math.pow((p - t3) * 42, 2)) * 0.25; } bounceDist = Math.max(0, bounceDist); const coverage = 1 - bounceDist; if (bounceDist > 0.001) { g.save(); const crushProgress = Math.max(0, Math.min(1, coverage)); const pushOffset = sign * crushProgress * (isVert ? h : w) * 0.45 * crushAmt; const scaleA = 1 - crushProgress * 0.35 * crushAmt; const shakeA = impactSpike * (ctx.random(Math.floor(p * 45)) - 0.5) * 28 * bounceMult; if (isVert) { const anchorY = sign > 0 ? h : 0; g.translate(w * 0.5 + shakeA, anchorY + pushOffset); g.scale(1 + crushProgress * 0.08 * crushAmt, Math.max(0.2, scaleA)); g.drawImage(ctx.inputA, -w * 0.5, sign > 0 ? -h : 0, w, h); } else { const anchorX = sign > 0 ? w : 0; g.translate(anchorX + pushOffset, h * 0.5 + shakeA); g.scale(Math.max(0.2, scaleA), 1 + crushProgress * 0.08 * crushAmt); g.drawImage(ctx.inputA, sign > 0 ? -w : 0, -h * 0.5, w, h); } if (shadowAmt > 0) { g.fillStyle = '#000000'; g.globalAlpha = Math.min(0.85, coverage * shadowAmt * 0.85); g.fillRect(-w, -h, w * 2, h * 2); } g.restore(); } const squashFactor = 1 - impactSpike * 0.16 * squashAmt; const stretchFactor = 1 / Math.max(0.65, squashFactor); const offsetMajor = -sign * bounceDist * (isVert ? h : w); if (shadowAmt > 0 && bounceDist > 0.002) { g.save(); const shSize = Math.max(8, (isVert ? h : w) * 0.08 * (1 - bounceDist * 0.5)); const edgePos = isVert ? (sign > 0 ? h + offsetMajor : offsetMajor) : (sign > 0 ? w + offsetMajor : offsetMajor); const grad = isVert ? g.createLinearGradient(0, edgePos, 0, edgePos + sign * shSize) : g.createLinearGradient(edgePos, 0, edgePos + sign * shSize, 0); grad.addColorStop(0, 'rgba(0,0,0,' + (0.65 * shadowAmt) + ')'); grad.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = grad; if (isVert) { g.fillRect(0, Math.min(edgePos, edgePos + sign * shSize), w, shSize); } else { g.fillRect(Math.min(edgePos, edgePos + sign * shSize), 0, shSize, h); } g.restore(); } g.save(); if (isVert) { const pivotY = sign > 0 ? h + offsetMajor : offsetMajor; g.translate(w * 0.5, pivotY); g.scale(stretchFactor, squashFactor); for (let ox = -1; ox <= 1; ox++) { g.save(); g.translate(ox * w, 0); g.scale(ox !== 0 ? -1 : 1, 1); g.drawImage(ctx.inputB, -w * 0.5, sign > 0 ? -h : 0, w, h); g.restore(); } } else { const pivotX = sign > 0 ? w + offsetMajor : offsetMajor; g.translate(pivotX, h * 0.5); g.scale(squashFactor, stretchFactor); for (let oy = -1; oy <= 1; oy++) { g.save(); g.translate(0, oy * h); g.scale(1, oy !== 0 ? -1 : 1); g.drawImage(ctx.inputB, sign > 0 ? -w : 0, -h * 0.5, w, h); g.restore(); } } g.restore();",
+  "renderProfile": "gpu-canvas2d-v1",
+  "optionLabels": {
+    "dropOrigin": {
+      "top": "Desde Arriba (Gravedad Clásica)",
+      "bottom": "Desde Abajo (Gravedad Invertida)",
+      "left": "Desde la Izquierda (Impacto Lateral)",
+      "right": "Desde la Derecha (Impacto Lateral)"
+    }
+  }
+}

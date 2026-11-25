@@ -1,77 +1,33 @@
-# Atribución y Licencias de Componentes de Terceros
+# Componentes de terceros â€” Prometheus 3.19.9
 
-Este documento detalla todas las herramientas, bibliotecas y modelos de terceros integrados, distribuidos o consumidos por **Prometheus v1.0.0**, en estricto cumplimiento de los términos de la **GNU General Public License v3.0 (GPL-3.0)** y las licencias de cada autor original.
+Prometheus se distribuye bajo GPL-3.0-or-later. Cada componente de terceros conserva sus derechos, condiciones y avisos. Los textos originales se incluyen sin traducir ni reemplazar sus titulares por los de Prometheus.
 
----
+| Componente | Licencia principal / observaciones | Avisos |
+|---|---|---|
+| Avalonia 11.2.5, CommunityToolkit.Mvvm, Vortice, NAudio | MIT; vÃ©anse dependencias nativas y fuentes por separado | `nuget/` |
+| Jint 4.18.0 | BSD-2-Clause | `nuget/Jint-4.18.0/` |
+| Acornima 1.9.1, Adam Simon | BSD-3-Clause | `nuget/Acornima-1.9.1/` |
+| CEF y CefSharp 156 | BSD y licencias de componentes de Chromium | `vendors/` y `nuget/` |
+| SkiaSharp, HarfBuzzSharp y ANGLE | Licencias de las envolturas y avisos nativos completos | `nuget/` |
+| Inter | SIL Open Font License 1.1; independiente de la licencia del paquete Avalonia.Fonts.Inter | `vendors/Inter-OFL.txt` |
+| .NET | MIT y avisos de terceros del runtime autÃ³nomo | `dotnet/` |
+| Microsoft Visual C++ Redistributable x64 | TÃ©rminos de Microsoft separados; instalador original firmado, sin ejecutar | `vendors/VC-Redistributable-*` |
+| FFmpeg/ffprobe 9.1 (`9.1-prometheus-3.19.9`) | GPLv3 o posterior; compilaciÃ³n propia desde fuentes; incluye Rubber Band 4.0.0 | `vendors/FFmpeg-3.19.9/`, `native-components.json` y `ThirdPartySources/FFmpeg/` |
+| yt-dlp 2026.08.19 | Fuente Unlicense; ejecutable combinado GPLv3 o posterior por sus dependencias | `vendors/yt-dlp-*` |
+| Python 3.11 | PSF y avisos de sus bibliotecas | `python/` |
+| PyTorch 2.8.0, torchvision 0.23.0 | BSD-3-Clause y avisos de componentes incluidos | `python/` |
+| torchaudio 2.8.0 | BSD-2-Clause y avisos adicionales | `python/` |
+| Faster Whisper 1.2.1, CTranslate2 4.8.2, ONNX Runtime 1.30.0 | MIT y avisos nativos | `python/` |
+| PyAV 18.1.0 | CÃ³digo BSD-3-Clause; para el conjunto binario se documenta la vÃ­a GPLv3 o posterior ofrecida por el proveedor, conservando avisos individuales | `python/`, `vendors/PyAV-MSYS2/`, verificaciÃ³n y fuentes adjuntas |
+| Whisper small | MIT; tarjeta de modelo y revisiÃ³n verificadas | `vendors/` |
+| SAM 2.1 | Apache-2.0; ccTorch BSD-3-Clause | `vendors/` y repositorio adjunto |
+| CUDA 12.6 y cuDNN 9.10.2.21 | TÃ©rminos NVIDIA; no quedan cubiertos por la GPL de Prometheus | `vendors/` |
+| Certifi y tqdm | Incluyen material MPL-2.0; fuentes adjuntas | `python/` |
 
-## Tabla Resumen de Licencias
+El inventario completo de paquetes, textos copiados y sus sumas se encuentra en `components.json`. Las licencias principales de esta tabla no sustituyen los avisos transitivos del paquete. La presencia de un archivo de licencia no implica que todas las obligaciones de redistribuciÃ³n estÃ©n cerradas: revisa `docs/PUBLICACION.md` y el estado de fuentes de la entrega.
 
-| Componente | Versión | Licencia Principal | Compatibilidad GPL-3.0 | Uso en Prometheus |
-| :--- | :--- | :--- | :---: | :--- |
-| **FFmpeg / FFprobe** | 9.0.1 (Gyan Essentials) | **GPL-3.0** | Idéntica | Motor de decodificación, composición y exportación audiovisual |
-| **SAM 2.1 (Segment Anything)** | 2.1 Small (Meta AI) | **Apache 2.0** | Compatible | Máscaras inteligentes y segmentación temporal de vídeo |
-| **OpenAI Whisper** | Embed Runtime | **MIT** | Compatible | Transcripción de audio a texto y generación de subtítulos |
-| **Playwright Core** | 1.x (Microsoft) | **Apache 2.0** | Compatible | Renderizado y animación de plantillas MGT y gráficos web |
-| **Three.js** | r128 | **MIT** | Compatible | Visor y renderizador 3D de subtítulos tipográficos MGT |
-| **yt-dlp** | 2026.08.19 | **Unlicense / GPL-2.0+** | Compatible | Asistente de consulta y descarga de metadatos web |
-| **Microsoft.Web.WebView2** | 1.0.x (Microsoft) | **BSD-3-Clause** | Compatible | Control incrustado de navegador Chromium para la interfaz |
-| **Microsoft .NET Framework** | 4.8 (Microsoft) | Propietaria SO | N/A (Sistema) | Entorno de ejecución de Windows (no redistribuido) |
+El portable de esta entrega usa FFmpeg/ffprobe 9.1 compilado desde fuentes; no usa el ejecutable Gyan 9.0.1. Los archivos de Gyan que permanecen en `ThirdPartySources` son evidencia de adquisiciÃ³n, no binarios del portable. Las DLL auxiliares de FFmpeg se atribuyen por separado en `native-components.json`. PyAV 18.1.0 usa su propio conjunto de binarios FFmpeg 8.1.2, distinto del motor principal del editor. Se incluyen fuentes, parches, configuraciÃ³n y recetas de compilaciÃ³n; no se afirma una reconstrucciÃ³n bit a bit de todas las DLL auxiliares.
 
----
+La revisiÃ³n del 25 de noviembre de 2026 verificÃ³ 24 archivos NVIDIA (22 DLL distintas), la biblioteca nativa de yt-dlp y los materiales de fuentes de PyAV. Los datos se conservan en `vendors/Verification-2026-11-25` y los textos originales NVIDIA por componente en `vendors/NVIDIA-components`. La procedencia y los materiales de construcciÃ³n de FFmpeg 9.1 se documentan en `vendors/FFmpeg-3.19.9` y `ThirdPartySources/FFmpeg`.
 
-## Detalle de Componentes y Cumplimiento
-
-### 1. FFmpeg y FFprobe
-* **Licencia:** GNU General Public License v3.0 (`GPL-3.0`)
-* **Proveedor de la compilación:** `gyan.dev` (compilación 9.0.1-essentials_build).
-* **Parámetros de compilación:** Configurado con `--enable-gpl --enable-version3`, soporte CUDA/NVENC/NVDEC y bibliotecas libres asociadas. Ver archivo [`FFmpeg-build.txt`](FFmpeg-build.txt) para la orden completa.
-* **Hashes SHA-256:**
-  * `ffmpeg.exe`: `72A489ECCD008C2EC2C0A5856C5C75BC3D8BBFA90166C4566865C246445E6AA3`
-  * `ffprobe.exe`: `19202B23C0043F15AD1B7BCE2344F406FD52BD6EFD8F995CE02E7392A1CEC52F`
-* **Código fuente:** https://ffmpeg.org/download.html y https://www.gyan.dev/ffmpeg/builds/
-* **Aviso:** No se modificaron los binarios. Se invocan como procesos externos mediante tuberías estándar de comunicación entre procesos (IPC).
-
-### 2. Segment Anything Model (SAM 2.1)
-* **Licencia:** Apache License, Version 2.0 (`Apache 2.0`)
-* **Autor:** Meta AI Research
-* **Ubicación:** `runtime/sam2/`
-* **Código fuente:** https://github.com/facebookresearch/sam2
-* **Aviso de patente y copyright:** Conserva su archivo `LICENSE` original de Apache 2.0 en `runtime/sam2/repo/LICENSE`.
-
-### 3. OpenAI Whisper
-* **Licencia:** MIT License (`MIT`)
-* **Autor:** OpenAI
-* **Ubicación:** `runtime/whisper/`
-* **Código fuente:** https://github.com/openai/whisper
-* **Aviso:** Utilizado para el reconocimiento automático del habla (ASR) e inferencia local en CPU/GPU.
-
-### 4. Playwright Core y Node Runtime
-* **Licencia:** Apache License, Version 2.0 (`Apache 2.0`)
-* **Autor:** Microsoft Corporation
-* **Ubicación:** `mgt-engine/runtime/playwright-core/`
-* **Código fuente:** https://github.com/microsoft/playwright
-
-### 5. Three.js
-* **Licencia:** MIT License (`MIT`)
-* **Autor:** Ricardo Cabello (mrdoob) y colaboradores de Three.js
-* **Ubicación:** `runtime/mgt-subtitle-view/licenses/Three-LICENSE.txt`
-* **Código fuente:** https://github.com/mrdoob/three.js
-
-### 6. yt-dlp
-* **Licencia:** The Unlicense / GPL-2.0+ (con componentes GPLv3 incorporados en el standalone)
-* **Hash SHA-256:**
-  * `yt-dlp.exe`: `66674953FE251B89F4D08C5F0E35E0728679BD67AB3D7D05C0562AF101DD3E7A`
-* **Código fuente:** https://github.com/yt-dlp/yt-dlp
-* **Avisos adicionales:** Consulta [`yt-dlp-LICENSE.txt`](yt-dlp-LICENSE.txt) y [`yt-dlp-THIRD_PARTY_LICENSES.txt`](yt-dlp-THIRD_PARTY_LICENSES.txt).
-
-### 7. Microsoft WebView2 Runtime & SDK
-* **Licencia:** BSD-3-Clause / Microsoft Software License
-* **Ubicación:** Archivos de aviso en `licenses/webview2/` (`LICENSE.txt` y `NOTICE.txt`).
-* **Archivos distribuidos:** `Microsoft.Web.WebView2.Core.dll`, `Microsoft.Web.WebView2.WinForms.dll`, `WebView2Loader.dll`.
-* **Aviso:** Se redistribuyen de conformidad con la licencia de redistribución de bibliotecas nativas de Microsoft Edge WebView2.
-
----
-
-## Código Fuente de Prometheus
-
-El código fuente de Prometheus se encuentra en [`src/`](../src/) bajo licencia **GPL-3.0**. Todo usuario o desarrollador tiene derecho a inspeccionar, modificar y recompilar el software utilizando el script de compilación incluido [`Build.ps1`](../Build.ps1). El texto completo de la licencia está en [`LICENSE`](../LICENSE).
+Enlaces de referencia: https://ffmpeg.org/legal.html Â· https://github.com/yt-dlp/yt-dlp#licensing Â· https://github.com/facebookresearch/sam2 Â· https://huggingface.co/Systran/faster-whisper-small Â· https://docs.nvidia.com/cuda/archive/12.6.0/eula/index.html

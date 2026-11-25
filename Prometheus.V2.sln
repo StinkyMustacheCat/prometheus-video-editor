@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{327751DE-AAF3-479B-86AC-7A3DA24E84B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client", "src\Prometheus.Client\Prometheus.Client.csproj", "{2B4EE831-DD42-475F-B7D6-2A2A70F97720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Common", "src\Prometheus.Common\Prometheus.Common.csproj", "{D305FF5E-3423-4143-AA8E-65C422636E64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{65EBF48A-5499-490A-A51A-6CB8F9187906}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.UnitTests", "tests\Prometheus.UnitTests\Prometheus.UnitTests.csproj", "{E2033CDE-67B4-4FDC-8D6D-A2A9217B9DD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Core", "src\Prometheus.Core\Prometheus.Core.csproj", "{0B9F77C7-519C-4A11-BF56-3B612E646C5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.McpBridge", "src\Prometheus.McpBridge\Prometheus.McpBridge.csproj", "{341B408A-F51D-43EB-83EF-080B1EA0EF48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.MgtLive", "src\Prometheus.MgtLive\Prometheus.MgtLive.csproj", "{CD05A23C-A4AB-4CDE-9934-73E631F8BB61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B4EE831-DD42-475F-B7D6-2A2A70F97720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4EE831-DD42-475F-B7D6-2A2A70F97720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4EE831-DD42-475F-B7D6-2A2A70F97720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4EE831-DD42-475F-B7D6-2A2A70F97720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D305FF5E-3423-4143-AA8E-65C422636E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D305FF5E-3423-4143-AA8E-65C422636E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D305FF5E-3423-4143-AA8E-65C422636E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D305FF5E-3423-4143-AA8E-65C422636E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2033CDE-67B4-4FDC-8D6D-A2A9217B9DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2033CDE-67B4-4FDC-8D6D-A2A9217B9DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2033CDE-67B4-4FDC-8D6D-A2A9217B9DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2033CDE-67B4-4FDC-8D6D-A2A9217B9DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B9F77C7-519C-4A11-BF56-3B612E646C5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B9F77C7-519C-4A11-BF56-3B612E646C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B9F77C7-519C-4A11-BF56-3B612E646C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B9F77C7-519C-4A11-BF56-3B612E646C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{341B408A-F51D-43EB-83EF-080B1EA0EF48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{341B408A-F51D-43EB-83EF-080B1EA0EF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{341B408A-F51D-43EB-83EF-080B1EA0EF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{341B408A-F51D-43EB-83EF-080B1EA0EF48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD05A23C-A4AB-4CDE-9934-73E631F8BB61}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{CD05A23C-A4AB-4CDE-9934-73E631F8BB61}.Debug|Any CPU.Build.0 = Debug|x64
+		{CD05A23C-A4AB-4CDE-9934-73E631F8BB61}.Release|Any CPU.ActiveCfg = Release|x64
+		{CD05A23C-A4AB-4CDE-9934-73E631F8BB61}.Release|Any CPU.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B4EE831-DD42-475F-B7D6-2A2A70F97720} = {327751DE-AAF3-479B-86AC-7A3DA24E84B2}
+		{D305FF5E-3423-4143-AA8E-65C422636E64} = {327751DE-AAF3-479B-86AC-7A3DA24E84B2}
+		{E2033CDE-67B4-4FDC-8D6D-A2A9217B9DD3} = {65EBF48A-5499-490A-A51A-6CB8F9187906}
+		{0B9F77C7-519C-4A11-BF56-3B612E646C5E} = {327751DE-AAF3-479B-86AC-7A3DA24E84B2}
+		{341B408A-F51D-43EB-83EF-080B1EA0EF48} = {327751DE-AAF3-479B-86AC-7A3DA24E84B2}
+		{CD05A23C-A4AB-4CDE-9934-73E631F8BB61} = {327751DE-AAF3-479B-86AC-7A3DA24E84B2}
+	EndGlobalSection
+EndGlobal

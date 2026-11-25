@@ -1,0 +1,133 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="using:Prometheus.Client.Shell"
+        xmlns:dock="using:Prometheus.Client.Docking"
+        x:Class="Prometheus.Client.Views.MainWindow"
+        Title="Prometheus"
+        Icon="/Assets/app.ico"
+        Width="1400" Height="900"
+        MinWidth="900" MinHeight="600"
+        Background="{StaticResource BackgroundPureBlackBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}">
+
+    <Grid RowDefinitions="Auto,*,24" Background="{StaticResource BackgroundPureBlackBrush}">
+        <!-- BARRA SUPERIOR (LOGO IZQUIERDA | NOTCH CÁPSULA CENTRO | DISEÑOS DERECHA) -->
+        <Border Grid.Row="0" Background="{StaticResource BackgroundPureBlackBrush}" Padding="16,3,16,2">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <!-- 1. ESQUINA IZQUIERDA: BRANDING LOGO PROMETHEUS Y MENÚ PROYECTO -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <Image Source="/Assets/app.ico" Width="20" Height="20" VerticalAlignment="Center" />
+                    <TextBlock Text="PROMETHEUS" FontSize="12" FontWeight="Black" LetterSpacing="1" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" />
+                    <Border Background="{StaticResource BackgroundSurfaceTertiaryBrush}" CornerRadius="3" Padding="4,1" Margin="2,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Name="BuildVersionLabel" Text="" FontSize="9" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+                    </Border>
+
+                    <Button Name="ProjectMenuButton" Classes="nle-btn" Height="24" Padding="8,2" Margin="8,0,0,0">
+                        <TextBlock Text="Proyecto ▾" FontSize="10" />
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="MenuNewProject" Header="Nuevo Proyecto (Ctrl+N)" />
+                                <MenuItem Name="MenuOpenProject" Header="Abrir Proyecto... (Ctrl+O)" />
+                                <MenuItem Name="MenuRecentProjects" Header="Proyectos recientes" />
+                                <MenuItem Name="MenuCloseProject" Header="Cerrar proyecto" />
+                                <MenuItem Name="MenuRecoverProject" Header="Recuperar sesión…" />
+                                <Separator />
+                                <MenuItem Name="MenuSaveProject" Header="Guardar (Ctrl+S)" />
+                                <MenuItem Name="MenuSaveProjectAs" Header="Guardar como... (Ctrl+Shift+S)" />
+                                <MenuItem Name="MenuExportProject" Header="Exportar montaje a MP4…" />
+                                <Separator />
+                                <MenuItem Name="MenuUndo" Header="Deshacer (Ctrl+Z)" />
+                                <MenuItem Name="MenuRedo" Header="Rehacer (Ctrl+Shift+Z)" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                    <Button Name="SettingsMenuButton" Classes="nle-btn" Height="24" Padding="8,2">
+                        <TextBlock Text="Ajustes ▾" FontSize="10" />
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="MenuKeyboardShortcuts" Header="Atajos de teclado…" />
+                                <MenuItem Name="MenuWebDownloads" Header="Descargas web…" />
+                                <MenuItem Name="MenuPreviewSettings" Header="Previsualización y montaje…" />
+                                <Separator />
+                                <MenuItem Name="MenuAbout" Header="Acerca de Prometheus y licencias…" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                </StackPanel>
+
+                <!-- 2. CENTRO: NOTCH FLOTANTE TIPO GOTA (SOLO PANELES Y MINIMIZADOS) -->
+                <shell:ShelfNotchView Grid.Column="1" Name="ShelfNotch" HorizontalAlignment="Center" />
+
+                <!-- 3. ESQUINA DERECHA: BOTÓN DE DISEÑOS CON ICONO DE CAJITAS (⊞) -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                    <Button Name="McpTopButton" Classes="nle-btn" Height="26" Padding="8,2" ToolTip.Tip="Conexión MCP">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Name="McpStatusDot" Text="●" Foreground="#808080" FontSize="11" />
+                            <TextBlock Text="MCP" FontSize="10" />
+                        </StackPanel>
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="McpToggleItem" Header="Desactivar MCP" />
+                                <MenuItem Name="McpCopyConfigItem" Header="Copiar configuración MCP" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                    <Button Name="NotificationsButton" Classes="nle-btn" Height="26" Width="30" Padding="4"
+                            ToolTip.Tip="Notificaciones" AutomationProperties.Name="Notificaciones">
+                        <Grid Width="17" Height="17">
+                            <Path Data="M 3,11 L 4.5,9 L 4.5,6 A 4,4 0 0 1 12.5,6 L 12.5,9 L 14,11 Z M 7,13 A 1.5,1.5 0 0 0 10,13"
+                                  Stroke="{StaticResource TextSecondaryBrush}" StrokeThickness="1.35"/>
+                            <Ellipse Name="NotificationsDot" Width="6" Height="6" Fill="{StaticResource PrometheusOrangeBrush}"
+                                     HorizontalAlignment="Right" VerticalAlignment="Top" IsVisible="False" />
+                        </Grid>
+                    </Button>
+                    <Button Name="LayoutsGridButton" Classes="nle-btn" ToolTip.Tip="Diseños de espacio de trabajo" Height="26" Padding="8,2">
+                        <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                            <TextBlock Text="⊞" FontSize="13" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" VerticalAlignment="Center" />
+                            <TextBlock Name="ActiveLayoutLabel" Text="Equilibrado" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Text="▾" FontSize="9" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <Button.ContextMenu>
+                            <ContextMenu Name="PresetsContextMenu">
+                                <MenuItem Name="PresetEquilibradoItem" Header="Equilibrado" />
+                                <MenuItem Name="PresetMontajeItem" Header="Montaje" />
+                                <MenuItem Name="PresetBRollItem" Header="B-Roll" />
+                                <MenuItem Name="PresetRevisionItem" Header="Revisión" />
+                                <MenuItem Name="PresetEdicionCompletaItem" Header="Edición Completa" />
+                                <MenuItem Name="PresetPersonalizadoItem" Header="Personalizado" />
+                                <Separator />
+                                <MenuItem Name="PresetResetItem" Header="↺ Restablecer diseño actual" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                    <Button Name="ExportTopButton" Classes="nle-accent" Content="Exportar" Height="26" Padding="12,2" Margin="8,0,0,0" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- CONTENEDOR PRINCIPAL DE DOCKING Y LIENZO FLOTANTE INTERNO MDI -->
+        <dock:DockContainerControl Grid.Row="1" Name="DockContainer" />
+
+        <!-- BARRA DE ESTADO INFERIOR -->
+        <Border Grid.Row="2" Background="{StaticResource BackgroundPanelHeaderBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,1,0,0" Padding="12,0">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="●" FontSize="9" Foreground="{StaticResource PrometheusOrangeBrush}" VerticalAlignment="Center" />
+                    <TextBlock Name="StatusBarStatus" Text="Listo" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16" VerticalAlignment="Center">
+                    <TextBlock Name="StatusBarVideoFormat" Text="" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" />
+                    <TextBlock Name="StatusBarAudioFormat" Text="" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" />
+                    <TextBlock Text="Motor: Avalonia UI Direct3D" FontSize="10" Foreground="{StaticResource TextMutedBrush}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                    <TextBlock Name="StatusBarProject" Text="Proyecto: Sin título" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                    <Separator Width="1" Height="10" Background="{StaticResource BorderSubtleBrush}" />
+                    <TextBlock Name="StatusBarLayout" Text="Diseño: Equilibrado" FontSize="10" Foreground="{StaticResource PrometheusOrangeBrush}" VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,761 @@
+{
+  "python_version": 310,
+  "python_library": "python310.dll",
+  "entries": [
+    {
+      "name": "struct",
+      "kind": "m",
+      "bytes": 271
+    },
+    {
+      "name": "pyimod01_archive",
+      "kind": "m",
+      "bytes": 3125
+    },
+    {
+      "name": "pyimod02_importers",
+      "kind": "m",
+      "bytes": 22883
+    },
+    {
+      "name": "pyimod03_ctypes",
+      "kind": "m",
+      "bytes": 3620
+    },
+    {
+      "name": "pyimod04_pywin32",
+      "kind": "m",
+      "bytes": 1053
+    },
+    {
+      "name": "pyiboot01_bootstrap",
+      "kind": "s",
+      "bytes": 970
+    },
+    {
+      "name": "pyi_rth_inspect",
+      "kind": "s",
+      "bytes": 1503
+    },
+    {
+      "name": "pyi_rth_pkgutil",
+      "kind": "s",
+      "bytes": 910
+    },
+    {
+      "name": "pyi_rth_multiprocessing",
+      "kind": "s",
+      "bytes": 1442
+    },
+    {
+      "name": "__main__",
+      "kind": "s",
+      "bytes": 355
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_ARC4.pyd",
+      "kind": "b",
+      "bytes": 10752
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_Salsa20.pyd",
+      "kind": "b",
+      "bytes": 13824
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_chacha20.pyd",
+      "kind": "b",
+      "bytes": 13312
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_pkcs1_decode.pyd",
+      "kind": "b",
+      "bytes": 13312
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_aes.pyd",
+      "kind": "b",
+      "bytes": 35328
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_aesni.pyd",
+      "kind": "b",
+      "bytes": 15360
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_arc2.pyd",
+      "kind": "b",
+      "bytes": 14848
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_blowfish.pyd",
+      "kind": "b",
+      "bytes": 19456
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_cast.pyd",
+      "kind": "b",
+      "bytes": 24064
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_cbc.pyd",
+      "kind": "b",
+      "bytes": 11776
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_cfb.pyd",
+      "kind": "b",
+      "bytes": 12288
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_ctr.pyd",
+      "kind": "b",
+      "bytes": 14848
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_des.pyd",
+      "kind": "b",
+      "bytes": 52736
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_des3.pyd",
+      "kind": "b",
+      "bytes": 52736
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_ecb.pyd",
+      "kind": "b",
+      "bytes": 10240
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_eksblowfish.pyd",
+      "kind": "b",
+      "bytes": 20480
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_ocb.pyd",
+      "kind": "b",
+      "bytes": 17920
+    },
+    {
+      "name": "Cryptodome\\Cipher\\_raw_ofb.pyd",
+      "kind": "b",
+      "bytes": 11776
+    },
+    {
+      "name": "Cryptodome\\Hash\\_BLAKE2b.pyd",
+      "kind": "b",
+      "bytes": 14336
+    },
+    {
+      "name": "Cryptodome\\Hash\\_BLAKE2s.pyd",
+      "kind": "b",
+      "bytes": 13824
+    },
+    {
+      "name": "Cryptodome\\Hash\\_MD2.pyd",
+      "kind": "b",
+      "bytes": 14336
+    },
+    {
+      "name": "Cryptodome\\Hash\\_MD4.pyd",
+      "kind": "b",
+      "bytes": 13824
+    },
+    {
+      "name": "Cryptodome\\Hash\\_MD5.pyd",
+      "kind": "b",
+      "bytes": 15360
+    },
+    {
+      "name": "Cryptodome\\Hash\\_RIPEMD160.pyd",
+      "kind": "b",
+      "bytes": 13824
+    },
+    {
+      "name": "Cryptodome\\Hash\\_SHA1.pyd",
+      "kind": "b",
+      "bytes": 17920
+    },
+    {
+      "name": "Cryptodome\\Hash\\_SHA224.pyd",
+      "kind": "b",
+      "bytes": 21504
+    },
+    {
+      "name": "Cryptodome\\Hash\\_SHA256.pyd",
+      "kind": "b",
+      "bytes": 21504
+    },
+    {
+      "name": "Cryptodome\\Hash\\_SHA384.pyd",
+      "kind": "b",
+      "bytes": 26112
+    },
+    {
+      "name": "Cryptodome\\Hash\\_SHA512.pyd",
+      "kind": "b",
+      "bytes": 26112
+    },
+    {
+      "name": "Cryptodome\\Hash\\_ghash_clmul.pyd",
+      "kind": "b",
+      "bytes": 12800
+    },
+    {
+      "name": "Cryptodome\\Hash\\_ghash_portable.pyd",
+      "kind": "b",
+      "bytes": 12288
+    },
+    {
+      "name": "Cryptodome\\Hash\\_keccak.pyd",
+      "kind": "b",
+      "bytes": 15360
+    },
+    {
+      "name": "Cryptodome\\Hash\\_poly1305.pyd",
+      "kind": "b",
+      "bytes": 13824
+    },
+    {
+      "name": "Cryptodome\\Math\\_modexp.pyd",
+      "kind": "b",
+      "bytes": 30720
+    },
+    {
+      "name": "Cryptodome\\Protocol\\_scrypt.pyd",
+      "kind": "b",
+      "bytes": 12288
+    },
+    {
+      "name": "Cryptodome\\PublicKey\\_curve25519.pyd",
+      "kind": "b",
+      "bytes": 19456
+    },
+    {
+      "name": "Cryptodome\\PublicKey\\_curve448.pyd",
+      "kind": "b",
+      "bytes": 58880
+    },
+    {
+      "name": "Cryptodome\\PublicKey\\_ec_ws.pyd",
+      "kind": "b",
+      "bytes": 755200
+    },
+    {
+      "name": "Cryptodome\\PublicKey\\_ed25519.pyd",
+      "kind": "b",
+      "bytes": 23552
+    },
+    {
+      "name": "Cryptodome\\PublicKey\\_ed448.pyd",
+      "kind": "b",
+      "bytes": 74752
+    },
+    {
+      "name": "Cryptodome\\Util\\_cpuid_c.pyd",
+      "kind": "b",
+      "bytes": 10240
+    },
+    {
+      "name": "Cryptodome\\Util\\_strxor.pyd",
+      "kind": "b",
+      "bytes": 10240
+    },
+    {
+      "name": "THIRD_PARTY_LICENSES.txt",
+      "kind": "b",
+      "bytes": 248243
+    },
+    {
+      "name": "VCRUNTIME140.dll",
+      "kind": "b",
+      "bytes": 98224
+    },
+    {
+      "name": "_asyncio.pyd",
+      "kind": "b",
+      "bytes": 65304
+    },
+    {
+      "name": "_brotli.cp310-win_amd64.pyd",
+      "kind": "b",
+      "bytes": 856576
+    },
+    {
+      "name": "_bz2.pyd",
+      "kind": "b",
+      "bytes": 83736
+    },
+    {
+      "name": "_cffi_backend.cp310-win_amd64.pyd",
+      "kind": "b",
+      "bytes": 179712
+    },
+    {
+      "name": "_ctypes.pyd",
+      "kind": "b",
+      "bytes": 123672
+    },
+    {
+      "name": "_decimal.pyd",
+      "kind": "b",
+      "bytes": 254744
+    },
+    {
+      "name": "_elementtree.pyd",
+      "kind": "b",
+      "bytes": 128280
+    },
+    {
+      "name": "_hashlib.pyd",
+      "kind": "b",
+      "bytes": 64792
+    },
+    {
+      "name": "_lzma.pyd",
+      "kind": "b",
+      "bytes": 158488
+    },
+    {
+      "name": "_multiprocessing.pyd",
+      "kind": "b",
+      "bytes": 34584
+    },
+    {
+      "name": "_overlapped.pyd",
+      "kind": "b",
+      "bytes": 49944
+    },
+    {
+      "name": "_queue.pyd",
+      "kind": "b",
+      "bytes": 31512
+    },
+    {
+      "name": "_socket.pyd",
+      "kind": "b",
+      "bytes": 79128
+    },
+    {
+      "name": "_sqlite3.pyd",
+      "kind": "b",
+      "bytes": 99096
+    },
+    {
+      "name": "_ssl.pyd",
+      "kind": "b",
+      "bytes": 160536
+    },
+    {
+      "name": "_uuid.pyd",
+      "kind": "b",
+      "bytes": 25368
+    },
+    {
+      "name": "api-ms-win-core-console-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22072
+    },
+    {
+      "name": "api-ms-win-core-datetime-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-core-debug-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 21944
+    },
+    {
+      "name": "api-ms-win-core-errorhandling-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22096
+    },
+    {
+      "name": "api-ms-win-core-fibers-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22072
+    },
+    {
+      "name": "api-ms-win-core-fibers-l1-1-1.dll",
+      "kind": "b",
+      "bytes": 22072
+    },
+    {
+      "name": "api-ms-win-core-file-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 26152
+    },
+    {
+      "name": "api-ms-win-core-file-l1-2-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-core-file-l2-1-0.dll",
+      "kind": "b",
+      "bytes": 21960
+    },
+    {
+      "name": "api-ms-win-core-handle-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 21944
+    },
+    {
+      "name": "api-ms-win-core-heap-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22072
+    },
+    {
+      "name": "api-ms-win-core-interlocked-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22072
+    },
+    {
+      "name": "api-ms-win-core-kernel32-legacy-l1-1-1.dll",
+      "kind": "b",
+      "bytes": 22080
+    },
+    {
+      "name": "api-ms-win-core-libraryloader-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-core-localization-l1-2-0.dll",
+      "kind": "b",
+      "bytes": 22080
+    },
+    {
+      "name": "api-ms-win-core-memory-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-core-namedpipe-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22096
+    },
+    {
+      "name": "api-ms-win-core-processenvironment-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 21968
+    },
+    {
+      "name": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22096
+    },
+    {
+      "name": "api-ms-win-core-processthreads-l1-1-1.dll",
+      "kind": "b",
+      "bytes": 22072
+    },
+    {
+      "name": "api-ms-win-core-profile-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22080
+    },
+    {
+      "name": "api-ms-win-core-rtlsupport-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 21960
+    },
+    {
+      "name": "api-ms-win-core-string-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-core-synch-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-core-synch-l1-2-0.dll",
+      "kind": "b",
+      "bytes": 22080
+    },
+    {
+      "name": "api-ms-win-core-sysinfo-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22072
+    },
+    {
+      "name": "api-ms-win-core-sysinfo-l1-2-0.dll",
+      "kind": "b",
+      "bytes": 22080
+    },
+    {
+      "name": "api-ms-win-core-timezone-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-core-util-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 21944
+    },
+    {
+      "name": "api-ms-win-crt-conio-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-crt-convert-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 26056
+    },
+    {
+      "name": "api-ms-win-crt-environment-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22080
+    },
+    {
+      "name": "api-ms-win-crt-filesystem-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22056
+    },
+    {
+      "name": "api-ms-win-crt-heap-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22096
+    },
+    {
+      "name": "api-ms-win-crt-locale-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22080
+    },
+    {
+      "name": "api-ms-win-crt-math-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 30248
+    },
+    {
+      "name": "api-ms-win-crt-process-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22096
+    },
+    {
+      "name": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 26152
+    },
+    {
+      "name": "api-ms-win-crt-stdio-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 26168
+    },
+    {
+      "name": "api-ms-win-crt-string-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 26176
+    },
+    {
+      "name": "api-ms-win-crt-time-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 22096
+    },
+    {
+      "name": "api-ms-win-crt-utility-l1-1-0.dll",
+      "kind": "b",
+      "bytes": 21952
+    },
+    {
+      "name": "base_library.zip",
+      "kind": "b",
+      "bytes": 880569
+    },
+    {
+      "name": "certifi\\cacert.pem",
+      "kind": "b",
+      "bytes": 240216
+    },
+    {
+      "name": "certifi\\py.typed",
+      "kind": "b",
+      "bytes": 0
+    },
+    {
+      "name": "charset_normalizer\\cd.cp310-win_amd64.pyd",
+      "kind": "b",
+      "bytes": 114176
+    },
+    {
+      "name": "charset_normalizer\\md.cp310-win_amd64.pyd",
+      "kind": "b",
+      "bytes": 200192
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\DELVEWHEEL",
+      "kind": "b",
+      "bytes": 446
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\INSTALLER",
+      "kind": "b",
+      "bytes": 4
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\METADATA",
+      "kind": "b",
+      "bytes": 17867
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\RECORD",
+      "kind": "b",
+      "bytes": 5010
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\REQUESTED",
+      "kind": "b",
+      "bytes": 0
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\WHEEL",
+      "kind": "b",
+      "bytes": 100
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\entry_points.txt",
+      "kind": "b",
+      "bytes": 49
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\licenses\\LICENSE",
+      "kind": "b",
+      "bytes": 1129
+    },
+    {
+      "name": "curl_cffi-0.16.0.dist-info\\top_level.txt",
+      "kind": "b",
+      "bytes": 10
+    },
+    {
+      "name": "curl_cffi.libs\\libcurl-impersonate-ec8ead0e422fe4ae62a99233a63f6007.dll",
+      "kind": "b",
+      "bytes": 3881472
+    },
+    {
+      "name": "curl_cffi\\_wrapper.pyd",
+      "kind": "b",
+      "bytes": 39424
+    },
+    {
+      "name": "libcrypto-1_1.dll",
+      "kind": "b",
+      "bytes": 3450648
+    },
+    {
+      "name": "libffi-7.dll",
+      "kind": "b",
+      "bytes": 32792
+    },
+    {
+      "name": "libssl-1_1.dll",
+      "kind": "b",
+      "bytes": 704792
+    },
+    {
+      "name": "pyexpat.pyd",
+      "kind": "b",
+      "bytes": 198936
+    },
+    {
+      "name": "python3.dll",
+      "kind": "b",
+      "bytes": 66328
+    },
+    {
+      "name": "python310.dll",
+      "kind": "b",
+      "bytes": 4458776
+    },
+    {
+      "name": "select.pyd",
+      "kind": "b",
+      "bytes": 29976
+    },
+    {
+      "name": "sqlite3.dll",
+      "kind": "b",
+      "bytes": 1511192
+    },
+    {
+      "name": "ucrtbase.dll",
+      "kind": "b",
+      "bytes": 1361448
+    },
+    {
+      "name": "unicodedata.pyd",
+      "kind": "b",
+      "bytes": 1123608
+    },
+    {
+      "name": "websockets-16.1.1.dist-info\\INSTALLER",
+      "kind": "b",
+      "bytes": 4
+    },
+    {
+      "name": "websockets-16.1.1.dist-info\\METADATA",
+      "kind": "b",
+      "bytes": 6980
+    },
+    {
+      "name": "websockets-16.1.1.dist-info\\RECORD",
+      "kind": "b",
+      "bytes": 7741
+    },
+    {
+      "name": "websockets-16.1.1.dist-info\\REQUESTED",
+      "kind": "b",
+      "bytes": 0
+    },
+    {
+      "name": "websockets-16.1.1.dist-info\\WHEEL",
+      "kind": "b",
+      "bytes": 101
+    },
+    {
+      "name": "websockets-16.1.1.dist-info\\entry_points.txt",
+      "kind": "b",
+      "bytes": 51
+    },
+    {
+      "name": "websockets-16.1.1.dist-info\\licenses\\LICENSE",
+      "kind": "b",
+      "bytes": 1538
+    },
+    {
+      "name": "websockets-16.1.1.dist-info\\top_level.txt",
+      "kind": "b",
+      "bytes": 11
+    },
+    {
+      "name": "websockets\\speedups.cp310-win_amd64.pyd",
+      "kind": "b",
+      "bytes": 11264
+    },
+    {
+      "name": "yt_dlp_ejs\\yt\\solver\\core.min.js",
+      "kind": "b",
+      "bytes": 6945
+    },
+    {
+      "name": "yt_dlp_ejs\\yt\\solver\\lib.min.js",
+      "kind": "b",
+      "bytes": 151561
+    },
+    {
+      "name": "pyi-contents-directory _internal",
+      "kind": "o",
+      "bytes": 0
+    },
+    {
+      "name": "PYZ.pyz",
+      "kind": "z",
+      "bytes": 7059909
+    }
+  ]
+}

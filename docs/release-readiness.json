@@ -1,0 +1,163 @@
+{
+  "version": "3.19.9",
+  "source_repository_prepared": true,
+  "public_binary_release_ready": true,
+  "prepared_for": "public GitHub release v3.19.9 (release/3.19.9; main and v1.0.0 preserved)",
+  "checks": {
+    "unit_tests": {
+      "passed": 507,
+      "failed": 0,
+      "skipped": 0
+    },
+    "self_contained_build": "passed Windows x64",
+    "chromium_credits": "exported from bundled Chromium 156.0.8078.80, full text included",
+    "vendor_ffmpeg_executables": "Own FFmpeg 9.1 build with Rubber Band 4.0.0; sources, generated configuration, build recipe and logs included.",
+    "vendor_ytdlp_executable": "SHA-256 matches official 2026.08.19 checksums",
+    "whisper_model": "SHA-256 matches pinned Systran/faster-whisper-small",
+    "cudnn": "version 9.10.2.21, DLL comparison and original archive license captured",
+    "portable_mcp": "self-contained initialization passed; 11 tools",
+    "portable_gpu": "CEF GPU, alpha, live parameters and cross-process sharing passed",
+    "portable_ai": "relocated Python imports, CUDA detection and offline Whisper CPU model load passed; SAM inference not retested",
+    "sam_checkpoint": "SHA-256 matches pinned facebook/sam2.1-hiera-small",
+    "nvidia_redistributables": {
+      "status": "verified_technical_mapping",
+      "distinct_torch_dlls": 22,
+      "additional_identical_copies": 2,
+      "official_archive_hashes_verified": true,
+      "all_dll_bytes_match": true,
+      "all_torch_record_hashes_match": true,
+      "notices": "licenses/vendors/NVIDIA-components",
+      "evidence": "licenses/vendors/Verification-2026-11-25/nvidia-verification.json",
+      "condition": "Retain and comply with the original separate NVIDIA terms; this is not a blanket relicensing of NVIDIA files."
+    },
+    "ytdlp_native_dependencies": {
+      "status": "verified_for_bundled_windows_executable",
+      "dll_and_wrapper_match_official_wheel": true,
+      "backend": "WinIDN",
+      "runtime_version": "libcurl/8.21.0-IMPERSONATE BoringSSL zlib/1.3.1 brotli/1.2.0 zstd/1.5.7 WinIDN nghttp2/1.63.0 ngtcp2/1.20.0 nghttp3/1.15.0",
+      "evidence": "licenses/vendors/Verification-2026-11-25/ytdlp-verification.json"
+    },
+    "pyav_source_materials": {
+      "status": "source_materials_recovered_GPL_route",
+      "official_wheel_native_files_verified": 74,
+      "vendor_commit": "a71bf9279f7a4659154b68ba6783e89be460bcd5",
+      "repair_tool": "delvewheel 1.13.0",
+      "msys_source_bundles_recovered": 5,
+      "basis": "Official PyPI wheel hash, historical upstream release-to-commit mapping, pinned vendor recipes and dependency archives, MSYS executable-section comparisons and source packages including original upstream code, patches and PKGBUILD.",
+      "limitations": [
+        "No bit-identical rebuild was performed. MSYS DLL executable sections match official packages; whole-file hashes differ as expected after strip and delvewheel repair.",
+        "Two adjacent winpthreads package revisions have matching executable sections; both source snapshots will be preserved. Winpthreads is MIT AND BSD-3-Clause-Clear, not LGPL."
+      ],
+      "evidence": "licenses/vendors/Verification-2026-11-25/pyav-verification.json"
+    },
+    "ffmpeg_source_closure": {
+      "source_bundles": 134,
+      "upstream_source_and_patch_checksums": 470,
+      "rubberband_files_matched_to_official_commit": 169,
+      "native_inventory": "licenses/native-components.json",
+      "evidence": "licenses/vendors/FFmpeg-3.19.9"
+    },
+    "exports": {
+      "passed": true,
+      "formats": [
+        {
+          "file": "h264.mp4",
+          "codec": "h264",
+          "duration": 1.0,
+          "pixel_format": "yuv420p",
+          "frames": "30",
+          "color_space": "bt709"
+        },
+        {
+          "file": "h264-cpu.mp4",
+          "codec": "h264",
+          "duration": 1.0,
+          "pixel_format": "yuv420p",
+          "frames": "30",
+          "color_space": "bt709"
+        },
+        {
+          "file": "hevc.mp4",
+          "codec": "hevc",
+          "duration": 1.0,
+          "pixel_format": "yuv420p",
+          "frames": "30",
+          "color_space": "bt709"
+        },
+        {
+          "file": "hevc-cpu.mp4",
+          "codec": "hevc",
+          "duration": 1.0,
+          "pixel_format": "yuv420p",
+          "frames": "30",
+          "color_space": "bt709"
+        },
+        {
+          "file": "422.mov",
+          "codec": "prores",
+          "duration": 1.0,
+          "pixel_format": "yuv422p10le",
+          "frames": "30",
+          "color_space": "bt709"
+        },
+        {
+          "file": "4444.mov",
+          "codec": "prores",
+          "duration": 1.0,
+          "pixel_format": "yuva444p12le",
+          "frames": "30",
+          "color_space": "bt709"
+        },
+        {
+          "file": "audio.wav",
+          "codec": "pcm_s16le",
+          "duration": 1.0,
+          "pixel_format": null,
+          "frames": null,
+          "color_space": null
+        }
+      ],
+      "prores4444_alpha_range": [
+        0,
+        129
+      ],
+      "gpu_vs_cpu_color_mean_absolute_error": 0.001851851851851852,
+      "rubberband_input_hz": 440,
+      "rubberband_output_hz": 660.0,
+      "ffmpeg_nvenc_encoders": [
+        "h264_nvenc",
+        "hevc_nvenc"
+      ]
+    },
+    "portable": {
+      "passed": true,
+      "checks": [
+        "self-contained MCP: 11 tools",
+        "bundled FFmpeg with Windows-only PATH",
+        "CEF GPU texture, alpha, live parameters and interprocess sharing",
+        "relocated Python imports, CUDA detection and local Whisper load"
+      ]
+    },
+    "source_build": {
+      "passed": true,
+      "sdk": "8.0.427",
+      "empty_nuget_cache": true,
+      "local_feed_only": true,
+      "components": [
+        "Client",
+        "McpBridge",
+        "MgtLive"
+      ],
+      "offline_nuget_packages": 175,
+      "rebuilt_mcp_and_multimedia_startup": true
+    }
+  },
+  "publication_holds": [],
+  "limitations": [
+    ".NET 8 reached end of vendor support on 2026-11-10; migration is not part of this packaging change.",
+    "Other Windows PCs and AMD GPUs have not been validated.",
+    "Native dependencies require the Microsoft Visual C++ x64 runtime. The signed official installer is included, not executed. Its separate original terms accompany the installer."
+  ],
+  "verification_revision": 3,
+  "verified_on": "2026-11-25"
+}

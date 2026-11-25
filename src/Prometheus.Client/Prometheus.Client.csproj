@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Version>3.19.9</Version>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MgtTransitionPilot)' == 'true'">
+    <DefineConstants>$(DefineConstants);MGT_TRANSITION_PILOT</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+    <Content Include="Runtime\sam2_bridge.py" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Runtime\sam2_track.py" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Runtime\MgtTransitions\*.mgt.json" CopyToOutputDirectory="PreserveNewest" Condition="'$(MgtTransitionPilot)' != 'true'" />
+    <Content Include="Runtime\MgtTransitions\mgt.kinetic.pop-spring.mgt.json;Runtime\MgtTransitions\mgt.shader.cyber-glitch.mgt.json;Runtime\MgtTransitions\mgt.shader.rich-blur.mgt.json"
+             CopyToOutputDirectory="PreserveNewest" Condition="'$(MgtTransitionPilot)' == 'true'" />
+    <Content Include="Runtime\whisper_bridge.py" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Prometheus.UnitTests" />
+    <PackageReference Include="Avalonia" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.5">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Vortice.D3DCompiler" Version="3.8.3" />
+    <PackageReference Include="Vortice.Direct2D1" Version="3.8.3" />
+    <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
+    <PackageReference Include="Vortice.DXGI" Version="3.8.3" />
+    <PackageReference Include="Vortice.MediaFoundation" Version="3.8.3" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Prometheus.Common\Prometheus.Common.csproj" />
+    <ProjectReference Include="..\Prometheus.Core\Prometheus.Core.csproj" />
+  </ItemGroup>
+</Project>

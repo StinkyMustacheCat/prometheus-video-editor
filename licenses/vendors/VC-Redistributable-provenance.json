@@ -1,0 +1,7 @@
+{
+  "requested_url": "https://aka.ms/vc14/vc_redist.x64.exe",
+  "resolved_url": "https://download.visualstudio.microsoft.com/download/pr/78d061c5-9ef3-42ab-98ed-3309d1095dc4/9C02C9ED120F671B900E6B9471D890E3B2414117A7E53F4AE2E855466FA2B7C9/VC_redist.x64.exe",
+  "sha256": "9c02c9ed120f671b900e6b9471d890e3b2414117a7e53f4ae2e855466fa2b7c9",
+  "bytes": 18863624,
+  "note": "Installer included for clean Windows prerequisites; not run during preparation. Separate Microsoft terms apply."
+}

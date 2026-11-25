@@ -1,0 +1,80 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Prometheus.Client.Panels.ColorPanelView">
+    <Grid RowDefinitions="Auto,*" Background="{StaticResource BackgroundPureBlackBrush}">
+        <!-- HEADER -->
+        <Border Grid.Row="0" Background="{StaticResource BackgroundPanelHeaderBrush}" Padding="10,6" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,0,1">
+            <TextBlock Text="COLOR Y GRADACIÓN CROMÁTICA" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" />
+        </Border>
+
+        <!-- LISTA DE CÁPSULAS -->
+        <ScrollViewer Grid.Row="1" Padding="10">
+            <StackPanel Spacing="10">
+                <!-- CÁPSULA 1: RUEDAS CROMÁTICAS DE 3 VÍAS -->
+                <Border Classes="capsule">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Ruedas Cromáticas de 3 Vías" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+
+                        <UniformGrid Columns="3" Margin="0,4">
+                            <!-- LIFT -->
+                            <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                <TextBlock Text="LIFT" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" />
+                                <Border Width="65" Height="65" CornerRadius="33" Background="#0C0C0C" BorderBrush="{StaticResource BorderCapsuleBrush}" BorderThickness="1">
+                                    <Ellipse Width="8" Height="8" Fill="{StaticResource PrometheusOrangeBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <Slider Width="65" Minimum="-1" Maximum="1" Value="0" />
+                            </StackPanel>
+
+                            <!-- GAMMA -->
+                            <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                <TextBlock Text="GAMMA" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" />
+                                <Border Width="65" Height="65" CornerRadius="33" Background="#0C0C0C" BorderBrush="{StaticResource BorderCapsuleBrush}" BorderThickness="1">
+                                    <Ellipse Width="8" Height="8" Fill="{StaticResource PrometheusOrangeBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <Slider Width="65" Minimum="-1" Maximum="1" Value="0" />
+                            </StackPanel>
+
+                            <!-- GAIN -->
+                            <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                <TextBlock Text="GAIN" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" />
+                                <Border Width="65" Height="65" CornerRadius="33" Background="#0C0C0C" BorderBrush="{StaticResource BorderCapsuleBrush}" BorderThickness="1">
+                                    <Ellipse Width="8" Height="8" Fill="{StaticResource PrometheusOrangeBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <Slider Width="65" Minimum="-1" Maximum="1" Value="0" />
+                            </StackPanel>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+
+                <!-- CÁPSULA 2: AJUSTES PRIMARIOS Y LUTS -->
+                <Border Classes="capsule">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Ajustes Primarios y LUTs" FontSize="10" FontWeight="Bold" Foreground="{StaticResource PrometheusOrangeBrush}" />
+
+                        <Grid ColumnDefinitions="80,*">
+                            <TextBlock Text="Tabla LUT:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <ComboBox Grid.Column="1" SelectedIndex="0" FontSize="10" Height="26" Padding="6,2" HorizontalAlignment="Stretch">
+                                <ComboBoxItem Content="Ninguna (Paso directo)" />
+                                <ComboBoxItem Content="Cinematic_TealOrange.cube" />
+                                <ComboBoxItem Content="Kodak_2383_D65.cube" />
+                                <ComboBoxItem Content="Rec709_Neutral.cube" />
+                            </ComboBox>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="80,*,30">
+                            <TextBlock Text="Temperatura:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Grid.Column="1" Minimum="-100" Maximum="100" Value="0" />
+                            <TextBlock Grid.Column="2" Text="0" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="80,*,30">
+                            <TextBlock Text="Saturación:" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <Slider Grid.Column="1" Minimum="0" Maximum="200" Value="100" />
+                            <TextBlock Grid.Column="2" Text="100" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextAlignment="Right" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

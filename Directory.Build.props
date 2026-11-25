@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <Authors>Nicolas &amp; Prometheus Contributors</Authors>
+    <Version>3.19.9</Version>
+    <Copyright>Copyright (C) 2026 Nicolas &amp; Prometheus Contributors</Copyright>
+    <RepositoryUrl>https://github.com/StinkyMustacheCat/prometheus-video-editor</RepositoryUrl>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <Deterministic>true</Deterministic>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+</Project>

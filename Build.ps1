@@ -1,71 +1,42 @@
-param(
-    [string]$OutDir = "$PSScriptRoot\bin",
-    [string]$Configuration = "Release"
-)
-
+﻿[CmdletBinding()]
+param([string]$Output = (Join-Path $PSScriptRoot 'dist\Prometheus-3.19.9'), [string]$ToolsDirectory,
+      [string]$RuntimeDirectory, [string]$Dotnet = 'dotnet', [switch]$Offline,
+      [string]$DependenciesDirectory = (Join-Path $PSScriptRoot 'Dependencies'))
 $ErrorActionPreference = 'Stop'
-$repoRoot = $PSScriptRoot
-$out = [System.IO.Path]::GetFullPath($OutDir)
-$lib = Join-Path $repoRoot "lib"
-
-Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "       PROMETHEUS 1.0.0 - PROCESO DE COMPILACION           " -ForegroundColor Cyan
-Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "Directorio de salida: $out"
-Write-Host "Configuracion:        $Configuration (x64)"
-Write-Host ""
-
-New-Item -ItemType Directory -Force -Path $out | Out-Null
-
-# Copiar dependencias de runtime y enlaces WebView2
-Write-Host "Copiando librerias nativas y ensamblados de lib/..." -ForegroundColor Yellow
-Copy-Item (Join-Path $lib "*.dll") -Destination $out -Force
-if (Test-Path "$repoRoot\src\Prometheus\Prometheus.exe.config") {
-    Copy-Item "$repoRoot\src\Prometheus\Prometheus.exe.config" -Destination "$out\Prometheus.exe.config" -Force
-}
-
-# Intentar compilar mediante MSBuild (Estandar Visual Studio)
-$msbuildPaths = @(
-    (Join-Path $env:WINDIR "Microsoft.NET\Framework64\v4.0.30319\msbuild.exe"),
-    "msbuild.exe"
-)
-$msbuildExe = $msbuildPaths | Where-Object { Test-Path $_ } | Select-Object -First 1
-
-if ($msbuildExe) {
-    Write-Host "Compilando solucion completa con MSBuild ($msbuildExe)..." -ForegroundColor Green
-    & $msbuildExe "$repoRoot\Prometheus.sln" /p:Configuration=$Configuration /p:Platform=x64 "/p:OutputPath=$out\" /v:minimal /nologo
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host ""
-        Write-Host ">>> COMPILACION EXITOSA DE PROMETHEUS 1.0.0 (MSBuild) <<<" -ForegroundColor Green
-        exit 0
+Push-Location -LiteralPath $PSScriptRoot
+try {
+    foreach ($component in @('Prometheus.Client','Prometheus.McpBridge','Prometheus.MgtLive')) {
+        $project = Join-Path $PSScriptRoot "src\$component\$component.csproj"
+        $target = if ($component -eq 'Prometheus.Client') { $Output } elseif ($component -eq 'Prometheus.McpBridge') {
+            Join-Path $Output 'McpBridge'
+        } else { Join-Path $Output 'MgtLive' }
+        $restoreArguments = @('restore', $project, '-r', 'win-x64', '--locked-mode')
+        if ($Offline) { $restoreArguments += @('--configfile', (Join-Path $DependenciesDirectory 'NuGet.Config')) }
+        & $Dotnet @restoreArguments
+        if ($LASTEXITCODE -ne 0) { throw "No se restauraron las dependencias de $component" }
+        & $Dotnet publish $project -c Release -r win-x64 --self-contained true --no-restore -o $target '-p:DebugType=None' '-p:DebugSymbols=false'
+        if ($LASTEXITCODE -ne 0) { throw "No se compilÃƒÂ³ $component" }
     }
-}
-
-# Modo de reserva: Compilacion directa rapida con csc.exe
-Write-Host "Compilando proyectos mediante csc.exe..." -ForegroundColor Yellow
-$cscExe = Join-Path $env:WINDIR "Microsoft.NET\Framework64\v4.0.30319\csc.exe"
-
-Write-Host "1/4 Compilando Prometheus.Core.dll..."
-$coreFiles = Get-ChildItem "$repoRoot\src\Prometheus.Core\*.cs" | ForEach-Object { $_.FullName }
-& $cscExe /nologo /target:library /platform:x64 /optimize+ /reference:System.Web.Extensions.dll "/out:$out\Prometheus.Core.dll" $coreFiles
-if ($LASTEXITCODE -ne 0) { throw "Error al compilar Prometheus.Core" }
-
-Write-Host "2/4 Compilando Prometheus.Media.dll..."
-$mediaFiles = Get-ChildItem "$repoRoot\src\Prometheus.Media\*.cs" | ForEach-Object { $_.FullName }
-& $cscExe /nologo /target:library /platform:x64 /optimize+ /reference:System.Web.Extensions.dll /reference:System.Drawing.dll "/reference:$out\Prometheus.Core.dll" "/out:$out\Prometheus.Media.dll" $mediaFiles
-if ($LASTEXITCODE -ne 0) { throw "Error al compilar Prometheus.Media" }
-
-Write-Host "3/4 Compilando Prometheus.Rendering.dll..."
-$renderingFiles = Get-ChildItem "$repoRoot\src\Prometheus.Rendering\*.cs" | ForEach-Object { $_.FullName }
-& $cscExe /nologo /target:library /platform:x64 /optimize+ /reference:System.Drawing.dll /reference:System.Web.Extensions.dll "/reference:$out\Prometheus.Core.dll" "/reference:$out\Prometheus.Media.dll" "/out:$out\Prometheus.Rendering.dll" $renderingFiles
-if ($LASTEXITCODE -ne 0) { throw "Error al compilar Prometheus.Rendering" }
-
-Write-Host "4/4 Compilando Prometheus.exe..."
-$appFiles = Get-ChildItem "$repoRoot\src\Prometheus\*.cs" | ForEach-Object { $_.FullName }
-$icon = "$repoRoot\assets\Prometheus.ico"
-$iconArg = if (Test-Path $icon) { "/win32icon:$icon" } else { "" }
-& $cscExe /nologo /target:winexe /platform:x64 /optimize+ /reference:System.Windows.Forms.dll /reference:System.Drawing.dll /reference:System.Web.Extensions.dll "/reference:$out\Microsoft.Web.WebView2.Core.dll" "/reference:$out\Microsoft.Web.WebView2.WinForms.dll" "/reference:$out\Prometheus.Core.dll" "/reference:$out\Prometheus.Media.dll" "/reference:$out\Prometheus.Rendering.dll" $iconArg "/out:$out\Prometheus.exe" $appFiles
-if ($LASTEXITCODE -ne 0) { throw "Error al compilar Prometheus.exe" }
-
-Write-Host ""
-Write-Host ">>> COMPILACION EXITOSA DE PROMETHEUS 1.0.0 (csc.exe) <<<" -ForegroundColor Green
+    foreach ($name in @('LICENSE','README.md','CHANGELOG.md','licenses','docs')) {
+        Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination $Output -Recurse -Force
+    }
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'tools\Configure-Mcp.ps1') -Destination $Output -Force
+    if ($ToolsDirectory) {
+        $multimedia = Join-Path $ToolsDirectory 'ffmpeg'
+        if (-not (Test-Path -LiteralPath $multimedia -PathType Container)) { $multimedia = Join-Path $ToolsDirectory 'Runtime\ffmpeg' }
+        if (Test-Path -LiteralPath $multimedia -PathType Container) {
+            $destination = Join-Path $Output 'Runtime\ffmpeg'
+            New-Item -ItemType Directory -Path $destination -Force | Out-Null
+            Copy-Item -Path (Join-Path $multimedia '*') -Destination $destination -Recurse -Force
+        }
+        foreach ($name in @('ffmpeg.exe','ffprobe.exe','yt-dlp.exe')) {
+            if ($name -ne 'yt-dlp.exe' -and (Test-Path -LiteralPath $multimedia -PathType Container)) { continue }
+            Copy-Item -LiteralPath (Join-Path $ToolsDirectory $name) -Destination $Output -Force
+        }
+    }
+    if ($RuntimeDirectory) {
+        robocopy $RuntimeDirectory (Join-Path $Output 'Runtime') /E /XD __pycache__ .git /XF *.pyc /NFL /NDL /NJH /NJS /NP
+        if ($LASTEXITCODE -ge 8) { throw 'No se copiaron los componentes de IA' }
+    }
+    Write-Host "CompilaciÃƒÂ³n preparada en $Output. Para redistribuir, comprueba docs/PUBLICACION.md y los paquetes de fuentes."
+} finally { Pop-Location }

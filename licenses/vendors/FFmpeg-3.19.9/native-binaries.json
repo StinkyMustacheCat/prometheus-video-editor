@@ -1,0 +1,1392 @@
+{
+  "version": "ffmpeg version 9.1-prometheus-3.19.9 Copyright (c) 2000-2026 the FFmpeg developers",
+  "standalone_startup_without_msys_or_sdk_in_path": true,
+  "files": [
+    {
+      "file": "avcodec-63.dll",
+      "bytes": 20985856,
+      "sha256": "3c1e386a56474e2492f7cc58d7b9a7e776de49636ce0373ea280375e3e9281a3",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "avdevice-63.dll",
+      "bytes": 160768,
+      "sha256": "707f49da254b63abd3e71d233ed266e32c9990f72d3a75be3ed66ca3078bc4be",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "avfilter-12.dll",
+      "bytes": 6763520,
+      "sha256": "4d2a040e0a6ee22290080db0fd5ce49300026859b620b0a4bd215a3305e61c6e",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "avformat-63.dll",
+      "bytes": 3001856,
+      "sha256": "2f2a01b0ad12b5e465f6de7d0faa352ad4a946302b5c9b5fa6cf67d253ab50b3",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "avutil-61.dll",
+      "bytes": 1283072,
+      "sha256": "e8ca4b0df85bd2aeac46f0e48df94ad5152513ed3954e02e8506c34fb1190ad1",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "edit.dll",
+      "bytes": 86331,
+      "sha256": "f008f32074e52290ade0134a48928192afcf0adf91e4af6d9d9942555b66f7d0",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ffmpeg.exe",
+      "bytes": 487424,
+      "sha256": "157e02ac5866327039c68c00dddb8802993a5967d1d2dbcde1aaa5dc4f513f31",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "ffprobe.exe",
+      "bytes": 224256,
+      "sha256": "4f72b0e50ae134f21e658c864936879fbf209cee693a392cf07229001290d3c2",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "ggml-1.dll",
+      "bytes": 55198,
+      "sha256": "9eab37f55f5be13a9f3253e44d2f09d7888d62908863c717231bec26b344672d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-base-1.dll",
+      "bytes": 947977,
+      "sha256": "71c66fe7c514b868fe0f5a2a3f12f381bd898146a2bcf46efc83c54df95d3e4d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-blas.dll",
+      "bytes": 41965,
+      "sha256": "5a6a34f64d7d4992dc03c14bc584869cccaa571793fc4afb1b2516db9e093dea",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-alderlake.dll",
+      "bytes": 1268586,
+      "sha256": "d6bcf2596db18679b5be27278bba907e2c6c300ec3bfb0a79f016a65b39dd40c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-cannonlake.dll",
+      "bytes": 1374570,
+      "sha256": "32e829568a8aba373a23decb4f7f462595a97109470f93570e36fdd9323bc457",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-cascadelake.dll",
+      "bytes": 1390442,
+      "sha256": "1f26dfd53ceef30faff75cfc7ae53a809ffc5a878825778b42f5f5f167440df7",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-cooperlake.dll",
+      "bytes": 1391466,
+      "sha256": "a1b1ee1aaed6b6d6c4ee71463a3a6f2c3e3d3309f938fcf47987e37fc06f9368",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-haswell.dll",
+      "bytes": 1269610,
+      "sha256": "1b694b76407de9881b65ebfc65d9db9a06522b847638c1d0894b35bf2a7691cc",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-icelake.dll",
+      "bytes": 1386858,
+      "sha256": "6bc0bbf28fbb5b963917ec297608153838d583da5b1904ba1e330377fc74b030",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-ivybridge.dll",
+      "bytes": 1197418,
+      "sha256": "c3ded0965f20bf236293a81e8090c3859f24010a61d60b4ddfaf1e7b98fedd1f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-piledriver.dll",
+      "bytes": 1197418,
+      "sha256": "9ae842503f3defbd053f71571f632c82279cdccf60694307b7e558b9a9cfd906",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-sandybridge.dll",
+      "bytes": 1211754,
+      "sha256": "fc1460aca7c44f0e9654a9be0cd5cb0622c2eb755286d642bc726de92c1e4b3f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-sapphirerapids.dll",
+      "bytes": 1691035,
+      "sha256": "e34668297084756c8d68a5994e6af43c13344c075b568bb5a357e7c17b4826af",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-skylakex.dll",
+      "bytes": 1377642,
+      "sha256": "3ba57318e0969afa3d6ef2be0548b4c3fb10332edd61013853360cdcb7723d7c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-sse42.dll",
+      "bytes": 969266,
+      "sha256": "d6905f2c066631a9f0215e00ab26a432dd6263425914d7db0c3924abc8f93f7c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-x64.dll",
+      "bytes": 993300,
+      "sha256": "ec97385d17271a48efc824539ed0ac114ca89bbd61ad82b55a475f1041a16a04",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-cpu-zen4.dll",
+      "bytes": 1387882,
+      "sha256": "fc1f9d300b517888c727da526b958cad9b33d5d2f257cc622be78956f7c09b99",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-opencl.dll",
+      "bytes": 2776304,
+      "sha256": "6923d622aecb147e7ed3d0e8b5a4c9a4f6846714a0f4dcb7e955b8774022ff35",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-rpc.dll",
+      "bytes": 256575,
+      "sha256": "cb5ea5b09fee9491ca71892e2c591a0cec0c5b60f149cb8a4a9ea23c96672a68",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "ggml-vulkan.dll",
+      "bytes": 41222092,
+      "sha256": "242d28d7b2c6ec8d5056e512eaacfaa7daa945e612eb016e31e6357ffed437f7",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "glslang.dll",
+      "bytes": 4499537,
+      "sha256": "38876a8df9af0436e2dadeba83f3cebf92ee72163d5d913ed04ad462441a557a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libaom.dll",
+      "bytes": 9688945,
+      "sha256": "653bac1c9921627d42339de55d3272afe4cb95d5a2132d8922780962889690b8",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libasprintf-0.dll",
+      "bytes": 141183,
+      "sha256": "317a714680dd0706c4f56c06fe23a6a9af2a7703120066845c7fd4a4e8841a5d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libass-9.dll",
+      "bytes": 351277,
+      "sha256": "d7e21a7fa952033ff5bbacd2564b343671bf0ad4ae9338613935f2709861b9d2",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libbluray-4.dll",
+      "bytes": 374967,
+      "sha256": "b7d67f3dddd4cf78ef6579fd660384ca80f9f737c6fb5ac6c9e3cdf3464cfc07",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libbrotlicommon.dll",
+      "bytes": 140068,
+      "sha256": "121006fe45e8bd12b1929f86e1efb1dbd1c6291118f9a409693ce8c030f1cefb",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libbrotlidec.dll",
+      "bytes": 60092,
+      "sha256": "dab7d47981ee887865d1f82dcbcc8fc4c7a43942278bb27877e168909e10d346",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libbrotlienc.dll",
+      "bytes": 786548,
+      "sha256": "07a33fd6cf281dc6dea6606700ede061b8dc7c2b6786f1cd4ab64e7bcbacef22",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libbz2-1.dll",
+      "bytes": 108633,
+      "sha256": "a4fbb97c26662d2b8a80bf4597ed3effb69b12048b0cb1eef2c3f211e2e66673",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libcaca++-0.dll",
+      "bytes": 59041,
+      "sha256": "d0ea85427199dd702ba57ee804dc4d3a6777fbf9fcc691f6dabbc19d6cf880a9",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libcaca-0.dll",
+      "bytes": 862030,
+      "sha256": "54730393b26010bdb0797fe41bec38b8092400b4bbda0e35530fe8af320d8c3d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libcairo-2.dll",
+      "bytes": 1250226,
+      "sha256": "aa794d8f62e122d7739523643e293d26e05f2c1c723035079ba01dcaeda0dad6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libcairo-gobject-2.dll",
+      "bytes": 31735,
+      "sha256": "2fbc11e9949328df850a5803162a8d812133208a3ad091630e6cb339b081cddb",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libcairo-script-interpreter-2.dll",
+      "bytes": 172597,
+      "sha256": "5c72a36e191d108774b0fc3a39fad632cd2920bcf7441843bfbf23f1fddd271f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libcharset-1.dll",
+      "bytes": 42734,
+      "sha256": "d057f3ef0932f937093bcde39e478dce31f308406f999fa963c3614ed89d9498",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libcrypto-4-x64.dll",
+      "bytes": 5592098,
+      "sha256": "42e484d793266c8506bfbbefd7fe341b708b2656bf41acee20afd0c9e3934dc4",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libcurl-4.dll",
+      "bytes": 1417318,
+      "sha256": "39fb6534e03255b85cc460d489e34d869e20a65f17e59f2dafd7d2423d8c591a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libdatrie-1.dll",
+      "bytes": 35033,
+      "sha256": "2f784872e6404e57847201fe1e7e591bd5b5be4a319ef38ebcb36014ac7f385d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libdav1d-7.dll",
+      "bytes": 1929626,
+      "sha256": "83517d991d0ab499cea2b7aa5a45bf6acae20c63ed2232daab0ebdad809d3ac1",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libdeflate.dll",
+      "bytes": 95902,
+      "sha256": "4be2ffe36137f533825a853642051f2c1f6ddd2f6515e33c2c32712bc9a6d214",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libdovi.dll",
+      "bytes": 1370085,
+      "sha256": "d0ebc0d98ac67dc28b176f77af125f2066dcb6cf6283f71c102d67f0eeb1df7c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libexif-12.dll",
+      "bytes": 286789,
+      "sha256": "c449245825b103bebce642db9e7b61a22668a9bc3cb1367c2ef4ed12ed5fcfee",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libexpat-1.dll",
+      "bytes": 237027,
+      "sha256": "d96eafff7e3356e13aab6b569cc373ef61b1b2b9489803f45561cbfeaf70ee1b",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libffi-8.dll",
+      "bytes": 32976,
+      "sha256": "66b36d7b793e6da743fb8b5fb2d9419d2e46d645c7777963c539416209cd97c6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libfontconfig-1.dll",
+      "bytes": 506353,
+      "sha256": "04b3ef319b36fd7ba810e1ebf3a04430fbc0ab953c67db06bf745a7c27e61687",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libformw6.dll",
+      "bytes": 142677,
+      "sha256": "2fa17b76d2b0137d73952012967177a6d1fd061705efd8a0b78f64439617032d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libfreetype-6.dll",
+      "bytes": 807389,
+      "sha256": "9f62ad75bdc24573940f2e0b0db1848464ce02928926808885e3744fc5272add",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libfribidi-0.dll",
+      "bytes": 154283,
+      "sha256": "777543504df2de352659d5153f90c9ca17957d9ad88fe8d37126819995f5336b",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgcc_s_seh-1.dll",
+      "bytes": 149364,
+      "sha256": "3776dae2a0a196651bc9a5f3e79cfdebcf7a63c7ac522a9b2f9b1604996e1e1b",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgdk_pixbuf-2.0-0.dll",
+      "bytes": 358598,
+      "sha256": "e4615a88eff40cfe51a4b181e6c917462a9ecc52285e00a3e7a07ae922c2f6f5",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgfortran-5.dll",
+      "bytes": 3787505,
+      "sha256": "ffcc606500a98da350e2d35ea913d1b2a86036bffa79e56009e11e3cd01b07c3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgif-7.dll",
+      "bytes": 45777,
+      "sha256": "5b3d837ccaab84683dd93fbaddf2d98e1a9f90e0ddb8ea73dc70157adb4d26f1",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgio-2.0-0.dll",
+      "bytes": 1918835,
+      "sha256": "eef35a18138b7afefaf5ade36b07b3b3ec25d21080a1c2c5eccefad383482016",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgirepository-2.0-0.dll",
+      "bytes": 270368,
+      "sha256": "517239b90be3c49fae6de28f4e0c39642ff54a638d2336d2d5b0104256a78bb7",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libglib-2.0-0.dll",
+      "bytes": 1570710,
+      "sha256": "84b15dc907fd1d3bb1cd799fc034d2edcbc3946c8c4acd6a8dd3ace381f9e568",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libglslang-default-resource-limits.dll",
+      "bytes": 64683,
+      "sha256": "6fcfe38ac927342f38c3e2979419142f233f3abcbcedf69de0546aa028d9957c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgme.dll",
+      "bytes": 373557,
+      "sha256": "89c741e7b290f8be525ef5ea1420176d5ddddd151875c51a346688f0ec7bfa0f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgmodule-2.0-0.dll",
+      "bytes": 23387,
+      "sha256": "79a7646945b520966dcd2541d40c109f26c42979b47bed9aabec796a8cbe20d0",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgmp-10.dll",
+      "bytes": 679747,
+      "sha256": "37248cda33845e7c5c35a574e57da762dd0a8268f0270d179f30a33746809681",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgmpxx-4.dll",
+      "bytes": 30824,
+      "sha256": "9a667d5dc4ca5a49d1d5fdbfa83866e0e04fbab1c304b49b67951498159a8246",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgnutls-30.dll",
+      "bytes": 2325568,
+      "sha256": "c207b98897222f34aaa490bece8596a7c6304a87346492f99b5531859ee84a33",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgnutls-openssl-27.dll",
+      "bytes": 212855,
+      "sha256": "72b5f6925d44e0026d00b7c8c56c08bcd0ee7176c428c0f0205fe6a7970f86c3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgnutlsxx-30.dll",
+      "bytes": 52038,
+      "sha256": "4eea099ab407cf6df2569e8971902e3cbee6258d4611bb333073b1b0041c3b1b",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgobject-2.0-0.dll",
+      "bytes": 357682,
+      "sha256": "a417864358cbe7a1da74b7cfcc61f7d49b03772b02f29fa611b01a67d5b99632",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgomp-1.dll",
+      "bytes": 328152,
+      "sha256": "5618c32eba0b9ccb7c9896435e0d51dd53c958f001887323a79d7303ef10396a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgraphite2.dll",
+      "bytes": 167155,
+      "sha256": "063a9ad34a5ec87d038b4646660957395224ecf2cf707917256b7d251a7c5f57",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgsm.dll",
+      "bytes": 56554,
+      "sha256": "687f6fd4d7aaa7a725e856000e5e9f3bfb77fcaa554713db432cf6c4f433a3a1",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libgthread-2.0-0.dll",
+      "bytes": 12681,
+      "sha256": "150169032b546456c868aeac4317a919d9f9e2f34f3a79bcb42b96528b451ec6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libharfbuzz-0.dll",
+      "bytes": 1952250,
+      "sha256": "e8ffc111297c498091691a90ece1aea2f259f4d86fda4fc3c74d0e0acb5e9c1d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libharfbuzz-gobject-0.dll",
+      "bytes": 93963,
+      "sha256": "68f295cab0f93f120ae25c39d530036b839656f3b57c1434b075dc4618c38cd3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libharfbuzz-raster-0.dll",
+      "bytes": 134834,
+      "sha256": "1642f409797dc2efadac0103976b62c8e2afa49ef6e2491761f8e00406bd6331",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libharfbuzz-subset-0.dll",
+      "bytes": 2823763,
+      "sha256": "c20ae6878cc96c9efd5be4fa454e788f8b7b7bcb75a8bffe5f6b91bbb3537001",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libharfbuzz-vector-0.dll",
+      "bytes": 241635,
+      "sha256": "48c84d311a4243201fe6fa4084d91e362a5d86b5669a1010a424483aa0cf5467",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libhogweed-7.dll",
+      "bytes": 275389,
+      "sha256": "8a4785b98e5418c32035f570904f65360c89825358702954b53c77ee2df8c97d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libhwy.dll",
+      "bytes": 88615,
+      "sha256": "4cd65f4bb3c123471a23f3eed734adbb31522b012c2c1776640d9634fbeb623c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libhwy_contrib.dll",
+      "bytes": 6256602,
+      "sha256": "2f2448b7829c3b42802446b11e802809c3a0e8b88c78029e28a2483325fc19a0",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libhwy_test.dll",
+      "bytes": 46618,
+      "sha256": "7ec2ac0b81f7c6a6cc1f4717ecb7b0b4db4ec5e2ef59e9df831548c6c07f402a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libiconv-2.dll",
+      "bytes": 1141004,
+      "sha256": "587bd8c780e89f5d834c251accc6053f479713184c433e0f1bab898ee0aa3751",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libidn2-0.dll",
+      "bytes": 245489,
+      "sha256": "84bbd5b6f2e03f39068f7cc37f590be830820287557f783fb47307d47fe3b37a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libIex-3_5.dll",
+      "bytes": 363511,
+      "sha256": "2393588f1fc263d7437eeecc2a3da85b4bdca6883fc0eb83f0cb57a5fe2cf09f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libIlmThread-3_5.dll",
+      "bytes": 37316,
+      "sha256": "be0ca81bcb7b62ccdb30f5f15f6c4cbba3a6806f57f372aa3f303c17da00393e",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libImath-3_2.dll",
+      "bytes": 344446,
+      "sha256": "b658b80f828f5d00701bc5c6f3e800310ae20582df8760f713f5114ade3b3148",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libintl-8.dll",
+      "bytes": 298731,
+      "sha256": "0537c3dd2378218508ebe3cc416d72a99ee2d24ae1c5525e23458f32544ef861",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libjbig-0.dll",
+      "bytes": 60973,
+      "sha256": "9286b1f637ff4a249d81238ea9c9ebf4fb083727dfc4235c750bf749606d85f0",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libjpeg-8.dll",
+      "bytes": 964809,
+      "sha256": "49aae36dc96d8dd9ca3a3c126b261d7ff3deeda1040e9bc32149db0763dff849",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libjxl.dll",
+      "bytes": 6316792,
+      "sha256": "a0e51ff60fdb09e429142aa260beee46b6040fcebfc7fe63088e1cec39acb92a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libjxl_cms.dll",
+      "bytes": 147924,
+      "sha256": "c1215dbf1d589a65c8b8519c0a2f891f09cecb2ce8525bbbd5df9b95d7cc6f16",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libjxl_threads.dll",
+      "bytes": 22901,
+      "sha256": "3020e230e11dbe6d135cab066d608d0a0388e5fb5b9a2ffc374875fb30b135a8",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "liblc3-1.dll",
+      "bytes": 165244,
+      "sha256": "ead8e36dd9b502baccfd4814eb84e3047a597fb2b96231592367f1fac7587904",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "liblcms2-2.dll",
+      "bytes": 458665,
+      "sha256": "4cbfb860eed492eb3fb0b407f1c03407e9c88847c41641b112e47d1c32e6245a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "liblcms2_fast_float-2.dll",
+      "bytes": 68156,
+      "sha256": "a26c5caca3e14d8f8860012ac7af3c3b6b5b46ea556af1168391678d1327e177",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libLerc.dll",
+      "bytes": 804265,
+      "sha256": "6887fb5aeabf382a835a4cb693025e8d48d9c90e82ca4eae5d2d8ffb70c6ca9a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-1.dll",
+      "bytes": 4534975,
+      "sha256": "e2b2348055025e215c525a0d6e6e5176a2c2c53b922733548a08e7b16590c424",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-batched-bench-impl.dll",
+      "bytes": 67473,
+      "sha256": "1091993103c52fd3b898af96f74c1f55031cdd9abd1c603111934ec45c670a7d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-bench-impl.dll",
+      "bytes": 426657,
+      "sha256": "2e95533199ab5e5980caaac8162e488f2be0fcf1497f2e5525cf28bc1764da51",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-cli-impl.dll",
+      "bytes": 245632,
+      "sha256": "0aeb7b557f097feea05889fc106e85ede68da52710306ed3c9f2c4996e8dcf7f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-common-1.dll",
+      "bytes": 5297569,
+      "sha256": "42b4336768305da03f2389bf04d59f0847675c59cb8acb28933df704caae6f22",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-completion-impl.dll",
+      "bytes": 109604,
+      "sha256": "bd20846b331948ffe7c6fe9e1722ead6c5a564c8508ae0a8f6f8cea08660e967",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-fit-params-impl.dll",
+      "bytes": 64025,
+      "sha256": "4ad0919953a3593aef739cd2f1abed77d984753b39d877e53103df3062e24638",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-perplexity-impl.dll",
+      "bytes": 143352,
+      "sha256": "e6bb209e2eef86fdf413f273df587d8dc2c09056504d91ddf0521f396e9471fe",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-quantize-impl.dll",
+      "bytes": 114046,
+      "sha256": "9b37e5b425456a0480f92079ec0c25ae8629e34e84cbe1b5588651a0bcfbb833",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libllama-server-impl.dll",
+      "bytes": 7280684,
+      "sha256": "b962a221e6e3a7a3775306d3f41dd2bb42f3d0dd8333238f57bdcc2a6c61f3c7",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "liblzma-5.dll",
+      "bytes": 190709,
+      "sha256": "ccb6a179acf35e704b2ffd7f232677982c4856bd1dda1341713a27518cf97ce1",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "liblzo2-2.dll",
+      "bytes": 155548,
+      "sha256": "7c34ad01e75c97c6636a2f609089a85abdb50b75e13c5fda731352ec8aa053e9",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libmenuw6.dll",
+      "bytes": 38126,
+      "sha256": "cde296d3cf670f375d60d3223e5347342a976123ab78ec3de316b046996d4719",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libmodplug-1.dll",
+      "bytes": 405405,
+      "sha256": "3e172e181479b0f42911f017746b405c20e9e6f87137b49bf9ccf271d50fbc5a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libmp3lame-0.dll",
+      "bytes": 288125,
+      "sha256": "35bc561d60948094f9fc2a11a343714ab49c71ada1220b0f259a4375a44c5be3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libmpdec++-4.dll",
+      "bytes": 44315,
+      "sha256": "b5d9da28a3c8039397a267467a4fe18d9589155e173de980c65690313015fec8",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libmpdec-4.dll",
+      "bytes": 203428,
+      "sha256": "878304e9055db6a493f767bed4ad6c62a15bdc610a88ec9bdeb8e7d35955f5a3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libmpg123-0.dll",
+      "bytes": 453200,
+      "sha256": "5d9ccd4c86b75a984044ebe1d4c95afd1e771b74e89c1467bf76a520c37a5299",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libmtmd-1.dll",
+      "bytes": 2111896,
+      "sha256": "4fbd99b07f4f8ad276edc4f009b22acebf6a4db2321c382ad01d601e5aa86122",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libmysofa.dll",
+      "bytes": 152646,
+      "sha256": "6cdea0fc53e94a3761a4fa8ca2e3b3d8b25e6c5171ead1c522aa65699ab057f5",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libncurses++w6.dll",
+      "bytes": 73562,
+      "sha256": "611d63f9b2ac4d75242ee048314592c4990a818ba75c028b9d2360d5f57aacb0",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libncursesw6.dll",
+      "bytes": 546668,
+      "sha256": "db7e2662a24845652cdec2479db38a622a5bc4f15a02e470b5a8c836d9071722",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libnettle-9.dll",
+      "bytes": 360977,
+      "sha256": "208002d990684946c7923a87022bedea588fef8e31286598c08805e37be2a95a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libnghttp2-14.dll",
+      "bytes": 213808,
+      "sha256": "69edb8a5047bcfaf837f3ae92339784449835768c2d33804fc9d07e1e3d86782",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libnghttp3-9.dll",
+      "bytes": 204618,
+      "sha256": "64152e7cf508855ab18f93ecf4089298f0fd722d7ef70d94c9bdddc81cc60b14",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libngtcp2-16.dll",
+      "bytes": 393515,
+      "sha256": "4a81f84e33267a4da6a66f7b215781fe6025a5727a23f44e4b2f0bee3b25460a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libngtcp2_crypto_gnutls-8.dll",
+      "bytes": 44949,
+      "sha256": "9b0d0bc8f53bed6a60c2f76c142f57a0d12dc76cbac9d89bc4bfede968c52cfc",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libngtcp2_crypto_ossl-0.dll",
+      "bytes": 51367,
+      "sha256": "e9b4581aafa901e77bcb60448efdca4878e4615c10037fa9472a3244d275161a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libogg-0.dll",
+      "bytes": 40580,
+      "sha256": "3038ce8d161324a6349bf7c83b78493857ff6a3501e3adb3d541c6a07bd94a57",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libopenal-1.dll",
+      "bytes": 2728444,
+      "sha256": "cb97d2f5a9797ff64db90d0691e4ff9eb2a088026351c9bad7aa26d229a354ce",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libopenblas.dll",
+      "bytes": 44335329,
+      "sha256": "336e3f763e7564568f3db155d7426e0095a6bf3e8dce15de81e3b3bcade1054a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libopencore-amrnb-0.dll",
+      "bytes": 174211,
+      "sha256": "8f9b1fd5fec2042a3b6af15eae54474210569c75bcc482fe702b45dcb3e96397",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libopencore-amrwb-0.dll",
+      "bytes": 91267,
+      "sha256": "7482267efad926b69c8304ec631fd531a2fc5d99b481b59cb5b34d8540a38dc2",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libOpenEXR-3_5.dll",
+      "bytes": 1262003,
+      "sha256": "463c70fa04fcb54db55feecb1292e576f27e654321dc10340c7b84d07e95e275",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libOpenEXRCore-3_5.dll",
+      "bytes": 509963,
+      "sha256": "c5577176bbd3a0243592d110e670fcf031c422ce65a8fc21f0c0014be898b86c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libOpenEXRUtil-3_5.dll",
+      "bytes": 244378,
+      "sha256": "5ac4b316c51adff01b5d7fde7075c063614f8ce0952a7304a35e08673bd4eb57",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libopenjp2-7.dll",
+      "bytes": 519082,
+      "sha256": "123587086cb1a25d2a338fb9b7c1d6bda10bf9062625b4f08c6a92b3d9cafe47",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libopenjph-0.33.dll",
+      "bytes": 668861,
+      "sha256": "07fa73bb238bab6d4613e671f43174aac19dd8d898ab55cad1c70094a961bfa9",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libopenjpip-7.dll",
+      "bytes": 186437,
+      "sha256": "8aa4bcb4d8ea02be39656ea644c52b36be082c55a30260555b761e39d1aa0530",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libopus-0.dll",
+      "bytes": 500008,
+      "sha256": "e602e0f79080e988df0ab1c9ce2ec9c11325c3d808fbae3230ad1cfd4942acc4",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libout123-0.dll",
+      "bytes": 85857,
+      "sha256": "7256a1ce92f7bcb22831d7115fac954a891a83d0ed8ad494cee1ae3ae39fb1b3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libp11-kit-0.dll",
+      "bytes": 1633761,
+      "sha256": "b949df3470cbb1510a90c7332e78d5c81f45dd74fc9dc47b5bd44f340021df78",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpanelw6.dll",
+      "bytes": 19061,
+      "sha256": "7bc8f8975113c12b742aedc9e7222e0055124c0a2984238b11ce01e2311e7f31",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpango-1.0-0.dll",
+      "bytes": 434535,
+      "sha256": "078881c139e7dd422c4cb5f9c43b939712eb7ad4f3d7d25c41639873e8aec6d6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpangocairo-1.0-0.dll",
+      "bytes": 83118,
+      "sha256": "b9f800abeafd27c07dc9f9fa4a41bb614564038ce7ac5753ca6c60c1d7d555cc",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpangoft2-1.0-0.dll",
+      "bytes": 111841,
+      "sha256": "38602e75c85e149bf7294bccb8792f54299daed45509a8ac4b3a18e3921ec56e",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpangowin32-1.0-0.dll",
+      "bytes": 111376,
+      "sha256": "2fb6d21cce830182c9d4bf22015dec9abbb0846ebce828ca0a5d4cefc74e46c6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libparakeet-1.dll",
+      "bytes": 187876,
+      "sha256": "50f71785b17c7613562ee9c5854b774982ae3c1ebf427b80270aceb8ce775069",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpcre2-16-0.dll",
+      "bytes": 646468,
+      "sha256": "a6adeb3d58d2860e770327043412adf5cf4c9b3ec3a3012e792c881932e4c376",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpcre2-32-0.dll",
+      "bytes": 617284,
+      "sha256": "6b840f7212219ca178b241eebbdb8f3c22c2ca4890dcbb43168286d7cb7f4054",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpcre2-8-0.dll",
+      "bytes": 706403,
+      "sha256": "26fb276dc3a6179d889684a8ec0e3f012a7da60d9bf4c755822340c5268cb8dc",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpcre2-posix-3.dll",
+      "bytes": 43515,
+      "sha256": "b2d5f61bc95340fae22c803ebbcbb1ef2a6e34ae59f6a439146c0d14b27e5eb0",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpixman-1-0.dll",
+      "bytes": 740378,
+      "sha256": "55ce45825eb8e825c635416171be4736147a6b0b690469f545d8c4ae8e85b4a3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libplacebo-387.dll",
+      "bytes": 1330396,
+      "sha256": "4d0e9f85d4e660eb3272f29569547b432cca020e3431a9b7ad0239e12b26520f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpng16-16.dll",
+      "bytes": 260070,
+      "sha256": "4a33007395f1d30881d0c185c120f1ecf05c8ebb520933068902ddc1f6c58506",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpsl-5.dll",
+      "bytes": 105304,
+      "sha256": "b31fc70eda598a39b65fe2736d815518db0652d641346f75eac40c2a0499b058",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libPyImath_Python3_14-3_2.dll",
+      "bytes": 25858385,
+      "sha256": "c1eba207c2952ffe3b26385d4133e7b1efe6668d7f4e9dc177f823cb5bf2f42c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpython3.14.dll",
+      "bytes": 5617173,
+      "sha256": "4273863532afd9225433b85a52f309f31df40a8a87cd861e28cbb57823e9d9fd",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libpython3.dll",
+      "bytes": 76006,
+      "sha256": "df2fcddc9c00b92dd16d110876294aec811ed76562b3803f31df0d1da0aaaced",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libquadmath-0.dll",
+      "bytes": 413359,
+      "sha256": "f0eb395863fed82e9ed0c3c8ca2d3dff6e683e3421fa26eae0feeb3f8eee930b",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "librav1e.dll",
+      "bytes": 3527680,
+      "sha256": "6fe18e4a040c471dc13bcea44ecd2c6a3c040971542c6b798627e4c787056acb",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "librsvg-2-2.dll",
+      "bytes": 11717163,
+      "sha256": "b9896861f39112a945966da1e330efaf6d854ca30f5989131059de903ec598b1",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "librtmp-1.dll",
+      "bytes": 183492,
+      "sha256": "2c8c2ea1a686d954129b94c06dd2ab2163d45521211376ea2694f131d75ce6fc",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "librubberband-3.dll",
+      "bytes": 633673,
+      "sha256": "63e2877ea3c465559b2efa39ed7f416733f09f8e42a04fbc068328155b8b4c50",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "libshaderc_shared.dll",
+      "bytes": 10666154,
+      "sha256": "803dd276af99afa40e96836484fea513852fba773fc45690c5eef5a5ebc3ae94",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libsharpyuv-0.dll",
+      "bytes": 53757,
+      "sha256": "ab0c9f61dc69b6bcdff1011e215f8d5fd6e5096aba9be3386ab87f217fbbeffe",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libsoxr-lsr.dll",
+      "bytes": 15360,
+      "sha256": "06bbd9b3e6961201240c1cf5a490e8472bd0f9ba9b52120f1b2cdb00c151de61",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libsoxr.dll",
+      "bytes": 352768,
+      "sha256": "655087dac926b304969b2171de0be277a36f167989d4c7214612faf591ac9929",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libspeex-1.dll",
+      "bytes": 137822,
+      "sha256": "3cd8b5e812022307d8ba09747b648a7402fc4caa44b50e328b3424102ab98f3a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libspeexdsp-1.dll",
+      "bytes": 120644,
+      "sha256": "6a832c7492e0f3e8e637d817568b58225d9e7b87ad68c6fe5b68ddebb3adf7b7",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libspirv-cross-c-shared.dll",
+      "bytes": 3434910,
+      "sha256": "b769dd849d7dcbf7668ddbb55f66acbd0e26152da1112d796fbd0635c3aacd29",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libSPIRV-Tools-diff.dll",
+      "bytes": 145565,
+      "sha256": "a1d792ed465f3d2198e0fa144aeed44f9051579750103e8690cae8255a5cf23f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libSPIRV-Tools-link.dll",
+      "bytes": 204201,
+      "sha256": "a4dc8ed4b15ae172d450119620ae83aba7519e656199369cf251ce52d94ba8eb",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libSPIRV-Tools-lint.dll",
+      "bytes": 94800,
+      "sha256": "54a70648e6934519578912ed6913d99ed6f29b66a9153be34b592ec7c3938c16",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libSPIRV-Tools-opt.dll",
+      "bytes": 3728445,
+      "sha256": "6faf4bc2f8375118c0b832606476759c940a8d4801f7a8286383a44921e57a10",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libSPIRV-Tools-reduce.dll",
+      "bytes": 258690,
+      "sha256": "15285204a30b1522ef532cba0fa6d4b1d952a57a441879a995e53c7eee03fd92",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libSPIRV-Tools-shared.dll",
+      "bytes": 1970157,
+      "sha256": "0b64ea3815223c74540ed42348ae72d8d04575983beb4385a732ea78019ab1e1",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libSPIRV-Tools.dll",
+      "bytes": 2000809,
+      "sha256": "6ebed996f5573360f07180db06b2678abcd510771caaaebb5e2f479024ec6de3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libsqlite3-0.dll",
+      "bytes": 1609170,
+      "sha256": "a7ed649d8f25e3fc545b82b915b7c90184f2326994263bf5b6ce32f16c64ffbe",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libsrt.dll",
+      "bytes": 858637,
+      "sha256": "271689fdb73881c808cf3872723a62f324a28c1feadfe58158d397b08a43446f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libssh.dll",
+      "bytes": 624350,
+      "sha256": "11b7639a35cd20d98b011cd9092d7d9726b956fb7cb643d03bf0d7d81175337c",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libssh2-1.dll",
+      "bytes": 336525,
+      "sha256": "fa98cd5a3ac2e63c43dbfa2cc2a29377a2cbd1ab6b1445a342beb06a1a40f4d6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libssl-4-x64.dll",
+      "bytes": 1149113,
+      "sha256": "d3f86e150a199d430ffa457532a82af6b67c2f37c0ff1aec99e6498528b53982",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libstdc++-6.dll",
+      "bytes": 2658711,
+      "sha256": "d5f362b6956185e24af7c710ae9ed794af92ffa325e50a165c26a1a31f35d694",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libSvtAv1Enc-4.dll",
+      "bytes": 8001433,
+      "sha256": "1c4740c216b64105938db8fb0b5d7a8239effbfb7b54982a94cb092aa4a6c43d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libsyn123-0.dll",
+      "bytes": 207354,
+      "sha256": "df66e69674ad0f50a223fa95c1850922fc75c655a715900896988214dcc93fdd",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libsystre-0.dll",
+      "bytes": 11201,
+      "sha256": "4bc4dae17267afec9f9812e88167980808848c10a255ccbda9ef4fd758897938",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libtasn1-6.dll",
+      "bytes": 112355,
+      "sha256": "7fab47d20a3ba71161113dd182441ece97ab2f041fed90b4919d035a2819ec6f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libthai-0.dll",
+      "bytes": 72294,
+      "sha256": "5d741974fdec19e0f6cddbcdb539428af0c7392740a056634714c2884157fdb9",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libtheora-1.dll",
+      "bytes": 289899,
+      "sha256": "9a444d18ce7bdc19ce235ee39259a0cb15446e4821534346a8647048d911ae52",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libtheoradec-2.dll",
+      "bytes": 95898,
+      "sha256": "68ee314c17b3db7183394b27b79e27888b30d329418f94251bbd43c3d0d70705",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libtheoraenc-2.dll",
+      "bytes": 244843,
+      "sha256": "799d234af07f5824f1dbbeacedecd4bf0773216e1d317fb77144d19f9b46484b",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libtiff-6.dll",
+      "bytes": 619851,
+      "sha256": "8f9dd61dbac532e61e79b7ad864b47e2e10b10ba152f7e3073e8fad8fc5f7d65",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libtiffxx-6.dll",
+      "bytes": 16257,
+      "sha256": "04b7a53b12eb2674461ea7614ddcbeb2d5cf79957040c5ff43c8b88b3c347882",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libtre-5.dll",
+      "bytes": 100574,
+      "sha256": "5833b2b1f62b67d8b4b3881f1bc05f42b0dee1a9f10cef897cdf44d74d094fdf",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libturbojpeg.dll",
+      "bytes": 1345117,
+      "sha256": "31e23f7072cba3d6c6ebd978ae36078974ba7a48c0df4b39a4f4b4f5d67eb678",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libunibreak-7.dll",
+      "bytes": 140772,
+      "sha256": "e146c2f36b2e36f620238f2bf0820ef9e74f5b39fbfb9ffe99183bb4a21809f0",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libunistring-5.dll",
+      "bytes": 2298777,
+      "sha256": "45355d84e6f24737ffd95554ac91a3b2ca346d70df1db289730c4124287cd962",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libva.dll",
+      "bytes": 286510,
+      "sha256": "1600880518a5c9d454dc26f151c0bf4969f60cc7fb53ade023e1816ddefdf141",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libva_win32.dll",
+      "bytes": 17070,
+      "sha256": "710033877d446638b686de916595e1470d194db55395b2f907abaff26298f5d3",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libvidstab.dll",
+      "bytes": 153183,
+      "sha256": "3a2d95ea86bbcf049d90fbaf7a8cf07516464b77d9475246303ced38df17e737",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libvorbis-0.dll",
+      "bytes": 184216,
+      "sha256": "3282629e1b5d6ececcfde133b20fe73de5c81b6eadfbb4697e6718886c7c97a6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libvorbisenc-2.dll",
+      "bytes": 578809,
+      "sha256": "090f0734883464af440eb9084b22384951b95b1bf325236b322dbef7f93530aa",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libvorbisfile-3.dll",
+      "bytes": 38089,
+      "sha256": "78559fbab64af27b66bd0904bdee7afb16190e66ca3d67323958aa59d2687c8d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libvpl-2.dll",
+      "bytes": 480963,
+      "sha256": "670c4a28094b9f0d2aefe1e666c61e9e5eb7315f1ffd0bf12e4731727c6254e6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libvpx-1.dll",
+      "bytes": 4412330,
+      "sha256": "ce199be3f352d76a1994ca7e4b0549ca6f8a6700ba5f5bbde24adef262256f01",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libwebp-7.dll",
+      "bytes": 749724,
+      "sha256": "c6c21a10f8cfe13270832e64640b82709e1d87b956b5f15af435a6c25acd6bbf",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libwebpdecoder-3.dll",
+      "bytes": 445732,
+      "sha256": "13ae915d60002b8fc78789e82504b4846d4449636b3f2bd4cdc20ab3266d26c6",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libwebpdemux-2.dll",
+      "bytes": 25726,
+      "sha256": "10fd43e1820a03dea175e3c4a7c96ba0463d41971f4ec75dbd375d10b585446a",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libwebpmux-3.dll",
+      "bytes": 82858,
+      "sha256": "2c8a2e9d7901ec65330f31f9989c2a07ef0506e903b485fcd8b241a6bab9b88f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libwhisper-1.dll",
+      "bytes": 509067,
+      "sha256": "7550165aa583a770a2bec6219957b2bac957eb301daeedb2516a1e9ee5fc3613",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libwinpthread-1.dll",
+      "bytes": 73020,
+      "sha256": "98a4fea591385952cad1c532f4a92606358630976e9ede5fcf115ab945305a09",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libx264-165.dll",
+      "bytes": 2024174,
+      "sha256": "0d814d13db7eeac0ff5264ed86d376f9260746323107cb07affb6c306b240329",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libx265-217.dll",
+      "bytes": 22667339,
+      "sha256": "23a4579cf07ad233818d53f941e846847876cb68f57e4492f943d26463cc995f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libxml2-16.dll",
+      "bytes": 1254972,
+      "sha256": "4d805645b6582125e1ffe31a44b5ef06815a2774ab428b3251e4d29799c54462",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libz-1.dll",
+      "bytes": 148872,
+      "sha256": "b82cab3e02b60e664c19eb3459f6e6ca7f6165a727bbb18f48dee0474b42a920",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libzimg-2.dll",
+      "bytes": 636837,
+      "sha256": "26ad6d01991171038ca5a4078a3854ea2f7765beb572e567a83ce15d495d75dc",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libzlibwapi.dll",
+      "bytes": 191257,
+      "sha256": "c574abadf7e95bd16ee4e96a3fb9dccb6106b65a958fae0e592a9c69895fe6d5",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libzstd.dll",
+      "bytes": 1218273,
+      "sha256": "b95c223a9548a9ecf51377c962e0bc8f0c51eb0c6f67a296dbc885996f0dd40d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "libzvbi-0.dll",
+      "bytes": 449470,
+      "sha256": "985683ca824af6a0f5896ebcb59f3be894cb25ecd78cffda41a534ef95eb5184",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "OpenCL.dll",
+      "bytes": 172267,
+      "sha256": "03ca4a306a932b63ccf8da7fe0ff45bca570f49349f05a8c2b60442d21d6282f",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "SDL2.dll",
+      "bytes": 381370,
+      "sha256": "8936a9fa9a5ed1f4383c1bfe8507819e7b048bb345785531ce88fc3a3677b403",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "SDL3.dll",
+      "bytes": 4045124,
+      "sha256": "be379724429bfc39cc6ea079fc82d528e09e216861298b16b78cc01cd2752e9d",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "SPIRV.dll",
+      "bytes": 10982,
+      "sha256": "81f590c947f8ad38c8fc7b377a82398db7fd237a8f7bf32d0298663dcd129e31",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "swresample-7.dll",
+      "bytes": 185344,
+      "sha256": "162b91e2d3a49a392c37d2a08c8f1b1826ef7fb323da3c2cb1524d4abfb7dd44",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "swscale-10.dll",
+      "bytes": 2330624,
+      "sha256": "ee19da7f319deb81360bf01cf927c6ea5fab4d7fcc38444c4c43889c6418595b",
+      "origin": "own FFmpeg/Rubber Band build"
+    },
+    {
+      "file": "tcl86.dll",
+      "bytes": 1762679,
+      "sha256": "81fbd8536bbc4183ecaa0e9390f7f336c3c4d78b5445efaaa9325d706260037e",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "tk86.dll",
+      "bytes": 1645745,
+      "sha256": "2b89a483af1f5919d9a12a925f56024e9cbb3d72aef2bcf5d06a778a7d45c8d5",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "vulkan-1.dll",
+      "bytes": 724975,
+      "sha256": "1d848aabe2673d89ccbced220cbc0b98793b49aa38e3b2d7b5a71e28f4875016",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "xvidcore.dll",
+      "bytes": 781411,
+      "sha256": "1c19803a7d0d8fe21064459dd51725ffdefb07a96079967417bf597178b4db33",
+      "origin": "verified MSYS2 package payload"
+    },
+    {
+      "file": "zlib1.dll",
+      "bytes": 191257,
+      "sha256": "72df18f3a7c8e9341c776a5a23c2dfb2524dbbf1f343c3012cb1178436535a29",
+      "origin": "verified MSYS2 package payload"
+    }
+  ]
+}

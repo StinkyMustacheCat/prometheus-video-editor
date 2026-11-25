@@ -1,0 +1,331 @@
+{
+  "reference_url": "https://github.com/facebookresearch/sam2",
+  "reference_archive_sha256": "f0bc125d69a0a85dc52c54ed16c88ee504b65b6fe3f0d215dacd4cb991e18292",
+  "note": "Reference snapshot comparison does not prove historical checkout revision. CRLF differences are recorded separately. The complete as-distributed sources are included.",
+  "files": [
+    {
+      "file": ".clang-format",
+      "sha256": "47bdcbde7f91fdece6eab801afe1660e9e5a2b526d574c72d999949113979de9",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": ".gitignore",
+      "sha256": "2651ea1c225478bb9452176181cca2d53202853465f7c874453caf47ae6874f2",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": ".watchmanconfig",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "matches_upstream_reference_snapshot": true,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "backend.Dockerfile",
+      "sha256": "c8e7e5bdb2b9137485be713a684817475b28ed76657043faa8c72e98101c0be2",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "CODE_OF_CONDUCT.md",
+      "sha256": "49fd7625ea116e80b0b3f999c981647d7ec28568b9b999382b8e5ba8ed6fa32c",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "CONTRIBUTING.md",
+      "sha256": "8581fc050aeabd9fadfcc2aff507f025323a8b27601fc2f1c8bfd390076a0ff1",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "docker-compose.yaml",
+      "sha256": "25d72008b215b517579f75abfe9d0e55a3561fd27f0f9da318dc1a2025db559e",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "INSTALL.md",
+      "sha256": "44cc140e16a37a5d872ffc9bc8ec255565848278f8a5f20a84296c722debf40b",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "LICENSE",
+      "sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "LICENSE_cctorch",
+      "sha256": "b4d90f9c25b30d3fbd412f50dd4204f17e16af2813f4f3fe25b2f0d0f97e35fd",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "MANIFEST.in",
+      "sha256": "40263ba30b07de19bec5a47de531ea4f431ae2ad1a1bf25298639d4ad6177f48",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "pyproject.toml",
+      "sha256": "1585b90b808aa18902556732f5914fbd601a5b07beb8c4fdf32a2a02086feedc",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "README.md",
+      "sha256": "8187448c95ac50ea30d9c591e550fd2c07620269387489cf9b46132fb178bd55",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "RELEASE_NOTES.md",
+      "sha256": "c0cf4d3f9a729775aedf1b03dd05ae0b99dabb2be5df61f1670b9c678ff665cf",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "setup.py",
+      "sha256": "5e8fa9eea2d742bcaccbfe054839cf8760b5fea28cde49e8bc43e4e03eb8c7c6",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/automatic_mask_generator.py",
+      "sha256": "b888136cfcd40f04aedcfccf56516f778038414ba9ae2bd41b3725a04ca89cc3",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/benchmark.py",
+      "sha256": "eba42a58c402afb076df36a2ec83b4e184d766b0aa0d986a330b0f0ee25ed793",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/build_sam.py",
+      "sha256": "d962a9ebc5b65aa03a8d74159742b9993b8affb44b205ba78685db8d199dc3a7",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/sam2_hiera_b+.yaml",
+      "sha256": "212887bd5b1d90c07a3439a911593ec6ec8a586cce0b12799f1ebec38bbe401d",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": false
+    },
+    {
+      "file": "sam2/sam2_hiera_l.yaml",
+      "sha256": "0e313563f8f467c382c81192a0e2aff4624dda2b23218f1a78df30ebe4b4eb1a",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": false
+    },
+    {
+      "file": "sam2/sam2_hiera_s.yaml",
+      "sha256": "6fff1ab952d4ff7bc4bf8bb480f6283bcf12a763057f5bb697b25151a20f7608",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": false
+    },
+    {
+      "file": "sam2/sam2_hiera_t.yaml",
+      "sha256": "4ba0a249a1da9a6cc4070d47894808f206f67249d0c6fda21c6280af692dd77e",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": false
+    },
+    {
+      "file": "sam2/sam2_image_predictor.py",
+      "sha256": "edd7281ec91bea1c5c9ee498b09c823b534fe31e36fc3dfbe7696e6d7a216bef",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/sam2_video_predictor.py",
+      "sha256": "1e2de167d91974e96de21b51237e20f1a30f9b37fae706c854974386b4800d50",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/sam2_video_predictor_legacy.py",
+      "sha256": "ec0992b44ac2bdc3db0f0693e94b15e3e813e30ab5f3f57f878857043161e1d4",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/__init__.py",
+      "sha256": "fd116e43c17587fce9d5cc7de043dd183b29e4af5c369bd09ca121ffb03755f0",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/csrc/connected_components.cu",
+      "sha256": "cf9bb101204537262ad46111828d365f67c88726b31efc16af13c8bfbf77a553",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/memory_attention.py",
+      "sha256": "4c82b71c2cd518011cdb4341c75f18e6b8b6de411de96e4aec424bfe9ed9a0be",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/memory_encoder.py",
+      "sha256": "2803cd030e6a067978f272cb35c24b0690b1e7eecb51fdbd224a74cab6f31e3f",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/position_encoding.py",
+      "sha256": "e19abfd3a2758755d9182cf0355bdfa28b6db61851e31546fefee9ca27f27ebf",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/sam2_base.py",
+      "sha256": "5ac8be9a6e9935d2f4ee6efa1edff87915aa7cdd7da1207e1be21af6462093f2",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/sam2_utils.py",
+      "sha256": "74175905345361fe8fd2bbf3aecd772552b5b1c68b6cf5081953230c8fd82c10",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/__init__.py",
+      "sha256": "9f2c336d52111ef51bae5b4959d8941968e9e26638c681de5388c58d3080624d",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/utils/amg.py",
+      "sha256": "15649a414e87d38b2863f8408b16be1e1c16b2c4f9faef154e108d81f194e438",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/utils/misc.py",
+      "sha256": "ff2d441d16cedd6cc50a4bcdcbff29a1cb4d46d40c1123c3a471f265bbed3b0e",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/utils/transforms.py",
+      "sha256": "c200d1931d501ea70cd73a84128dfa20f92b3f1f4e2d74760d032410fda0d0be",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/utils/__init__.py",
+      "sha256": "9f2c336d52111ef51bae5b4959d8941968e9e26638c681de5388c58d3080624d",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/backbones/hieradet.py",
+      "sha256": "e793e2a2545cf4e2dedcd0d0654e6cd6b118179d94d5a5eeffa29b7cb6b96fd0",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/backbones/image_encoder.py",
+      "sha256": "5920c2ad317cebad34a747f10426ece14303b59a813ae79c5e95dc6b5d171663",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/backbones/utils.py",
+      "sha256": "967625e0701b240c0169574845bc18e61e18a41c128198239363bc8b96fdc662",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/backbones/__init__.py",
+      "sha256": "9f2c336d52111ef51bae5b4959d8941968e9e26638c681de5388c58d3080624d",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/sam/mask_decoder.py",
+      "sha256": "b53d185daee38021270aa57f607281418b5544bfe549d91abd6dbcea48420432",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/sam/prompt_encoder.py",
+      "sha256": "4dd05bad47c1b0a16cc6f4c095b877433e7d96f80160dc06f4b7f9559b0c3b3b",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/sam/transformer.py",
+      "sha256": "47f32206d8286c0538ed789273e607214a3e41892d3c907a8e7a6cfdd4240ca0",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/modeling/sam/__init__.py",
+      "sha256": "9f2c336d52111ef51bae5b4959d8941968e9e26638c681de5388c58d3080624d",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2/sam2_hiera_b+.yaml",
+      "sha256": "58ae5539466e1da4b856346427a29a8f3675a0c1132ec0b81bc3911ee1775ce9",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2/sam2_hiera_l.yaml",
+      "sha256": "32d7bf07be4e3717985f76052f740b90e4cfaf45588621b286de24962c2d2fd3",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2/sam2_hiera_s.yaml",
+      "sha256": "03d12a4ac21f82eb1e9d5c3c831983986b05812c861b5893a02bc3bdd9ecac4e",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2/sam2_hiera_t.yaml",
+      "sha256": "829706a768d641fa8644e194d1d69322af5d837b099e8731af1476227f7c5691",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2.1/sam2.1_hiera_b+.yaml",
+      "sha256": "ef47e14197a65c1fd542e1862270ee851c2b15e571b2c58ceb0329d15be33769",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2.1/sam2.1_hiera_l.yaml",
+      "sha256": "4c9983b04adddc5e4586c7809a4c21dd90975bccc5026aea3c22232783c18112",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2.1/sam2.1_hiera_s.yaml",
+      "sha256": "592306d059a2df49898fefcb939c11abc9dfc8fd962bc77c31d132e68cb4320a",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2.1/sam2.1_hiera_t.yaml",
+      "sha256": "9eb1c5e9db577925464492ccbbf6810731bcbbde31325fb8d297d78c3eb5d9dc",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    },
+    {
+      "file": "sam2/configs/sam2.1_training/sam2.1_hiera_b+_MOSE_finetune.yaml",
+      "sha256": "a3e2653cc96fbdde7a498da3d48e9db69d04baa9bfaab83ffde68a0022289361",
+      "matches_upstream_reference_snapshot": false,
+      "matches_after_normalizing_CRLF": true
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Prometheus.Client.Panels.EffectControlsPanelView">
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Background="#000000">
+        <TextBox Name="SearchBox" Grid.Row="0" Watermark="Buscar efectos…" Height="28" Margin="8,7,8,4" />
+        <Grid Grid.Row="1" RowDefinitions="Auto,2" ColumnDefinitions="Auto,Auto,*,Auto,Auto" Margin="8,0,8,0">
+            <ScrollViewer Name="TabScroll" Grid.Row="0" Grid.Column="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                <StackPanel Name="TabBar" Orientation="Horizontal" Spacing="0" />
+            </ScrollViewer>
+            <Button Name="AddTabButton" Grid.Column="1" Content="+" Padding="0" Width="26" Height="29" Margin="3,0,0,0" ToolTip.Tip="Crear pestaña personalizada" />
+            <Button Name="PreviousTabButton" Grid.Column="3" Content="‹" Padding="0" Width="24" Height="29" IsVisible="False" ToolTip.Tip="Pestañas anteriores" />
+            <Button Name="NextTabButton" Grid.Column="4" Content="›" Padding="0" Width="24" Height="29" IsVisible="False" ToolTip.Tip="Pestañas siguientes" />
+            <Border Grid.Row="1" Grid.ColumnSpan="5" Background="#535353" />
+        </Grid>
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="10,4,8,4">
+            <TextBlock Name="LibraryStatus" Text="Biblioteca de efectos" VerticalAlignment="Center"
+                       FontSize="10" Foreground="#999999" />
+            <Button Name="ImportMgtTransition" Grid.Column="1" IsVisible="False" Content="Importar MGT…" FontSize="10" Padding="6,3" />
+        </Grid>
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Name="EffectList" Spacing="2" Margin="9,3,9,12" />
+        </ScrollViewer>
+    </Grid>
+</UserControl>

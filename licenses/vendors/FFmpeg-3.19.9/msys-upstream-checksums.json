@@ -1,0 +1,3221 @@
+[
+  {
+    "archive": "mingw-w64-amf-headers-1.5.3-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "amf-headers-1.5.3.tar.gz",
+        "algorithm": "sha256",
+        "digest": "eb7d7d14c239117478f229cf174dc359fa2ba1e0817a7cb16277cc5251709f0f"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-aom-3.15.3-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libaom-3.15.3.tar.gz",
+        "algorithm": "sha256",
+        "digest": "12c01dc731ed7b5a999e28120b45bf58a002ba3435a4ba2cfbc1e084a27c9c04"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://storage.googleapis.com/aom-releases/libaom-3.15.3.tar.gz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-boost-1.92.0-4.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "boost-1.92.0-cmake.tar.xz",
+        "algorithm": "sha256",
+        "digest": "9bed76128d4e46755dbe818487788c6fceb6f72b378f4daa49b7e1e600d9088d"
+      },
+      {
+        "file": "0001-Fix-building-with-cmake-on-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "fb32ea452e02196552dae815eb44be5b18d849b0f6e24ecf5cf7be15e42ad85b"
+      },
+      {
+        "file": "0002-No-Arch-in-library-name-tag.patch",
+        "algorithm": "sha256",
+        "digest": "ee45d199c0e578a8d670ee6c6fa46466a53a02690c94f9221c67bbc9ab3387dc"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-brotli-1.2.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "brotli-1.2.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "98d35d11a78dc453aebb7d10c3748f3f73ff78c8267c0dc697b8631f67bf7e8f"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-bzip2-1.0.8-4.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "bzip2-1.0.8.tar.gz",
+        "algorithm": "sha256",
+        "digest": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269"
+      },
+      {
+        "file": "bzip2-cygming-1.0.6.src.all.patch",
+        "algorithm": "sha256",
+        "digest": "7e67f77172b19f3e6c1f0875b1d3e9cb79211f8e1c752794ef9afd3704f928cf"
+      },
+      {
+        "file": "bzip2-buildsystem.all.patch",
+        "algorithm": "sha256",
+        "digest": "e519a50a4adaf05b18650d3e9d644badc66e80ca86063681ffe9a2c2226319d0"
+      },
+      {
+        "file": "bzip2-1.0.6-progress.all.patch",
+        "algorithm": "sha256",
+        "digest": "f93e6b50082a8e880ee8436c7ec6a65a8f01e9282436af77f95bb259b1c7f7f7"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-ca-certificates-20260816-6.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "ca-certificates_20260816+nmu1.tar.xz",
+        "algorithm": "sha256",
+        "digest": "914416a1e44a25733aff51092fe4e27fdec1c9f6e8d1db0b8364922486153134"
+      },
+      {
+        "file": "certdata2pem.py",
+        "algorithm": "sha256",
+        "digest": "854704f72d8f031946dc6f341a6fad301032be453072bd4a173feb25a860574c"
+      },
+      {
+        "file": "update-ca-trust",
+        "algorithm": "sha256",
+        "digest": "b75af1999b537ab8ef60e35fa42f434dd20ae180e4041d752c28647333a6fa37"
+      },
+      {
+        "file": "update-ca-trust.8",
+        "algorithm": "sha256",
+        "digest": "b052972dd118a3e25f785b6caa141599f0db6fc1d943e9ebcd6ca0e1f0421f60"
+      },
+      {
+        "file": "001-blacklist-more.patch",
+        "algorithm": "sha256",
+        "digest": "c1b35b93035daf81a926ae16a839a06ef1fc6751bc813e74cdfe83b35c7d967e"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-cairo-1.18.6-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "cairo-1.18.6.tar.xz",
+        "algorithm": "sha256",
+        "digest": "1c767308174337a74694da0f3ec069c271452163a1ef4540964c50c301f157d4"
+      },
+      {
+        "file": "0001-DWrite-Get-glyph-bitmap-with-D2D-in-selected-cases.patch",
+        "algorithm": "sha256",
+        "digest": "ccac43886a0fc1403f04d34bbc977ae3b0bc6086475806a835638d4a55b01b44"
+      },
+      {
+        "file": "673.patch",
+        "algorithm": "sha256",
+        "digest": "98ca730258da7a13f1e7577bc43438f1f7cf0c9ca0fd3bb8231e8c018aa90da7"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-crt-14.0.0.r598.ge3d18511f-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "mingw-w64",
+        "algorithm": "sha256",
+        "digest": "f96372df71b5f32f54e0c3d37e59dfc4628b41137f64a87e7ca67eda6d197185"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-curl-8.23.0-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "curl-8.23.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "8dadd7d2536a314f982ad05a651b713f426bf7d02cc2c76cffb9796f2218e6c5"
+      },
+      {
+        "file": "pathtools.c",
+        "algorithm": "sha256",
+        "digest": "ebf471173f5ee9c4416c10a78760cea8afaf1a4a6e653977321e8547ce7bf3c0"
+      },
+      {
+        "file": "pathtools.h",
+        "algorithm": "sha256",
+        "digest": "1585ef1b61cf53a2ca27049c11d49e0834683dfda798f03547761375df482a90"
+      },
+      {
+        "file": "0001-Make-cURL-relocatable.patch",
+        "algorithm": "sha256",
+        "digest": "787aeed169b188c966c10c3bb8a55a12347b200eebb877bbdde7dbc21598204a"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/curl/curl/releases/download/curl-8_23_0/curl-8.23.0.tar.xz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-dav1d-1.5.5-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "dav1d-1.5.5.tar.xz",
+        "algorithm": "sha256",
+        "digest": "ca96b1d0ba3f01f55de7231d775892b64994ba061aaeeaaa4f662a390b3abf9e"
+      },
+      {
+        "file": "0001-dll-version.patch",
+        "algorithm": "sha256",
+        "digest": "7fc584e69c156d7d9805b38912f07f417ccd1cce5fe4ee457761e8bea9128d04"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://downloads.videolan.org/pub/videolan/dav1d/1.5.5/dav1d-1.5.5.tar.xz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-dlfcn-1.4.2-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "dlfcn-1.4.2.tar.gz",
+        "algorithm": "sha256",
+        "digest": "f61a874bc9163ab488accb364fd681d109870c86e8071f4710cbcdcbaf9f2565"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-expat-2.10.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "expat-2.10.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "c624ba2998fc65df1163a49641ff3f9ab73138b11641d92c86bee0fb01b1bc7f"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/libexpat/libexpat/releases/download/R_2_10_0/expat-2.10.0.tar.xz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-fast_float-8.3.3-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "fast_float-8.3.3.tar.gz",
+        "algorithm": "sha256",
+        "digest": "4dd695f051893c8218faf2ed9871fa4a4990aa6aee2d3190ed7bfa2e83092245"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-ffmpeg-9.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "ffmpeg-9.1.tar.xz",
+        "algorithm": "sha256",
+        "digest": "1a4d394ae63d190a526cd052eb4415c156b5c5e2df37efab41a7de0b8fde2433"
+      },
+      {
+        "file": "pathtools.c",
+        "algorithm": "sha256",
+        "digest": "ebf471173f5ee9c4416c10a78760cea8afaf1a4a6e653977321e8547ce7bf3c0"
+      },
+      {
+        "file": "pathtools.h",
+        "algorithm": "sha256",
+        "digest": "1585ef1b61cf53a2ca27049c11d49e0834683dfda798f03547761375df482a90"
+      },
+      {
+        "file": "0005-Win32-Add-path-relocation-to-frei0r-plugins-search.patch",
+        "algorithm": "sha256",
+        "digest": "8c74e9b5800dbb41c33a60114712726ec768ad6de8f147c2eb30656fd4c899cc"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ffmpeg.org/releases/ffmpeg-9.1.tar.xz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-ffnvcodec-headers-13.0.19.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "nv-codec-headers.git",
+        "algorithm": "sha256",
+        "digest": "1b6190ddb4b36356ab3d4c2d53ed613aec077748a28c3ef7fff53047662b245b"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-fontconfig-2.18.4-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "fontconfig-2.18.4.tar.gz",
+        "algorithm": "sha256",
+        "digest": "cecf4125622ed674d5630b6deaeff43e3695afe197bdcc560363a1820d858112"
+      },
+      {
+        "file": "0011-conf-copy-instead-of-symlink.patch",
+        "algorithm": "sha256",
+        "digest": "73ed74a1f4624466084d219e2fbc0d5780da9f63763f1307629251e58cccf2cd"
+      },
+      {
+        "file": "0012-conf-copy-drive-relative.patch",
+        "algorithm": "sha256",
+        "digest": "bb754488fbe89158eb756823757a612bdc26c1fdf0389316dc495caf027e4763"
+      },
+      {
+        "file": "fontconfig.hook.in",
+        "algorithm": "sha256",
+        "digest": "ad4ce48983045d7f39b40ca9e04d4be2eaa9177b89dcc516388d779c131a88bc"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-freetype-2.15.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "freetype-2.15.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "93cd47eb719c325107f2d3cf087d06299e944c3b48a40b55537302304dea1dd5"
+      },
+      {
+        "file": "freetype-2.10.0-enable-valid.patch",
+        "algorithm": "sha256",
+        "digest": "30e84993f899b66c31451992667f7ac6cc9e0b19dfe2f47ccb546d77bbc77ef5"
+      },
+      {
+        "file": "freetype-2.10.0-enable-spr.patch",
+        "algorithm": "sha256",
+        "digest": "0571f18d97834df020e4cbdb1338b14f9160669f868237080951e01f5b86727c"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.15.0.tar.xz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-frei0r-plugins-3.7.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "frei0r-plugins-3.7.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "5543917de48d2e8cc2fa02794240a3613447d00458bc2cf606aef20f4b8da515"
+      },
+      {
+        "file": "0001-fix-sse-define.patch",
+        "algorithm": "sha256",
+        "digest": "6ffde5108c212db5930575b16c8402f35c7f004093243fbdacb82f7de71dc70a"
+      },
+      {
+        "file": "0002-fix-build-with-opencv-5.patch",
+        "algorithm": "sha256",
+        "digest": "dd72a22f88b4075fc7c85d48d2a8fedead46e095b18f9bd599f1d5952b7613d7"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-fribidi-1.0.18-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "fribidi-1.0.18.tar.xz",
+        "algorithm": "sha256",
+        "digest": "1de5e8073d035388b71d0b2d452b1da1f8caeea8a7702997b401fe1b6250727f"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-gcc-16.2.0-7.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "gcc-16.2.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "e6738e29597f733270731aa90600f37ffdc045079dfc27ec7e8192cc81085c3e"
+      },
+      {
+        "file": "gdbinit",
+        "algorithm": "sha256",
+        "digest": "bce81824fc89e5e62cca350de4c17a27e27a18a1a1ad5ca3492aec1fc5af3234"
+      },
+      {
+        "file": "0003-Windows-Follow-Posix-dir-exists-semantics-more-close.patch",
+        "algorithm": "sha256",
+        "digest": "3fc35067823f87e48dd3bfd265e7593000dc110fa9ad5f16c81b896765fc897a"
+      },
+      {
+        "file": "0012-Handle-spaces-in-path-for-default-manifest.patch",
+        "algorithm": "sha256",
+        "digest": "e98805ead7d78ee2a92f237894c4b2b7ddc1688e1b517d8c04f28d440202e40f"
+      },
+      {
+        "file": "0014-gcc-9-branch-clone_function_name_1-Retain-any-stdcall-suffix.patch",
+        "algorithm": "sha256",
+        "digest": "fd9bdecb2bbc4796bbc9f00b708dac42ef9e3464a06d6d27e5475cee117de5be"
+      },
+      {
+        "file": "0021-bootstrap-gnattools-Pass-target-sysroot-flags-to-boo.patch",
+        "algorithm": "sha256",
+        "digest": "76455c46eec4df95a80bbf7e5bcd2d165f300976c79c1baf0bf7ed20f000cdd4"
+      },
+      {
+        "file": "0024-libgfortran-Guard-locale-restoration-for-formatted-I0.patch",
+        "algorithm": "sha256",
+        "digest": "976d14f803a211b19d9bf0169c08d4fde05af5cc18073f2fc8efc9a3cb17890a"
+      },
+      {
+        "file": "0025-libgfortran-Copy-LC_NUMERIC-string-for-formatted-IO.patch",
+        "algorithm": "sha256",
+        "digest": "f591efc820a2c72aefb83179f7cbd3f4654231b68700486bd04ee32e2db61de5"
+      },
+      {
+        "file": "0140-gcc-diagnostic-color.patch",
+        "algorithm": "sha256",
+        "digest": "c94004dab1685a6fa9124de86aae742df4136a2e9ff5d5e1ad87ecdc35fbcef4"
+      },
+      {
+        "file": "1000-MSYS2-Set-STANDARD_STARTFILE_PREFIX_1-to-lib.patch",
+        "algorithm": "sha256",
+        "digest": "ad71bc58d9ad3927893a0ce443a03c770d4f9ba5ebc8dc6943ed3c59b4823858"
+      },
+      {
+        "file": "3001-fix-codeview-crashes.patch",
+        "algorithm": "sha256",
+        "digest": "f21f9ab731e9cab8fd4ca8c289497f859ef7004e6fa0507877dc2559ac2071c3"
+      },
+      {
+        "file": "0002-i386-Keep-SEH-enabled-for-Win64-sysv_abi-functions.patch",
+        "algorithm": "sha256",
+        "digest": "fdf4e90a56fc195a8f9a969af39335f158a29f29d42d33c00d908fc47cf5ad24"
+      },
+      {
+        "file": "0007-Build-EXTRA_GNATTOOLS-for-Ada.patch",
+        "algorithm": "sha256",
+        "digest": "90d5cb570083f9dea4ac0f0f87e3e8d2230f5052e6f9b946061a20a224a9d195"
+      },
+      {
+        "file": "0022-mingw-Remove-outdated-mingw-stuff-from-FLAGS_FOR_TAR.patch",
+        "algorithm": "sha256",
+        "digest": "e4f508bd6e5936dee1c87557ff27e264ad2a7929fe0c3a1cd6dd8adfcfc29106"
+      },
+      {
+        "file": "0023-lto-mingw-Do-not-export-symbols-from-some-fronten.patch",
+        "algorithm": "sha256",
+        "digest": "e58644aa26e4921b77598b254e015617f458c80cc537e52561bb8b4a3382bd4d"
+      },
+      {
+        "file": "0026-mingw-Honor-with-local-dir-and-with-native-system-he.patch",
+        "algorithm": "sha256",
+        "digest": "e1e05ceee42e6418ca744d29cbe3d9c8af3575044fc7b35c8c698e503d9bc788"
+      },
+      {
+        "file": "0027-libstc-configure-Check-for-timing-APIs-even-if-_POSI.patch",
+        "algorithm": "sha256",
+        "digest": "abdaeb9c523846b39564b9cbfb732ab047ad9f0f8f56ac8cc4e8d172879de918"
+      },
+      {
+        "file": "0200-function-honour-over-alignment-in-assign_stack_local.patch",
+        "algorithm": "sha256",
+        "digest": "70d2504edfb92dbccd224eb917392bf9c53476253cd6d43466173b270027fe96"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ftp.gnu.org/gnu/gcc/gcc-16.2.0/gcc-16.2.0.tar.xz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-gdk-pixbuf2-2.44.8-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "gdk-pixbuf-2.44.8.tar.xz",
+        "algorithm": "sha256",
+        "digest": "919f529512961a12e81cd4b4b466a48c3933469e7f9a310c6513cd4fb252ba3c"
+      },
+      {
+        "file": "0003-fix-dllmain.patch",
+        "algorithm": "sha256",
+        "digest": "21bd9b2ba1447267c84f1b445cbcf50c62299254856c1c227cc7ba4babc9f27e"
+      },
+      {
+        "file": "0004-build-all-loaders-plus-gdi.patch",
+        "algorithm": "sha256",
+        "digest": "f265628da99c0bc2a9a9a40a27d7ea0b8b783bf38200c14ee8db4ed879facbec"
+      },
+      {
+        "file": "fix-missing-meson-dep.patch",
+        "algorithm": "sha256",
+        "digest": "c7a0e09fd611a6de0ed91348ba6776ad5c2c4fee4d834c61628318a374bc9318"
+      },
+      {
+        "file": "gdk-pixbuf-query-loaders.hook.in",
+        "algorithm": "sha256",
+        "digest": "6277c30e763c7889a3446e2ce8c7b8dbe7212678497b2905582de8159831e3fb"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-gettext-1.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "gettext-1.0.tar.lz",
+        "algorithm": "sha256",
+        "digest": "d6342cbe1411a2fe7d139bfed80c2d63b1babc92acfedc72501cc105184f61ee"
+      },
+      {
+        "file": "0005-Fix-compilation-of-pthread_sigmask.c.patch",
+        "algorithm": "sha256",
+        "digest": "cbc2f533012d646521afa20f8b256917fce040741ff42cf53fb6dd7123a6670a"
+      },
+      {
+        "file": "122-Use-LF-as-newline-in-envsubst.patch",
+        "algorithm": "sha256",
+        "digest": "ec39103d851262c02c27b7038f3c538e03afaefc6aa050311d62519d192ff38c"
+      },
+      {
+        "file": "0021-replace-fsync.patch",
+        "algorithm": "sha256",
+        "digest": "380dbddee2f9e2feee4c1435e8a942b5d11d0125e60c3350ebb10c19b19011aa"
+      },
+      {
+        "file": "0022-libasprintf.patch",
+        "algorithm": "sha256",
+        "digest": "c354f6a7021069c99b90f1c6d6f6a4ccf40a01e9f6742b866df2b5a7286cb868"
+      },
+      {
+        "file": "0024-disable-gnu-format.patch",
+        "algorithm": "sha256",
+        "digest": "ce7ccf6dd3a492cab322253cd67310899b546eccc25821c25cbc047a1a984633"
+      },
+      {
+        "file": "0030-fix-build-with-mingw-w64-clang.patch",
+        "algorithm": "sha256",
+        "digest": "9b1b4f0c65b3bc1a3103c921a02c203cecf533d145f0bd90023406e760f81749"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ftp.gnu.org/pub/gnu/gettext/gettext-1.0.tar.lz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-ggml-1.0.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "v1.0.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "27de4df871da091112a1e4ea0e13be70f364af5da666c1246fb26fde2b21fac0"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-giflib-6.1.3-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "giflib-6.1.3.tar.gz",
+        "algorithm": "sha256",
+        "digest": "b65b66b99f0424b93525f987386f22fc5efb9da2bfc92ad4a532249aaffbab0e"
+      },
+      {
+        "file": "001-mingw-build.patch",
+        "algorithm": "sha256",
+        "digest": "5b2369bb4bce5f0bcd17f383d53458e193fd9778ef5d0b4e6eff2342c54f4c42"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-glib2-2.90.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "glib-2.90.1.tar.xz",
+        "algorithm": "sha256",
+        "digest": "93c941aa17d5eb1d53fe838365f29a8b4e539c222a256d974ec8f30fc413e396"
+      },
+      {
+        "file": "7e69f88480a4bf8d9653efd0310c4c25390a0c8b.patch",
+        "algorithm": "sha256",
+        "digest": "4902e5748c6954ed38f690f27954db96709e705ff83bbdb4ebf7392a21f65824"
+      },
+      {
+        "file": "0002-disable_glib_compile_schemas_warning.patch",
+        "algorithm": "sha256",
+        "digest": "396c25cfd740ffbb72209133c7b9453173167577265a4bb14502678de8d5a8f9"
+      },
+      {
+        "file": "0004-disable-explicit-ms-bitfields.patch",
+        "algorithm": "sha256",
+        "digest": "48e94a9e61f8db9a2dc66556f12c725efe5e247a9ddc5b491f8cb8310a387293"
+      },
+      {
+        "file": "glib-compile-schemas.hook.in",
+        "algorithm": "sha256",
+        "digest": "0c3d54636407e0e13429b73959cace626253cd772e1d4870de0fb92b0b99545a"
+      },
+      {
+        "file": "gio-querymodules.hook.in",
+        "algorithm": "sha256",
+        "digest": "f18d27d98709dba8c5f9756672baaf0158fb4353c9edbdc2e80021f88ff34ced"
+      },
+      {
+        "file": "pyscript2exe.py",
+        "algorithm": "sha256",
+        "digest": "3c65bc3dd7337877e14b19bc7c42918bde664a11a860cfc0b9db891f8a1052db"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-glslang-16.6.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "glslang-16.6.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "9c09b901149c729df745057dafa815278aaa101b84d2b6e14f16a42de52f97f2"
+      },
+      {
+        "file": "002-remove-deprecated-mingw-secure-api.patch",
+        "algorithm": "sha256",
+        "digest": "c0a1b75449fa7ab6448b38b3d55bff1c150c2083894063cb95ad5b165bf79fe0"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-gmp-6.3.0-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "gmp-6.3.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898"
+      },
+      {
+        "file": "do-not-use-dllimport.diff",
+        "algorithm": "sha256",
+        "digest": "385ab704f82c47f3aecc9141f43c96e7b8de2bf0e654dc457ce0f1a039db2c68"
+      },
+      {
+        "file": "gmp-staticlib.diff",
+        "algorithm": "sha256",
+        "digest": "7c3cde2634baa2cb1c31404bbfed2d8d7ba33556971ac842a08f2e87667849ab"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-gnutls-3.8.14-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "gnutls-3.8.14.tar.xz",
+        "algorithm": "sha256",
+        "digest": "7e2d258071f5db9620aa7ff34259331d004f7beafa3eb18560cfaf60acfbf02a"
+      },
+      {
+        "file": "0001-fix-build-with-mingw-w64-clang.patch",
+        "algorithm": "sha256",
+        "digest": "7941d0a98b46b48cc85985a2edf6576a699f854d9147e794c713465ec07958ab"
+      },
+      {
+        "file": "0003-gnutls-fix-external-libtasn1-detection.patch",
+        "algorithm": "sha256",
+        "digest": "08e4e6311b935dab02f0fe203311f184fb8020603955fd519614e4c0acc4b90c"
+      },
+      {
+        "file": "0004-disable-broken-examples.patch",
+        "algorithm": "sha256",
+        "digest": "cbf9e59fb2432d4ac1edcb70734023e074b8058fa4c010a036a40de8449f67fb"
+      },
+      {
+        "file": "0005-remove-coverage-rules.patch",
+        "algorithm": "sha256",
+        "digest": "10ea5a84459af8d848788cc8871decd3b3cdd542b829883ebe4f6ec28d60578f"
+      },
+      {
+        "file": "0006-record-include-errno.patch",
+        "algorithm": "sha256",
+        "digest": "6a4ecc7fdcf2d0f722195e5306d56ec871e08813661f8d39c8a4205013d5075c"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.14.tar.xz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-graphite2-1.3.15-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "graphite2-1.3.15.tgz",
+        "algorithm": "sha256",
+        "digest": "c6bc8b4252724665297f7cad0c55897285c673f9b8e6db3522ace833593fe0b1"
+      },
+      {
+        "file": "001-graphite2-1.3.12-win64.patch",
+        "algorithm": "sha256",
+        "digest": "a77a3e21099454b0732da2ec37067c871c267e9443a9c6c56ca44245e6a64c4f"
+      },
+      {
+        "file": "002-graphite2-1.2.1-pkgconfig.patch",
+        "algorithm": "sha256",
+        "digest": "5ca68f1d7418c5d159c3eebb9f1ad31e71ebfe3b9492d3fe78db360bcf626ffe"
+      },
+      {
+        "file": "003-graphite2-1.3.12-staticbuild.patch",
+        "algorithm": "sha256",
+        "digest": "7cfc9f8bcb786b89713cfd043bc471ef61441360fa6b45b5fc2e93cd69e79e93"
+      },
+      {
+        "file": "004-graphite2-1.3.12-dllimport-fix.patch",
+        "algorithm": "sha256",
+        "digest": "cc33eab2ac0e335963d678ce7af15ccfef4cbc94e6722ffeb99b200f14a5003d"
+      },
+      {
+        "file": "005-remove-unknown-dep.patch",
+        "algorithm": "sha256",
+        "digest": "026e1bf900610d4f01d9f191aa75dfc9e0398737653589f1b42f41659d21a828"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-gsm-1.0.24-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "gsm-1.0.24.tar.gz",
+        "algorithm": "sha256",
+        "digest": "a3c40c6471928383f4abfcb2e8f24012a1f562be2f17b8d672145d5986681a92"
+      },
+      {
+        "file": "0001-adapt-makefile-to.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "654eaac22889157982d216776bf9de9b33a24e0bea4f8f56b7659cb80627dff3"
+      },
+      {
+        "file": "0002-adapt-config-h-to.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "4baaaf5218f384c7ee204da0617d6f95d3e2fc684faf5a80b892f29930939d07"
+      },
+      {
+        "file": "0003-fix-ln.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "29973fa21c19f68aa4fecc9cb9d622f5d459eb193907c434eed1e05caa4c2321"
+      },
+      {
+        "file": "0004-use-cc-instead-of-gcc.patch",
+        "algorithm": "sha256",
+        "digest": "07a85325c41e9e4e83f1730ccf1d5c1a0a7b4effcda913a0619d2f984aaa8eab"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-harfbuzz-15.2.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "harfbuzz-15.2.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "e2ec49090744383cdbe7df808c1cedaafba06a97be8dc4211fe546ba585f12cb"
+      },
+      {
+        "file": "001-fix-build-with-chafa.patch",
+        "algorithm": "sha256",
+        "digest": "26b37a1ca9872973905ecb96bcbe3f054472252320956faa74428206900d360e"
+      },
+      {
+        "file": "002-make-library-type-in-cmake-config-unknown.patch",
+        "algorithm": "sha256",
+        "digest": "189dc3cb2f9a0fd07d6499cee3307985f68e6b9d28d581d15c365b33f2012552"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-headers-14.0.0.r598.ge3d18511f-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "mingw-w64",
+        "algorithm": "sha256",
+        "digest": "f96372df71b5f32f54e0c3d37e59dfc4628b41137f64a87e7ca67eda6d197185"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-highway-1.4.0-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "highway-1.4.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "36f672ab48ddb3c8555e9e89e16fe400cd7d16c6eb455a1a3d0c146a63ababdc"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/google/highway/releases/download/1.4.0/highway-1.4.0.tar.gz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-imath-3.2.3-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "Imath-3.2.3.tar.gz",
+        "algorithm": "sha256",
+        "digest": "72f498e7073890a2a1b870e453908a07c9725f9d1384527043a38578bfb4ef31"
+      },
+      {
+        "file": "0001-cmake-libs-name.patch",
+        "algorithm": "sha256",
+        "digest": "5a70997f2d34eba47210ac93f67b2037ca61c5c967a4a1f00a479d1c5eda490f"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-jbigkit-2.1-6.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "jbigkit-2.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "de7106b6bfaf495d6865c7dd7ac6ca1381bd12e0d81405ea81e7f2167263d932"
+      },
+      {
+        "file": "allNewMainMakefile.all.patch",
+        "algorithm": "sha256",
+        "digest": "ce210309c47214599c451e680043dc827980ace647385c4ae26f3725d1054d97"
+      },
+      {
+        "file": "manfiles.all.patch",
+        "algorithm": "sha256",
+        "digest": "d5cce4c1bae575563cb892c93de349a7747435c175e81ee57d77e65079d11908"
+      },
+      {
+        "file": "pbmtoolsMakefile.all.patch",
+        "algorithm": "sha256",
+        "digest": "7f268260d596275a1bbe803a829baf6c4a6938f9e23e861dd433622e12c2487e"
+      },
+      {
+        "file": "useLibtool.all.patch",
+        "algorithm": "sha256",
+        "digest": "10877f4c14c1251871b8d733b9748d8db66cb4d7e0453cfd92a5b30e1c268e5e"
+      },
+      {
+        "file": "zzz_debug.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "fe579b90d3b34e6d3209af91fcd9f84a172c2e45ca88a8b23e84f8eacd04f941"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-l-smash-2.14.5-4.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "l-smash-2.14.5.tar.gz",
+        "algorithm": "sha256",
+        "digest": "e6f7c31de684f4b89ee27e5cd6262bf96f2a5b117ba938d2d606cf6220f05935"
+      },
+      {
+        "file": "0001-remove-version-script.patch",
+        "algorithm": "sha256",
+        "digest": "7f5267757e8eee42faecbaa64e2002b65f6bd356e637cb8297ae96cf3ef72d68"
+      },
+      {
+        "file": "0002-use-cc-instead-of-gcc.patch",
+        "algorithm": "sha256",
+        "digest": "b366a6accdd2bf5f5d8bd7abb3559553b61701722c629f75e3c98c9d9f1f3b31"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-lame-4.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "lame-4.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "3df5124d5ad3a98312ffd7ba6a9b36230e4f8a3e66d3ce0f425e336c32d216eb"
+      },
+      {
+        "file": "0002-07-field-width-fix.all.patch",
+        "algorithm": "sha256",
+        "digest": "d3ba595816761706d1e5dcf432f0b3ad8c9c6b37584032e21bf24c89e4fd0fc8"
+      },
+      {
+        "file": "0005-no-gtk.all.patch",
+        "algorithm": "sha256",
+        "digest": "55f7fb63fd6a4e738f4d449d212ac928a522135e608c28449b86510fd33c0834"
+      },
+      {
+        "file": "0006-dont-use-outdated-symbol-list.patch",
+        "algorithm": "sha256",
+        "digest": "723fcb34c969dd5052b44d6586236c262b9340c423ed75b1fc5104fb0e207434"
+      },
+      {
+        "file": "0008-skip-termcap.patch",
+        "algorithm": "sha256",
+        "digest": "8fddeebd0ccdec62ede2932ce3bbe767af6ed6f06018f7f13113401d4ce06179"
+      },
+      {
+        "file": "0010-frontend-utf8-id3v2-setters.patch",
+        "algorithm": "sha256",
+        "digest": "2885e151385022ed144bf6ebf25f8af46589c6a2bdb777bb983227eba0ace4c6"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-lcms2-2.20-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "lcms2-2.20.tar.gz",
+        "algorithm": "sha256",
+        "digest": "18ff5504fa9cc8a2b1f3591180d90ead16c8a2ea78e530523b46eab70e1ca6b9"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-lerc-4.1.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "lerc-4.1.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "fe2860e10635166cd9f2144e429ec6b870d471e9957f5812ba2da0973770b022"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libass-0.17.5-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libass-0.17.5.tar.xz",
+        "algorithm": "sha256",
+        "digest": "2dca25c0e0c837ddf00b52011b3f82cac1e4ddd3ad018227806b0c2288864acc"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libbluray-1.5.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libbluray-1.5.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "f676408e91a5d321abf8b8d4dfdae36205c297dab5c54c3ec519639025f474a2"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libcaca-0.99.beta20-8.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libcaca-0.99.beta20.tar.gz",
+        "algorithm": "sha256",
+        "digest": "8ad74babc63bf665b0b2378d95b4da65b7493c11bd9f3ac600517085b0c4acf2"
+      },
+      {
+        "file": "0001-win32-is-not-msvc-it-could-be.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "d7a30c2717d2cc22eee98a635bf885ea057888381c8a452f942931afb5990ded"
+      },
+      {
+        "file": "0002-correct-installation-order.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "bd7b8659347406d76579a6d29148016a452b18dfcc1760db1be8b1f4c0786a63"
+      },
+      {
+        "file": "0006-no-undefined.all.patch",
+        "algorithm": "sha256",
+        "digest": "41868030a0e8ec2828476c17918af6d368e84e6aa1e165338000c36cc9898f82"
+      },
+      {
+        "file": "0010-missing-include.patch",
+        "algorithm": "sha256",
+        "digest": "77ba3e75979ee455464fc4cdf2ca6a22dd50b78133c3a299647199011fdd0c1f"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libdatrie-0.2.14-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libdatrie-0.2.14.tar.xz",
+        "algorithm": "sha256",
+        "digest": "f04095010518635b51c2313efa4f290b7db828d6273e39b2b8858f859dfe81d5"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libdeflate-1.26-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libdeflate-1.26.tar.gz",
+        "algorithm": "sha256",
+        "digest": "bba03fffc5538576213675ce6968fcff6ce2e67d82e4d5febea2d05f9f13cf85"
+      },
+      {
+        "file": "002-pkg-config.patch",
+        "algorithm": "sha256",
+        "digest": "7feb96b6466375824af54a829dfe0d5cbd641970d64ef9fe0f9f4ab5e18040dd"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libdovi-3.4.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libdovi-3.4.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "8eac4d1c3134f53e8eb216db6450307a737425844113e480d1e9713c142a9fa2"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libexif-0.6.26-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libexif-0_6_26-release.tar.gz",
+        "algorithm": "sha256",
+        "digest": "974329442c4b0515814aa700073abbac592a29d1c2c14e4ec2bf0209764dabe9"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libffi-3.8.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libffi-3.8.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "81e879c094cc5ec3186c48510c6385ac6b3e866192e8bc71a35245703757ee40"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libgme-0.6.5-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libgme-0.6.5-src.tar.gz",
+        "algorithm": "sha256",
+        "digest": "a133f19278222136ba0d8c27b64a07987ba05fec9d2e6d293ccd8cabdd97ddbb"
+      },
+      {
+        "file": "0001-fix-pkgconfig.patch",
+        "algorithm": "sha256",
+        "digest": "65784ffefb1e3645573ac5aa547da10fefe29c0a69dad725cef9337cc16d6919"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libiconv-1.19.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libiconv-1.19.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "9a06844846d664d7122161700c10a64480d7c7bcead3091925a785b38c91edab"
+      },
+      {
+        "file": "0003-add-cp65001-as-utf8-alias.patch",
+        "algorithm": "sha256",
+        "digest": "d5a19da369771cc001445588555e57c0cf9c4ae061dd47d2f1643ae64ed99680"
+      },
+      {
+        "file": "0002-fix-cr-for-awk-in-configure.all.patch",
+        "algorithm": "sha256",
+        "digest": "5125319c3b1751b86baf779b512a4cc88bd7a5cc2fd71c76eb2bf6df7089e675"
+      },
+      {
+        "file": "iconv.pc",
+        "algorithm": "sha256",
+        "digest": "56e7ec406bf42eb66b1d972f20d229f7a76ba00c38c7b4403bf348875704baae"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.19.1.tar.gz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-libidn2-2.3.8-5.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libidn2-2.3.8.tar.gz",
+        "algorithm": "sha256",
+        "digest": "f557911bf6171621e1f72ff35f5b1825bb35b52ed45325dcdee931e5d3c0787a"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ftp.gnu.org/gnu/libidn/libidn2-2.3.8.tar.gz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-libjpeg-turbo-3.2.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libjpeg-turbo-3.2.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "c27ad72a68da151177929aa969ae773a2da5ac2af9ce946079314fdac8cece7f"
+      },
+      {
+        "file": "0001-header-compat.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "f0609ad801831a549cbc15eeee5ab45fb9df344e607491f6f1ad762519d50089"
+      },
+      {
+        "file": "libjpeg-turbo-1.3.1-libmng-compatibility.patch",
+        "algorithm": "sha256",
+        "digest": "2154ecce25b3b2aae5eeabd52c8a1480ec78f1cd50bb8e989e30de54d50e3ec6"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.2.1/libjpeg-turbo-3.2.1.tar.gz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-libjxl-0.13.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libjxl-0.13.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "24d18c9af2d1f5a17730b3f8d3f70a5c16e5ac303f5d9d5fe9dc00cf7ca82af2"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-liblc3-1.1.3-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "v1.1.3.tar.gz",
+        "algorithm": "sha256",
+        "digest": "276752ff54ce6a77d54ec133397b9d7e71f90caf3d9afa32d8b0e891b8ecb8af"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libmodplug-0.8.9.2-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libmodplug-0.8.9.2.tar.gz",
+        "algorithm": "sha256",
+        "digest": "e4d9cb46da78a639d6eadb4ff3ab955f68c3099579b5310af64b37091e28957e"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libmysofa-1.3.5-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libmysofa-1.3.5.tar.gz",
+        "algorithm": "sha256",
+        "digest": "f29508c335c83d8703f943ffc9ca783ac39aca84e851357f13a55af0f8143137"
+      },
+      {
+        "file": "002-fix-exports.patch",
+        "algorithm": "sha256",
+        "digest": "eee2ea1c7bc233a40be8608881cf05dd623a61b1daa6365a1db47ac316bf42e4"
+      },
+      {
+        "file": "005-add-cflag-private-for-staticlib.patch",
+        "algorithm": "sha256",
+        "digest": "7c88bad3aac44c96d8ef1dd001f9677b46613774e9f2e2780692f3af995cc609"
+      },
+      {
+        "file": "007-fix-dllname.patch",
+        "algorithm": "sha256",
+        "digest": "34926f9df08443fb0c7661c925a132c14685c72a83415e505f9c370132d40902"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libogg-1.3.6-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libogg-1.3.6.tar.gz",
+        "algorithm": "sha256",
+        "digest": "83e6704730683d004d20e21b8f7f55dcb3383cdf84c0daedf30bde175f774638"
+      },
+      {
+        "file": "libogg-1.3.4-versioned-dll-cmake.patch",
+        "algorithm": "sha256",
+        "digest": "18772896694597eb60ab3f9fb6bc7629759d51a7fa0c1645da1f8d7ba11c1bf8"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libplacebo-7.387.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libplacebo-v7.387.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "3bf5d72786682c194387c33d563872f6bfe202a9816f9dde6535a31a9b2e0d74"
+      },
+      {
+        "file": "0001-add-cflags-private.patch",
+        "algorithm": "sha256",
+        "digest": "bda9bed8b8fff7e69fe750b6f2caafde67f63343d05698a81fb1f7b27ac4cca3"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libpng-1.6.59-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "v1.6.59.tar.gz",
+        "algorithm": "sha256",
+        "digest": "2540302a1844ad2b2b501977abecfa850f265f97b78f065a712ab4074a89f5b5"
+      },
+      {
+        "file": "apng.patch",
+        "algorithm": "sha256",
+        "digest": "a9c117324291cda7558ab36bec4ba28a34013d76e1ceaf9953749791a9e154a8"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libpsl-0.21.5-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libpsl-0.21.5.tar.gz",
+        "algorithm": "sha256",
+        "digest": "1dcc9ceae8b128f3c0b3f654decd0e1e891afc6ff81098f227ef260449dae208"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-librsvg-2.63.4-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "librsvg-2.63.4.tar.xz",
+        "algorithm": "sha256",
+        "digest": "31f07d9350dad3f8964fd613c31309ac160fdef13dfac59df6fd082de78d6e8f"
+      },
+      {
+        "file": "0002-avoid-link-whole.patch",
+        "algorithm": "sha256",
+        "digest": "4cb597eef01a636ad7007b3a47b76e395f30b2347183b5acb1af94d39577a239"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libsoxr-0.1.3-6.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "0001-libsoxr-fix-pkgconfig-file.patch",
+        "algorithm": "sha256",
+        "digest": "77c45009fd5b84b56c8b0b5a90dcc6a093d129e571d13afc086c7dfe02c2be96"
+      },
+      {
+        "file": "0002-libsoxr-fix-documentation-installation.patch",
+        "algorithm": "sha256",
+        "digest": "7c16beb3898279db96b09b365c069071b371a1022f0baf12bb3da9d45d387fdf"
+      },
+      {
+        "file": "LICENSE-PFFFT",
+        "algorithm": "sha256",
+        "digest": "a9f3d236f3c14a41a1293f176d4c7c46d85404403417fcb8df6d6c9707104e42"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "git+https://git.code.sf.net/p/soxr/code#commit=945b592b70470e29f917f4de89b4281fbbd540c0"
+    ]
+  },
+  {
+    "archive": "mingw-w64-libssh-0.12.2-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libssh-0.12.2.tar.xz",
+        "algorithm": "sha256",
+        "digest": "49560f677d96e3706a904ac2de1116e25f3680937d51e5c92198fcba4a1c1e9f"
+      },
+      {
+        "file": "002-libssh-fix-pkgconfig.patch",
+        "algorithm": "sha256",
+        "digest": "45eb3be0e97f9d50144ac14404545a1a337609b3d650aa3b2c353affefb220cd"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://www.libssh.org/files/0.12/libssh-0.12.2.tar.xz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-libssh2-1.11.1-4.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libssh2-1.11.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "d9ec76cbe34db98eec3539fe2c899d26b0c837cb3eb466a56b0f109cabf658f7"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://libssh2.org/download/libssh2-1.11.1.tar.gz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-libsystre-1.0.2-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "COPYING",
+        "algorithm": "sha256",
+        "digest": "3200024286eb0a33c22da3a31c470df07c7b8cfbead2b9528195d67d107264ec"
+      },
+      {
+        "file": "README",
+        "algorithm": "sha256",
+        "digest": "5ba16345af82fd3aee07ccf407dbc37ff5793e305dfc9b203e1fecf5323dc101"
+      },
+      {
+        "file": "meson.build",
+        "algorithm": "sha256",
+        "digest": "783d035a2c418d29add2d885015b014eef146def58639a1af9ab8d701a3756c2"
+      },
+      {
+        "file": "meson_post_install.py",
+        "algorithm": "sha256",
+        "digest": "4dc9f7404ba23de7491ee8146adf72ccc87c3114c459d3c778e70389846f2a37"
+      },
+      {
+        "file": "regex.h",
+        "algorithm": "sha256",
+        "digest": "5c06d602f089fe1f2a95a59dfe7866e90a3358c714b22f6aafd7c14bd5a0f7c4"
+      },
+      {
+        "file": "systre.c",
+        "algorithm": "sha256",
+        "digest": "454cdacd0a31d15c1a7b7e9fa8d81d0137a1b628d157cb49071a8cf7f5537827"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libtasn1-4.21.0-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libtasn1-4.21.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "1d8a444a223cc5464240777346e125de51d8e6abf0b8bac742ac84609167dc87"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.21.0.tar.gz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-libthai-0.1.30-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libthai-0.1.30.tar.xz",
+        "algorithm": "sha256",
+        "digest": "ddba8b53dfe584c3253766030218a88825488a51a7deef041d096e715af64bdd"
+      },
+      {
+        "file": "relocatable.patch",
+        "algorithm": "sha256",
+        "digest": "f258c748e37a11ce20d307a9a27cf68de9543d79b7e60ebd31c7cf4398b5f6d9"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libtheora-1.2.0-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libtheora-1.2.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "279327339903b544c28a92aeada7d0dcfd0397b59c2f368cc698ac56f515906e"
+      },
+      {
+        "file": "001-example.patch",
+        "algorithm": "sha256",
+        "digest": "5627d26c3316fef71bca037e1834bcba063dbf949ea9293820f0e68b13641105"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libtiff-4.7.2-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "tiff-4.7.2.tar.gz",
+        "algorithm": "sha256",
+        "digest": "672bd7d10aee4606171afb864f3570b83340f6a33e2c186dc0512f7145ffdf6a"
+      },
+      {
+        "file": "0002-libtiff-install-headers.patch",
+        "algorithm": "sha256",
+        "digest": "493742947c8667655b6b89f2d7d27e92e1438a490ed86f50811112394b432a12"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libtre-0.9.0-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libtre",
+        "algorithm": "sha256",
+        "digest": "81ac859d391cfd1a240a23ac1b7bda51cee7b75103cf03015cea9ea0b3492c3d"
+      },
+      {
+        "file": "001-autotools.patch",
+        "algorithm": "sha256",
+        "digest": "0fca8835867ccd669aa572d3fe25db8e45f33d93c17ee9c00e50cfab23e78dd1"
+      },
+      {
+        "file": "002-pointer-cast.patch",
+        "algorithm": "sha256",
+        "digest": "72c87b956eade17ed5444c3c6eae7be09b93d145573f20017ec590d9c2516c52"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libunibreak-7.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libunibreak-7.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "e4cb1a0d9aebb129c9856ec75e3d98e675997e385cce4e0106ef8f68e09afaa3"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libunistring-1.5-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libunistring-1.5.tar.gz",
+        "algorithm": "sha256",
+        "digest": "5b0ecd46cbf225375f20ab4056197e66a7ac590e2684c069af407ae3383c9d81"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ftp.gnu.org/gnu/libunistring/libunistring-1.5.tar.gz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-libva-2.24.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libva-2.24.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "0b4a3649ee8d683b9cce2ef094df4fb039d276c0cef7e49337c43d3b297b9f42"
+      },
+      {
+        "file": "0001-libva-add-driver-path-relocation.patch",
+        "algorithm": "sha256",
+        "digest": "1cc40ae0b25f462fa0cb4c4717ea7728e8ff0d83c13197035525ff76c0947ad3"
+      },
+      {
+        "file": "0002-libva-allow-static-library.patch",
+        "algorithm": "sha256",
+        "digest": "d2892f008523a24fca707b501a56141eae2aee3b2ea1d708a15cc50da6082430"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libvorbis-1.3.7-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libvorbis-1.3.7.tar.gz",
+        "algorithm": "sha256",
+        "digest": "0e982409a9c3fc82ee06e08205b1355e5c6aa4c36bca58146ef399621b0ce5ab"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libvpl-2.17.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libvpl-2.17.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "4de3e2faf1e8307fb282e4a43f443191810f6a6b0a484fffa7995ba1c814c6ec"
+      },
+      {
+        "file": "0001-fix-pkgconfig-file.patch",
+        "algorithm": "sha256",
+        "digest": "f23ca1ccbaa9c8e3fd4fd7320996e5be2753cfcdc6e2a25f6def08222a5691cd"
+      },
+      {
+        "file": "0002-cmake-install-vars-sh.patch",
+        "algorithm": "sha256",
+        "digest": "b9b1cdcb531ee0b6b1d7eef8bbfb1df8ca1ffe72d76961050dd912203edecc67"
+      },
+      {
+        "file": "0003-cmake-fix-32bit-install.patch",
+        "algorithm": "sha256",
+        "digest": "21b2cc2f466f636940c8ef81f50dff177aff96d60dc4bc57f58c5c9f016502fe"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libvpx-1.17.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libvpx-1.17.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "1020f184046187baa2985dbde38e0691f49c44088bca7a1842b0236c6081dc0a"
+      },
+      {
+        "file": "0001-enable-shared-on.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "f37a24525725cad215d73c538c0b06343b043f2b07553e7dc25835bd68af0695"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libwebp-1.6.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libwebp-1.6.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "93a852c2b3efafee3723efd4636de855b46f9fe1efddd607e1f42f60fc8f2136"
+      },
+      {
+        "file": "0001-mingw-cmake-output.patch",
+        "algorithm": "sha256",
+        "digest": "30ed42b782af427f57049abada30ce6d4d62318ee13014585cb352b570c68e3d"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-libxml2-2.15.4-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "libxml2-2.15.4.tar.xz",
+        "algorithm": "sha256",
+        "digest": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821"
+      },
+      {
+        "file": "xmlts20130923.tar.gz",
+        "algorithm": "sha256",
+        "digest": "9b61db9f5dbffa545f4b8d78422167083a8568c59bd1129f94138f936cf6fc1f"
+      },
+      {
+        "file": "0001-do-not-export-DllMain.patch",
+        "algorithm": "sha256",
+        "digest": "baad28b724738464cebf1a4e3320111b848fd7b14619e5c0134784ef7ad2aa3a"
+      },
+      {
+        "file": "0029-xml2-config-win-paths.patch",
+        "algorithm": "sha256",
+        "digest": "278b4531da3d2aabda080c412c5122b471202dd6df67768b38bb0c31c7a0e508"
+      },
+      {
+        "file": "0031-apply-msvc-relocation.patch",
+        "algorithm": "sha256",
+        "digest": "bcb2565878e524df3e3bcd1631dbcefc205e9b435a2e537c1810996b97c4dd4a"
+      },
+      {
+        "file": "0032-cmake-relocation.patch",
+        "algorithm": "sha256",
+        "digest": "d2bd68da35aa68197f1b0ebed2c01685a7f4c780430840784a861a540d05b130"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-llama.cpp-1~1.0.0-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "llama.cpp-v1.0.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "3f5f750e36326aea4d65c7623e7d597a33e395d65f4d76e5e0532171f252532b"
+      },
+      {
+        "file": "0001-avoid-stream-manager-destruction-at-dll-teardown.patch",
+        "algorithm": "sha256",
+        "digest": "dd0f0e08da1cfe209e78298c99d553240a25d18c91937eeeb5818a23eafb06b3"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-lzo2-2.10-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "lzo-2.10.tar.gz",
+        "algorithm": "sha256",
+        "digest": "c0f892943208266f9b6543b3ae308fab6284c5c90e627931446fb49b4221a072"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-mpdecimal-4.0.1-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "mpdecimal-4.0.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "96d33abb4bb0070c7be0fed4246cd38416188325f820468214471938545b1ac8"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-mpg123-1.33.7-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "mpg123-1.33.7.tar.bz2",
+        "algorithm": "sha256",
+        "digest": "31d0e35a4ca567ec9b5ebda6c3062bb4435d6d3eacd6ef0d95cadd7854dc03ee"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://sourceforge.net/projects/mpg123/files/mpg123/1.33.7/mpg123-1.33.7.tar.bz2.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-nasm-3.02-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "nasm-3.02.tar.xz",
+        "algorithm": "sha256",
+        "digest": "87336eba53b4acfe917424ab5d500d2b0054d9f5148d35c2273ccf2cfb712f0d"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-ncurses-6.6-5.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "ncurses-6.6.tar.gz",
+        "algorithm": "sha256",
+        "digest": "355b4cbbed880b0381a04c46617b7656e362585d52e9cf84a67e2009b749ff11"
+      },
+      {
+        "file": "002-ncurses-config-win-paths.patch",
+        "algorithm": "sha256",
+        "digest": "5367d8f49aff92884b9daa014502df13e1812f1b7ee1b3a3cb18139f10039408"
+      },
+      {
+        "file": "ncurses-6.3-cflags-private.patch",
+        "algorithm": "sha256",
+        "digest": "3107029dfb807e338d34641d78329cd6725c58e6b873352621f4b9611a8380bf"
+      },
+      {
+        "file": "ncurses-6.3-pkgconfig.patch",
+        "algorithm": "sha256",
+        "digest": "b8544a607dfbeffaba2b087f03b57ed1fa81286afca25df65f61b04b5f3b3738"
+      },
+      {
+        "file": "003-include-wchar-before-wctomb.patch",
+        "algorithm": "sha256",
+        "digest": "93f44209aa399aa19f3137a789c3f1e56a0a7d51ebb0a4ae4b3e0d78e9eb4b08"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://invisible-mirror.net/archives/ncurses/ncurses-6.6.tar.gz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-nettle-4.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "nettle-4.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "3addbc00da01846b232fb3bc453538ea5468da43033f21bb345cb1e9073f5094"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://ftp.gnu.org/gnu/nettle/nettle-4.0.tar.gz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-nghttp2-1.71.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "nghttp2-1.71.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "c0f55121d88650e4b9227aec28cebaf664d2417ca60fe70be0f8d38829f52116"
+      },
+      {
+        "file": "001-fix-pc-prefix.patch",
+        "algorithm": "sha256",
+        "digest": "baf901e7d565eaea1133d30b13620b02681ce96ebe56d38e1dea4394299106b6"
+      },
+      {
+        "file": "002-nghttp2-pkgconfig-add-cflags-private.patch",
+        "algorithm": "sha256",
+        "digest": "d82d0b5b32e26955c99ef70e129b33696fee01ad9a9a4e5d0fb98951fb5d0f22"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-nghttp3-1.19.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "nghttp3-1.19.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "228e17f5cc3d4de7bfced9912bd09de30e7f45741cc47503cf88d3fa9209e155"
+      },
+      {
+        "file": "001-fix-pc-prefix.patch",
+        "algorithm": "sha256",
+        "digest": "08559edf597300d34b258c5dab6d16237c6493976e7b4d45a818e0619d21665d"
+      },
+      {
+        "file": "002-nghttp3-pkgconfig-add-cflags-private.patch",
+        "algorithm": "sha256",
+        "digest": "68c831018eb79bc3b43a8fb6a7d013a617dbe2ba7d7971b0993b3cf27107e614"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/ngtcp2/nghttp3/releases/download/v1.19.0/nghttp3-1.19.0.tar.xz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-ngtcp2-1.26.0-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "ngtcp2-1.26.0.tar.xz",
+        "algorithm": "sha256",
+        "digest": "7804aa0fa1c39942ba322a90805824c37231f7675b08d0c3cc4332858a7b085e"
+      },
+      {
+        "file": "001-fix-pc-prefix.patch",
+        "algorithm": "sha256",
+        "digest": "cdbb6fad1afc1eac3f3bca72cd83e49684439c02b0b74fd8841b9d1523ab86de"
+      },
+      {
+        "file": "002-ngtcp2-pkgconfig-add-cflags-private.patch",
+        "algorithm": "sha256",
+        "digest": "11d30ddfcf358e4a10f416737776fd268395643c84a90f43f798492b42dd4680"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/ngtcp2/ngtcp2/releases/download/v1.26.0/ngtcp2-1.26.0.tar.xz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-openal-1.25.2-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "openal-1.25.2.tar.gz",
+        "algorithm": "sha256",
+        "digest": "fb27e5839aa11f0e5b9d33756965291fad5d6909ab928ea1f796f4a1a6877894"
+      },
+      {
+        "file": "0001-dll-name.patch",
+        "algorithm": "sha256",
+        "digest": "fda6cd11b16dadb6eb391b0854c8694938cb722b2df49fd65e0575af99344a14"
+      },
+      {
+        "file": "0003-openal-not-32.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "33dccfc603a48d265341e60bc801976d077e546ab5c91a93e8426eac01bb7ad4"
+      },
+      {
+        "file": "0004-pkgconfig-add-Cflags-private.patch",
+        "algorithm": "sha256",
+        "digest": "fb62d0ee19f79dc8990686c4341e1bdbc5fe91418f8deb7267b9fb3887a18e83"
+      },
+      {
+        "file": "0005-mingw-dont-check-libm.patch",
+        "algorithm": "sha256",
+        "digest": "6b1fa164c4d515dae069a1fcee226a555969b1b981379648ac4e11c742493512"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-openblas-0.3.34-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "OpenBLAS-0.3.34.tar.gz",
+        "algorithm": "sha256",
+        "digest": "cd7e129868320cc2d033afa920e31202dfe0b8066a5b66661900ccc0f197dfed"
+      },
+      {
+        "file": "0b54dd1154727d9adf021ab60072758f1ab718ca.patch",
+        "algorithm": "sha256",
+        "digest": "f768717ca68c9cc38bc8663a6d0c0fdd3e4111b08c5bbae83b703879330c7145"
+      },
+      {
+        "file": "001-enable-openmp-with-lapack.patch",
+        "algorithm": "sha256",
+        "digest": "358e0425015e3c51598d8e6658648f0ffd45e44325ccf6bb8c3d9108ed3b522b"
+      },
+      {
+        "file": "002-lgfortran-requires-lquadmath.patch",
+        "algorithm": "sha256",
+        "digest": "c147ec053bdf0387d499372472365aa829db0d8200b6828b0ebce5209e8603fd"
+      },
+      {
+        "file": "003-disable-renaming-symbols-on-mingw.patch",
+        "algorithm": "sha256",
+        "digest": "40a52c7b6f927b09eeffce37d543613dfdfebe9da9e2eb19b6f4aef7d2a0330d"
+      },
+      {
+        "file": "004-aarch64-detection.patch",
+        "algorithm": "sha256",
+        "digest": "06869b50f629c6960d6610a4d8240c81090cc381950744f18b4eec79e910da98"
+      },
+      {
+        "file": "005-fix-pkgconfig-files.patch",
+        "algorithm": "sha256",
+        "digest": "a5c94f3c089a85c691ce67f0ad2e090d7d4ef951beee040248a5eaf0ee12b33d"
+      },
+      {
+        "file": "006-find-openmp-before-usage.patch",
+        "algorithm": "sha256",
+        "digest": "5a5d0ee8431460bab0a253de1cb8ba92dfccba8b5bc4c4f668b599029778ad4a"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-opencl-headers-2~2026.05.29-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "OpenCL-Headers-2026.05.29.tar.gz",
+        "algorithm": "sha256",
+        "digest": "d9e6c48357de5002da11ce45de600e0c3ffe6ab4f628a3b9fe2b38603161658a"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-opencl-icd-2026.05.29-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "opencl-icd-2026.05.29.tar.gz",
+        "algorithm": "sha256",
+        "digest": "48fd0c5181db7cd046f4f731d5955694892e10998d49d09ee0d997e7e04fd939"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-opencore-amr-0.1.6-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "opencore-amr-0.1.6.tar.gz",
+        "algorithm": "sha256",
+        "digest": "483eb4061088e2b34b358e47540b5d495a96cd468e361050fae615b1809dc4a1"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-openexr-3.5.5-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "openexr-3.5.5.tar.gz",
+        "algorithm": "sha256",
+        "digest": "66699e84a31fb787461f0fdbeff7507479ae4096119d3a12670f9baedb8288eb"
+      },
+      {
+        "file": "0006-cmake-soversion.patch",
+        "algorithm": "sha256",
+        "digest": "5653da878ebbf5f3087bb529213931b48e151aef082b34e19d189e22be0411e7"
+      },
+      {
+        "file": "0007-export-TypedAttribute-value.patch",
+        "algorithm": "sha256",
+        "digest": "204777b48cde1c4d390789f10c5e429d5295be701f68a7937a90d0ecf271c048"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-openjpeg2-2.5.4-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "openjpeg-2.5.4.tar.gz",
+        "algorithm": "sha256",
+        "digest": "a695fbe19c0165f295a8531b1e4e855cd94d0875d2f88ec4b61080677e27188a"
+      },
+      {
+        "file": "0004-mingw-disable-java.patch",
+        "algorithm": "sha256",
+        "digest": "adade9b29e4292b642d547644e26fab6e193bbfe31d25f07d89a8c35e4d0993d"
+      },
+      {
+        "file": "0006-openjpeg-2.1.0-stdcall-for-all-win.patch",
+        "algorithm": "sha256",
+        "digest": "44679801b740ddb75edd4b55031c5f70a02eaf4f8e5eba5f3ad1b397b2ec4aed"
+      },
+      {
+        "file": "1ad9bec2c12ee445ce23e660f5e4fe870b9d5e09.patch",
+        "algorithm": "sha256",
+        "digest": "173965285e2494cc001cf05fbbce815c31af5a3eda65e435f52070462cbad634"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-openjph-0.33.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "openjph-0.33.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "3437f296ff8531b35558650b0ed7fde45cad39394329eef4064a3d4900cf101f"
+      },
+      {
+        "file": "d617e859e64eb140cc8599e4c3dc5a103f6dea3e.patch",
+        "algorithm": "sha256",
+        "digest": "618eb7105346a4685132cdc7df16378e753c14587e0982e5096f5229890d645b"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-openssl-4.1.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "openssl-4.1.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "50c17baf54cb008f6ce42d50deb4b28050a1aad711636cabd4b241c7e90cc2fd"
+      },
+      {
+        "file": "002-relocation.patch",
+        "algorithm": "sha256",
+        "digest": "5cb9977cf850ed2664465c0213aa1cae530830491a8f56d98bc161ab5df31533"
+      },
+      {
+        "file": "004-arch-suffix.patch",
+        "algorithm": "sha256",
+        "digest": "6a686ef69c2b196fb1420389ccd0db84582fd288942560d5eba963c11ce8595a"
+      },
+      {
+        "file": "pathtools.c",
+        "algorithm": "sha256",
+        "digest": "ebf471173f5ee9c4416c10a78760cea8afaf1a4a6e653977321e8547ce7bf3c0"
+      },
+      {
+        "file": "pathtools.h",
+        "algorithm": "sha256",
+        "digest": "1585ef1b61cf53a2ca27049c11d49e0834683dfda798f03547761375df482a90"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/openssl/openssl/releases/download/openssl-4.1.0/openssl-4.1.0.tar.gz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-opus-1.6.1-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "opus-1.6.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "6ffcb593207be92584df15b32466ed64bbec99109f007c82205f0194572411a1"
+      },
+      {
+        "file": "001-aarch64-features.patch",
+        "algorithm": "sha256",
+        "digest": "5fb0f28264492d6512acb6eec7b5e147c922751f6df30d1317114048eca01516"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-p11-kit-0.26.6-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "p11-kit-0.26.6.tar.xz",
+        "algorithm": "sha256",
+        "digest": "5fda95dc89964af32dbd8e01b139c166717cf96c4fee3d601bcd60bdb23d23c6"
+      },
+      {
+        "file": "0002-fix-includes.patch",
+        "algorithm": "sha256",
+        "digest": "aa92f986d3f7dfc119e86f9a8f3987e6ac2562149921820eadbe09218c4df99c"
+      },
+      {
+        "file": "0004-fix-abspath-check.all.patch",
+        "algorithm": "sha256",
+        "digest": "ea4593324db6d2d193733561f0352c6d679d1fb00aed0a2bae0d28aecbe92721"
+      },
+      {
+        "file": "pathtools.c",
+        "algorithm": "sha256",
+        "digest": "ebf471173f5ee9c4416c10a78760cea8afaf1a4a6e653977321e8547ce7bf3c0"
+      },
+      {
+        "file": "pathtools.h",
+        "algorithm": "sha256",
+        "digest": "1585ef1b61cf53a2ca27049c11d49e0834683dfda798f03547761375df482a90"
+      },
+      {
+        "file": "0006-p11-kit-relocation.patch",
+        "algorithm": "sha256",
+        "digest": "59f320862821ac83aab707cc99e064e934d94c9791fc0fea87648aec93ec3721"
+      },
+      {
+        "file": "0007-mmap-CreateFile-with-FILE_SHARE_READ.patch",
+        "algorithm": "sha256",
+        "digest": "2b0fc5c54776aca54e306315338323075e7412d8d800f490a31870008c34f8d1"
+      },
+      {
+        "file": "0011-p11-kit-spawn-external.patch",
+        "algorithm": "sha256",
+        "digest": "3c4821c36f76fd45c0d1ec83474773e45ccefde4ac92ca88b8493425f7553cb9"
+      },
+      {
+        "file": "0012-no-version-script.patch",
+        "algorithm": "sha256",
+        "digest": "15a2729f39e260f7fe8d55a91a399f2512854da626a69bc215470f902fc178cd"
+      },
+      {
+        "file": "0013-fix-reallocarray-decl.patch",
+        "algorithm": "sha256",
+        "digest": "83ecf11aaf9a1c6f617790048e80febd7320edae6ba203958349264170956911"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/p11-glue/p11-kit/releases/download/0.26.6/p11-kit-0.26.6.tar.xz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-pango-1.58.2-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "pango-1.58.2.tar.xz",
+        "algorithm": "sha256",
+        "digest": "342385b6ca3b7c73455d7c80a13b7dbe4489e00bc3bd4c5bd6ed4dce421e374a"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-pcre2-10.49-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "pcre2-10.49.tar.bz2",
+        "algorithm": "sha256",
+        "digest": "53c156e1ba416a20da8e65395daa132da0d80e76910424caca3fcdae7831d384"
+      },
+      {
+        "file": "0001-pcre2test-wineditline.patch",
+        "algorithm": "sha256",
+        "digest": "73400390211bfaf1ad7e5b900335bc48b50d9bd1aa5b864fa54a3e8f666d5eb9"
+      },
+      {
+        "file": "0002-do-not-pollute-common-cflags.patch",
+        "algorithm": "sha256",
+        "digest": "dda90b44600c35724ea8ca2821a1510b426459a69899431eba7e71d821b54b5a"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/PhilipHazel/pcre2/releases/download/pcre2-10.49/pcre2-10.49.tar.bz2.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-pixman-0.46.4-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "pixman-0.46.4.tar.xz",
+        "algorithm": "sha256",
+        "digest": "a098c33924754ad43f981b740f6d576c70f9ed1006e12221b1845431ebce1239"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-python-3.14.10-4.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "Python-3.14.10.tar.xz",
+        "algorithm": "sha256",
+        "digest": "de414a57119abef52784d8993e341d53aed635fc2b05c2607d9f98a2c5b72032"
+      },
+      {
+        "file": "EXTERNALLY-MANAGED",
+        "algorithm": "sha256",
+        "digest": "3981fed74ee7d43ad69bd67e634e03d7bf6890558a87062380112e195688728a"
+      },
+      {
+        "file": "0001-build-add-with-nt-threads-and-make-it-default-on-min.patch",
+        "algorithm": "sha256",
+        "digest": "88376bcd3fb857ee0193fc096ebc97a30f9a0496a3c55697bd687b5201d13d25"
+      },
+      {
+        "file": "0002-build-Define-MS_WINDOWS-and-others-when-compiling-wi.patch",
+        "algorithm": "sha256",
+        "digest": "b9a06e889fd373838e6395c666196038f5241e7009c88b503f02332c0b86de1c"
+      },
+      {
+        "file": "0003-sysmodule-Implement-flags-_is_mingw-is_mingw_ucrt-an.patch",
+        "algorithm": "sha256",
+        "digest": "24ab0d69619796dafe4d0b95bdae3d595086dd022299eeb8632ff6ac0e3436ff"
+      },
+      {
+        "file": "0004-configure-add-MACHDEP-and-platform-on-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "1a8ae4bf05648ac862a512b5621bc2c52033defbc70a183c5bf34a6691876aad"
+      },
+      {
+        "file": "0005-build-Add-default-cross-configuration-for-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "8a13807bc3774b3da73ee3f7b6a666278afe62a832dfa4344d0aca406b34b9bc"
+      },
+      {
+        "file": "0006-configure-enable-largefile-support-by-default-for-Mi.patch",
+        "algorithm": "sha256",
+        "digest": "18c593ff3351c8bf3f306b3315c8d7a1945565bdf5748eda53c2ec4e17168cdc"
+      },
+      {
+        "file": "0007-build-Add-PC-to-CPPFLAGS-and-to-SRCDIRS-on-Mingw.patch",
+        "algorithm": "sha256",
+        "digest": "ed96699bd8c32f4e2522c2dd52e0a42a754016e45d3ffb695285eaebb40e019f"
+      },
+      {
+        "file": "0008-build-add-MINGW-support-for-posixmodule.patch",
+        "algorithm": "sha256",
+        "digest": "fef06563505905cf8c38d1e4a5973a178c324fd91d15191a57117d585f8f5ce1"
+      },
+      {
+        "file": "0009-exports.h-Add-support-for-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "1d8e2eb48055f9651c49687a007883d7f49d788f38c4ccbba2c83f5e91e3bba3"
+      },
+      {
+        "file": "0010-configure-add-options-so-that-shared-build-is-possib.patch",
+        "algorithm": "sha256",
+        "digest": "56323b9895ea705d0e3e5ba76b3dc50f955ff4de8dbd7fdccbe998e80d33aee1"
+      },
+      {
+        "file": "0011-build-Add-PYD_PLATFORM_TAG.patch",
+        "algorithm": "sha256",
+        "digest": "0ce6f11abfd85e12e844f2512e17963412c8a6d47fca97a1b72c92f02846327f"
+      },
+      {
+        "file": "0012-build-Add-dynload_win-support-for-MinGW.patch",
+        "algorithm": "sha256",
+        "digest": "4f6baa947dd29e7f95887ad733c3e16ae607656f0885a0828cc88b13f3fbcfaa"
+      },
+      {
+        "file": "0013-build-Use-.pyd-extension-suffix-fix-import-lib-insta.patch",
+        "algorithm": "sha256",
+        "digest": "65ad9616a37b41bb0d64ab01e02c8f9bc2ed82b671aa4d0ec88fa9dc290c29b5"
+      },
+      {
+        "file": "0014-build-Configure-SOABI-and-EXT_SUFFIX-for-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "5b0ea7ea04642f1d1cced8effafbbb96a472e7d3bd0406037dad982f4e6d818c"
+      },
+      {
+        "file": "0015-build-Define-MS_DLL_ID-for-sys.winver-on-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "c1a2720863da940b77251c9504b60b7a25153993cb690edf9f7a064cdfd42674"
+      },
+      {
+        "file": "0016-build-Ignore-main-program-for-frozen-scripts-on-MING.patch",
+        "algorithm": "sha256",
+        "digest": "bb8cde3f849a8b5078a616ed7c2c8c037a10d38717a29fce417b31b7ad862008"
+      },
+      {
+        "file": "0017-socketmodule-add-MINGW-support.patch",
+        "algorithm": "sha256",
+        "digest": "73d83a454a59d9245a22e17de1cddad966ac27087e40b9cc7698e950e899d511"
+      },
+      {
+        "file": "0018-build-enable-winreg-msvcrt-_winapi-winsound-and-_ove.patch",
+        "algorithm": "sha256",
+        "digest": "889b25a1376cab115572a31714a2e49e0d4d1cd17f3f59165988379e8abd2f3d"
+      },
+      {
+        "file": "0019-sysconfig-make-_sysconfigdata.py-relocatable.patch",
+        "algorithm": "sha256",
+        "digest": "514cdd035f87c3a39e770ad31a9cd0eb4764c3f3789019182c301c55663993ce"
+      },
+      {
+        "file": "0020-sysconfig-treat-MINGW-builds-as-POSIX-builds.patch",
+        "algorithm": "sha256",
+        "digest": "4bc4d627d454a678e0a999cbe21993f1fcc443999dcb53bd646bf211211af881"
+      },
+      {
+        "file": "0021-sysconfig-Change-the-get_platform-method-in-sysconfi.patch",
+        "algorithm": "sha256",
+        "digest": "4496b76d8207296910cd7a4f93103539a17282c2d04c59d43b97d64d62bec975"
+      },
+      {
+        "file": "0022-build-semi-native-build-sysconfig.patch",
+        "algorithm": "sha256",
+        "digest": "dfb7db6d2a28ea70a5e317d2592da64f88f456528242283e8bbd94d19dcbaefb"
+      },
+      {
+        "file": "0023-ctypes-Add-support-for-stdcall-without-underscore.patch",
+        "algorithm": "sha256",
+        "digest": "8839d98cebf86c9c7f0b9a3ab266b03e6145f3d3e1b9a7857bb66a074f2db49a"
+      },
+      {
+        "file": "0024-ctypes-add-suppor-for-ctypes.pythonapi-under-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "bf134bbae0c2437324d1814b72b7c106db564f8428efc42fa21e4dcbdc50b439"
+      },
+      {
+        "file": "0025-ctypes-find_library-c-should-return-None-with-ucrt.patch",
+        "algorithm": "sha256",
+        "digest": "9b8301ea8b898e634f4e45f92fe61b6b9e67081a777d49eb2d00c3ad3a38f0f7"
+      },
+      {
+        "file": "0026-site-Customize-for-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "0716a01a9692ca016dd8ccd10948549a7b88e819da34e7e799222c47480bc09a"
+      },
+      {
+        "file": "0027-site-Change-user-site-packages-path-to-include-the-e.patch",
+        "algorithm": "sha256",
+        "digest": "6820353d5319ac1dae0a2b41a128a07721e5fe1cc4f670fd9d66b47f85d392fa"
+      },
+      {
+        "file": "0028-python-config-output-Windows-paths-for-the-shell-var.patch",
+        "algorithm": "sha256",
+        "digest": "a9505ba15cecdc701b2ab68e8a819fc3e45fa38100860233b0c7599383c60a92"
+      },
+      {
+        "file": "0029-python-config-use-the-Python-variant-of-python-confi.patch",
+        "algorithm": "sha256",
+        "digest": "31c5ecda35ed25b5b66569c54cfb8663d960d4f7d2743a10ad14a1954d5cad0f"
+      },
+      {
+        "file": "0030-mingw-prefer-unix-sep-if-MSYSTEM-environment-variabl.patch",
+        "algorithm": "sha256",
+        "digest": "e9a5a070b30fd473d4f2bddf6378f3c56578b56f0189bfa48e115b2dbb648551"
+      },
+      {
+        "file": "0031-build-Remove-MAXPATHLEN-default.patch",
+        "algorithm": "sha256",
+        "digest": "312f3fe6f3c7b7b078c785b65e4cd3dfe3cbc9187277e0c7f65918072b5cf40a"
+      },
+      {
+        "file": "0032-build-dont-link-with-gettext.patch",
+        "algorithm": "sha256",
+        "digest": "7752a39b14d3710ab0368245a504e4d8ce79609e20f78ba5b3afacb7b3a39643"
+      },
+      {
+        "file": "0033-use-gnu_printf-in-format.patch",
+        "algorithm": "sha256",
+        "digest": "18ee2c137ec6328fb94321185b78a8c236c75c940705e8c30247deb4efe5513f"
+      },
+      {
+        "file": "0034-build-remove-usage-of-MS_COREDLL.patch",
+        "algorithm": "sha256",
+        "digest": "1e4f511f7f9b335adf0bb002805e90285c6845e1d50a8e2e406fdc345208e0cf"
+      },
+      {
+        "file": "0035-getcompiler-expose-MINGW-toolchain-related-informati.patch",
+        "algorithm": "sha256",
+        "digest": "5e525fe5084814df165efa93e9f7a283b98a7ae5763afd61a05def956c76bad9"
+      },
+      {
+        "file": "0036-build-fix-signal-module-build.patch",
+        "algorithm": "sha256",
+        "digest": "43062c3d29674326b7bd4a75aa5503a70217b8a7edbf29c96c1ae24f21ff9b35"
+      },
+      {
+        "file": "0037-build-build-winconsoleio-and-_testconsole.patch",
+        "algorithm": "sha256",
+        "digest": "645ef2af436bd7500b3235c37711e55a3c715e264db65e7f17f52218836ee098"
+      },
+      {
+        "file": "0038-multiprocessing-expose-sem_unlink-to-fix-multiproces.patch",
+        "algorithm": "sha256",
+        "digest": "28be2d20470b55037d95baf0e680b9194167b6f35b959d96f4324ea4d78a95c8"
+      },
+      {
+        "file": "0039-build-link-win-resource-files-and-build-pythonw.patch",
+        "algorithm": "sha256",
+        "digest": "a57a37c709df89ea8f90da3caafe186998b75e1168f321f7ddd437efb560b47e"
+      },
+      {
+        "file": "0040-pycore_fileutils-add-MINGW-support.patch",
+        "algorithm": "sha256",
+        "digest": "fe86c3708190fd0fcf7bec4e926b508318739937ae7b5ce8fbd21db55f1db20d"
+      },
+      {
+        "file": "0041-configure-fix-inet_pton-check.patch",
+        "algorithm": "sha256",
+        "digest": "da39ac8cb8e795dbcb9bc9ffeb772f2afd1240b11c39cd9e059a12d7dbc587e4"
+      },
+      {
+        "file": "0042-importlib-bootstrap-path-sep.patch",
+        "algorithm": "sha256",
+        "digest": "67b911b3282a27b8d2ef39febc9ce5aa1a5d7e2859b86b49b2cbb2797aff1218"
+      },
+      {
+        "file": "0043-configure-set-MINGW-stack-reserve.patch",
+        "algorithm": "sha256",
+        "digest": "6f6fd13a98b1be01c9d19b0a2b7fe578884b202b0c742eab5d04cd9255e2b7f0"
+      },
+      {
+        "file": "0044-tests-fix-test_bytes.patch",
+        "algorithm": "sha256",
+        "digest": "99c640c77344c085cf2a96f08fe2a6e146fda7f18ebfd2f9bcab655da92c1b3b"
+      },
+      {
+        "file": "0045-timemodule-add-MINGW-support.patch",
+        "algorithm": "sha256",
+        "digest": "f047a6a9489c01b917e771f605b88bd3649f4a0f522294588058b3680fa1ac69"
+      },
+      {
+        "file": "0046-configure-Disable-checks-for-dlopen-dlfcn.patch",
+        "algorithm": "sha256",
+        "digest": "a461a81a4b3b13d3e44fafb27e68217b3a4263c560c178090a17dc691b17fb51"
+      },
+      {
+        "file": "0047-venvlauncher-Build-venvlauncher.exe-from-PC-launcher.patch",
+        "algorithm": "sha256",
+        "digest": "c2d7057603d0ec555835d1310bd06c0c196cc89f882f4eeb2eed3d168b0356df"
+      },
+      {
+        "file": "0048-venvlauncher-try-looking-for-the-versioned-.exe-firs.patch",
+        "algorithm": "sha256",
+        "digest": "640496f87e25d15603738a2bace86b6761badd54cbb37ce1e3989e1008fbec12"
+      },
+      {
+        "file": "0049-venvlauncher-Skip-find-python-in-Registry-for-mingw-.patch",
+        "algorithm": "sha256",
+        "digest": "7f409d889fcecc3d144c0c8984327df401581070a9722d86e5a97040024d0c93"
+      },
+      {
+        "file": "0050-configure-don-t-check-for-clock_-functions.patch",
+        "algorithm": "sha256",
+        "digest": "ea8592c4cce50fb60b4bad323b6e9c316387f6422fe42c2ceb78b75cd539e653"
+      },
+      {
+        "file": "0051-CI-test-the-build-and-add-some-mingw-specific-tests.patch",
+        "algorithm": "sha256",
+        "digest": "df6fd07ab747cae1d13bc43e648930fbc556eb607b0a3f4f49ffe834f0769d05"
+      },
+      {
+        "file": "0052-configure-Default-to-without-c-locale-coercion-on-Wi.patch",
+        "algorithm": "sha256",
+        "digest": "bc11557aa383413c8975e934579ee305dc1bf27f789709cd1a9246749f6abd70"
+      },
+      {
+        "file": "0053-tests-Fix-some-failing-tests.patch",
+        "algorithm": "sha256",
+        "digest": "2f2167ada04ac765f75a97ec226ea7faf0844150f5b4c6fb840fc43c2e9ebc73"
+      },
+      {
+        "file": "0054-build-def-VPATH-when-compiling-Python-sysmodule.c.patch",
+        "algorithm": "sha256",
+        "digest": "03ef7ee4159cfe39ab5a0b9c71d0567708f8351027cb06f97006f995c2414f78"
+      },
+      {
+        "file": "0055-configure-correctly-find-native-python.patch",
+        "algorithm": "sha256",
+        "digest": "33bf237e4688f57b6d34abfd6bd1e0e8a8e0e5b47024978128bb1cd865653fa8"
+      },
+      {
+        "file": "0056-build-Add-extra-flags-for-_bootstrap_python.patch",
+        "algorithm": "sha256",
+        "digest": "34c00e660c6527575f353a815346c900d9356673a4d7c63764981be2a70d2782"
+      },
+      {
+        "file": "0057-getpath-add-support-for-mingw.patch",
+        "algorithm": "sha256",
+        "digest": "117dbe66c7b0d7f546c22bd86d196c619e0232edf8530e2ff6a7708fd4f594a6"
+      },
+      {
+        "file": "0058-build-Don-t-build-_posixsubprocess-on-Windows.patch",
+        "algorithm": "sha256",
+        "digest": "54c2593d89a613d1c4fe22309967a90c227b5b6d4b5a7f83d82270566f135c26"
+      },
+      {
+        "file": "0059-ssl-module-add-MINGW-support.patch",
+        "algorithm": "sha256",
+        "digest": "13521b9d3389981dc4387ec958adce6aea996b4f7ac8b1c7b6ded73142ee9fc0"
+      },
+      {
+        "file": "0060-configure-Include-winsock.h-when-checking-for-netdb-.patch",
+        "algorithm": "sha256",
+        "digest": "ffd1aea0f1c9b373dfc044324bfabeb9fc11e2aaaa07c091f21f02c1c5c35ebe"
+      },
+      {
+        "file": "0061-configure-always-build-_multiprocessing-on-Windows.patch",
+        "algorithm": "sha256",
+        "digest": "d451ed27dc017924ee6b9063feb51582ac8e13e0da72604eea9c58cd4fd47adb"
+      },
+      {
+        "file": "0062-configure-build-mmap-module-on-win32.patch",
+        "algorithm": "sha256",
+        "digest": "7201b21bbdf5a71033fdc4b585968008b9870bca73c1858ceb7fbe10bea0740a"
+      },
+      {
+        "file": "0063-configure-set-BUILDEXEEXT-and-EXEEXT.patch",
+        "algorithm": "sha256",
+        "digest": "f05377741fb3036e3bd66d309130f017dcafed2f32d8aaf2f7de1482a6d561ad"
+      },
+      {
+        "file": "0064-configure-fix-building-some-test-modules.patch",
+        "algorithm": "sha256",
+        "digest": "ca4c1eb204b073cf85f129ec3774e0451ba33d03fe6bdb21f0800f9e4530c3b1"
+      },
+      {
+        "file": "0065-Always-convert-to-before-passing-though-pathcch-func.patch",
+        "algorithm": "sha256",
+        "digest": "bb7215f90394fa31afd4ac76864a4a417faff9a2c897a7187a8638ad318125f3"
+      },
+      {
+        "file": "0066-pylifecycle.h-remove-conflicting-_Py_CheckPython3-de.patch",
+        "algorithm": "sha256",
+        "digest": "b8f914c2bdcf744eec697413cdf23ea9ddd05675ff39c58a7926dfaa84e7e901"
+      },
+      {
+        "file": "0067-dynload_win-add-env-var-for-reverting-the-legacy-DLL.patch",
+        "algorithm": "sha256",
+        "digest": "56cc7fbffe247bf0d8ee3cc7803950c0651539d2d3b692446bb6dc10b515acc7"
+      },
+      {
+        "file": "0068-dynload_win-Port-GetPythonImport-to-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "f296705d0b98f9ccdd698395bacbf3f51692909f89a23e36d4c77e651aab4a66"
+      },
+      {
+        "file": "0069-dynload_win-make-sure-to-only-use-backslashes-for-pa.patch",
+        "algorithm": "sha256",
+        "digest": "1bc876d6aa8a2d241484439e3f799a9ed21ef460b0c39fe4953d00d0d3ccdcd4"
+      },
+      {
+        "file": "0070-dynload_win-don-t-run-_Py_CheckPython3-for-MINGW-bui.patch",
+        "algorithm": "sha256",
+        "digest": "0eeaafd011d4b010f216d082ccf543c20cb108a23a3092ad12117519878671ba"
+      },
+      {
+        "file": "0071-build-Build-and-install-libpython3.dll-stable-ABI.patch",
+        "algorithm": "sha256",
+        "digest": "dc2f51f5f9ab3b67fe1a1130bf335ecb661f91bce1c7e6d1d36162b3834411a6"
+      },
+      {
+        "file": "0072-configure-define-_DEBUG-for-a-debug-build.patch",
+        "algorithm": "sha256",
+        "digest": "ddf4b9bc04fcad9bb7bbc2eb30563849f47e478457a600bdd5fad1d4147f554b"
+      },
+      {
+        "file": "0073-configure-fix-multiprocessing-module.patch",
+        "algorithm": "sha256",
+        "digest": "e21624de8985ffbbd5f8ac4955ea7edd9b2c0c201922127cbf9935aedc88d6f0"
+      },
+      {
+        "file": "0074-build-add-MINGW-support-for-selectmodule.patch",
+        "algorithm": "sha256",
+        "digest": "ac5af8153007b1df39961d1b73c2a662ae9cd5a70e14cdc383232aa6f9adc7c6"
+      },
+      {
+        "file": "0075-configure-disable-various-modules-on-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "2f4547f706118c8f1c72aad919946f4f63e2752270c3605f44457029c213bf68"
+      },
+      {
+        "file": "0076-configure-Add-libraries-to-fix-ctypes-on-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "79209343bcd01b1107a6f31427debe69d211da8da347b2eb12c5db4aad06ca64"
+      },
+      {
+        "file": "0077-configure-Enable-_uuid-on-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "3c02b78d1f5b46ae99ff81e9165d07a9615da47ac3bc102402c5356d2f3bdc72"
+      },
+      {
+        "file": "0078-configure-make-incompatible-pointer-types-a-warning.patch",
+        "algorithm": "sha256",
+        "digest": "c8cbb4e0cc4f67b77e07681a2f7c71a3012562a789a9848456be07ea62543fce"
+      },
+      {
+        "file": "0079-tests-test_makefile-normalize-path.patch",
+        "algorithm": "sha256",
+        "digest": "37efe2e314f490adce1f7546d9e3e28647998969e9d1fb9c461d8272aefc36fa"
+      },
+      {
+        "file": "0080-Fix-include-naming-for-cross-build.patch",
+        "algorithm": "sha256",
+        "digest": "89a77a58bb546cd9d06d75a392aaacd481522d2daa09e7b244ab1c3fba33946e"
+      },
+      {
+        "file": "0081-Fix-format-warning.patch",
+        "algorithm": "sha256",
+        "digest": "f5dabfd59f39af175eeb27d9cb97ac6c53dc9051eab064e201feabd65c1128b6"
+      },
+      {
+        "file": "0082-Fix-pragma-warnings.patch",
+        "algorithm": "sha256",
+        "digest": "f563a2bb49aed8661dbd11e2da47c0a8a2c7b4cc00b9fd1d324ad11a5a1161ca"
+      },
+      {
+        "file": "0083-math-pyhash-MINGW-support.patch",
+        "algorithm": "sha256",
+        "digest": "8cb818547ab6ee3ab99f62e043f0aec318cee9458b6e3952fbd786641ea6f051"
+      },
+      {
+        "file": "0084-tests-Fix-test-for-library-name.patch",
+        "algorithm": "sha256",
+        "digest": "568526d42aa874991912c27560cc90d2f1442a1df8fb8a19860eb39ec0c4282d"
+      },
+      {
+        "file": "0085-dictobject-MINGW-support.patch",
+        "algorithm": "sha256",
+        "digest": "172c1bf0f91afa5e22a78e49653be6e39f849c5dad2d3c47a4ff4a241cac4fce"
+      },
+      {
+        "file": "0086-build-Fix-export-Py_GetBuildInfo-symbol.patch",
+        "algorithm": "sha256",
+        "digest": "1e112cfde9f4146746dbf4637486460a5bd5074c9cef9fa04ec49164430e04c3"
+      },
+      {
+        "file": "0087-build-Allow-profile-tests-failure.patch",
+        "algorithm": "sha256",
+        "digest": "3b84c8a90c4bae5335ea700a5d8d101bb8debc7b588d7e06b8a64e9f811efa94"
+      },
+      {
+        "file": "0088-build-add-support-for-building-C-modules.patch",
+        "algorithm": "sha256",
+        "digest": "0562acc2cde3e4d91836a51966251d2b37d11d4a364675772cc967745d082e2c"
+      },
+      {
+        "file": "0089-build-build-fix-the-wmi-module.patch",
+        "algorithm": "sha256",
+        "digest": "f0b63527263993048df1d76b0b2f17de80ca733f068e62ed9f7d896d539897a1"
+      },
+      {
+        "file": "0090-Fix-exports-for-_suggestions-module.patch",
+        "algorithm": "sha256",
+        "digest": "3b705dd8156713138a3812f80f1ef039b4d7e55c6d1ea7ef3493ebcab57e8d6a"
+      },
+      {
+        "file": "0091-compileall-Normalize-paths.patch",
+        "algorithm": "sha256",
+        "digest": "0b9efc3f9c9b46c31a817271561ac319c373063fed1e40981a5996b6ad90e821"
+      },
+      {
+        "file": "0092-configure-enable-64-bit-time-support-for-32-bit-buil.patch",
+        "algorithm": "sha256",
+        "digest": "d32c1933760cdbaa591f673f2dd3e355a2746d3772520089007b10c75eb87a43"
+      },
+      {
+        "file": "0093-venv-also-install-the-versioned-launchers.patch",
+        "algorithm": "sha256",
+        "digest": "d22fa1d21d09503ba137744233b9f4a4a5093d05a799d70ebc99c23e03196b49"
+      },
+      {
+        "file": "0094-configure-set-_WIN32_WINNT-version.patch",
+        "algorithm": "sha256",
+        "digest": "aa9e5f258f6a84e91e3f72166bce3ce38c845855d591aa637305b61d481331fc"
+      },
+      {
+        "file": "0095-tests-fix-sysconfig.test_get_platform.patch",
+        "algorithm": "sha256",
+        "digest": "51b27ecec37009ac17938266a67a62af58a7ad65f97ceae3a3b3b62c45c8c646"
+      },
+      {
+        "file": "0096-pycore_time-fix-missing-timeval.patch",
+        "algorithm": "sha256",
+        "digest": "c3ece14871c7470af9d4c2919e4ea56cf420857cbb463415ef17977fd9cdc764"
+      },
+      {
+        "file": "0097-mmapmodule-define-DONT_USE_SEH.patch",
+        "algorithm": "sha256",
+        "digest": "b60eba5f68b03e6ea33c7d6a50a9dc90a59f81579981c49391377fa2336ea7bf"
+      },
+      {
+        "file": "0098-build-Add-ABIFLAGS-to-targets-when-needed.patch",
+        "algorithm": "sha256",
+        "digest": "b6a8b17bc3bc31ba168da9e33230ee5866866b71189b990e132e03da3ba27ece"
+      },
+      {
+        "file": "0099-sysconfig-patch-nt-schemes-again.patch",
+        "algorithm": "sha256",
+        "digest": "ffe194b7c8d2d0f9fabd801b17cbf37a8d25580a2b8894cd1a6b81f9181727e4"
+      },
+      {
+        "file": "0100-configure-define-_PYTHREAD_NAME_MAXLEN-for-MINGW.patch",
+        "algorithm": "sha256",
+        "digest": "2cb1cb1d64f8fda8801037a53f73677529e0c767cf5f4f501b6c54ba6bdc77a8"
+      },
+      {
+        "file": "0101-configure-allow-older-autoconf.patch",
+        "algorithm": "sha256",
+        "digest": "fb29035e431763ea13887728fbd90d9599e2156a1a3d37eb08d7fa545abfa66b"
+      },
+      {
+        "file": "0102-tests-allow-sys.abiflags-to-exist.patch",
+        "algorithm": "sha256",
+        "digest": "4f0f592c3ebb207ac808b0a44417f5aec75e7c9e8dfd486fc930d3e7f480431e"
+      },
+      {
+        "file": "0103-makesetup-make-sure-to-link-the-built-libpython.patch",
+        "algorithm": "sha256",
+        "digest": "3ecc69e9c9f5fac650a7750a013d788434c88242a824df848f94900eccf4452a"
+      },
+      {
+        "file": "0104-mimalloc-avoid-duplicate-process-initialization-on-M.patch",
+        "algorithm": "sha256",
+        "digest": "a418b2e4efc535c82b08530e695dabcde13a5a040a43ab5a1597bf1ed332bfbb"
+      },
+      {
+        "file": "970-openssl4.patch",
+        "algorithm": "sha256",
+        "digest": "ea716a012bfb34e00aacacc85960d527714b68e031947d6d94039f43c42b014f"
+      },
+      {
+        "file": "971-openssl4-tls-availability.patch",
+        "algorithm": "sha256",
+        "digest": "4590cf6b86f1367d0850fad671a3b9e260fa34a325adfb6c63a4f211fc1f3f47"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-python-packaging-26.3-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "packaging-26.3.tar.gz",
+        "algorithm": "sha256",
+        "digest": "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-rav1e-0.8.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "rav1e-0.8.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "06d1523955fb6ed9cf9992eace772121067cca7e8926988a1ee16492febbe01e"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-rtmpdump-2.6-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "rtmpdump",
+        "algorithm": "sha256",
+        "digest": "0cba5d49d41b5e35a34ea8230124ed853eeeac19091d17a4188a47c31a17d352"
+      },
+      {
+        "file": "0001-mingw.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "cfd82cad49aa6e84f5316befce5d223d1861b6997bfbf7d655503b71878f5423"
+      },
+      {
+        "file": "0002-no-fPIC.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "7c6f0360249996fa6b994bef025b742cdf7748a255f19d8cc46c50bbe4ff99c9"
+      },
+      {
+        "file": "0003-better-w32-threading.all.patch",
+        "algorithm": "sha256",
+        "digest": "0a2f24ded2c025d324189a8246162f8f906afd0c1650ed31b6e748874ea31ea1"
+      },
+      {
+        "file": "0004-gnu_printf.all.patch",
+        "algorithm": "sha256",
+        "digest": "eb6af4f8a570ff8274c0c412901e719cd0ef14badcc88358d7c36cb3ff29df17"
+      },
+      {
+        "file": "0005-fix-unused-var-warning.all.patch",
+        "algorithm": "sha256",
+        "digest": "4afc6626fa29398a086a9385f251db9c2e5a885cf08b43c7aa88c16a91d72278"
+      },
+      {
+        "file": "0006-deprecated-gnutls-type.all.patch",
+        "algorithm": "sha256",
+        "digest": "717b514c7686a39262edbb84791145cb805261f02a76b71f558db4ca4d9d3c24"
+      },
+      {
+        "file": "0007-cast-appropriately-for-nettle.all.patch",
+        "algorithm": "sha256",
+        "digest": "c12973df7e9f01020f31acef6778884b02a6d6bdd6310d2d5396b4dcefdbf907"
+      },
+      {
+        "file": "0009-correct-cast.all.patch",
+        "algorithm": "sha256",
+        "digest": "c3ac95d2b39fed97587f0cf379abea50d43708ab5bd5e49f43d618ae383fa108"
+      },
+      {
+        "file": "0012-no-sbin.patch",
+        "algorithm": "sha256",
+        "digest": "4ba58ee78346e5e472671006adb91e581177c706b01d71f8e6cbd3aa4e776e2b"
+      },
+      {
+        "file": "0013-no-extra-dll.patch",
+        "algorithm": "sha256",
+        "digest": "a663ed0927d9e1b0487f4a61cf0d5833344dde80741e95b102f8e78495768c89"
+      },
+      {
+        "file": "0014-nettle-4.patch",
+        "algorithm": "sha256",
+        "digest": "d91be37b35368db605b25cdc51f3f0c467e3bf6ea68348f7f780e70fb821f361"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-sdl2-compat-2.32.74-5.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "sdl2-compat-2.32.74.tar.gz",
+        "algorithm": "sha256",
+        "digest": "ec68abde77e2e459c8abc4f9587b8976b5d2a657b2bfda2fb3a079b0f8924588"
+      },
+      {
+        "file": "0001-just-build-normal.patch",
+        "algorithm": "sha256",
+        "digest": "484cc733b3f1b8ecec23d4a60eebd20c4e645a4e085e6e26ec8142b47b68fc12"
+      },
+      {
+        "file": "0002-sdl-config-win-paths.patch",
+        "algorithm": "sha256",
+        "digest": "0b761282e9f96a1a967b735374ec60c875aa7aefb5b99d100430c323e0b06d5c"
+      },
+      {
+        "file": "0003-Enable-static-library-support-for-Windows.patch",
+        "algorithm": "sha256",
+        "digest": "60db752646a6e919f670eb0f3eaedf0414f9ced14023b78eb81436a0aa4cac52"
+      },
+      {
+        "file": "0004-Make-static-library-really-static-for-MinGW.patch",
+        "algorithm": "sha256",
+        "digest": "bfc29743022780463e9ca097c33907abe2cb26e36ed081c938f93975eaa981e8"
+      },
+      {
+        "file": "0005-SDL_config_windows.h-Define-HAVE_LIBC-for-MinGW.patch",
+        "algorithm": "sha256",
+        "digest": "509c31ea74afe697451cadd257110c5b8f2dd52a2dceb4643f8ddab0a37a10dc"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-sdl3-3.4.20-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "SDL3-3.4.20.tar.gz",
+        "algorithm": "sha256",
+        "digest": "f3bb06f55bed9557227a700af2ea62e49497ebdf58037732a731a5fb3ef8581f"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/libsdl-org/SDL/releases/download/release-3.4.20/SDL3-3.4.20.tar.gz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-shaderc-2026.4-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "shaderc-2026.4.tar.gz",
+        "algorithm": "sha256",
+        "digest": "f06ce5bcca94e5df7f34e115743597d0ad2e13c5fe9213c67dc8c76031241947"
+      },
+      {
+        "file": "0001-fix-glslang-hlsl-linking-order.patch",
+        "algorithm": "sha256",
+        "digest": "af880b221603e2b5c34dd306feeb4fa9af5803ebc841d64ab8e4be0e7455a6ba"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-speex-1.2.1-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "speex-Speex-1.2.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "beaf2642e81a822eaade4d9ebf92e1678f301abfc74a29159c4e721ee70fdce0"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-speexdsp-1.2.1-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "speexdsp-SpeexDSP-1.2.1.tar.gz",
+        "algorithm": "sha256",
+        "digest": "d17ca363654556a4ff1d02cc13d9eb1fc5a8642c90b40bd54ce266c3807b91a7"
+      },
+      {
+        "file": "0001-include-stdint-in-resample-neon-h.patch",
+        "algorithm": "sha256",
+        "digest": "a61da81d79a1233e9d3636eb738b06314d51c55941e25b0ece9e49cb746e48c3"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-spirv-cross-1~1.4.363.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "spirv-cross-1.4.363.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "f708982e88b763ef5b0394ed468fc2c3628f68cdab89f2e7a946cd628c04e721"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-spirv-headers-2~1.4.363.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "spirv-headers-1.4.363.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "5b3a0d099f5c7649e29c0938476c462e71d66ad89a0bde42fa1ba3eb476956c9"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-spirv-tools-3~1.4.363.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "spirv-tools-1.4.363.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "e6c83a215538fbfd265ccf398d3877985055df1273dbed73912bd05307664688"
+      },
+      {
+        "file": "002-Do-not-statically-link-to-the-C-runtime-with-mingw.patch",
+        "algorithm": "sha256",
+        "digest": "ff63fc6e786e6b40b3ec5fa7356b671a391e3c29b7660dcc87d799de49754d2a"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-sqlite-3.54.1-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "sqlite-src-3540100.zip",
+        "algorithm": "sha256",
+        "digest": "387e7f6cad4797b17848c07d453dc6606917bb356a6cfe5a3abafd38c240c71b"
+      },
+      {
+        "file": "sqlite-doc-3540100.zip",
+        "algorithm": "sha256",
+        "digest": "e9f634ac28a4c7b48f5c389e4b08c039654ec1487512092b330ccfcfdc0816e0"
+      },
+      {
+        "file": "0001-sqlite-pcachetrace-include-sqlite3.patch",
+        "algorithm": "sha256",
+        "digest": "6518119034ceb2820d058afcb099d11f636271f55a41ffae22855af66a369166"
+      },
+      {
+        "file": "0002-fix-building-sqldiff.patch",
+        "algorithm": "sha256",
+        "digest": "cf5c47c30e97f5493d2fad730a9bfcd33d20a0a052571e8e35b88f388d368724"
+      },
+      {
+        "file": "0003-fix-makefile-recipe.patch",
+        "algorithm": "sha256",
+        "digest": "1c6af3b2bb35112a6d42caa8d322f3f496ea1e25cac60edf8fb9b6987420e0b6"
+      },
+      {
+        "file": "0004-dont-misuse-tcl-extern.patch",
+        "algorithm": "sha256",
+        "digest": "8dd2377afaad17fa85049be90bfc2bd757350343b3f64ff9bfbbcf3736593a34"
+      },
+      {
+        "file": "Makefile.ext.in",
+        "algorithm": "sha256",
+        "digest": "84b64569978dde5b63799099b0fbb3336943ef877170beb84483020c67e25b3c"
+      },
+      {
+        "file": "README.md.in",
+        "algorithm": "sha256",
+        "digest": "5ca42f1f92abfb61bacc9ff60f5836cc56e2ce2af52264f918cb06c3d566d562"
+      },
+      {
+        "file": "LICENSE",
+        "algorithm": "sha256",
+        "digest": "0b76663a90e034f3d7f2af5bfada4cedec5ebc275361899eccc5c18e6f01ff1f"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-srt-1.5.7-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "srt-1.5.7.tar.gz",
+        "algorithm": "sha256",
+        "digest": "017cd1e437ef2073a4dd10ddf7b55e86bc3d6ebac0393d13bd22f6a57055d32b"
+      },
+      {
+        "file": "0006-no-msvc-compat-headers.patch",
+        "algorithm": "sha256",
+        "digest": "18af8a55e898b12074e797a212eda5e6f3c935dcc37745eb97a60591e80ab64e"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-svt-av1-4.3.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "SVT-AV1-4.3.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "687da7bc19b7f1bc8a18325d4ce2a468ecb41e3e59a807a5bd3393c537c95363"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-tcl-8.6.18-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "tcl8.6.18-src.tar.gz",
+        "algorithm": "sha256",
+        "digest": "14f9af32b1767ff718477a8f974ad03c34341097e6b43f4ce54644ee974e268e"
+      },
+      {
+        "file": "005-no-xc.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "2b0f41f6704aa964dbfafa0a65dd5ce0ab97e82ff5cbbe2a95a2e8d644cc5550"
+      },
+      {
+        "file": "010-win-non-x86.patch",
+        "algorithm": "sha256",
+        "digest": "bdaeb5695ffc860215df81276f347995a9f5bd8ce37f8f85ac1465cf71086ebd"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-tk-8.6.18-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "tk8.6.18-src.tar.gz",
+        "algorithm": "sha256",
+        "digest": "95cd528a80f5e4bdb557af9b14a7197d6860793a3894e25e7c9fad2ed05d4c3c"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-tzdata-2026f-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "tzdata2026f.tar.gz",
+        "algorithm": "sha256",
+        "digest": "01b4a91cec5167ed48c11e8ab78f2048cead78ce94b0cafcad0ae8c5a3044d3d"
+      },
+      {
+        "file": "tzcode2026f.tar.gz",
+        "algorithm": "sha256",
+        "digest": "5a18da01393679ef2559214dc687563f7f3d05691f6f58b7fbc0166f3e796cd6"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://www.iana.org/time-zones/repository/releases/tzdata2026f.tar.gz.asc",
+      "https://www.iana.org/time-zones/repository/releases/tzcode2026f.tar.gz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-vid.stab-1.1.2-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "vid.stab-1.1.2",
+        "algorithm": "sha256",
+        "digest": "fa083365228201372c1728f502c12ba1b6183f0d0e5571061925cf6d530080c2"
+      },
+      {
+        "file": "0001-OpenMP.patch",
+        "algorithm": "sha256",
+        "digest": "902d237a2cbdbec032379a2b23ba3abd0bd4f4455169c7c4994edbaf5137e1f5"
+      },
+      {
+        "file": "0002-disable-sse-on-arm.patch",
+        "algorithm": "sha256",
+        "digest": "c11232d1dad550363f1d69137e2ddfb7f159c8ba86040e65dc376bd757d58ca7"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-vulkan-headers-1~1.4.363.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "Vulkan-Headers-1.4.363.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "4a078be12bef21cfebc09d878b77a63cff9d68f899254a0b00d0e37ef73e7f7e"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-vulkan-loader-1~1.4.363.0-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "Vulkan-Loader-1.4.363.0.tar.gz",
+        "algorithm": "sha256",
+        "digest": "941eff558fc74f248745fb7df367640cf89a8457f216dae498a74ae14b6ba6f7"
+      },
+      {
+        "file": "001-fix-import-library-name.patch",
+        "algorithm": "sha256",
+        "digest": "3b4a05ba0d8df9cdde475fee056e8c67891ce1b02ff4ce37216beec5ae783d24"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-whisper.cpp-1~1.9.5.r334.g5922450fb-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "whisper.cpp",
+        "algorithm": "sha256",
+        "digest": "b4ad2f72e6c81d77b9dd9cbf3879992d72a5c9103c2e0a2f4fd60e423a0c48c2"
+      },
+      {
+        "file": "63ae1b5f55b5d56622b39b3c01a4710feb57d844.patch",
+        "algorithm": "sha256",
+        "digest": "017d5479a765977a476362c674d5b48cd8803bce5748a97b21c8d5c481760d8e"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-wineditline-2.208-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "wineditline-2.208.tar.gz",
+        "algorithm": "sha256",
+        "digest": "2df14abed2fadebf6e20bc0853b8b9b01f736ea3a5402420e0192029c6a23d80"
+      },
+      {
+        "file": "001-fix-installing.patch",
+        "algorithm": "sha256",
+        "digest": "821d0a36115832a76497dc6d7ea4b6e45e4ce73621030a59865f851309f8db34"
+      },
+      {
+        "file": "003-dont-link-with-def.patch",
+        "algorithm": "sha256",
+        "digest": "19077726758de7780cd68f3f47d8353516fd864ede1903d55280a1fb3dbe408d"
+      },
+      {
+        "file": "004-add-pkgconfig.patch",
+        "algorithm": "sha256",
+        "digest": "7586c2bfeed3f4ff0998c2958b2613671fbca731768d2d2ac39f91ca28bfca2a"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-winpthreads-14.0.0.r598.ge3d18511f-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "mingw-w64",
+        "algorithm": "sha256",
+        "digest": "f96372df71b5f32f54e0c3d37e59dfc4628b41137f64a87e7ca67eda6d197185"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-x264-0.165.r3222.b35605a-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "x264",
+        "algorithm": "sha256",
+        "digest": "e92edc35efe3f8c3effb0c04854de0f8428cc09a218b2062ec3fe44f8ad2aa4e"
+      },
+      {
+        "file": "0001-beautify-pc.all.patch",
+        "algorithm": "sha256",
+        "digest": "8e92f4d6c1924664e7c9f5b797070a35f8eabbfce431f996167fe426fc833dda"
+      },
+      {
+        "file": "0002-install-avisynth_c.h.mingw.patch",
+        "algorithm": "sha256",
+        "digest": "611d427742347e0dfbcea8d45c8c9b0fd15e29ab0b22207000f8bf5f3ba1a3a9"
+      },
+      {
+        "file": "0003-pkgconfig-add-Cflags-private.patch",
+        "algorithm": "sha256",
+        "digest": "0cbf016c01291f1b8b97ffabdf7e52a8a8593ddf8d88c782245b60462a18bd60"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-x265-4.3-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "x265-4.3.tar.gz",
+        "algorithm": "sha256",
+        "digest": "83c53e4c8bbb8f1e33ed59e10a7d621d1d7801ca853910c3eb41f038b8ffb121"
+      },
+      {
+        "file": "0001-missing-include.patch",
+        "algorithm": "sha256",
+        "digest": "20e240c5365665e254b6030a458376fac16c1797903d607cae5863b280859a8f"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-xvidcore-1.3.7-5.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "xvidcore-1.3.7.tar.bz2",
+        "algorithm": "sha256",
+        "digest": "aeeaae952d4db395249839a3bd03841d6844843f5a4f84c271ff88f7aa1acff7"
+      },
+      {
+        "file": "0001-remove-dll-option-clang.patch",
+        "algorithm": "sha256",
+        "digest": "e100d96f183bf0e7334ab6ae12ded47a72157fc3976c10db32377ab8cda22715"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-xxhash-0.8.4-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "xxhash-0.8.4.tar.gz",
+        "algorithm": "sha256",
+        "digest": "5738270935e7c3d38a79b3adf7c9692566ce7895a25f67de43ad52ab504acd32"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-xz-5.8.4-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "xz-5.8.4.tar.xz",
+        "algorithm": "sha256",
+        "digest": "4ce24038fd4221e0d13bc1a2de7a4db56e90b92b3bf75321f6c14be73f65de4b"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/tukaani-project/xz/releases/download/v5.8.4/xz-5.8.4.tar.xz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-zimg-3.0.6-3.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "zimg-3.0.6.tar.gz",
+        "algorithm": "sha256",
+        "digest": "be89390f13a5c9b2388ce0f44a5e89364a20c1c57ce46d382b1fcc3967057577"
+      },
+      {
+        "file": "0001-zimg-export-def-symbols.patch",
+        "algorithm": "sha256",
+        "digest": "6e52d715d19080434392f04b33005fee428368e12176da20555f4059209c8134"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  },
+  {
+    "archive": "mingw-w64-zlib-1.4-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "zlib-1.4.tar.xz",
+        "algorithm": "sha256",
+        "digest": "4f11c512053d7bab8d9e9b89bde3575add3e4c50a383b42ef6cb837035fc5a7c"
+      },
+      {
+        "file": "01-no-extra-suffix-for-static-library.patch",
+        "algorithm": "sha256",
+        "digest": "c3d9dd52828a458b7558712dda57b4acf1ddfe9944d6c1a2675e1471e661975d"
+      },
+      {
+        "file": "02-no-pdb-for-mingw.patch",
+        "algorithm": "sha256",
+        "digest": "3b969ab5377633fc9e66c1ae862b2d5bc37f954a2bfe56d752b280ea13e3bec2"
+      },
+      {
+        "file": "03-fix-output-name-for-zlib1.patch",
+        "algorithm": "sha256",
+        "digest": "aa541a5f4c50c5355209f7f94087e5970ebb8c34100b5ad5adba690bc100c992"
+      },
+      {
+        "file": "04-no-minizip-headers-in-zlib1.patch",
+        "algorithm": "sha256",
+        "digest": "39e63187a6bd6108ec926e7148d5a43e67ed8b8beb4e1c82e8408248c0d1f0c3"
+      },
+      {
+        "file": "08-Add-bzip2-library-to-pkg-config-file.patch",
+        "algorithm": "sha256",
+        "digest": "0da526061789a45b53ca16405dcb9333b235d25b8bee012263ac9683559e0536"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/madler/zlib/releases/download/v1.4/zlib-1.4.tar.xz.asc"
+    ]
+  },
+  {
+    "archive": "mingw-w64-zstd-1.5.7-2.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "zstd-1.5.7.tar.gz",
+        "algorithm": "sha256",
+        "digest": "eb33e51f49a15e023950cd7825ca74a4a2b43db8354825ac24fc1b7ee09e6fa3"
+      },
+      {
+        "file": "zstd-1.4.0-fileio-mingw.patch",
+        "algorithm": "sha256",
+        "digest": "283e584477a8f70c9bea86a500486dd11dfcb59b22690fd94deb44a3f95a6668"
+      }
+    ],
+    "upstream_skip_entries_retained": [
+      "https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz.sig"
+    ]
+  },
+  {
+    "archive": "mingw-w64-zvbi-0.2.46-1.src.tar.zst",
+    "source_inputs_verified": [
+      {
+        "file": "zvbi.git",
+        "algorithm": "sha256",
+        "digest": "6bfa25de6d2aa560dd52cb48ee0a12562597e441e4de33752016a6852c9a8601"
+      },
+      {
+        "file": "0001-zvbi-no-undefined.patch",
+        "algorithm": "sha256",
+        "digest": "c29b9fb68e48dee88b6a881478a51ce6b7277f5b3c2fedbfab71cd0270c66e47"
+      }
+    ],
+    "upstream_skip_entries_retained": []
+  }
+]

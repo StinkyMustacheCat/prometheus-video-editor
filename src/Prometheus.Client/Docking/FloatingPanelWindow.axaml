@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Prometheus.Client.Docking.FloatingPanelWindow"
+        Title="Ventana Flotante - Prometheus"
+        Icon="/Assets/app.ico"
+        MinWidth="100" MinHeight="100"
+        Width="400" Height="300"
+        Background="{StaticResource BackgroundPureBlackBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        WindowStartupLocation="Manual">
+    <Grid RowDefinitions="28,*">
+        <!-- BARRA SUPERIOR DE VENTANA FLOTANTE -->
+        <Border Grid.Row="0" Name="TitleBarBorder" Background="{StaticResource BackgroundPanelHeaderBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,0,1" Padding="8,0,4,0">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" Margin="0,0,6,0" VerticalAlignment="Center">
+                    <Image Source="/Assets/app.ico" Width="16" Height="16" VerticalAlignment="Center" />
+                </StackPanel>
+                <TextBlock Grid.Column="1" Name="TitleText" Text="Panel Flotante" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                    <!-- BOTÓN REACOPLAR -->
+                    <Button Name="ReDockButton" Classes="nle-btn" ToolTip.Tip="Reacoplar al espacio de trabajo" Height="22" Padding="6,2">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock Text="⇲" FontSize="10" VerticalAlignment="Center" />
+                            <TextBlock Text="Reacoplar" FontSize="10" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <!-- BOTÓN CERRAR -->
+                    <Button Name="CloseButton" Classes="nle-btn" ToolTip.Tip="Cerrar panel" Width="22" Height="22" Padding="0">
+                        <TextBlock Text="✕" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Button>
+                    <!-- BOTÓN MINIMIZAR -->
+                    <Button Name="MinimizeButton" Classes="nle-btn" ToolTip.Tip="Minimizar al Estante" Width="22" Height="22" Padding="0">
+                        <TextBlock Text="🗕" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- CONTENIDO -->
+        <Border Grid.Row="1" Name="ContentHolder" Background="{StaticResource BackgroundPanelBaseBrush}" />
+    </Grid>
+</Window>
