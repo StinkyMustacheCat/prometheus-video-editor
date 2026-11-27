@@ -32,23 +32,92 @@ public sealed class Sam2VideoBridge : IDisposable
     private readonly CancellationTokenSource _closing = new();
     private volatile bool _disposed;
     private System.Threading.Tasks.Task<string>? _stderr;
+    private ProcessingChoice? _choice;
+    private bool _ready;
     private static string ModelRoot => RuntimeDependencies.SamRoot;
     private static string Python => RuntimeDependencies.SamPython;
     private static string Script => Environment.GetEnvironmentVariable("PROMETHEUS_SAM2_TRACK_SCRIPT") ??
         Path.Combine(AppContext.BaseDirectory, "Runtime", "sam2_track.py");
 
-    public static bool IsAvailable => File.Exists(Python) && File.Exists(Script) &&
-        File.Exists(Path.Combine(ModelRoot, "sam2.1_hiera_small.pt")) &&
-        Directory.Exists(Path.Combine(ModelRoot, "repo"));
+    private static bool HasCpuRuntime => File.Exists(Path.Combine(ModelRoot, "track-cpu", "torch", "__init__.py"));
+
+    internal static string ConfiguredBackend
+    {
+        get
+        {
+            return ProcessingService.Resolve(ProcessingFunction.SamTrack).Backend;
+        }
+    }
+
+    public static bool IsAvailable
+    {
+        get
+        {
+            if (!File.Exists(Python) || !File.Exists(Script) ||
+                !File.Exists(Path.Combine(ModelRoot, "sam2.1_hiera_small.pt")) ||
+                !Directory.Exists(Path.Combine(ModelRoot, "repo"))) return false;
+            string backend;
+            try { backend = ConfiguredBackend; } catch (InvalidOperationException) { return false; }
+            if (backend == "cuda") return true;
+            if (!HasCpuRuntime) return false;
+            if (backend == "torch-cpu") return true;
+            var graphRoot = Path.Combine(ModelRoot, "onnx");
+            return backend is "directml" or "webgpu" &&
+                Directory.Exists(Path.Combine(graphRoot, "ort-" + backend, "onnxruntime")) &&
+                File.Exists(Path.Combine(graphRoot, "vision_encoder.onnx")) &&
+                File.Exists(Path.Combine(graphRoot, "vision_encoder.onnx_data"));
+        }
+    }
+
+    internal string Backend { get; private set; } = "pending";
+
+    internal void Prepare(CancellationToken cancellation)
+    {
+        lock (_gate)
+        {
+            if (_disposed) throw new ObjectDisposedException(nameof(Sam2VideoBridge));
+            if (_ready && _worker is { HasExited: false } && !_invalidWorker) return;
+            using var deadline = CancellationTokenSource.CreateLinkedTokenSource(cancellation, _closing.Token);
+            deadline.CancelAfter(TimeSpan.FromMinutes(3));
+            var choices = ProcessingService.Candidates(ProcessingFunction.SamTrack);
+            string? fallback = null;
+            for (var index = 0; index < choices.Length; index++)
+            {
+                _choice = choices[index]; Backend = _choice.Backend;
+                try
+                {
+                    StartIfNeeded();
+                    using var stop = deadline.Token.Register(KillWorker);
+                    _worker!.StandardInput.WriteLine("{\"op\":\"ping\"}");
+                    _worker.StandardInput.Flush();
+                    using var response = ReadHeader();
+                    EnsureOk(response.RootElement);
+                    if (response.RootElement.GetProperty("backend").GetString() != Backend)
+                        throw new InvalidDataException("El seguimiento inició otro proveedor.");
+                    _ready = true;
+                    ProcessingService.Record(_choice, reason: fallback);
+                    return;
+                }
+                catch (Exception error)
+                {
+                    KillWorker(); cancellation.ThrowIfCancellationRequested(); _closing.Token.ThrowIfCancellationRequested();
+                    ProcessingService.Record(_choice, reason: error.Message, failed: true);
+                    if (deadline.IsCancellationRequested) throw new TimeoutException("El seguimiento SAM no pudo iniciar a tiempo.");
+                    fallback = _choice.Label + ": " + error.Message;
+                    if (index == choices.Length - 1) throw;
+                }
+            }
+        }
+    }
 
     public IReadOnlyList<SamTrackedFrame> TrackWindow(IReadOnlyList<SamVideoFrame> frames,
-        IReadOnlyList<byte[]> seedMasks, bool reverse, CancellationToken cancellation)
+        IReadOnlyList<byte[]> seedMasks, bool reverse, CancellationToken cancellation, Action<int>? frameReceived = null)
     {
         lock (_gate)
         {
             if (_disposed) throw new ObjectDisposedException(nameof(Sam2VideoBridge));
             using var deadline = CancellationTokenSource.CreateLinkedTokenSource(cancellation, _closing.Token);
-            deadline.CancelAfter(TimeSpan.FromMinutes(5));
+            deadline.CancelAfter(TimeSpan.FromMinutes(Backend == "cuda" ? 5 : 15));
             var requestedCancellation = cancellation;
             cancellation = deadline.Token;
 
@@ -77,7 +146,7 @@ public sealed class Sam2VideoBridge : IDisposable
                 }
                 seedMasks = seedMasks.Take(MaxSeeds - 1).Append(combined).ToArray();
             }
-            StartIfNeeded();
+            Prepare(cancellation);
             using var registration = cancellation.Register(KillWorker);
             try
             {
@@ -126,6 +195,7 @@ public sealed class Sam2VideoBridge : IDisposable
                         _worker.StandardOutput.BaseStream.ReadExactly(masks[objectIndex]);
                     }
                     result[index] = new SamTrackedFrame(width, height, masks);
+                    frameReceived?.Invoke(index);
                 }
                 using (var complete = ReadHeader())
                 {
@@ -150,7 +220,8 @@ public sealed class Sam2VideoBridge : IDisposable
     {
         if (_worker is { HasExited: false } && !_invalidWorker) return;
         _worker?.Dispose();
-        if (!IsAvailable) throw new FileNotFoundException("No se encontró el motor de seguimiento SAM 2.1.");
+        if (!File.Exists(Python) || !File.Exists(Script) || _choice == null)
+            throw new FileNotFoundException("No se encontró el motor de seguimiento SAM 2.1.");
         var info = new ProcessStartInfo(Python)
         {
             UseShellExecute = false,
@@ -160,11 +231,15 @@ public sealed class Sam2VideoBridge : IDisposable
             RedirectStandardError = true,
             WorkingDirectory = Path.Combine(ModelRoot, "repo")
         };
+        info.ArgumentList.Add("-B");
         info.ArgumentList.Add("-u");
         info.ArgumentList.Add(Script);
         info.ArgumentList.Add("--model-root");
         info.ArgumentList.Add(ModelRoot);
+        info.Environment["PROMETHEUS_SAM2_TRACK_BACKEND"] = Backend;
+        info.Environment["TQDM_DISABLE"] = "1";
         RuntimeDependencies.PreparePython(info);
+        ProcessingService.Configure(info, _choice!);
         _invalidWorker = false;
         _worker = Process.Start(info) ?? throw new InvalidOperationException("No se pudo iniciar SAM 2.1 video.");
         _stderr = ExternalProcess.ReadDiagnosticsAsync(_worker.StandardError);

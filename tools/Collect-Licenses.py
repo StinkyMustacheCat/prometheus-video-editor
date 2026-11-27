@@ -64,6 +64,7 @@ def main():
     # Public inventory contains relative notice paths, never the operator's local directories.
     for record in all_records:
         for n in record['notices']:n['file']=pathlib.Path(n['file']).relative_to(root).as_posix()
-    (out/'components.json').write_text(json.dumps({'format':1,'release':'3.19.9','components':all_records},ensure_ascii=False,indent=2,default=str),encoding='utf-8')
+    version=ET.parse(root/'Directory.Build.props').findtext('.//Version')
+    (out/'components.json').write_text(json.dumps({'format':1,'release':version,'components':all_records},ensure_ascii=False,indent=2,default=str),encoding='utf-8')
     print(json.dumps({'nuget':len(records),'python':len(python_records),'no_notice':[r['id'] for r in all_records if not r['notices']]}))
 if __name__=='__main__':main()

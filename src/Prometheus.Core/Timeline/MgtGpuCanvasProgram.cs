@@ -20,6 +20,9 @@ public sealed class MgtGpuCanvasProgram
     private readonly JsValue _invoke;
 
     public MgtGpuCanvasProgram(MgtGpuTransition definition)
+        : this(definition, TimeSpan.FromMilliseconds(160)) { }
+
+    private MgtGpuCanvasProgram(MgtGpuTransition definition, TimeSpan timeout)
     {
         definition.Validate();
         if (Unsupported.IsMatch(definition.Render))
@@ -29,7 +32,7 @@ public sealed class MgtGpuCanvasProgram
         {
             options.Strict();
             options.MaxStatements(50_000).LimitRecursion(48).LimitMemory(24_000_000)
-                .TimeoutInterval(TimeSpan.FromMilliseconds(160));
+                .TimeoutInterval(timeout);
             options.Constraints.MaxArraySize = 32_768;
             options.Constraints.RegexTimeout = TimeSpan.FromMilliseconds(30);
             options.Constraints.PromiseTimeout = TimeSpan.FromMilliseconds(30);
@@ -55,7 +58,8 @@ public sealed class MgtGpuCanvasProgram
 
     public static void Check(MgtGpuTransition definition)
     {
-        var program = new MgtGpuCanvasProgram(definition);
+        // Import checks include cold interpreter initialization across several seek patterns.
+        var program = new MgtGpuCanvasProgram(definition, TimeSpan.FromMilliseconds(500));
         // Exercise endpoints and interleaved seeks with both common orientations.
         foreach (var (width, height) in new[] { (1920, 1080), (1080, 1920) })
         {

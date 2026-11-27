@@ -136,7 +136,8 @@ internal sealed class McpMediaWorkService(ProjectController controller)
         var mode = McpJson.String(args, "caption_mode") ?? "phrase";
         if (mode is not ("phrase" or "word")) throw new ArgumentException("caption_mode debe ser phrase o word.");
         var apply = McpJson.Bool(args, "apply_captions");
-        var stream = AudioOrdinal(asset, job.Clip, job.Path);
+        var stream = LocalMediaService.AudioOrdinal(asset, job.Clip, job.Path)
+            ?? throw new ArgumentException("El medio no contiene la pista de audio seleccionada.");
         return async () =>
         {
             var progress = new Progress<double>(value =>
@@ -158,7 +159,7 @@ internal sealed class McpMediaWorkService(ProjectController controller)
                     captions = TranscriptOperations.Apply(project, result.Document.Id);
             }, "Transcribir clip con Whisper");
             return new { document_id = result.Document.Id, words_count = result.Document.Words.Count,
-                caption_ids = captions, mode, device = result.Device };
+                caption_ids = captions, mode, device = result.Device, language = result.Document.Language };
         };
     }
 
@@ -166,7 +167,8 @@ internal sealed class McpMediaWorkService(ProjectController controller)
     {
         var apply = McpJson.Bool(args, "apply");
         var ripple = McpJson.Bool(args, "ripple");
-        var stream = AudioOrdinal(asset, job.Clip, job.Path);
+        var stream = LocalMediaService.AudioOrdinal(asset, job.Clip, job.Path)
+            ?? throw new ArgumentException("El medio no contiene la pista de audio seleccionada.");
         var settings = McpJson.String(args, "preset") switch
         {
             "soft" => new SilenceSettings(-42, 0.80, 0.20, 0.25),
@@ -200,6 +202,10 @@ internal sealed class McpMediaWorkService(ProjectController controller)
         var still = StillImageRules.IsStill(project, job.Clip);
         var sourceTime = SourceTime(job.Clip, args);
         var name = McpJson.String(args, "name") ?? "SAM";
+        var layerId = McpJson.String(args, "mask_id");
+        if (layerId != null && !ClipMaskStack.Read(job.Clip).Any(layer => layer.Id == layerId && layer.Kind == "sam"))
+            throw new ArgumentException("La capa SAM seleccionada no existe.");
+        var fps = project.Sequences.Single(sequence => sequence.Id == job.SequenceId).Fps.Seconds;
         return async () =>
         {
             var token = job.Cancellation.Token;
@@ -217,9 +223,19 @@ internal sealed class McpMediaWorkService(ProjectController controller)
             var mask = await worker.PredictAsync(points.Select(point => (
                 point.X * (frame.Width - 1), point.Y * (frame.Height - 1), point.Positive)).ToArray(), token);
             var seed = SamMaskKeyframe.Create(sourceTime, mask.Width, mask.Height, mask.Alpha);
-            var layer = new ClipMaskLayer { Name = name, Kind = "sam", SamMasks = [seed] };
-            Commit(job, (_, _, clip) => ClipMaskStack.Edit(clip).Add(layer), "Aplicar máscara SAM");
-            return new { mask_id = layer.Id, seed_id = seed.Id, source_seconds = sourceTime, score = mask.Score };
+            var newLayer = new ClipMaskLayer { Name = name, Kind = "sam", SamMasks = [seed] };
+            Commit(job, (_, _, clip) =>
+            {
+                var layers = ClipMaskStack.Edit(clip);
+                if (layerId == null) { layers.Add(newLayer); return; }
+                var layer = layers.FirstOrDefault(item => item.Id == layerId && item.Kind == "sam")
+                    ?? throw new InvalidOperationException("La capa SAM cambió mientras se preparaba la corrección.");
+                layer.SamMasks.RemoveAll(existing => still ||
+                    Math.Abs(existing.SourceSeconds - seed.SourceSeconds) <= 0.5 / Math.Max(1, fps) + 0.0001);
+                layer.SamMasks.Add(seed);
+            }, layerId == null ? "Aplicar máscara SAM" : "Corregir máscara SAM");
+            return new { mask_id = layerId ?? newLayer.Id, seed_id = seed.Id, source_seconds = sourceTime,
+                score = mask.Score, backend = mask.Backend };
         };
     }
 
@@ -244,6 +260,12 @@ internal sealed class McpMediaWorkService(ProjectController controller)
         snapshotClip.SamMasks = mask.SamMasks;
         snapshotClip.SamMaskTracks = mask.SamMaskTracks;
         snapshotClip.ShapeMask = null;
+        var repair = McpJson.Bool(args, "repair");
+        var previous = repair ? mask.SamMaskTracks.LastOrDefault() : null;
+        if (repair && (previous == null || !SamTrackingService.CanRepair(snapshotClip, previous, seed.SourceSeconds) ||
+            SamMaskTrackValidity.Problem(snapshotClip, previous, job.Path) != null ||
+            !File.Exists(SamMaskTrackStore.PathFor(projectPath, previous.Id))))
+            throw new InvalidOperationException("La corrección necesita un seguimiento anterior que cubra el clip.");
         return async () =>
         {
             job.Stage = "tracking";
@@ -251,19 +273,25 @@ internal sealed class McpMediaWorkService(ProjectController controller)
             {
                 if (job.State == "running" && value.Total > 0) job.Progress = (double)value.Done / value.Total;
             });
-            var track = await Task.Run(() => SamTrackingService.Track(snapshot, job.Clip.Id, job.Path,
-                projectPath, seed.SourceSeconds, seed, progress, job.Cancellation.Token), job.Cancellation.Token);
+            var track = await Task.Run(() => previous != null
+                ? SamTrackingService.Repair(snapshot, job.Clip.Id, job.Path, projectPath, seed.SourceSeconds,
+                    seed, previous, progress, job.Cancellation.Token)
+                : SamTrackingService.Track(snapshot, job.Clip.Id, job.Path, projectPath, seed.SourceSeconds,
+                    seed, progress, job.Cancellation.Token), job.Cancellation.Token);
             Commit(job, (_, _, clip) =>
             {
                 var layer = ClipMaskStack.Edit(clip).FirstOrDefault(item => item.Id == mask.Id && item.Kind == "sam" &&
                     item.SamMasks.Any(current => current.Id == seed.Id))
                     ?? throw new InvalidOperationException("La máscara inicial cambió durante el seguimiento.");
+                if (previous != null && layer.SamMaskTracks.LastOrDefault()?.Id != previous.Id)
+                    throw new InvalidOperationException("El seguimiento anterior cambió durante la corrección.");
                 var currentPath = controller.ResourceProjectPath ?? throw ChangedClip();
                 SamMaskTrackStore.CopyOne(projectPath, currentPath, track.Id);
                 layer.SamMaskTracks.Clear();
                 layer.SamMaskTracks.Add(track);
             }, "Seguir máscara SAM");
-            return new { mask_id = mask.Id, track_id = track.Id, frames_count = track.FrameCount };
+            return new { mask_id = mask.Id, track_id = track.Id, frames_count = track.FrameCount,
+                encoder_backend = Sam2VideoBridge.ConfiguredBackend, repaired = previous != null };
         };
     }
 
@@ -295,15 +323,6 @@ internal sealed class McpMediaWorkService(ProjectController controller)
         if (asset == null || path == null || !File.Exists(path))
             throw new FileNotFoundException("El medio del clip no está disponible.");
         return (asset, Path.GetFullPath(path));
-    }
-
-    private static int AudioOrdinal(Asset asset, Clip clip, string path)
-    {
-        var stream = asset.Streams.FirstOrDefault(item => item.Id == clip.StreamId && item.Kind == "audio")
-            ?? throw new ArgumentException("El medio no contiene la pista de audio seleccionada.");
-        var representation = asset.Representations.FirstOrDefault(item =>
-            string.Equals(item.Locator.Path, path, StringComparison.OrdinalIgnoreCase));
-        return representation?.StreamOrdinals.GetValueOrDefault(stream.Id, stream.Ordinal) ?? stream.Ordinal;
     }
 
     private static bool IsAudio(Sequence sequence, Clip clip) =>

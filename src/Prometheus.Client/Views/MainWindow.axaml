@@ -48,6 +48,7 @@
                                 <MenuItem Name="MenuKeyboardShortcuts" Header="Atajos de teclado…" />
                                 <MenuItem Name="MenuWebDownloads" Header="Descargas web…" />
                                 <MenuItem Name="MenuPreviewSettings" Header="Previsualización y montaje…" />
+                                <MenuItem Name="MenuProcessingSettings" Header="Procesamiento…" />
                                 <Separator />
                                 <MenuItem Name="MenuAbout" Header="Acerca de Prometheus y licencias…" />
                             </ContextMenu>

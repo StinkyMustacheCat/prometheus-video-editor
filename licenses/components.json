@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "release": "3.19.9",
+  "release": "3.22.2",
   "components": [
     {
       "ecosystem": "NuGet",

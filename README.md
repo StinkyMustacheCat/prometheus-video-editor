@@ -1,8 +1,10 @@
-# Prometheus 3.19.9
+# Prometheus 3.22.2
 
 Editor de vídeo no lineal para Windows, con cliente Avalonia, composición Direct3D 11, gráficos MGT en vivo y automatización local mediante MCP.
 
-Esta es la distribución del cliente actual. La interfaz WinForms de las versiones antiguas no forma parte de esta entrega. El nombre histórico `Prometheus.V2.sln` se conserva para compilar las fuentes; la versión del programa es 3.19.9.
+> **3.22.2 es solo una rama de pruebas de código; no hay una prerelease binaria publicada.** La publicación de los ZIP está bloqueada hasta cerrar la revisión de redistribución y fuentes de los nuevos proveedores. No es una versión estable. La guía para testers y sus límites está en [prueba en PC limpio](docs/PRUEBA_PC_LIMPIO_3_22_2.md); consulta el [estado de publicación](docs/PUBLICACION.md) antes de compilar o distribuir artefactos.
+
+Esta es la distribución del cliente actual. La interfaz WinForms de las versiones antiguas no forma parte de esta entrega. El nombre histórico `Prometheus.V2.sln` se conserva para compilar las fuentes; la versión del programa es 3.22.2.
 
 ## Funciones
 
@@ -18,7 +20,11 @@ Esta es la distribución del cliente actual. La interfaz WinForms de las version
 
 Extrae todos los ZIP de componentes de la misma versión en una carpeta común, conservando la estructura. Ejecuta `Prometheus.Client.exe`. El paquete autónomo incluye .NET; no necesita instalar el SDK. Consulta [instalación](docs/INSTALACION.md), [MCP](docs/MCP.md) y [limitaciones](docs/LIMITACIONES.md).
 
-Requisitos de esta distribución: Windows x64, controlador gráfico actualizado y GPU NVIDIA compatible con las funciones utilizadas. La ruta de render actual y SAM se validaron en el equipo de desarrollo; no se anuncia soporte AMD, Linux, macOS ni compatibilidad completa con todas las generaciones NVIDIA. Consulta las limitaciones antes de descargar varios gigabytes de IA.
+Esta entrega reúne la base NVIDIA 3.19.10 y la adaptación AMD APU 3.21.2. En **Ajustes → Procesamiento** se muestra el hardware y se elige el motor de cada función. Automático conserva CUDA en NVIDIA, selecciona DirectML para SAM en Radeon y utiliza Whisper CPU INT8 en equipos sin CUDA. En Radeon, el seguimiento combina el codificador de imagen en GPU y la propagación temporal de SAM en CPU; no es un seguimiento completamente acelerado. H.264 y HEVC utilizan el adaptador del compositor, mediante Media Foundation/NVENC en NVIDIA o AMF en AMD, con respaldo CPU en modo automático. Una elección manual que falla se informa al usuario.
+
+La rama AMD previa se probó en Ryzen 3 7320U / Radeon 610M. La integración 3.22.2 se comprueba en Ryzen 9 3900 / RTX 3060; la revisión manual de este paquete unificado en APU y equipos híbridos está pendiente. No se extrapola el rendimiento entre equipos. Consulta [procesamiento y comprobaciones](docs/PROCESAMIENTO_3_22.md).
+
+Para guardar un informe del adaptador Direct3D 11, ejecuta `Prometheus.Client.exe --graphics-diagnostics diagnostico.json`. Las opciones de previsualización del monitor se guardan independientemente de la resolución de exportación.
 
 ## Compilación
 

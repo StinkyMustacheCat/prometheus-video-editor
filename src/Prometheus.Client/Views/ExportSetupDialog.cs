@@ -101,7 +101,7 @@ internal sealed class ExportSetupDialog : Window
         root.Children.Add(_resolution);
         _encoderLabel = Caption("Codificador de vídeo");
         root.Children.Add(_encoderLabel);
-        _encoder = new ComboBox { ItemsSource = new[] { "Automático · GPU con respaldo CPU", "GPU NVIDIA", "CPU" },
+        _encoder = new ComboBox { ItemsSource = new[] { "Automático · según Procesamiento", "GPU del equipo", "CPU" },
             SelectedIndex = 0, HorizontalAlignment = HorizontalAlignment.Stretch };
         root.Children.Add(_encoder);
         _format.SelectionChanged += (_, _) =>

@@ -1,163 +1,69 @@
 {
-  "version": "3.19.9",
+  "version": "3.22.2",
   "source_repository_prepared": true,
-  "public_binary_release_ready": true,
-  "prepared_for": "public GitHub release v3.19.9 (release/3.19.9; main and v1.0.0 preserved)",
+  "local_review_delivery_ready": true,
+  "public_binary_release_ready": false,
+  "tester_prerelease_ready": false,
+  "publication_status": "Source branch only. Do not publish binary assets until the redistribution and source-correspondence review is closed.",
+  "baseline": "3.19.10 + AMD APU 3.21.2",
+  "scope": "First joint review delivery: integration, hardware detection, processing settings (3.22.0-3.22.2)",
   "checks": {
     "unit_tests": {
-      "passed": 507,
+      "passed": 536,
       "failed": 0,
-      "skipped": 0
+      "skipped": 0,
+      "runtime_process_tests_exercised": true
     },
-    "self_contained_build": "passed Windows x64",
-    "chromium_credits": "exported from bundled Chromium 156.0.8078.80, full text included",
-    "vendor_ffmpeg_executables": "Own FFmpeg 9.1 build with Rubber Band 4.0.0; sources, generated configuration, build recipe and logs included.",
-    "vendor_ytdlp_executable": "SHA-256 matches official 2026.08.19 checksums",
-    "whisper_model": "SHA-256 matches pinned Systran/faster-whisper-small",
-    "cudnn": "version 9.10.2.21, DLL comparison and original archive license captured",
-    "portable_mcp": "self-contained initialization passed; 11 tools",
-    "portable_gpu": "CEF GPU, alpha, live parameters and cross-process sharing passed",
-    "portable_ai": "relocated Python imports, CUDA detection and offline Whisper CPU model load passed; SAM inference not retested",
-    "sam_checkpoint": "SHA-256 matches pinned facebook/sam2.1-hiera-small",
-    "nvidia_redistributables": {
-      "status": "verified_technical_mapping",
-      "distinct_torch_dlls": 22,
-      "additional_identical_copies": 2,
-      "official_archive_hashes_verified": true,
-      "all_dll_bytes_match": true,
-      "all_torch_record_hashes_match": true,
-      "notices": "licenses/vendors/NVIDIA-components",
-      "evidence": "licenses/vendors/Verification-2026-11-25/nvidia-verification.json",
-      "condition": "Retain and comply with the original separate NVIDIA terms; this is not a blanket relicensing of NVIDIA files."
+    "runtime_device_tests": {
+      "passed": 3,
+      "failed": 0,
+      "scope": "CUDA logical ordinal, visibility order, UUID filtering and missing LUID"
     },
-    "ytdlp_native_dependencies": {
-      "status": "verified_for_bundled_windows_executable",
-      "dll_and_wrapper_match_official_wheel": true,
-      "backend": "WinIDN",
-      "runtime_version": "libcurl/8.21.0-IMPERSONATE BoringSSL zlib/1.3.1 brotli/1.2.0 zstd/1.5.7 WinIDN nghttp2/1.63.0 ngtcp2/1.20.0 nghttp3/1.15.0",
-      "evidence": "licenses/vendors/Verification-2026-11-25/ytdlp-verification.json"
-    },
-    "pyav_source_materials": {
-      "status": "source_materials_recovered_GPL_route",
-      "official_wheel_native_files_verified": 74,
-      "vendor_commit": "a71bf9279f7a4659154b68ba6783e89be460bcd5",
-      "repair_tool": "delvewheel 1.13.0",
-      "msys_source_bundles_recovered": 5,
-      "basis": "Official PyPI wheel hash, historical upstream release-to-commit mapping, pinned vendor recipes and dependency archives, MSYS executable-section comparisons and source packages including original upstream code, patches and PKGBUILD.",
-      "limitations": [
-        "No bit-identical rebuild was performed. MSYS DLL executable sections match official packages; whole-file hashes differ as expected after strip and delvewheel repair.",
-        "Two adjacent winpthreads package revisions have matching executable sections; both source snapshots will be preserved. Winpthreads is MIT AND BSD-3-Clause-Clear, not LGPL."
-      ],
-      "evidence": "licenses/vendors/Verification-2026-11-25/pyav-verification.json"
-    },
-    "ffmpeg_source_closure": {
-      "source_bundles": 134,
-      "upstream_source_and_patch_checksums": 470,
-      "rubberband_files_matched_to_official_commit": 169,
-      "native_inventory": "licenses/native-components.json",
-      "evidence": "licenses/vendors/FFmpeg-3.19.9"
-    },
-    "exports": {
-      "passed": true,
-      "formats": [
-        {
-          "file": "h264.mp4",
-          "codec": "h264",
-          "duration": 1.0,
-          "pixel_format": "yuv420p",
-          "frames": "30",
-          "color_space": "bt709"
-        },
-        {
-          "file": "h264-cpu.mp4",
-          "codec": "h264",
-          "duration": 1.0,
-          "pixel_format": "yuv420p",
-          "frames": "30",
-          "color_space": "bt709"
-        },
-        {
-          "file": "hevc.mp4",
-          "codec": "hevc",
-          "duration": 1.0,
-          "pixel_format": "yuv420p",
-          "frames": "30",
-          "color_space": "bt709"
-        },
-        {
-          "file": "hevc-cpu.mp4",
-          "codec": "hevc",
-          "duration": 1.0,
-          "pixel_format": "yuv420p",
-          "frames": "30",
-          "color_space": "bt709"
-        },
-        {
-          "file": "422.mov",
-          "codec": "prores",
-          "duration": 1.0,
-          "pixel_format": "yuv422p10le",
-          "frames": "30",
-          "color_space": "bt709"
-        },
-        {
-          "file": "4444.mov",
-          "codec": "prores",
-          "duration": 1.0,
-          "pixel_format": "yuva444p12le",
-          "frames": "30",
-          "color_space": "bt709"
-        },
-        {
-          "file": "audio.wav",
-          "codec": "pcm_s16le",
-          "duration": 1.0,
-          "pixel_format": null,
-          "frames": null,
-          "color_space": null
-        }
-      ],
-      "prores4444_alpha_range": [
-        0,
-        129
-      ],
-      "gpu_vs_cpu_color_mean_absolute_error": 0.001851851851851852,
-      "rubberband_input_hz": 440,
-      "rubberband_output_hz": 660.0,
-      "ffmpeg_nvenc_encoders": [
-        "h264_nvenc",
-        "hevc_nvenc"
-      ]
-    },
-    "portable": {
-      "passed": true,
-      "checks": [
-        "self-contained MCP: 11 tools",
-        "bundled FFmpeg with Windows-only PATH",
-        "CEF GPU texture, alpha, live parameters and interprocess sharing",
-        "relocated Python imports, CUDA detection and local Whisper load"
-      ]
-    },
-    "source_build": {
-      "passed": true,
-      "sdk": "8.0.427",
-      "empty_nuget_cache": true,
-      "local_feed_only": true,
-      "components": [
-        "Client",
-        "McpBridge",
-        "MgtLive"
-      ],
-      "offline_nuget_packages": 175,
-      "rebuilt_mcp_and_multimedia_startup": true
-    }
+    "integration_hardware": "Ryzen 9 3900 / RTX 3060 12 GB / 32 GB RAM / Windows x64",
+    "real_project_audio_preview": "321 input entries; 768000 PCM bytes read; clean stop; no Windows error 206",
+    "sam_image": "CUDA, DirectML, WebGPU; identical binary mask in synthetic positive/negative-point fixture",
+    "sam_tracking": "CUDA and DirectML+CPU; identical masks across three synthetic moving frames",
+    "whisper": "CUDA FP16 and CPU INT8; 32 words in 12 second voice excerpt with source offset",
+    "exports": "H.264/HEVC GPU and CPU; ProRes 422/4444; WAV; output validation",
+    "mgt_exports": "two consecutive GPU exports completed using Media Foundation NVIDIA",
+    "recovery": "cancelled after one complete segment; resumed libx264 despite changed local NVIDIA preference; final output validated",
+    "portable": "self-contained MCP 11 tools; FFmpeg; CEF texture/alpha/live parameters/cross-process sharing; offline AI imports",
+    "settings_ui": "manual CPU selection/apply; reset; refresh; advanced/reset; export diagnostic; isolated preferences",
+    "new_components": "34 isolated Python distributions inventoried with original notices; ONNX model hashes retained"
   },
-  "publication_holds": [],
-  "limitations": [
-    ".NET 8 reached end of vendor support on 2026-11-10; migration is not part of this packaging change.",
-    "Other Windows PCs and AMD GPUs have not been validated.",
-    "Native dependencies require the Microsoft Visual C++ x64 runtime. The signed official installer is included, not executed. Its separate original terms accompany the installer."
+  "publication_holds": [
+    "Close the redistribution and corresponding-source review for the new ONNX Runtime and PyTorch CPU providers. Existing component metadata and notices are evidence, not an independent closure of all obligations for the exact distributed binaries."
   ],
-  "verification_revision": 3,
-  "verified_on": "2026-11-25"
+  "validation_pending": [
+    "Physical clean-PC validation on an APU and a hybrid system is the purpose of the planned tester prerelease; no results are available yet. The previous AMD APU 3.21.2 USB test is not a test of this 3.22.2 package."
+  ],
+  "tester_prerelease_requirements": [
+    "Obtain maintainer approval of the new-provider redistribution and source-material review before making any ZIP publicly downloadable.",
+    "For any package changes, rebuild affected archives, regenerate SHA256SUMS.txt, and recheck hashes, CRCs, archive membership, and manifest coverage."
+  ],
+  "runtime_packaging_review": {
+    "path": "Runtime/sam2/track-cpu/torch/lib/dnnl.lib",
+    "bytes": 2325803578,
+    "assessment": "Static archive format (!<arch>); not a runtime DLL and not loaded to execute the shipped application.",
+    "action": "Exclude from the next portable and AI-02 package, then rebuild and reverify those archives before publication."
+  },
+  "out_of_scope": [
+    "3.22.3 resource calibration and concurrency policy",
+    "3.22.4 cross-hardware publication closure"
+  ],
+  "limitations": [
+    "The .NET 8 baseline is retained; framework migration is separate.",
+    "AMD SAM temporal propagation remains on CPU; no completely GPU-based tracking claim.",
+    "AMF reads BGRA back from GPU before encoding; not a zero-copy implementation.",
+    "Visual C++ x64 runtime may be required; signed original installer is included, not executed."
+  ],
+  "delivery_evidence_verified_on": "2026-11-27T19:41:31.883323+00:00",
+  "worktree_test_results": {
+    "tested_on": "2026-11-27",
+    "dotnet_sdk": "8.0.427 used from a temporary install outside the repository",
+    "unit_tests": "Passed 536, failed 0, skipped 0 in this worktree; FFmpeg and FFprobe were provided from the 3.22.2 delivery runtime.",
+    "runtime_device_tests": "Passed 3 of 3 in this worktree with Python unittest.",
+    "solution_build": "Release build succeeded with 0 warnings and 0 errors.",
+    "physical_hardware": "Not tested; no APU or hybrid validation is claimed."
+  }
 }

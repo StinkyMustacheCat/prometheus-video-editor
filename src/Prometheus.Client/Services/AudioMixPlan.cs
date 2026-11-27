@@ -159,6 +159,9 @@ public sealed class AudioMixPlan
         return result;
     }
 
+    internal AudioMixCommand PrepareProcess(double previewSpeed = 1, string? waveOutput = null, bool floatingPoint = false) =>
+        new(BuildProcess(previewSpeed, waveOutput, floatingPoint));
+
     public ProcessStartInfo BuildProcess(double previewSpeed = 1, string? waveOutput = null, bool floatingPoint = false)
     {
         previewSpeed = Math.Clamp(previewSpeed, 0.5, 3);

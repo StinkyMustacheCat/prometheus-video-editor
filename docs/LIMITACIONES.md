@@ -1,8 +1,9 @@
 # Alcance y limitaciones
 
-- Distribución probada para Windows x64 y el hardware de desarrollo NVIDIA. La interfaz Avalonia no implica compatibilidad de todo el motor con Linux, macOS, AMD o cualquier GPU NVIDIA.
-- SAM 2.1 utiliza CUDA y autocast BF16. No se promete que funcione en tarjetas antiguas sin soporte adecuado, aunque otras funciones del editor puedan funcionar.
-- H.264/HEVC aprovechan NVENC cuando está disponible. ProRes y ciertos formatos con alfa recurren a CPU en parte del flujo. La compatibilidad depende del códec, profundidad, perfil y contenedor del archivo.
+- La entrega unificada 3.22.2 se comprueba en Windows x64, Ryzen 9 3900, RTX 3060 y 32 GB de RAM. Su revisión manual en APU y equipos híbridos está pendiente. El antecedente AMD APU 3.21.2 se validó en Ryzen 3 7320U / Radeon 610M; no equivale a probar este nuevo paquete ni el 5300U.
+- SAM por puntos admite CUDA, DirectML, WebGPU y ONNX CPU. El seguimiento AMD acelera la codificación de fotogramas con DirectML y conserva la propagación temporal en CPU. CUDA/BF16 se comprueba al cargar el modelo y puede requerir una alternativa en GPUs antiguas. Los [resultados anteriores de AMD APU](SAM_AMD_APU.md) describen el equipo y material de aquella prueba.
+- En un equipo híbrido, el monitor/MGT y la exportación conservan el adaptador gráfico efectivo de Direct3D 11. El selector de GPU de IA no mueve CEF ni las texturas a otro adaptador. La calibración automática de rendimiento y la validación híbrida completa pertenecen a los bloques siguientes.
+- H.264/HEVC pueden usar AMD AMF en Radeon o la ruta NVIDIA existente, según el adaptador y el perfil de salida. ProRes y ciertos formatos con alfa recurren a CPU en parte del flujo. La compatibilidad depende del códec, profundidad, perfil y contenedor del archivo.
 - MGT ejecuta HTML/CSS/JavaScript. Importa plantillas de confianza. Las transiciones GPU utilizan el contrato específico de Prometheus; no cualquier transición HTML se transforma automáticamente en un shader.
 - Las grabaciones HDR de iPhone y la igualdad exacta de color entre reproductores requieren validación con el material y la pantalla de destino. No se promete equivalencia universal de color.
 - El motor actual usa .NET 8. Su soporte del proveedor terminó el 10 de noviembre de 2026. Esta entrega conserva la versión funcional existente; la migración a una versión con soporte queda como trabajo separado. Fuente: https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core

@@ -17,7 +17,9 @@ def main():
     result=subprocess.run([str(root/'McpBridge/Prometheus.McpBridge.exe')],input='\n'.join(json.dumps(x) for x in requests)+'\n',text=True,capture_output=True,timeout=20,env=env,cwd=root)
     if result.returncode:raise RuntimeError(result.stderr)
     replies=[json.loads(line) for line in result.stdout.splitlines()]
-    assert replies[0]['result']['serverInfo']['version']=='3.19.9',replies
+    dependencies=json.loads((root/'Prometheus.Client.deps.json').read_text(encoding='utf-8'))
+    expected_version=next(key.split('/',1)[1] for key in dependencies['libraries'] if key.startswith('Prometheus.Client/'))
+    assert replies[0]['result']['serverInfo']['version']==expected_version,replies
     assert len(replies[1]['result']['tools'])==11,replies
     print('PASS self-contained MCP initialization; 11 tools')
     for tool in ('ffmpeg','ffprobe'):

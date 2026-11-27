@@ -11,7 +11,7 @@ jobs:
         with:
           dotnet-version: 8.0.427
       - name: Restaurar
-        run: dotnet restore Prometheus.V2.sln --locked-mode
+        run: dotnet restore Prometheus.V2.sln --locked-mode -p:Configuration=Release
       - name: Compilar
         run: dotnet build Prometheus.V2.sln -c Release --no-restore
       - name: Pruebas de lógica sin runtime multimedia ni IA

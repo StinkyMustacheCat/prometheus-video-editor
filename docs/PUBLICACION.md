@@ -1,11 +1,11 @@
-# Entrega preparada — Prometheus 3.19.9
+# Publicación — Prometheus 3.22.2
 
-Esta entrega sustituye la preparación 3.19.8. FFmpeg 9.1 y Rubber Band 4.0.0 se compilan desde las fuentes incluidas; el ejecutable Gyan 9.0.1 no se distribuye en el portable. Los archivos Gyan conservados en ThirdPartySources son evidencia de adquisición, no fuentes correspondientes del binario actual.
+**Estado: rama de código para pruebas publicada; prerelease binaria bloqueada.** Esta integración no es estable ni debe presentarse como compatible de forma general. No se adjuntarán los ZIP hasta completar la revisión de redistribución y correspondencia de fuentes de los componentes nuevos de ONNX Runtime y PyTorch CPU. El detalle está en `release-readiness.json` y `licenses/processing-components.json`.
 
-El estado por componente se registra en `release-readiness.json`, las evidencias en `VERIFICACION_LICENCIAS_3_19_9.md` y las comprobaciones de los ZIP en `VERIFICACION_DEL_PAQUETE.json`. Los inventarios y avisos originales se mantienen separados por componente.
+Los registros incluidos son resultados de la entrega fuente, no una ejecución de pruebas en este worktree. Registran 536 pruebas unitarias, tres pruebas del puente de dispositivos y verificaciones sintéticas. La validación física disponible fue en Ryzen 9 3900 / RTX 3060 / 32 GB / Windows x64. No demuestra funcionamiento en APU ni en un sistema híbrido; esos resultados deben recogerse de testers en los equipos indicados en `PRUEBA_PC_LIMPIO_3_22_2.md`. La prueba anterior de AMD APU 3.21.2 no valida este paquete.
 
-Para publicar, conserva todos los ZIP de la misma versión, `SHA256SUMS.txt` y el documento de entrega. Los archivos grandes están divididos para permanecer por debajo del límite por archivo de GitHub. No sustituyas archivos después de calcular sus sumas. Las fuentes de terceros deben acompañar a los binarios: no basta publicar solamente el portable.
+La integración conserva FFmpeg `9.1-prometheus-3.19.9` y Rubber Band 4.0.0. La revisión de fuentes/licencias de esa base es histórica y no cierra por sí sola el inventario añadido en 3.22.2. No se ha cambiado ni sustituido la versión estable 3.19.10.
 
-La carpeta `GitHub` contiene las fuentes públicas del editor, pruebas, documentación y scripts. Las dependencias grandes pertenecen a los adjuntos de la release y se excluyen del historial Git. Las carpetas de trabajo, credenciales, cookies y proyectos reales no se incluyen.
+Cuando se autorice una prerelease, el portable y los paquetes `AI-XX` deberán extraerse juntos en la misma carpeta raíz. `Source`, `Dependencies` y `ThirdPartySources` son paquetes separados; no se deben mezclar versiones. Antes de una publicación binaria hay que resolver los holds, omitir `Runtime/sam2/track-cpu/torch/lib/dnnl.lib` (biblioteca estática de enlace, no necesaria para ejecutar el portable), reconstruir los ZIP afectados, regenerar `SHA256SUMS.txt` y volver a verificar hashes, CRC y cobertura del manifiesto. Ese archivo de 2.325.803.578 bytes figura actualmente como la única entrada de AI-02.
 
-El avance 3.19.9 se publica en la rama `release/3.19.9` y el tag `v3.19.9`, sin sustituir `main` ni el tag `v1.0.0`. Las limitaciones de hardware y del framework se describen en LIMITACIONES.md; no son una promesa de compatibilidad con equipos aún no probados.
+Los artefactos de varios GB no se guardan en Git. No publicar una release estable ni convertir esta rama de pruebas en una release estable.

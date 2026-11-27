@@ -30,7 +30,7 @@ public static async Task Main()
                             ? requested.GetString()! : "2025-11-25",
                     capabilities = new { tools = new { listChanged = false } },
                     serverInfo = new { name = "prometheus-v3-2",
-                        version = typeof(Program).Assembly.GetName().Version?.ToString(3) ?? "3.19.9" }
+                        version = typeof(Program).Assembly.GetName().Version?.ToString(3) ?? "3.22.2" }
                 }),
                 "ping" => Result(id, new { }),
                 "tools/list" => Result(id, new { tools = Tools.Select(t => new
@@ -128,7 +128,7 @@ static object Error(JsonElement? id, int code, string message) => new
 static readonly (string name, string description, object inputSchema)[] Tools =
 [
     ("get_state", "Consulta el estado compacto del proyecto abierto en Prometheus Avalonia.",
-        Schema(new { scope = new { type = "string", @enum = new[] { "summary", "project", "media_pool", "sequence", "selection", "io", "tracks", "links", "transcriptions" } },
+        Schema(new { scope = new { type = "string", @enum = new[] { "summary", "project", "media_pool", "sequence", "selection", "io", "tracks", "links", "transcriptions", "processing" } },
             track_ids = new { type = "array", items = new { type = "string" } },
             folder_id = new { type = new[] { "string", "null" }, description = "En media_pool: omitir para todos, null para Sin carpeta, o ID de carpeta." },
             document_id = new { type = "string" }, offset = new { type = "integer" }, limit = new { type = "integer" } })),
@@ -158,7 +158,7 @@ static readonly (string name, string description, object inputSchema)[] Tools =
             kind = new { type = "string", @enum = new[] { "whisper", "sam_seed", "sam_track", "silence" } },
             job_id = new { type = "string" }, clip_id = new { type = "string" }, sequence_id = new { type = "string" },
             expected_revision = new { type = "integer" }, at_seconds = new { type = "number" }, mask_id = new { type = "string" },
-            name = new { type = "string" }, caption_mode = new { type = "string", @enum = new[] { "phrase", "word" } },
+            repair = new { type = "boolean" }, name = new { type = "string" }, caption_mode = new { type = "string", @enum = new[] { "phrase", "word" } },
             apply_captions = new { type = "boolean" }, apply = new { type = "boolean" }, ripple = new { type = "boolean" },
             preset = new { type = "string", @enum = new[] { "soft", "balanced", "aggressive" } },
             points = new { type = "array", items = Schema(new { x = new { type = "number", minimum = 0, maximum = 1 },

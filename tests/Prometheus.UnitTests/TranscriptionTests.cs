@@ -16,6 +16,25 @@ public class TranscriptionTests
         "0.600 1.700 [PAUSA 1.100]\n1.800 2.000 Otra\n2.050 2.300 frase.\n";
 
     [Fact]
+    public void SelectedAudioUsesTheOrdinalOfItsCurrentRepresentation()
+    {
+        var asset = new Asset
+        {
+            Streams = [new() { Id = "voice", Kind = "audio", Ordinal = 2 }],
+            Representations =
+            [
+                new() { Locator = new Locator("proxy.mkv"), StreamOrdinals = new() { ["voice"] = 1 } }
+            ]
+        };
+        var clip = new Clip { StreamId = "voice" };
+
+        Assert.Equal(1, LocalMediaService.AudioOrdinal(asset, clip, "proxy.mkv"));
+        Assert.Equal(2, LocalMediaService.AudioOrdinal(asset, clip, "original.mkv"));
+        clip.StreamId = "";
+        Assert.Null(LocalMediaService.AudioOrdinal(asset, clip, "proxy.mkv"));
+    }
+
+    [Fact]
     public void WordlineRoundTripAndPhraseOrWordProjection()
     {
         var doc = TranscriptOperations.Parse(Wordline, "Entrevista", 10);

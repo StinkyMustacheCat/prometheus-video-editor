@@ -1,4 +1,6 @@
-# Verificación de procedencia — 3.19.9
+# Historial: verificación de procedencia — 3.19.9
+
+> **Alcance histórico:** esta evidencia describe la base 3.19.9 y no constituye una revisión ni cierre de las dependencias añadidas en Prometheus 3.22.2. Para el estado actual consulta `PUBLICACION.md`, `release-readiness.json` y `licenses/processing-components.json`.
 
 Fecha: 25 de noviembre de 2026. Esta revisión sustituye el estado de preparación de 3.19.8.
 
