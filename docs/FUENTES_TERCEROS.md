@@ -1,6 +1,8 @@
 # Fuentes y procedencia de terceros
 
-**Entrega actual: 3.19.9.** El portable usa FFmpeg/ffprobe 9.1 compilado desde fuentes, con Rubber Band 4.0.0; no incluye ni usa el ejecutable Gyan 9.0.1. Los archivos Gyan conservados en `ThirdPartySources` son evidencia de adquisición. Se incluyen las fuentes, parches, recetas propias y paquetes de fuentes MSYS2 de bibliotecas auxiliares; no se afirma una reconstrucción bit a bit de todas las DLL. PyAV mantiene aparte sus binarios FFmpeg 8.1.2. Los puntos de NVIDIA, yt-dlp y PyAV mantienen las evidencias de la revisión anterior; el cierre de FFmpeg se documenta en VERIFICACION_LICENCIAS_3_19_9.md.
+**Integración de revisión 3.22.2.** Se conserva el cierre multimedia de 3.19.9 descrito debajo. Los proveedores ONNX y PyTorch CPU añadidos se inventarían por separado en `licenses/processing-components.json`, con avisos y procedencia. El cierre de publicación unificada se revisará en 3.22.4.
+
+El portable usa FFmpeg/ffprobe 9.1 compilado desde fuentes, con Rubber Band 4.0.0; no incluye ni usa el ejecutable Gyan 9.0.1. Los archivos Gyan conservados en `ThirdPartySources` son evidencia de adquisición. Se incluyen las fuentes, parches, recetas propias y paquetes de fuentes MSYS2 de bibliotecas auxiliares; no se afirma una reconstrucción bit a bit de todas las DLL. PyAV mantiene aparte sus binarios FFmpeg 8.1.2. Los puntos de NVIDIA, yt-dlp y PyAV mantienen las evidencias de la revisión anterior; el cierre de FFmpeg se documenta en VERIFICACION_LICENCIAS_3_19_9.md.
 
 Los archivos de fuentes se distribuyen junto con los binarios correspondientes. Sus autores y licencias se conservan: no son cÃ³digo propio de Prometheus. Los archivos originales, versiones y SHA-256 se registran en los manifiestos de la entrega.
 

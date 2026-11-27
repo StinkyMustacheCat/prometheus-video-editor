@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <Version>3.19.9</Version>
+    <Version>3.22.2</Version>
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\app.ico</ApplicationIcon>
@@ -16,11 +16,13 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <Content Include="Runtime\sam2_bridge.py" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Runtime\sam2_onnx.py" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="Runtime\sam2_track.py" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="Runtime\MgtTransitions\*.mgt.json" CopyToOutputDirectory="PreserveNewest" Condition="'$(MgtTransitionPilot)' != 'true'" />
     <Content Include="Runtime\MgtTransitions\mgt.kinetic.pop-spring.mgt.json;Runtime\MgtTransitions\mgt.shader.cyber-glitch.mgt.json;Runtime\MgtTransitions\mgt.shader.rich-blur.mgt.json"
              CopyToOutputDirectory="PreserveNewest" Condition="'$(MgtTransitionPilot)' == 'true'" />
     <Content Include="Runtime\whisper_bridge.py" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Runtime\processing_runtime.py" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

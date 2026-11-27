@@ -14,6 +14,8 @@ sealed class Program
     {
         if (args is [RecoverableExport.WorkerFlag, var folder, var mode])
             return RecoverableExport.WorkerEntry(folder, mode == "overwrite");
+        if (args is ["--graphics-diagnostics", var report])
+            return GraphicsDiagnostics.Write(report);
         return BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 

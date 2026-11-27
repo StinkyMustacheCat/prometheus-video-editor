@@ -303,16 +303,22 @@ public partial class TranscriptPanelView : UserControl
         _transcribing = token;
         TranscribeButton.IsEnabled = false;
         CancelButton.IsEnabled = true;
-        InfoText.Text = "Whisper está transcribiendo el clip seleccionado…";
+        InfoText.Text = "Preparando la transcripción local…";
         try
         {
+            var stream = LocalMediaService.AudioOrdinal(asset, audio, path);
+            var progress = new Progress<double>(value =>
+            {
+                if (ReferenceEquals(_transcribing, token) && !token.IsCancellationRequested)
+                    InfoText.Text = $"Whisper · {value:P0}";
+            });
             var result = await WhisperTranscriptionService.TranscribeAsync(path, audio,
-                "Whisper · " + asset.Name, token.Token);
+                "Whisper · " + asset.Name, token.Token, progress, stream);
             if (controller.CurrentProject.Id != project.Id ||
                 controller.CurrentProject.ActiveSequenceId != sequence!.Id || token.IsCancellationRequested)
                 return;
             var currentAudio = controller.CurrentProject.ActiveSequence!.Clips.FirstOrDefault(clip => clip.Id == audio.Id);
-            if (currentAudio == null || currentAudio.AssetId != audio.AssetId || currentAudio.SourceIn != audio.SourceIn ||
+            if (currentAudio == null || currentAudio.AssetId != audio.AssetId || currentAudio.StreamId != audio.StreamId || currentAudio.SourceIn != audio.SourceIn ||
                 currentAudio.Duration != audio.Duration || currentAudio.Speed != audio.Speed)
             {
                 controller.ReportStatus("El audio cambió durante la transcripción. Selecciona el clip y vuelve a transcribir.");
@@ -328,7 +334,11 @@ public partial class TranscriptPanelView : UserControl
             Apply();
             controller.ReportStatus($"Whisper: {result.Document.Words.Count} palabras · {result.Device.ToUpperInvariant()}");
         }
-        catch (OperationCanceledException) { controller.ReportStatus("Transcripción cancelada"); }
+        catch (OperationCanceledException)
+        {
+            InfoText.Text = "Transcripción cancelada";
+            controller.ReportStatus(InfoText.Text);
+        }
         catch (Exception ex) { controller.ReportStatus("Whisper: " + ex.Message); InfoText.Text = ex.Message; }
         finally
         {

@@ -235,6 +235,11 @@ public partial class MainWindow : Window
         };
         MenuWebDownloads.Click += async (_, _) => await OpenWebDownloadsAsync();
         MenuPreviewSettings.Click += async (_, _) => await OpenPreviewSettingsAsync();
+        MenuProcessingSettings.Click += async (_, _) =>
+        {
+            await ProcessingService.InitializeAsync();
+            await new ProcessingSettingsDialog().ShowDialog(this);
+        };
         MenuAbout.Click += async (_, _) => await new AboutWindow().ShowDialog(this);
     }
 

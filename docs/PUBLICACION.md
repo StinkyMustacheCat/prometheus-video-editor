@@ -1,11 +1,9 @@
-# Entrega preparada — Prometheus 3.19.9
+# Entrega de revisión — Prometheus 3.22.2
 
-Esta entrega sustituye la preparación 3.19.8. FFmpeg 9.1 y Rubber Band 4.0.0 se compilan desde las fuentes incluidas; el ejecutable Gyan 9.0.1 no se distribuye en el portable. Los archivos Gyan conservados en ThirdPartySources son evidencia de adquisición, no fuentes correspondientes del binario actual.
+Primera entrega conjunta de la integración 3.22.0–3.22.2. Incluye portable completo y fuentes para revisar detección, selección y ajustes de procesamiento. La publicación consolidada para NVIDIA/APU/híbridos corresponde a 3.22.4, después de probar este paquete en esos equipos. No se ha subido esta integración automáticamente a GitHub.
 
-El estado por componente se registra en `release-readiness.json`, las evidencias en `VERIFICACION_LICENCIAS_3_19_9.md` y las comprobaciones de los ZIP en `VERIFICACION_DEL_PAQUETE.json`. Los inventarios y avisos originales se mantienen separados por componente.
+El estado exacto y los resultados se registran en `release-readiness.json` y `Validacion/`. La base multimedia conserva FFmpeg `9.1-prometheus-3.19.9` y Rubber Band 4.0.0, con sus fuentes y recetas; no incluye el ejecutable Gyan antiguo. La IA conserva CUDA y añade los proveedores y el runtime CPU de la rama AMD, aislados y con sus avisos originales. El inventario adicional figura en `licenses/processing-components.json`.
 
-Para publicar, conserva todos los ZIP de la misma versión, `SHA256SUMS.txt` y el documento de entrega. Los archivos grandes están divididos para permanecer por debajo del límite por archivo de GitHub. No sustituyas archivos después de calcular sus sumas. Las fuentes de terceros deben acompañar a los binarios: no basta publicar solamente el portable.
+Los ZIP de revisión comparten una carpeta raíz; extraer Portable y todos los AI-XX juntos. Source y Dependencies son independientes de los binarios. Los ZIP numerados son archivos ZIP autónomos. Se conservan las fuentes correspondientes de terceros de la base y los avisos/procedencia de los nuevos componentes. Antes de una publicación nueva, revisar este inventario junto al cierre multiplataforma previsto en 3.22.4.
 
-La carpeta `GitHub` contiene las fuentes públicas del editor, pruebas, documentación y scripts. Las dependencias grandes pertenecen a los adjuntos de la release y se excluyen del historial Git. Las carpetas de trabajo, credenciales, cookies y proyectos reales no se incluyen.
-
-El avance 3.19.9 se publica en la rama `release/3.19.9` y el tag `v3.19.9`, sin sustituir `main` ni el tag `v1.0.0`. Las limitaciones de hardware y del framework se describen en LIMITACIONES.md; no son una promesa de compatibilidad con equipos aún no probados.
+La carpeta `GitHub` contiene fuentes, pruebas, documentación y scripts. Dependencias grandes, proyectos personales, credenciales, cookies, ajustes del equipo y carpetas de trabajo se excluyen. Cada paquete tiene una suma SHA-256. Las comprobaciones en un PC no certifican otro modelo de GPU.

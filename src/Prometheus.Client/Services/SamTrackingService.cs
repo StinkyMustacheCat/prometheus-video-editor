@@ -13,6 +13,9 @@ public static class SamTrackingService
 {
     private const int WindowStep = 47; // 48 frames including the overlap/seed frame.
 
+    private static string CheckpointMode(string operation, string backend) =>
+        backend == "cuda" ? operation : operation + ":" + backend;
+
     public static bool CanRepair(Clip clip, SamMaskTrack previous, double anchorSourceSeconds) =>
         previous.FrameCount >= 2 && previous.FramesPerSecond > 0 &&
         previous.FrameAt(anchorSourceSeconds).HasValue &&
@@ -33,25 +36,30 @@ public static class SamTrackingService
         var sourceFps = asset?.Streams.FirstOrDefault(stream => stream.Id == clip.StreamId)?.NominalFps.Seconds
             ?? asset?.Streams.FirstOrDefault(stream => stream.Kind == "video")?.NominalFps.Seconds
             ?? sequence.Fps.Seconds;
-        var fps = Math.Clamp(double.IsFinite(sourceFps) && sourceFps > 0 ? sourceFps : 30, 1, 60);
         var start = clip.SourceIn.Seconds;
         var duration = clip.Duration.Seconds * clip.Speed.Seconds;
-        var count = (int)Math.Ceiling(duration * fps - 0.000001);
-        if (count < 2 || count > 21_600 || duration > 360)
+        if (!double.IsFinite(duration) || duration <= 0 || duration > 360)
             throw new InvalidOperationException("SAM requiere un clip de entre dos fotogramas y seis minutos; divide el clip si es más largo.");
-        var anchor = Math.Clamp((int)Math.Round((anchorSourceSeconds - start) * fps), 0, count - 1);
         if (!File.Exists(sourcePath)) throw new FileNotFoundException("Falta el vídeo para SAM.", sourcePath);
         cancellation.ThrowIfCancellationRequested();
 
+        // Older projects may have saved the importer default instead of the media's frame rate.
+        using var video = new GpuVideoSurface(sourcePath,
+            initialSeconds: Math.Clamp(anchorSourceSeconds, start, start + duration), exactDecode: true);
+        sourceFps = video.SourceFrameRate ?? sourceFps;
+        var fps = Math.Clamp(double.IsFinite(sourceFps) && sourceFps > 0 ? sourceFps : 30, 1, 60);
+        var count = (int)Math.Ceiling(duration * fps - 0.000001);
+        if (count < 2 || count > 21_600)
+            throw new InvalidOperationException("SAM requiere un clip de entre dos fotogramas y seis minutos; divide el clip si es más largo.");
+        var anchor = Math.Clamp((int)Math.Round((anchorSourceSeconds - start) * fps), 0, count - 1);
         var masks = new SamMaskKeyframe?[count];
         var completed = new bool[count];
         var done = 0;
-        using var video = new GpuVideoSurface(sourcePath, initialSeconds: start + anchor / fps,
-            exactDecode: true);
         using var worker = new Sam2VideoBridge();
+        worker.Prepare(cancellation);
         byte[][] initialSeeds = seed.DecodeObjectAlphas().ToArray();
         var checkpoint = new SamTrackingCheckpoint(projectPath, project, clip,
-            sourcePath, seed, fps, count, anchor, "track");
+            sourcePath, seed, fps, count, anchor, CheckpointMode("track", worker.Backend));
 
         void RunDirection(bool reverse)
         {
@@ -100,7 +108,11 @@ public static class SamTrackingService
                 }
                 var scaledSeeds = seeds.Select(mask => ScaleMask(mask, seedWidth, seedHeight,
                     frames[0].Width, frames[0].Height)).ToArray();
-                var tracked = worker.TrackWindow(frames, scaledSeeds, reverse, cancellation);
+                var reported = done;
+                var tracked = worker.TrackWindow(frames, scaledSeeds, reverse, cancellation, local =>
+                {
+                    if (!completed[low + local]) progress?.Report((++reported, count));
+                });
                 for (var local = 0; local < tracked.Count; local++)
                 {
                     var index = low + local;
@@ -173,9 +185,10 @@ public static class SamTrackingService
         using var video = new GpuVideoSurface(sourcePath,
             initialSeconds: previous.StartSourceSeconds + anchor / fps, exactDecode: true);
         using var worker = new Sam2VideoBridge();
+        worker.Prepare(cancellation);
         var initialSeeds = seed.DecodeObjectAlphas().ToArray();
         var checkpoint = new SamTrackingCheckpoint(projectPath, project, clip,
-            sourcePath, seed, fps, count, anchor, "repair:" + previous.Id);
+            sourcePath, seed, fps, count, anchor, CheckpointMode("repair:" + previous.Id, worker.Backend));
 
         void Propagate(bool reverse)
         {
@@ -211,7 +224,13 @@ public static class SamTrackingService
                     }
                     var scaledSeeds = seeds.Select(mask => ScaleMask(mask, seedWidth, seedHeight,
                         frames[0].Width, frames[0].Height)).ToArray();
-                    var tracked = worker.TrackWindow(frames, scaledSeeds, reverse, cancellation);
+                    var reported = done;
+                    var tracked = worker.TrackWindow(frames, scaledSeeds, reverse, cancellation, local =>
+                    {
+                        var index = low + local;
+                        if (index != anchor && (index != limit || !manual.Contains(limit)) &&
+                            !changed.ContainsKey(index)) progress?.Report((++reported, total));
+                    });
                     var boundary = tracked[reverse ? 0 : tracked.Count - 1];
                     saved = new SamTrackingCheckpoint.Chunk
                     {

@@ -34,6 +34,10 @@ public sealed class GpuExportFrameRenderer : IDisposable
     public GpuExportFrameRenderer(Project project, string? projectPath, int width, int height)
         : this(project, projectPath, null, width, height) { }
 
+    internal uint AdapterVendorId => _compositor.Adapter.VendorId;
+
+    internal void CopyFrameBgra(byte[] pixels) => _compositor.CopyFrameBgra(pixels);
+
     internal SKBitmap Readback() => _compositor.ReadbackBitmap();
 
     internal GpuExportFrameRenderer(Project project, string? projectPath, ExportMediaPlan? media,

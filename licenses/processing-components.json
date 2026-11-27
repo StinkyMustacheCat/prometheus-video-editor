@@ -1,0 +1,981 @@
+{
+  "version": "3.22.2",
+  "source": "AMD APU 3.21.2 USB portable; runtime components retained unchanged",
+  "components": [
+    {
+      "id": "flatbuffers",
+      "version": "25.12.19",
+      "location": "Runtime/sam2/onnx/ort-directml",
+      "license": "Apache 2.0",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: Apache Software License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3",
+        "Topic :: Software Development :: Libraries :: Python Modules"
+      ],
+      "project_urls": [
+        "Documentation, https://google.github.io/flatbuffers/",
+        "Source, https://github.com/google/flatbuffers"
+      ],
+      "homepage": "https://google.github.io/flatbuffers/",
+      "metadata_sha256": "9f38239f96faa21522a6aadab6912e1e560708bbe9c9f696a0679c9403fa089e"
+    },
+    {
+      "id": "mpmath",
+      "version": "1.3.0",
+      "location": "Runtime/sam2/onnx/ort-directml",
+      "license": "BSD",
+      "classifiers": [
+        "License :: OSI Approved :: BSD License",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy"
+      ],
+      "project_urls": [
+        "Source, https://github.com/fredrik-johansson/mpmath",
+        "Tracker, https://github.com/fredrik-johansson/mpmath/issues",
+        "Documentation, http://mpmath.org/doc/current/"
+      ],
+      "homepage": "http://mpmath.org/",
+      "metadata_sha256": "44b66ea444b9c0d19ae94815d356bf047ae6b680c19268b5c265687cd6a81406"
+    },
+    {
+      "id": "numpy",
+      "version": "2.4.6",
+      "location": "Runtime/sam2/onnx/ort-directml",
+      "license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
+        "Programming Language :: C",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Topic :: Software Development",
+        "Topic :: Scientific/Engineering",
+        "Typing :: Typed",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Operating System :: Unix",
+        "Operating System :: MacOS"
+      ],
+      "project_urls": [
+        "homepage, https://numpy.org",
+        "documentation, https://numpy.org/doc/",
+        "source, https://github.com/numpy/numpy",
+        "download, https://pypi.org/project/numpy/#files",
+        "tracker, https://github.com/numpy/numpy/issues",
+        "release notes, https://numpy.org/doc/stable/release"
+      ],
+      "homepage": null,
+      "metadata_sha256": "b082c52ccbe3b880bae177c35171b52ed6c947f3ad71e3762f2723f60a411de0"
+    },
+    {
+      "id": "onnxruntime-directml",
+      "version": "1.24.4",
+      "location": "Runtime/sam2/onnx/ort-directml",
+      "license": "MIT License",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Software Development",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14"
+      ],
+      "project_urls": [],
+      "homepage": "https://onnxruntime.ai",
+      "metadata_sha256": "1173eaa2693d5eb51709768f29e97be9983581c4ea9d2631d18adc2392355bca"
+    },
+    {
+      "id": "packaging",
+      "version": "26.4",
+      "location": "Runtime/sam2/onnx/ort-directml",
+      "license": "Apache-2.0 OR BSD-2-Clause",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Programming Language :: Python :: Free Threading :: 4 - Resilient",
+        "Typing :: Typed"
+      ],
+      "project_urls": [
+        "Documentation, https://packaging.pypa.io/",
+        "Source, https://github.com/pypa/packaging"
+      ],
+      "homepage": null,
+      "metadata_sha256": "f2fe7a3440ed0e67f703ec9cf0275c9f9b27be0eae3844258606caa7b0c56d62"
+    },
+    {
+      "id": "protobuf",
+      "version": "7.36.2",
+      "location": "Runtime/sam2/onnx/ort-directml",
+      "license": "3-Clause BSD License",
+      "classifiers": [
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14"
+      ],
+      "project_urls": [],
+      "homepage": "https://developers.google.com/protocol-buffers/",
+      "metadata_sha256": "445916389cc3a87d5f815d763192372a17a221339d474cb661523157bf07d61c"
+    },
+    {
+      "id": "sympy",
+      "version": "1.14.0",
+      "location": "Runtime/sam2/onnx/ort-directml",
+      "license": "BSD",
+      "classifiers": [
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Physics",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy"
+      ],
+      "project_urls": [
+        "Source, https://github.com/sympy/sympy"
+      ],
+      "homepage": "https://sympy.org",
+      "metadata_sha256": "b756c2fbfd5be05ac5bdb0ebca61f55618f30f633ed92d88a5687429313a7595"
+    },
+    {
+      "id": "flatbuffers",
+      "version": "25.12.19",
+      "location": "Runtime/sam2/onnx/ort-webgpu",
+      "license": "Apache 2.0",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: Apache Software License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3",
+        "Topic :: Software Development :: Libraries :: Python Modules"
+      ],
+      "project_urls": [
+        "Documentation, https://google.github.io/flatbuffers/",
+        "Source, https://github.com/google/flatbuffers"
+      ],
+      "homepage": "https://google.github.io/flatbuffers/",
+      "metadata_sha256": "9f38239f96faa21522a6aadab6912e1e560708bbe9c9f696a0679c9403fa089e"
+    },
+    {
+      "id": "numpy",
+      "version": "2.4.6",
+      "location": "Runtime/sam2/onnx/ort-webgpu",
+      "license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
+        "Programming Language :: C",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Topic :: Software Development",
+        "Topic :: Scientific/Engineering",
+        "Typing :: Typed",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Operating System :: Unix",
+        "Operating System :: MacOS"
+      ],
+      "project_urls": [
+        "homepage, https://numpy.org",
+        "documentation, https://numpy.org/doc/",
+        "source, https://github.com/numpy/numpy",
+        "download, https://pypi.org/project/numpy/#files",
+        "tracker, https://github.com/numpy/numpy/issues",
+        "release notes, https://numpy.org/doc/stable/release"
+      ],
+      "homepage": null,
+      "metadata_sha256": "b082c52ccbe3b880bae177c35171b52ed6c947f3ad71e3762f2723f60a411de0"
+    },
+    {
+      "id": "onnxruntime",
+      "version": "1.32.0",
+      "location": "Runtime/sam2/onnx/ort-webgpu",
+      "license": "MIT License",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Software Development",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14"
+      ],
+      "project_urls": [],
+      "homepage": "https://onnxruntime.ai",
+      "metadata_sha256": "206f37f65f1b4e61890ea454b9c66f352a4ccff3f43fcce6b857d7816e68a983"
+    },
+    {
+      "id": "onnxruntime-ep-webgpu",
+      "version": "0.6.0",
+      "location": "Runtime/sam2/onnx/ort-webgpu",
+      "license": "MIT",
+      "classifiers": [
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Software Development",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only"
+      ],
+      "project_urls": [
+        "Homepage, https://onnxruntime.ai",
+        "Source, https://github.com/microsoft/onnxruntime",
+        "Issues, https://github.com/microsoft/onnxruntime/issues",
+        "Download, https://github.com/microsoft/onnxruntime/tags"
+      ],
+      "homepage": null,
+      "metadata_sha256": "53429d944d8e7a3953f1febfbd6503d9aa98ce58ec9f037771a6b6e9de39a5c8"
+    },
+    {
+      "id": "packaging",
+      "version": "26.4",
+      "location": "Runtime/sam2/onnx/ort-webgpu",
+      "license": "Apache-2.0 OR BSD-2-Clause",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Programming Language :: Python :: Free Threading :: 4 - Resilient",
+        "Typing :: Typed"
+      ],
+      "project_urls": [
+        "Documentation, https://packaging.pypa.io/",
+        "Source, https://github.com/pypa/packaging"
+      ],
+      "homepage": null,
+      "metadata_sha256": "f2fe7a3440ed0e67f703ec9cf0275c9f9b27be0eae3844258606caa7b0c56d62"
+    },
+    {
+      "id": "protobuf",
+      "version": "7.36.2",
+      "location": "Runtime/sam2/onnx/ort-webgpu",
+      "license": "3-Clause BSD License",
+      "classifiers": [
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14"
+      ],
+      "project_urls": [],
+      "homepage": "https://developers.google.com/protocol-buffers/",
+      "metadata_sha256": "445916389cc3a87d5f815d763192372a17a221339d474cb661523157bf07d61c"
+    },
+    {
+      "id": "antlr4-python3-runtime",
+      "version": "4.9.3",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "BSD",
+      "classifiers": [],
+      "project_urls": [],
+      "homepage": "http://www.antlr.org",
+      "metadata_sha256": "d1de5c7416841a56a3d73795e7f30587c2b8f3ba01fbbff68c094e308c629e7d"
+    },
+    {
+      "id": "colorama",
+      "version": "0.4.6",
+      "location": "Runtime/sam2/track-cpu",
+      "license": null,
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Terminals"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/tartley/colorama"
+      ],
+      "homepage": null,
+      "metadata_sha256": "7baed29eb50c3b29bdb33ff84e3177bf1bc05784f7685ecdcaa4471c7dd810cc"
+    },
+    {
+      "id": "filelock",
+      "version": "4.3.1",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "MIT",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: System"
+      ],
+      "project_urls": [
+        "Changelog, https://py-filelock.readthedocs.io/en/latest/changelog.html",
+        "Documentation, https://py-filelock.readthedocs.io",
+        "Homepage, https://github.com/tox-dev/filelock",
+        "Source, https://github.com/tox-dev/filelock",
+        "Tracker, https://github.com/tox-dev/filelock/issues"
+      ],
+      "homepage": null,
+      "metadata_sha256": "e10398d06f540de66fb10d69b607c20b86e5b9554a871ed54eee596e2b13ee50"
+    },
+    {
+      "id": "fsspec",
+      "version": "2026.9.0",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "BSD-3-Clause",
+      "classifiers": [
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14"
+      ],
+      "project_urls": [
+        "Changelog, https://filesystem-spec.readthedocs.io/en/latest/changelog.html",
+        "Documentation, https://filesystem-spec.readthedocs.io/en/latest/",
+        "Homepage, https://github.com/fsspec/filesystem_spec"
+      ],
+      "homepage": null,
+      "metadata_sha256": "68f5a262767510638e9b1933b1493f2baadc9616fe1e696f62aedd59c8c0a37c"
+    },
+    {
+      "id": "hydra-core",
+      "version": "1.3.2",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "MIT",
+      "classifiers": [
+        "License :: OSI Approved :: MIT License",
+        "Development Status :: 4 - Beta",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: MacOS",
+        "Operating System :: Microsoft :: Windows"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/facebookresearch/hydra",
+      "metadata_sha256": "399046cbf9ae7ebab8dfd009e2b4f748212c710a0e75ca501a72bbb2d456e2e7"
+    },
+    {
+      "id": "iopath",
+      "version": "0.1.10",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "MIT licensed, as found in the LICENSE file",
+      "classifiers": [],
+      "project_urls": [],
+      "homepage": "https://github.com/facebookresearch/iopath",
+      "metadata_sha256": "c50084fdbe2bad6e6b884dd250fc020aaed3a633c98cb2640b4257ba646df592"
+    },
+    {
+      "id": "Jinja2",
+      "version": "3.1.6",
+      "location": "Runtime/sam2/track-cpu",
+      "license": null,
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Web Environment",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+        "Topic :: Text Processing :: Markup :: HTML",
+        "Typing :: Typed"
+      ],
+      "project_urls": [
+        "Changes, https://jinja.palletsprojects.com/changes/",
+        "Chat, https://discord.gg/pallets",
+        "Documentation, https://jinja.palletsprojects.com/",
+        "Donate, https://palletsprojects.com/donate",
+        "Source, https://github.com/pallets/jinja/"
+      ],
+      "homepage": null,
+      "metadata_sha256": "68c5548fb67c4132a13898d9b31ec50c6bea2abdd915d921f214355c3a6499c8"
+    },
+    {
+      "id": "MarkupSafe",
+      "version": "3.0.3",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "BSD-3-Clause",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Web Environment",
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+        "Topic :: Text Processing :: Markup :: HTML",
+        "Typing :: Typed"
+      ],
+      "project_urls": [
+        "Donate, https://palletsprojects.com/donate",
+        "Documentation, https://markupsafe.palletsprojects.com/",
+        "Changes, https://markupsafe.palletsprojects.com/page/changes/",
+        "Source, https://github.com/pallets/markupsafe/",
+        "Chat, https://discord.gg/pallets"
+      ],
+      "homepage": null,
+      "metadata_sha256": "f0ae5dbb09d50fb5f7632c3d53f0220995ef76019e5892e0a545740136a4e3cb"
+    },
+    {
+      "id": "mpmath",
+      "version": "1.3.0",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "BSD",
+      "classifiers": [
+        "License :: OSI Approved :: BSD License",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy"
+      ],
+      "project_urls": [
+        "Source, https://github.com/fredrik-johansson/mpmath",
+        "Tracker, https://github.com/fredrik-johansson/mpmath/issues",
+        "Documentation, http://mpmath.org/doc/current/"
+      ],
+      "homepage": "http://mpmath.org/",
+      "metadata_sha256": "44b66ea444b9c0d19ae94815d356bf047ae6b680c19268b5c265687cd6a81406"
+    },
+    {
+      "id": "networkx",
+      "version": "3.5",
+      "location": "Runtime/sam2/track-cpu",
+      "license": null,
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3 :: Only",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Scientific/Engineering :: Bio-Informatics",
+        "Topic :: Scientific/Engineering :: Information Analysis",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Physics"
+      ],
+      "project_urls": [
+        "Homepage, https://networkx.org/",
+        "Bug Tracker, https://github.com/networkx/networkx/issues",
+        "Documentation, https://networkx.org/documentation/stable/",
+        "Source Code, https://github.com/networkx/networkx"
+      ],
+      "homepage": null,
+      "metadata_sha256": "18b28258a7a706532cc5e97549a0f1beb39ba7b299c085904367c4930d4f8b94"
+    },
+    {
+      "id": "omegaconf",
+      "version": "2.3.1",
+      "location": "Runtime/sam2/track-cpu",
+      "license": null,
+      "classifiers": [
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent"
+      ],
+      "project_urls": [],
+      "homepage": "https://github.com/omry/omegaconf",
+      "metadata_sha256": "24dc07ea1b801810c63c386cc47376727a774cce4493bfddf6454fe8335eb84e"
+    },
+    {
+      "id": "pillow",
+      "version": "13.0.0",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "MIT-CMU",
+      "classifiers": [
+        "Development Status :: 6 - Mature",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Multimedia :: Graphics",
+        "Topic :: Multimedia :: Graphics :: Capture :: Digital Camera",
+        "Topic :: Multimedia :: Graphics :: Capture :: Screen Capture",
+        "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+        "Topic :: Multimedia :: Graphics :: Viewers",
+        "Typing :: Typed"
+      ],
+      "project_urls": [
+        "Release notes, https://pillow.readthedocs.io/en/stable/releasenotes/index.html",
+        "Changelog, https://github.com/python-pillow/Pillow/releases",
+        "Documentation, https://pillow.readthedocs.io",
+        "Funding, https://tidelift.com/lifter/search/pypi/pillow",
+        "Homepage, https://python-pillow.org",
+        "Mastodon, https://fosstodon.org/@pillow",
+        "Security, https://pillow.readthedocs.io/en/stable/handbook/security.html",
+        "Source, https://github.com/python-pillow/Pillow"
+      ],
+      "homepage": null,
+      "metadata_sha256": "140f39cb31ec9b46109828a6286f034a4848621263d6aab38d2f142083dd06c5"
+    },
+    {
+      "id": "portalocker",
+      "version": "4.4.2",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "BSD-3-Clause",
+      "classifiers": [
+        "Development Status :: 6 - Mature",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Information Technology",
+        "Intended Audience :: System Administrators",
+        "Natural Language :: English",
+        "Operating System :: MacOS",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Operating System :: POSIX :: BSD",
+        "Operating System :: POSIX :: BSD :: FreeBSD",
+        "Operating System :: POSIX :: BSD :: NetBSD",
+        "Operating System :: POSIX :: BSD :: OpenBSD",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: POSIX :: SunOS/Solaris",
+        "Operating System :: Unix",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: Implementation",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: System",
+        "Topic :: System :: Distributed Computing",
+        "Topic :: System :: Filesystems",
+        "Topic :: System :: Monitoring",
+        "Typing :: Typed"
+      ],
+      "project_urls": [
+        "homepage, https://github.com/wolph/portalocker/",
+        "documentation, https://portalocker.readthedocs.io/en/latest/",
+        "repository, https://github.com/wolph/portalocker/",
+        "Funding, https://github.com/sponsors/wolph"
+      ],
+      "homepage": null,
+      "metadata_sha256": "b6781e39a9cd00ec4e043d7bb20edf05ea70faf1a66cbe7c74fa09a9df419262"
+    },
+    {
+      "id": "pywin32",
+      "version": "312",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "PSF",
+      "classifiers": [
+        "Environment :: Win32 (MS Windows)",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: Python Software Foundation License",
+        "Development Status :: 5 - Production/Stable",
+        "Operating System :: Microsoft :: Windows",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Programming Language :: Python :: Implementation :: CPython"
+      ],
+      "project_urls": [
+        "Homepage, https://github.com/mhammond/pywin32",
+        "Changes, https://github.com/mhammond/pywin32/blob/main/CHANGES.md",
+        "Docs, https://mhammond.github.io/pywin32/",
+        "Bugs, https://github.com/mhammond/pywin32/issues",
+        "Support Requests, https://github.com/mhammond/pywin32/discussions",
+        "Mailing List, https://mail.python.org/mailman/listinfo/python-win32"
+      ],
+      "homepage": null,
+      "metadata_sha256": "77f53e90408dd3bdcf5f73a20d6548504313dee2ad34f8b3794b2202583a84b1"
+    },
+    {
+      "id": "PyYAML",
+      "version": "6.0.4",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "MIT",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Cython",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Text Processing :: Markup"
+      ],
+      "project_urls": [
+        "Bug Tracker, https://github.com/yaml/pyyaml/issues",
+        "CI, https://github.com/yaml/pyyaml/actions",
+        "Documentation, https://pyyaml.org/wiki/PyYAMLDocumentation",
+        "Mailing lists, http://lists.sourceforge.net/lists/listinfo/yaml-core",
+        "Source Code, https://github.com/yaml/pyyaml"
+      ],
+      "homepage": "https://pyyaml.org/",
+      "metadata_sha256": "585dbe99cc34d718ad3bf7ac539e8f5624b427d4f2e69a2a3943fdee53881aa5"
+    },
+    {
+      "id": "setuptools",
+      "version": "78.1.0",
+      "location": "Runtime/sam2/track-cpu",
+      "license": null,
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: System :: Archiving :: Packaging",
+        "Topic :: System :: Systems Administration",
+        "Topic :: Utilities"
+      ],
+      "project_urls": [
+        "Source, https://github.com/pypa/setuptools",
+        "Documentation, https://setuptools.pypa.io/",
+        "Changelog, https://setuptools.pypa.io/en/stable/history.html"
+      ],
+      "homepage": null,
+      "metadata_sha256": "4444a6b549a8ebb02e1739f4375af7756c841f96f0c31077a183273c7462bd10"
+    },
+    {
+      "id": "sympy",
+      "version": "1.14.0",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "BSD",
+      "classifiers": [
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Physics",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy"
+      ],
+      "project_urls": [
+        "Source, https://github.com/sympy/sympy"
+      ],
+      "homepage": "https://sympy.org",
+      "metadata_sha256": "b756c2fbfd5be05ac5bdb0ebca61f55618f30f633ed92d88a5687429313a7595"
+    },
+    {
+      "id": "torch",
+      "version": "2.8.0+cpu",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "BSD-3-Clause",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Education",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: BSD License",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Software Development",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Programming Language :: C++",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13"
+      ],
+      "project_urls": [
+        "Homepage, https://pytorch.org/",
+        "Documentation, https://pytorch.org/docs/",
+        "Source, https://github.com/pytorch/pytorch",
+        "Forum, https://discuss.pytorch.org/"
+      ],
+      "homepage": "https://pytorch.org/",
+      "metadata_sha256": "5c18087706e9eff80841e770e397ed2521cdcc6bb3f0dd9178f358d781729c86"
+    },
+    {
+      "id": "torchvision",
+      "version": "0.23.0+cpu",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "BSD",
+      "classifiers": [],
+      "project_urls": [],
+      "homepage": "https://github.com/pytorch/vision",
+      "metadata_sha256": "93055bcd58da47e64660d2e668042eab588320065882d37ea32cea3e84238e10"
+    },
+    {
+      "id": "tqdm",
+      "version": "4.70.1",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "MPL-2.0 AND MIT",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Console",
+        "Environment :: MacOS X",
+        "Environment :: Other Environment",
+        "Environment :: Win32 (MS Windows)",
+        "Environment :: X11 Applications",
+        "Framework :: IPython",
+        "Framework :: Jupyter",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Education",
+        "Intended Audience :: End Users/Desktop",
+        "Intended Audience :: Other Audience",
+        "Intended Audience :: System Administrators",
+        "Operating System :: MacOS",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft",
+        "Operating System :: Microsoft :: MS-DOS",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Operating System :: POSIX :: BSD",
+        "Operating System :: POSIX :: BSD :: FreeBSD",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: POSIX :: SunOS/Solaris",
+        "Operating System :: Unix",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: Implementation",
+        "Programming Language :: Python :: Implementation :: IronPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Programming Language :: Unix Shell",
+        "Topic :: Desktop Environment",
+        "Topic :: Education :: Computer Aided Instruction (CAI)",
+        "Topic :: Education :: Testing",
+        "Topic :: Office/Business",
+        "Topic :: Other/Nonlisted Topic",
+        "Topic :: Software Development :: Build Tools",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Software Development :: Pre-processors",
+        "Topic :: Software Development :: User Interfaces",
+        "Topic :: System :: Installation/Setup",
+        "Topic :: System :: Logging",
+        "Topic :: System :: Monitoring",
+        "Topic :: System :: Shells",
+        "Topic :: Terminals",
+        "Topic :: Utilities"
+      ],
+      "project_urls": [
+        "homepage, https://tqdm.github.io",
+        "repository, https://github.com/tqdm/tqdm",
+        "changelog, https://tqdm.github.io/releases",
+        "wiki, https://github.com/tqdm/tqdm/wiki"
+      ],
+      "homepage": null,
+      "metadata_sha256": "a5da70b966afea3a759716041bad7187f2ece02c22348cf9e7c0a512bbf15f57"
+    },
+    {
+      "id": "typing_extensions",
+      "version": "4.16.0",
+      "location": "Runtime/sam2/track-cpu",
+      "license": "PSF-2.0",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Topic :: Software Development"
+      ],
+      "project_urls": [
+        "Bug Tracker, https://github.com/python/typing_extensions/issues",
+        "Changes, https://github.com/python/typing_extensions/blob/main/CHANGELOG.md",
+        "Documentation, https://typing-extensions.readthedocs.io/",
+        "Home, https://github.com/python/typing_extensions",
+        "Q & A, https://github.com/python/typing/discussions",
+        "Repository, https://github.com/python/typing_extensions"
+      ],
+      "homepage": null,
+      "metadata_sha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46"
+    }
+  ],
+  "onnx_model_revision": "a7df49d8de14b9d2e4504d1687b0d568f905fd8d",
+  "onnx_model_files": [
+    {
+      "path": "Runtime/sam2/onnx/prompt_encoder_mask_decoder.onnx",
+      "sha256": "079c59b261f723ff5c6a125e69b0170a957b21c58738c28d2b0394ecd0587d7f"
+    },
+    {
+      "path": "Runtime/sam2/onnx/prompt_encoder_mask_decoder.onnx_data",
+      "sha256": "f9e59a584ab8ced21fa812c211bc01084204db1c9e92a5ef4fb3a49972b4e864"
+    },
+    {
+      "path": "Runtime/sam2/onnx/vision_encoder.onnx",
+      "sha256": "aacf1f7137bb6fffcf6bf166abcfabe28f57a76059254f3fb611c4a64a208119"
+    },
+    {
+      "path": "Runtime/sam2/onnx/vision_encoder.onnx_data",
+      "sha256": "260fd1f0a34e72a3dc79a739e563b4facc0ba75504818b433a1f808e66637456"
+    }
+  ]
+}

@@ -32,7 +32,7 @@ internal static class RecoverableExport
     private sealed record Job(string Destination, string? ProjectPath, string ProjectId, string SequenceId,
         string ProjectName, int Revision, double StartSeconds, double EndSeconds,
         GpuExportOptions Options, int TotalFrames, int SegmentFrames, string MediaSignature,
-        ExportEncoder? Encoder = null, int Segments = 0, string? TimeBase = null)
+        ExportEncoder? Encoder = null, int Segments = 0, string? TimeBase = null, string? VideoEncoder = null)
     {
         public int CompletedFrames => (int)Math.Min(TotalFrames, (long)Segments * SegmentFrames);
     }
@@ -204,7 +204,8 @@ internal static class RecoverableExport
         }
         if (keep != job.Segments)
         {
-            job = job with { Segments = keep, Encoder = keep == 0 ? null : job.Encoder, TimeBase = keep == 0 ? null : job.TimeBase };
+            job = job with { Segments = keep, Encoder = keep == 0 ? null : job.Encoder,
+                TimeBase = keep == 0 ? null : job.TimeBase, VideoEncoder = keep == 0 ? null : job.VideoEncoder };
             Write(folder, job);
         }
         var partial = Path.Combine(folder, "segment.part.mp4");
@@ -234,13 +235,14 @@ internal static class RecoverableExport
                         if (meter.ElapsedMilliseconds < 100) return;
                         report(0.95 * (first + count * fraction) / job.TotalFrames);
                         meter.Restart();
-                    }, null, cancellation, independentSegment: true);
+                    }, null, cancellation, independentSegment: true,
+                    requiredBackend: job.VideoEncoder ?? (job.Encoder == ExportEncoder.Gpu ? "Media Foundation NVIDIA" : null));
                 var timeBase = await ProbeAsync(partial, count, sequence, false, cancellation)
                     ?? throw new IOException($"El tramo {part + 1} no pasó la comprobación de vídeo.");
                 if (job.TimeBase != null && job.TimeBase != timeBase)
                     throw new IOException("El nuevo tramo usa una base de tiempo distinta.");
                 File.Move(partial, Chunk(folder, part), overwrite: true);
-                job = job with { Segments = part + 1, Encoder = encoder, TimeBase = timeBase };
+                job = job with { Segments = part + 1, Encoder = encoder.Mode, TimeBase = timeBase, VideoEncoder = encoder.Backend };
                 Write(folder, job);
                 report(0.95 * job.CompletedFrames / job.TotalFrames);
             }
@@ -273,7 +275,7 @@ internal static class RecoverableExport
         try { Directory.Delete(folder); }
         catch (IOException) { }
         catch (UnauthorizedAccessException) { }
-        return new(job.Encoder, inspection.Warnings);
+        return new(job.Encoder, inspection.Warnings) { VideoEncoder = job.VideoEncoder };
 
         int FrameCount(int part) => Math.Min(job.SegmentFrames, job.TotalFrames - part * job.SegmentFrames);
     }

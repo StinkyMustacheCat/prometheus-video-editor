@@ -21,6 +21,7 @@ public sealed class AudioPreviewService
         public required double PreviewSpeed;
         public readonly CancellationTokenSource Cancellation = new();
         public Process? Decoder;
+        public AudioMixCommand? Command;
         public WaveOutEvent? Output;
         public Task? Startup;
         public Task? Pump;
@@ -126,7 +127,9 @@ public sealed class AudioPreviewService
     {
         try
         {
-            var decoder = Process.Start(plan.BuildProcess(session.PreviewSpeed, floatingPoint: true)) ?? throw new InvalidOperationException("FFmpeg no abrió el audio");
+            session.Command = plan.PrepareProcess(session.PreviewSpeed, floatingPoint: true);
+            if (session.Cancellation.IsCancellationRequested) return;
+            var decoder = Process.Start(session.Command.StartInfo) ?? throw new InvalidOperationException("FFmpeg no abrió el audio");
             session.Decoder = decoder;
             session.Diagnostics = decoder.StandardError.ReadToEndAsync();
             if (session.Cancellation.IsCancellationRequested) return;
@@ -153,7 +156,17 @@ public sealed class AudioPreviewService
         }
         catch (Exception ex)
         {
+            if (session.Decoder != null) ExternalProcess.Kill(session.Decoder);
+            if (session.Pump == null) ReleaseCommand(session);
             ReportFailure(session, ex);
+        }
+        finally
+        {
+            if (session.Cancellation.IsCancellationRequested)
+            {
+                if (session.Decoder != null) ExternalProcess.Kill(session.Decoder);
+                if (session.Pump == null) ReleaseCommand(session);
+            }
         }
     }
 
@@ -188,7 +201,13 @@ public sealed class AudioPreviewService
         catch (OperationCanceledException) { }
         catch (IOException) when (cancellation.IsCancellationRequested) { }
         catch (Exception error) { ReportFailure(session, error); }
-        finally { provider.Complete(); }
+        finally
+        {
+            ExternalProcess.Kill(decoder);
+            try { await decoder.WaitForExitAsync(); } catch (InvalidOperationException) { }
+            provider.Complete();
+            session.Command?.Dispose();
+        }
     }
 
     private void ReportFailure(Session session, Exception error)
@@ -207,6 +226,13 @@ public sealed class AudioPreviewService
         try { session.Output?.Dispose(); } catch { }
         try { if (session.Decoder is { HasExited: false }) session.Decoder.Kill(true); } catch { }
         try { session.Decoder?.Dispose(); } catch { }
+        session.Command?.Dispose();
         session.Cancellation.Dispose();
+    }
+
+    private static void ReleaseCommand(Session session)
+    {
+        try { session.Decoder?.WaitForExit(2000); } catch (InvalidOperationException) { }
+        session.Command?.Dispose();
     }
 }

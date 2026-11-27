@@ -68,7 +68,8 @@ public partial class MainWindow
                         $"Exportando fotogramas… {fraction / 0.95:P0}");
                 export = await Task.Run(() => SequenceExportService.ExportGpuAsync(snapshot, path, sourceProjectPath,
                     progress: progress, cancellation: cancellation.Token, options: setup.Options), cancellation.Token);
-                StatusBarStatus.Text = "Archivo exportado: " + Path.GetFileName(path);
+                StatusBarStatus.Text = "Archivo exportado: " + Path.GetFileName(path) +
+                    (export.VideoEncoder is { } backend ? $" · {backend}" : "");
                 _projectController.RecordAction(history, "Exportar montaje", Path.GetFileName(path));
             }
             catch (OperationCanceledException)
@@ -101,6 +102,7 @@ public partial class MainWindow
             var resultBody = new StackPanel { Spacing = 12, Margin = new Avalonia.Thickness(16) };
             resultBody.Children.Add(new TextBlock { Text = failure ?? ("Archivo exportado: " + Path.GetFileName(path) +
                 (export?.Encoder is { } encoder ? $" · {encoder.ToString().ToUpperInvariant()}" : "") +
+                (export?.VideoEncoder is { } backend ? $" ({backend})" : "") +
                 (export?.Warnings.Count > 0 ? $" · {export.Warnings.Count} aviso(s) de medios" : "")),
                 TextWrapping = Avalonia.Media.TextWrapping.Wrap });
             var actions = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8,

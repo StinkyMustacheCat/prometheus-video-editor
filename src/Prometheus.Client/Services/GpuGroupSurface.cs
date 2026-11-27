@@ -107,6 +107,7 @@ public sealed class GpuGroupSurface : IDisposable
     private readonly ID3D11BlendState _opaque;
     private ID3D11PixelShader? _transitionShader;
     private ID3D11Texture2D? _blendBackdrop;
+    private ID3D11Texture2D? _exportStaging;
     private ID3D11ShaderResourceView? _blendBackdropView;
     private ID3D11Buffer? _transitionBuffer;
     private GpuMgtCanvas? _mgtTransitions;
@@ -130,6 +131,16 @@ public sealed class GpuGroupSurface : IDisposable
 
     public int Width { get; }
     public int Height { get; }
+    internal AdapterDescription Adapter
+    {
+        get
+        {
+            using var dxgi = _device.QueryInterface<IDXGIDevice>();
+            dxgi.GetAdapter(out var adapter).CheckError();
+            using (adapter) return adapter.Description;
+        }
+    }
+
     public IntPtr SharedHandle => _resource.SharedHandle;
 
     /// <summary>Hands the composed texture to a GPU consumer while holding its keyed mutex.</summary>
@@ -152,6 +163,11 @@ public sealed class GpuGroupSurface : IDisposable
         D3D11CreateDevice(null, DriverType.Hardware, DeviceCreationFlags.BgraSupport,
             [FeatureLevel.Level_11_1, FeatureLevel.Level_11_0],
             out _device, out _, out _context).CheckError();
+        using (var identity = _device.QueryInterface<IDXGIDevice>())
+        {
+            identity.GetAdapter(out var actual).CheckError();
+            using (actual) ProcessingService.ObserveComposition(actual.Description.Luid);
+        }
         using var multithread = _device.QueryInterface<ID3D11Multithread>();
         multithread.SetMultithreadProtected(true);
         _output = _device.CreateTexture2D(new Texture2DDescription(Format.B8G8R8A8_UNorm,
@@ -489,6 +505,36 @@ public sealed class GpuGroupSurface : IDisposable
         _context.OMSetRenderTargets((ID3D11RenderTargetView)null!);
     }
 
+    // Pipe encoders consume tightly packed BGRA. Keep one staging texture for the export
+    // and copy directly into its reusable buffer instead of allocating a bitmap per frame.
+    internal void CopyFrameBgra(byte[] pixels)
+    {
+        lock (_gpuGate)
+        {
+            if (_disposed || !_hasFrame) throw new InvalidOperationException("El grupo aún no tiene fotograma.");
+            var rowSize = checked(Width * 4);
+            if (pixels.Length != checked(rowSize * Height)) throw new ArgumentException("Tamaño BGRA no válido.", nameof(pixels));
+            var staging = _exportStaging ??= _device.CreateTexture2D(new Texture2DDescription(Format.B8G8R8A8_UNorm,
+                (uint)Width, (uint)Height, 1, 1, BindFlags.None, ResourceUsage.Staging, CpuAccessFlags.Read));
+            CopyToStaging(staging);
+            var mapped = _context.Map(staging, 0, MapMode.Read, Vortice.Direct3D11.MapFlags.None);
+            try
+            {
+                if (mapped.RowPitch == rowSize) Marshal.Copy(mapped.DataPointer, pixels, 0, pixels.Length);
+                else for (var y = 0; y < Height; y++)
+                    Marshal.Copy(IntPtr.Add(mapped.DataPointer, y * (int)mapped.RowPitch), pixels, y * rowSize, rowSize);
+            }
+            finally { _context.Unmap(staging, 0); }
+        }
+    }
+
+    private void CopyToStaging(ID3D11Texture2D staging)
+    {
+        GpuTextureSync.Acquire(_mutex, 0);
+        try { _context.CopyResource(staging, _output); _context.Flush(); }
+        finally { _mutex.ReleaseSync(0); }
+    }
+
     public SKBitmap ReadbackBitmap()
     {
         lock (_gpuGate)
@@ -496,9 +542,7 @@ public sealed class GpuGroupSurface : IDisposable
             if (_disposed || !_hasFrame) throw new InvalidOperationException("El grupo aún no tiene fotograma.");
             using var staging = _device.CreateTexture2D(new Texture2DDescription(Format.B8G8R8A8_UNorm,
                 (uint)Width, (uint)Height, 1, 1, BindFlags.None, ResourceUsage.Staging, CpuAccessFlags.Read));
-            GpuTextureSync.Acquire(_mutex!, 0);
-            try { _context.CopyResource(staging, _output); _context.Flush(); }
-            finally { _mutex.ReleaseSync(0); }
+            CopyToStaging(staging);
             var bitmap = new SKBitmap(new SKImageInfo(Width, Height, SKColorType.Bgra8888, SKAlphaType.Premul));
             var mapped = _context.Map(staging, 0, MapMode.Read, Vortice.Direct3D11.MapFlags.None);
             try
@@ -533,6 +577,7 @@ public sealed class GpuGroupSurface : IDisposable
             _glowPass?.Dispose();
             _mgtTransitions?.Dispose();
             _blendBackdropView?.Dispose(); _blendBackdrop?.Dispose();
+            _exportStaging?.Dispose();
             foreach (var lut in _luts.Values) lut.Dispose();
             _blend.Dispose(); _opaque.Dispose(); _effectBuffer.Dispose(); _placeBuffer.Dispose();
             _sampler.Dispose(); _effectShader.Dispose(); _transitionBuffer?.Dispose(); _transitionShader?.Dispose();

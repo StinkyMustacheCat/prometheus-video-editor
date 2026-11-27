@@ -109,6 +109,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
     private GpuEffectProfile? _renderedMaskBaseProfile;
     private string? _renderedMaskStackSignature;
 
+    internal double? SourceFrameRate { get; }
     public IntPtr SharedHandle { get; private set; }
     public int Width { get; private set; }
     public int Height { get; private set; }
@@ -415,6 +416,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
             var extension = Path.GetExtension(path).ToLowerInvariant();
             VideoMetadata? videoMetadata = !still && (exactDecode || extension is ".mov" or ".webm" or ".mkv" or ".ts" or ".m2ts" or ".mts")
                 ? ReadVideoMetadata(path) : null;
+            SourceFrameRate = videoMetadata?.Fps;
             if (still)
             {
                 using var codec = SKCodec.Create(path) ?? throw new InvalidOperationException("No se pudo abrir la imagen.");
@@ -620,7 +622,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
         var scale = previewLongEdge > 0 ? Math.Min(1, (double)previewLongEdge / Math.Max(Width, Height)) : 1;
         var width = Math.Max(1, (int)Math.Round(metadata.Width * scale));
         var height = Math.Max(1, (int)Math.Round(metadata.Height * scale));
-        _softwareReader = new FfmpegVideoReader(path, width, height, metadata.Fps,
+        _softwareReader = new FfmpegVideoReader(path, width, height, metadata.Fps ?? 30,
             alpha: metadata.Alpha, timed: !metadata.Alpha || metadata.Vp9Alpha,
             decoder: metadata.Vp9Alpha ? "libvpx-vp9" : null);
     }
@@ -1055,7 +1057,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
     }
 
     private readonly record struct VideoMetadata(int Rotation, bool Hlg, bool SdrBt601, bool Alpha,
-        int Width, int Height, double Fps, bool Vp9Alpha, bool MpegTransportStream);
+        int Width, int Height, double? Fps, bool Vp9Alpha, bool MpegTransportStream);
 
     private static VideoMetadata ReadVideoMetadata(string path)
     {
@@ -1065,7 +1067,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
             { UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true }
         };
         foreach (var arg in new[] { "-v", "error", "-select_streams", "V:0", "-show_entries",
-            "stream=codec_name,width,height,pix_fmt,avg_frame_rate,color_space,color_transfer,color_primaries:stream_side_data=rotation:stream_tags=rotate,alpha_mode:format=format_name",
+            "stream=codec_name,width,height,pix_fmt,avg_frame_rate,r_frame_rate,color_space,color_transfer,color_primaries:stream_side_data=rotation:stream_tags=rotate,alpha_mode:format=format_name",
             "-of", "json", path })
             process.StartInfo.ArgumentList.Add(arg);
         var result = ExternalProcess.RunAsync(process.StartInfo, TimeSpan.FromSeconds(5)).GetAwaiter().GetResult();
@@ -1093,16 +1095,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
         var alpha = vp9Alpha || pixelFormat.StartsWith("yuva", StringComparison.Ordinal) ||
             pixelFormat.StartsWith("gbrap", StringComparison.Ordinal) ||
             pixelFormat is "rgba" or "bgra" or "argb" or "abgr" or "ya8" or "ya16le";
-        var frameRate = stream.TryGetProperty("avg_frame_rate", out var rate) ? rate.GetString() : null;
-        var fps = 30d;
-        if (frameRate != null)
-        {
-            var fraction = frameRate.Split('/');
-            if (fraction.Length == 2 &&
-                double.TryParse(fraction[0], System.Globalization.CultureInfo.InvariantCulture, out var numerator) &&
-                double.TryParse(fraction[1], System.Globalization.CultureInfo.InvariantCulture, out var denominator) &&
-                denominator > 0 && numerator > 0) fps = numerator / denominator;
-        }
+        var fps = LocalMediaService.ReadVideoRate(stream)?.Seconds;
         var sdrBt601 = matrix is "smpte170m" or "bt470bg" or "fcc" ||
             (matrix is null or "unknown" && Math.Max(width, height) < 720);
         double degrees = 0;

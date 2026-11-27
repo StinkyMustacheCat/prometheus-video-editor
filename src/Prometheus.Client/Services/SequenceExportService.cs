@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +26,10 @@ public sealed record ExportInspection(double StartSeconds, double EndSeconds,
     public bool Ready => Issues.Count == 0;
 }
 
-public sealed record ExportResult(ExportEncoder? Encoder, IReadOnlyList<ExportMediaWarning> Warnings);
+public sealed record ExportResult(ExportEncoder? Encoder, IReadOnlyList<ExportMediaWarning> Warnings)
+{
+    public string? VideoEncoder { get; init; }
+}
 
 /// <summary>Exports the composed montage from a snapshot independent of the monitor.</summary>
 public static class SequenceExportService
@@ -87,8 +91,6 @@ public static class SequenceExportService
                 issues.Add(proRes ? "ProRes 422 requiere un ancho par." : "MP4 requiere dimensiones pares.");
             else if (proRes && options.Encoder == ExportEncoder.Gpu)
                 issues.Add("ProRes compone en GPU y codifica en CPU. Usa Automático o CPU.");
-            else if (options.Encoder == ExportEncoder.Gpu && (sequence.Width < 256 || sequence.Height < 256))
-                issues.Add("NVIDIA requiere al menos 256 × 256 píxeles. Usa Automático o CPU.");
             if (!proRes && (options.VideoBitrateMbps is < 1 or > 100 || options.AudioBitrateKbps is < 96 or > 320))
                 issues.Add("La calidad de exportación está fuera de rango.");
         }
@@ -154,8 +156,8 @@ public static class SequenceExportService
         {
             if (options.Format == ExportFormat.Wav)
             {
-                var info = media!.Audio.BuildProcess(waveOutput: tempOutput);
-                await RunProcessAsync(info, "No se pudo exportar el audio", cancellation);
+                using var command = media!.Audio.PrepareProcess(waveOutput: tempOutput);
+                await RunProcessAsync(command.StartInfo, "No se pudo exportar el audio", cancellation);
                 await CommitOutputAsync(0);
                 return new(null, inspection.Warnings);
             }
@@ -173,7 +175,7 @@ public static class SequenceExportService
             await RunProcessAsync(GpuMuxProcess(tempVideo, tempAudio, duration, tempOutput,
                 options.AudioBitrateKbps, format: options.Format), "No se pudo unir audio y vídeo", cancellation);
             await CommitOutputAsync(frames);
-            return new(encoder, inspection.Warnings);
+            return new(encoder.Mode, inspection.Warnings) { VideoEncoder = encoder.Backend };
 
             async Task CommitOutputAsync(int expectedFrames)
             {
@@ -197,45 +199,84 @@ public static class SequenceExportService
         }
     }
 
-    internal static async Task<ExportEncoder> RenderVideoAsync(GpuExportFrameRenderer renderer,
+    internal static async Task<(ExportEncoder Mode, string Backend)> RenderVideoAsync(GpuExportFrameRenderer renderer,
         Sequence sequence, ExportEncoder requested, int videoRate, string tempVideo,
         double timelineStart, int firstFrame, int frames, Action<double>? report,
         Action? validateProject, CancellationToken cancellation, bool independentSegment = false,
-        ExportFormat format = ExportFormat.Mp4)
+        ExportFormat format = ExportFormat.Mp4, string? requiredBackend = null)
     {
         var fps = sequence.Fps.Seconds;
         var hevc = format == ExportFormat.Hevc;
+        var function = hevc ? ProcessingFunction.Hevc : ProcessingFunction.H264;
+        ProcessingChoice? selection = null;
+        string? hardwareFailure = null;
+        if (!IsProRes(format))
+        {
+            var explicitBackend = requested == ExportEncoder.Cpu ? "cpu" : requested == ExportEncoder.Gpu
+                ? renderer.AdapterVendorId == 0x1002 ? "amf" : "nvidia" : null;
+            selection = ProcessingService.Resolve(function, explicitBackend);
+            if (requiredBackend != null)
+            {
+                var required = requiredBackend == "libx264" ? "cpu" : requiredBackend == "h264_amf" ? "amf" : "nvidia";
+                if (selection.Origin is "Configuración externa" or "Este trabajo" && selection.Backend != required)
+                    throw new InvalidOperationException("El trabajo recuperable requiere " + requiredBackend + ". Inicia una exportación nueva para cambiar de codificador.");
+                selection = selection with { Backend = required, Adapter = required == "cpu" ? null : ProcessingService.Hardware.Composition,
+                    Automatic = false, Origin = "Trabajo recuperable", Reason = "Se conserva el codificador de los segmentos existentes." };
+            }
+            requested = selection.Backend == "cpu" ? ExportEncoder.Cpu : selection.Automatic ? ExportEncoder.Automatic : ExportEncoder.Gpu;
+        }
         if (IsProRes(format))
         {
             await RenderPipeAsync("prores_ks", hardware: false);
-            return ExportEncoder.Cpu;
+            return (ExportEncoder.Cpu, "prores_ks");
         }
 
-        var encoder = requested == ExportEncoder.Cpu || requested == ExportEncoder.Automatic &&
-            (sequence.Width < 256 || sequence.Height < 256) ? ExportEncoder.Cpu : ExportEncoder.Gpu;
-        if (encoder == ExportEncoder.Gpu)
+        var cpu = hevc ? "libx265" : "libx264";
+        if (requested != ExportEncoder.Cpu)
         {
+            var vendor = renderer.AdapterVendorId;
+            var amf = hevc ? "hevc_amf" : "h264_amf";
             try
             {
-                try { await RenderGpuAsync(); }
-                catch (HardwareEncodingException) when (hevc)
+                switch (vendor)
                 {
-                    File.Delete(tempVideo);
-                    report?.Invoke(0);
-                    await RenderPipeAsync("hevc_nvenc", hardware: true);
+                    case 0x1002 when requiredBackend == null || requiredBackend == amf:
+                        await RenderPipeAsync(amf, hardware: true);
+                        ProcessingService.Record(selection!, amf);
+                        return (ExportEncoder.Gpu, amf);
+                    case 0x10de when requiredBackend is null or "Media Foundation NVIDIA":
+                        try
+                        {
+                            await RenderGpuAsync();
+                            ProcessingService.Record(selection!, "Media Foundation NVIDIA");
+                            return (ExportEncoder.Gpu, "Media Foundation NVIDIA");
+                        }
+                        catch (HardwareEncodingException) when (hevc && requiredBackend == null)
+                        {
+                            File.Delete(tempVideo);
+                            report?.Invoke(0);
+                        }
+                        await RenderPipeAsync("hevc_nvenc", hardware: true);
+                        ProcessingService.Record(selection!, "hevc_nvenc");
+                        return (ExportEncoder.Gpu, "hevc_nvenc");
+                    default:
+                        throw new HardwareEncodingException(new NotSupportedException(
+                            "El adaptador de composición no ofrece el codificador solicitado."));
                 }
             }
             catch (HardwareEncodingException error)
             {
+                hardwareFailure = error.Message;
+                ProcessingService.Record(selection!, reason: hardwareFailure, failed: true);
                 if (requested == ExportEncoder.Gpu)
-                    throw new InvalidOperationException("Falló el codificador NVIDIA. " + error.Message, error);
+                    throw new InvalidOperationException("Falló la codificación por GPU. " + error.Message, error);
                 File.Delete(tempVideo);
-                encoder = ExportEncoder.Cpu;
                 report?.Invoke(0);
             }
         }
-        if (encoder == ExportEncoder.Cpu) await RenderPipeAsync(hevc ? "libx265" : "libx264", hardware: false);
-        return encoder;
+        await RenderPipeAsync(cpu, hardware: false);
+        ProcessingService.Record(selection! with { Backend = "cpu", Adapter = null }, cpu, hardwareFailure);
+        return (ExportEncoder.Cpu, cpu);
 
         async Task RenderGpuAsync()
         {
@@ -291,58 +332,89 @@ public static class SequenceExportService
 
         async Task RenderPipeAsync(string codec, bool hardware)
         {
+            // An independently opened pipe lets the encoder see EOF even when a CEF
+            // worker starts and stops while the montage is being rendered.
+            var pipeName = "prometheus-export-" + Guid.NewGuid().ToString("N");
+            using var input = new NamedPipeServerStream(pipeName, PipeDirection.Out, 1,
+                PipeTransmissionMode.Byte, PipeOptions.Asynchronous | PipeOptions.CurrentUserOnly);
             var info = new ProcessStartInfo(LocalMediaService.Tool("ffmpeg"))
             {
-                UseShellExecute = false, CreateNoWindow = true,
-                RedirectStandardInput = true, RedirectStandardError = true
+                UseShellExecute = false, CreateNoWindow = true, RedirectStandardError = true
             };
             var rate = sequence.Fps;
             void Add(params string[] values) { foreach (var value in values) info.ArgumentList.Add(value); }
-            Add("-hide_banner", "-loglevel", "error", "-y", "-f", "rawvideo",
+            Add("-nostdin", "-hide_banner", "-loglevel", "error", "-y", "-f", "rawvideo",
                 "-pixel_format", "bgra", "-video_size", $"{sequence.Width}x{sequence.Height}",
-                "-framerate", $"{rate.N}/{rate.D}", "-i", "pipe:0", "-an");
+                "-framerate", $"{rate.N}/{rate.D}", "-i", $@"\\.\pipe\{pipeName}", "-an",
+                "-frames:v", frames.ToString(CultureInfo.InvariantCulture));
             var proRes = IsProRes(format);
             var alpha = format == ExportFormat.ProRes4444;
-            var pixelFormat = alpha ? "yuva444p10le" : proRes ? "yuv422p10le" : "yuv420p";
+            var amf = codec.EndsWith("_amf", StringComparison.Ordinal);
+            var pixelFormat = alpha ? "yuva444p10le" : proRes ? "yuv422p10le" : amf ? "nv12" : "yuv420p";
             Add("-vf", $"scale=out_color_matrix=bt709:out_range=tv,format={pixelFormat}", "-c:v", codec);
             if (alpha) Add("-profile:v", "4", "-alpha_bits", "16");
             else if (proRes) Add("-profile:v", "2");
-            else Add("-preset", hardware ? "p5" : "veryfast", "-b:v", videoRate.ToString(CultureInfo.InvariantCulture));
+            else Add("-preset", amf ? "quality" : hardware ? "p5" : "veryfast",
+                "-b:v", videoRate.ToString(CultureInfo.InvariantCulture));
             if (independentSegment) Add("-bf", "0");
             Add("-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv", tempVideo);
-            using var process = Process.Start(info) ?? throw new IOException("No se pudo iniciar FFmpeg.");
-            var errorTask = process.StandardError.ReadToEndAsync();
+            using var process = new Process { StartInfo = info };
             try
             {
-                await using (var input = process.StandardInput.BaseStream)
+                if (!process.Start()) throw new IOException("No se pudo iniciar FFmpeg.");
+            }
+            catch (Exception error) when (hardware && error is (IOException or System.ComponentModel.Win32Exception))
+            {
+                throw new HardwareEncodingException(error);
+            }
+            using var cancelProcess = cancellation.Register(() => ExternalProcess.Kill(process));
+            var errorTask = ExternalProcess.ReadDiagnosticsAsync(process.StandardError);
+            try
+            {
+                var exited = process.WaitForExitAsync(cancellation);
+                using (var deadline = CancellationTokenSource.CreateLinkedTokenSource(cancellation))
                 {
-                    for (var i = 0; i < frames; i++)
+                    deadline.CancelAfter(TimeSpan.FromSeconds(20));
+                    var connected = input.WaitForConnectionAsync(deadline.Token);
+                    if (await Task.WhenAny(connected, exited) != connected)
                     {
+                        deadline.Cancel();
                         cancellation.ThrowIfCancellationRequested();
-                        validateProject?.Invoke();
-                        await renderer.RenderAsync(timelineStart + (firstFrame + i) / fps, cancellation);
-                        using var bitmap = renderer.Readback();
-                        var bytes = bitmap.Bytes;
-                        if (alpha) UnpremultiplyBgra(bytes);
-                        var rowSize = sequence.Width * 4;
-                        if (rowSize == bitmap.RowBytes)
-                            await input.WriteAsync(bytes, cancellation);
-                        else
-                            for (var row = 0; row < sequence.Height; row++)
-                                await input.WriteAsync(bytes.AsMemory(row * bitmap.RowBytes, rowSize), cancellation);
-                        report?.Invoke((i + 1d) / frames);
+                        throw new IOException($"El codificador {codec} se cerró antes de recibir fotogramas.");
+                    }
+                    try { await connected; }
+                    catch (OperationCanceledException error) when (!cancellation.IsCancellationRequested)
+                    {
+                        throw new IOException($"El codificador {codec} no abrió la entrada de vídeo.", error);
                     }
                 }
-                await process.WaitForExitAsync(cancellation);
+                var bytes = new byte[checked(sequence.Width * sequence.Height * 4)];
+                for (var i = 0; i < frames; i++)
+                {
+                    cancellation.ThrowIfCancellationRequested();
+                    validateProject?.Invoke();
+                    await renderer.RenderAsync(timelineStart + (firstFrame + i) / fps, cancellation);
+                    renderer.CopyFrameBgra(bytes);
+                    if (alpha) UnpremultiplyBgra(bytes);
+                    await input.WriteAsync(bytes, cancellation);
+                    report?.Invoke((i + 1d) / frames);
+                }
+                input.Dispose();
+                await exited.WaitAsync(TimeSpan.FromSeconds(60), cancellation);
                 if (process.ExitCode != 0)
                     throw new IOException("Falló el codificador " + codec + ": " + (await errorTask).Trim());
             }
             catch (Exception error)
             {
-                if (!process.HasExited) process.Kill(entireProcessTree: true);
+                ExternalProcess.Kill(process);
                 await process.WaitForExitAsync();
-                if (hardware && error is IOException && !cancellation.IsCancellationRequested)
-                    throw new HardwareEncodingException(error);
+                cancellation.ThrowIfCancellationRequested();
+                if (hardware && error is (IOException or TimeoutException))
+                {
+                    var details = (await errorTask).Trim();
+                    throw new HardwareEncodingException(details.Length == 0 ? error :
+                        new IOException($"Falló el codificador {codec}: {details}", error));
+                }
                 throw;
             }
         }
@@ -472,7 +544,8 @@ public static class SequenceExportService
 
     internal static async Task RenderAudioAsync(AudioMixPlan plan, string path, CancellationToken cancellation)
     {
-        using var process = new Process { StartInfo = plan.BuildProcess() };
+        using var command = plan.PrepareProcess();
+        using var process = new Process { StartInfo = command.StartInfo };
         process.Start();
         var errorTask = process.StandardError.ReadToEndAsync(cancellation);
         try
@@ -484,6 +557,7 @@ public static class SequenceExportService
         catch
         {
             if (!process.HasExited) process.Kill(entireProcessTree: true);
+            await process.WaitForExitAsync();
             throw;
         }
         if (process.ExitCode != 0)

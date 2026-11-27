@@ -1,8 +1,12 @@
-﻿[CmdletBinding()]
-param([string]$Output = (Join-Path $PSScriptRoot 'dist\Prometheus-3.19.9'), [string]$ToolsDirectory,
+[CmdletBinding()]
+param([string]$Output, [string]$ToolsDirectory,
       [string]$RuntimeDirectory, [string]$Dotnet = 'dotnet', [switch]$Offline,
       [string]$DependenciesDirectory = (Join-Path $PSScriptRoot 'Dependencies'))
 $ErrorActionPreference = 'Stop'
+if (-not $Output) {
+    $version = ([xml](Get-Content -LiteralPath (Join-Path $PSScriptRoot 'Directory.Build.props') -Raw)).Project.PropertyGroup.Version
+    $Output = Join-Path $PSScriptRoot "dist\Prometheus-$version"
+}
 Push-Location -LiteralPath $PSScriptRoot
 try {
     foreach ($component in @('Prometheus.Client','Prometheus.McpBridge','Prometheus.MgtLive')) {
@@ -10,7 +14,7 @@ try {
         $target = if ($component -eq 'Prometheus.Client') { $Output } elseif ($component -eq 'Prometheus.McpBridge') {
             Join-Path $Output 'McpBridge'
         } else { Join-Path $Output 'MgtLive' }
-        $restoreArguments = @('restore', $project, '-r', 'win-x64', '--locked-mode')
+        $restoreArguments = @('restore', $project, '-r', 'win-x64', '--locked-mode', '-p:Configuration=Release')
         if ($Offline) { $restoreArguments += @('--configfile', (Join-Path $DependenciesDirectory 'NuGet.Config')) }
         & $Dotnet @restoreArguments
         if ($LASTEXITCODE -ne 0) { throw "No se restauraron las dependencias de $component" }
@@ -38,5 +42,6 @@ try {
         robocopy $RuntimeDirectory (Join-Path $Output 'Runtime') /E /XD __pycache__ .git /XF *.pyc /NFL /NDL /NJH /NJS /NP
         if ($LASTEXITCODE -ge 8) { throw 'No se copiaron los componentes de IA' }
     }
+    Copy-Item -Path (Join-Path $PSScriptRoot 'src\Prometheus.Client\Runtime\*.py') -Destination (Join-Path $Output 'Runtime') -Force
     Write-Host "CompilaciÃƒÂ³n preparada en $Output. Para redistribuir, comprueba docs/PUBLICACION.md y los paquetes de fuentes."
 } finally { Pop-Location }

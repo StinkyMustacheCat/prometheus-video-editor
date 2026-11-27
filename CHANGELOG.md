@@ -1,5 +1,32 @@
 # Cambios
 
+## 3.22.2 — ajustes de procesamiento y entrega unificada
+
+- Ajustes → Procesamiento: inventario ligero de CPU, RAM y adaptadores; selección por función, preferencias manuales, restauración automática y diagnóstico exportable.
+- Selección efectiva y último motor utilizado visibles en ajustes y mediante MCP `get_state` con `scope: processing`. Las preferencias no modifican el proyecto ni su historial de deshacer.
+- Procesos separados para cambiar de proveedor de IA, restauración del fotograma SAM preparado y fallos manuales explícitos. Respaldo automático comprobado al iniciar cada motor.
+- Se conserva el codificador de los segmentos al reanudar una exportación recuperable.
+
+## 3.22.1 — detección y selección de hardware
+
+- Identidad DXGI del adaptador, controlador, memoria dedicada, RAM y arquitectura UMA. La RAM compartida no se suma como memoria adicional ni identifica por sí sola una APU.
+- CUDA, DirectML y WebGPU reciben el dispositivo elegido; el compositor mantiene su adaptador efectivo para compartir texturas con CEF.
+- Las rutas NVIDIA y AMD se resuelven por función. No se seleccionan por marca del procesador ni por el orden del primer adaptador.
+
+## 3.22.0 — integración de las ramas NVIDIA y AMD APU
+
+- Se integra la adaptación AMD APU 3.21.2 sobre la base 3.19.10, conservando la corrección de órdenes de audio extensas de Windows.
+- AMF para exportación H.264/HEVC; SAM ONNX DirectML/WebGPU, PyTorch CPU temporal y Whisper CPU INT8, junto al runtime CUDA original.
+- Runtimes ONNX y PyTorch CPU/CUDA aislados. Se mantienen los formatos de proyectos, máscaras y MGT.
+- La evidencia de la rama AMD anterior se conserva como antecedente; la validación de la integración en cada equipo se registra por separado.
+
+## 3.19.10 — reproducción y exportación de montajes con muchos cortes
+
+- Las mezclas de audio extensas se entregan a FFmpeg mediante un archivo temporal, evitando el error 206 de Windows al superar el tamaño máximo de la orden de inicio.
+- La corrección cubre reproducción, exportación de audio y mezcla para exportación de vídeo, sin cambiar cortes, efectos ni niveles.
+- Limpieza del archivo de mezcla al terminar, detener, cancelar o fallar el proceso. Comprobación explícita de rutas que todavía excedan el límite.
+- Regresión con muchos cortes, equivalencia de PCM/WAV y comprobación sobre el proyecto real que provocaba el bloqueo.
+
 ## 3.19.9 — entrega completa
 
 - FFmpeg 9.1 compilado desde fuentes incluidas, con Rubber Band 4.0.0 para conservar el cambio de tono.

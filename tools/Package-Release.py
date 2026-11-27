@@ -16,8 +16,9 @@ def archive(path,entries):
     if path.stat().st_size>=1_950_000_000:raise RuntimeError('Archive exceeds release asset limit: '+str(path))
     print('PACKED',path.name,path.stat().st_size,flush=True)
 def main():
-    p=argparse.ArgumentParser();p.add_argument('staging',type=pathlib.Path);p.add_argument('--version',default='3.19.9');p.add_argument('--review-only',action='store_true');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('staging',type=pathlib.Path);p.add_argument('--version');p.add_argument('--review-only',action='store_true');args=p.parse_args()
     root=args.staging.resolve();ready=json.loads((root/'release-readiness.json').read_text(encoding='utf-8'))
+    args.version=args.version or ready['version']
     if not ready.get('public_binary_release_ready') and not args.review_only:
         raise RuntimeError('Binary publication is pending. Read release-readiness.json; use --review-only for local review packages.')
     assets=root/'Release-assets';assets.mkdir(exist_ok=True)
@@ -38,7 +39,11 @@ def main():
     groups=[];group=[];size=0
     for entry in ai:
         n=entry[0].stat().st_size
-        if n>1_700_000_000:raise RuntimeError('Single AI file is too large: '+str(entry[0]))
+        # Some vendor static libraries exceed the grouping estimate but compress
+        # well below the upload limit. Keep them alone and check the actual ZIP.
+        if n>1_700_000_000:
+            if group:groups.append(group);group=[];size=0
+            groups.append([entry]);continue
         if group and size+n>1_700_000_000:groups.append(group);group=[];size=0
         group.append(entry);size+=n
     if group:groups.append(group)
