@@ -110,7 +110,9 @@ public partial class MonitorPanelView
         else if (layer.Gpu is { } gpu && gpu.PrepareForReuse())
         {
             layer.Gpu = null;
-            var previous = _idleVideoReaders.FindIndex(item => item.Key == key);
+            // Keep at most one idle alpha decoder with its CPU frames and textures.
+            var previous = _idleVideoReaders.FindIndex(item => item.Key == key ||
+                gpu.HasReusableMovAlpha && item.Surface.HasReusableMovAlpha);
             if (previous >= 0)
             {
                 _idleVideoReaders[previous].Surface.Dispose();

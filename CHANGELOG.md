@@ -1,5 +1,11 @@
 # Cambios
 
+## 3.23.6 | MOV con alfa
+
+- El monitor y la exportación leen los tiempos reales de los fotogramas de ProRes 4444 y QuickTime Animation con transparencia.
+- El lector usa un canal local con un búfer mayor para entregar BGRA y prepara el alfa del fotograma que se va a dibujar. La composición permanece en Direct3D.
+- El monitor puede reutilizar un lector de alfa entre cortes y saltos. La resolución elegida en el monitor sigue siendo independiente de la exportación.
+
 ## 3.23.5 | Descargas web y sesiones
 
 - Las descargas de YouTube comienzan con los ajustes elegidos y pueden probar hasta dos variantes compatibles con el error. El permiso para usar otro perfil se aplica a un solo enlace.

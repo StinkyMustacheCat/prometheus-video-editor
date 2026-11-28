@@ -110,6 +110,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
     private string? _renderedMaskStackSignature;
 
     internal double? SourceFrameRate { get; }
+    internal bool HasReusableMovAlpha { get; private set; }
     public IntPtr SharedHandle { get; private set; }
     public int Width { get; private set; }
     public int Height { get; private set; }
@@ -143,7 +144,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
     {
         lock (_gpuGate)
         {
-            if (_disposed || _softwareReader != null) return false;
+            if (_disposed || _softwareReader != null && !HasReusableMovAlpha) return false;
             PauseForWarmup();
             if (_engine != null)
             {
@@ -648,9 +649,11 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
         var scale = previewLongEdge > 0 ? Math.Min(1, (double)previewLongEdge / Math.Max(Width, Height)) : 1;
         var width = Math.Max(1, (int)Math.Round(metadata.Width * scale));
         var height = Math.Max(1, (int)Math.Round(metadata.Height * scale));
+        HasReusableMovAlpha = metadata.MovAlphaDecoder != null;
         _softwareReader = new FfmpegVideoReader(path, width, height, metadata.Fps ?? 30,
-            alpha: metadata.Alpha, timed: !metadata.Alpha || metadata.Vp9Alpha,
-            decoder: metadata.Vp9Alpha ? "libvpx-vp9" : null);
+            alpha: metadata.Alpha, timed: !metadata.Alpha || metadata.Vp9Alpha || HasReusableMovAlpha,
+            decoder: metadata.Vp9Alpha ? "libvpx-vp9" : metadata.MovAlphaDecoder,
+            packedMovAlpha: HasReusableMovAlpha, sourcePremultiplied: metadata.Premultiplied);
     }
 
     private void ReleaseMediaFoundation()
@@ -1083,7 +1086,8 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
     }
 
     private readonly record struct VideoMetadata(int Rotation, bool Hlg, bool SdrBt601, bool Alpha,
-        int Width, int Height, double? Fps, bool Vp9Alpha, bool MpegTransportStream);
+        int Width, int Height, double? Fps, bool Vp9Alpha, bool MpegTransportStream,
+        string? MovAlphaDecoder, bool Premultiplied);
 
     private static VideoMetadata ReadVideoMetadata(string path)
     {
@@ -1093,7 +1097,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
             { UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true }
         };
         foreach (var arg in new[] { "-v", "error", "-select_streams", "V:0", "-show_entries",
-            "stream=codec_name,width,height,pix_fmt,avg_frame_rate,r_frame_rate,color_space,color_transfer,color_primaries:stream_side_data=rotation:stream_tags=rotate,alpha_mode:format=format_name",
+            "stream=codec_name,width,height,pix_fmt,alpha_mode,avg_frame_rate,r_frame_rate,color_space,color_transfer,color_primaries:stream_side_data=rotation:stream_tags=rotate,alpha_mode:format=format_name",
             "-of", "json", path })
             process.StartInfo.ArgumentList.Add(arg);
         var result = ExternalProcess.RunAsync(process.StartInfo, TimeSpan.FromSeconds(5)).GetAwaiter().GetResult();
@@ -1121,6 +1125,10 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
         var alpha = vp9Alpha || pixelFormat.StartsWith("yuva", StringComparison.Ordinal) ||
             pixelFormat.StartsWith("gbrap", StringComparison.Ordinal) ||
             pixelFormat is "rgba" or "bgra" or "argb" or "abgr" or "ya8" or "ya16le";
+        var movAlphaDecoder = alpha && (codecName is "prores" or "qtrle") &&
+            Path.GetExtension(path).Equals(".mov", StringComparison.OrdinalIgnoreCase) ? codecName : null;
+        var premultiplied = stream.TryGetProperty("alpha_mode", out var association) &&
+            association.GetString() == "premultiplied";
         var fps = LocalMediaService.ReadVideoRate(stream)?.Seconds;
         var sdrBt601 = matrix is "smpte170m" or "bt470bg" or "fcc" ||
             (matrix is null or "unknown" && Math.Max(width, height) < 720);
@@ -1133,9 +1141,9 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
             double.TryParse(tag.GetString(), System.Globalization.CultureInfo.InvariantCulture, out degrees);
         var normalized = ((degrees % 360) + 360) % 360;
         var quarterTurns = (int)Math.Round(normalized / 90) % 4;
-        if (Math.Abs(normalized - quarterTurns * 90) > 1)
-            return new(0, hlg, sdrBt601, alpha, width, height, fps, vp9Alpha, mpegTransportStream);
-        return new(quarterTurns * 90, hlg, sdrBt601, alpha, width, height, fps, vp9Alpha, mpegTransportStream);
+        var displayRotation = Math.Abs(normalized - quarterTurns * 90) > 1 ? 0 : quarterTurns * 90;
+        return new(displayRotation, hlg, sdrBt601, alpha, width, height, fps, vp9Alpha,
+            mpegTransportStream, movAlphaDecoder, premultiplied);
     }
 
     private GpuLutTexture? GetLutTexture()

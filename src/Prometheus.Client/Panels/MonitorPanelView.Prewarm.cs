@@ -107,8 +107,10 @@ public partial class MonitorPanelView
             if (_nestedLayers.Any(layer => LayerKey(layer) == key) ||
                 _preparedLayers.Any(layer => LayerKey(layer) == key) || _warmingLayers.ContainsKey(key) ||
                 _warmupFailures.TryGetValue(key, out var until) && DateTime.UtcNow < until) continue;
-            // Nonoverlapping uses can borrow the worker after the current clip leaves.
-            if (IsMgt(project, item.Layer.Clip) && active.Any(current =>
+            // Nonoverlapping uses can borrow a reader after the current clip leaves.
+            if ((IsMgt(project, item.Layer.Clip) || _nestedLayers.Any(layer => !layer.Failed &&
+                    layer.Path == item.Path && layer.PreviewEdge == edge && layer.FrameLocked == item.FrameLocked &&
+                    layer.Gpu?.HasReusableMovAlpha == true)) && active.Any(current =>
                     current.Containers.Count == 0 && item.Layer.Containers.Count == 0 &&
                     current.Clip.AssetId == item.Layer.Clip.AssetId &&
                     current.Clip.EndSeconds <= item.Layer.Clip.TimelineStart.Seconds))

@@ -25,6 +25,54 @@ public class GpuStability37Tests
     }
 
     [Fact]
+    public void PackedPremultiplicationPreservesAlphaInWholeVectorsAndTheTail()
+    {
+        byte[] input = [0, 80, 255, 0, 16, 96, 240, 64, 215, 155, 45, 128,
+            255, 128, 64, 255, 33, 121, 219, 175];
+        byte[] expected = new byte[input.Length];
+        for (var offset = 0; offset < input.Length; offset += 4)
+        {
+            var alpha = input[offset + 3];
+            for (var channel = 0; channel < 3; channel++)
+                expected[offset + channel] = (byte)((input[offset + channel] * alpha + 128) >> 8);
+            expected[offset + 3] = alpha;
+        }
+        BgraAlpha.Premultiply(input);
+        Assert.Equal(expected, input);
+    }
+
+    [Theory]
+    [InlineData("qtrle", "argb")]
+    [InlineData("prores_ks", "yuva444p10le")]
+    public async Task MovAlphaUsesSourceTimestampsAndPreservesTransparencyAfterReuse(string encoder, string format)
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        var path = Path.Combine(Path.GetTempPath(), "gpu-mov-alpha-" + Guid.NewGuid().ToString("N") + ".mov");
+        try
+        {
+            var arguments = new List<string> { "-f", "lavfi", "-i",
+                "nullsrc=s=96x64:r=10:d=2.8,format=gbrap,geq=r='40+5*N':g=100:b=55:a='if(lt(X,24),0,if(lt(X,72),N*8+20,255))'",
+                "-c:v", encoder, "-pix_fmt", format };
+            if (encoder == "prores_ks") arguments.AddRange(["-profile:v", "4", "-alpha_bits", "16"]);
+            else arguments.AddRange(["-g", "10"]);
+            Run([.. arguments, path]);
+
+            using var surface = new GpuVideoSurface(path);
+            Assert.True(surface.HasReusableMovAlpha);
+            foreach (var (seconds, frame) in new[] { (2.055, 20), (.45, 4), (.53, 5), (1.75, 17) })
+            {
+                Assert.True(await surface.PresentAsync(seconds, false, updateVisual: false));
+                using var bitmap = surface.ReadbackBitmap();
+                Assert.Equal(0, bitmap.GetPixel(10, 32).Alpha);
+                Assert.InRange((int)bitmap.GetPixel(48, 32).Alpha, 8 * frame + 18, 8 * frame + 22);
+                Assert.Equal(255, bitmap.GetPixel(84, 32).Alpha);
+                Assert.True(surface.PrepareForReuse());
+            }
+        }
+        finally { File.Delete(path); }
+    }
+
+    [Fact]
     public void TextureTimeoutDoesNotGrantOwnership()
     {
         if (!OperatingSystem.IsWindows()) return;

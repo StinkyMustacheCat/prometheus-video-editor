@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Channels;
@@ -12,6 +13,7 @@ namespace Prometheus.Client.Services;
 /// <summary>Decodes software video into bounded BGRA frames; the compositor still runs on D3D11.</summary>
 internal sealed class FfmpegVideoReader : IDisposable
 {
+    private const int MovPipeBuffer = 512 * 1024;
     private readonly string _path;
     private readonly int _width;
     private readonly int _height;
@@ -19,6 +21,8 @@ internal sealed class FfmpegVideoReader : IDisposable
     private readonly bool _alpha;
     private readonly bool _timed;
     private readonly string? _decoder;
+    private readonly bool _packedMovAlpha;
+    private readonly bool _premultiplyPackedAlpha;
     private Channel<double>? _timestamps;
     private double? _pendingTime;
     private bool _endOfStream;
@@ -28,6 +32,7 @@ internal sealed class FfmpegVideoReader : IDisposable
     private byte[] _frame;
     private byte[]? _nextFrame;
     private Process? _process;
+    private NamedPipeServerStream? _framePipe;
     private double _nextTime;
     private double _frameTime = double.NaN;
     private int _disposed;
@@ -36,7 +41,7 @@ internal sealed class FfmpegVideoReader : IDisposable
     public long FrameVersion { get; private set; }
 
     public FfmpegVideoReader(string path, int width, int height, double fps, bool alpha,
-        bool timed, string? decoder = null)
+        bool timed, string? decoder = null, bool packedMovAlpha = false, bool sourcePremultiplied = false)
     {
         _path = path;
         _width = width;
@@ -45,6 +50,8 @@ internal sealed class FfmpegVideoReader : IDisposable
         _alpha = alpha;
         _timed = timed;
         _decoder = decoder;
+        _packedMovAlpha = packedMovAlpha;
+        _premultiplyPackedAlpha = packedMovAlpha && !sourcePremultiplied;
         _frame = GC.AllocateUninitializedArray<byte>(checked(width * height * 4));
         _closing = _lifetime.Token;
     }
@@ -72,7 +79,9 @@ internal sealed class FfmpegVideoReader : IDisposable
                 var process = _process!;
                 using var cancelRead = cancellation.UnsafeRegister(static state => Kill((Process)state!), process);
                 using var closeRead = _closing.UnsafeRegister(static state => Kill((Process)state!), process);
+                if (_framePipe is { IsConnected: false } pipe) ConnectFramePipe(pipe, process, cancellation);
 
+                var frameVersion = FrameVersion;
                 if (_timed) ReadTimedFrames(process, seconds, cancellation);
                 else
                 {
@@ -82,8 +91,14 @@ internal sealed class FfmpegVideoReader : IDisposable
                         _nextTime += 1 / _fps;
                     }
                 }
+                if (_premultiplyPackedAlpha && FrameVersion != frameVersion) BgraAlpha.Premultiply(_frame);
                 cancellation.ThrowIfCancellationRequested();
                 return !_closing.IsCancellationRequested && !double.IsNaN(_frameTime);
+            }
+            catch
+            {
+                Stop();
+                throw;
             }
             finally
             {
@@ -126,7 +141,8 @@ internal sealed class FfmpegVideoReader : IDisposable
         cancellation.ThrowIfCancellationRequested();
         if (_endOfStream || _closing.IsCancellationRequested) return false;
         _nextFrame ??= GC.AllocateUninitializedArray<byte>(_frame.Length);
-        try { process.StandardOutput.BaseStream.ReadExactly(_nextFrame); }
+        var output = _framePipe ?? process.StandardOutput.BaseStream;
+        try { output.ReadExactly(_nextFrame); }
         catch (EndOfStreamException)
         {
             cancellation.ThrowIfCancellationRequested();
@@ -148,26 +164,38 @@ internal sealed class FfmpegVideoReader : IDisposable
     private void Restart(double seconds, bool preview)
     {
         Stop();
+        string? pipeName = null;
+        if (_packedMovAlpha && OperatingSystem.IsWindows())
+        {
+            pipeName = "Prometheus-MovAlpha-" + Guid.NewGuid().ToString("N");
+            _framePipe = new NamedPipeServerStream(pipeName, PipeDirection.In, 1,
+                PipeTransmissionMode.Byte, PipeOptions.Asynchronous | PipeOptions.CurrentUserOnly,
+                MovPipeBuffer, 0);
+        }
         var info = new ProcessStartInfo(LocalMediaService.Tool("ffmpeg"))
         {
             UseShellExecute = false,
             CreateNoWindow = true,
-            RedirectStandardOutput = true,
+            RedirectStandardOutput = _framePipe == null,
             RedirectStandardError = true
         };
         void Add(params string[] args) { foreach (var arg in args) info.ArgumentList.Add(arg); }
         Add("-hide_banner", "-loglevel", _timed ? "info" : "error", "-nostats", "-noautorotate");
         if (_timed) Add("-copyts", "-start_at_zero", "-noaccurate_seek");
         if (_decoder != null) Add("-c:v", _decoder);
+        if (_packedMovAlpha && _decoder == "prores")
+            Add("-threads:v", Math.Clamp(Environment.ProcessorCount, 1, 4).ToString(CultureInfo.InvariantCulture),
+                "-thread_type", "slice");
         if (preview) Add("-filter_threads", Math.Clamp(Environment.ProcessorCount, 1, 4).ToString(CultureInfo.InvariantCulture));
         Add("-ss", seconds.ToString("0.########", CultureInfo.InvariantCulture), "-i", _path,
             "-map", "0:V:0", "-an", "-sn", "-dn", "-vf",
             $"scale={_width}:{_height}:flags=fast_bilinear" +
-            (_alpha ? ",format=rgba,premultiply=inplace=1,format=bgra" : ",format=bgra") +
+            (_alpha && !_packedMovAlpha ? ",format=rgba,premultiply=inplace=1,format=bgra" : ",format=bgra") +
             (_timed ? ",settb=1/1000000,showinfo=checksum=0" : ""),
             "-fps_mode", "passthrough", "-f", "rawvideo", "-pix_fmt", "bgra");
-        if (preview) Add("-threads:v", "1");
-        Add("pipe:1");
+        if (preview || _packedMovAlpha) Add("-threads:v", "1");
+        if (pipeName == null) Add("pipe:1");
+        else Add("-y", @"file:\\.\pipe\" + pipeName);
         _process = Process.Start(info) ?? throw new InvalidOperationException("No se pudo abrir el vídeo con alfa.");
         _timestamps = _timed ? Channel.CreateUnbounded<double>(
             new UnboundedChannelOptions { SingleReader = true, SingleWriter = true }) : null;
@@ -176,6 +204,26 @@ internal sealed class FfmpegVideoReader : IDisposable
         _endOfStream = false;
         _frameTime = double.NaN;
         _nextTime = seconds;
+    }
+
+    private void ConnectFramePipe(NamedPipeServerStream pipe, Process process, CancellationToken cancellation)
+    {
+        using var deadline = CancellationTokenSource.CreateLinkedTokenSource(cancellation, _closing);
+        deadline.CancelAfter(TimeSpan.FromSeconds(6));
+        try
+        {
+            var connected = pipe.WaitForConnectionAsync(deadline.Token);
+            var exited = process.WaitForExitAsync(deadline.Token);
+            Task.WhenAny(connected, exited).GetAwaiter().GetResult();
+            if (!pipe.IsConnected && exited.IsCompletedSuccessfully)
+                throw new InvalidDataException("FFmpeg terminó antes de abrir el canal de vídeo.");
+            connected.GetAwaiter().GetResult();
+        }
+        catch (OperationCanceledException) when (!cancellation.IsCancellationRequested && !_closing.IsCancellationRequested)
+        {
+            throw new TimeoutException("FFmpeg no abrió el canal de vídeo a tiempo.");
+        }
+        finally { deadline.Cancel(); }
     }
 
     private static async Task DrainDiagnosticsAsync(StreamReader errors, ChannelWriter<double>? timestamps)
@@ -220,10 +268,14 @@ internal sealed class FfmpegVideoReader : IDisposable
 
     private void Stop()
     {
-        if (_process == null) return;
-        Kill(_process);
-        _process.Dispose();
-        _process = null;
+        if (_process != null)
+        {
+            Kill(_process);
+            _process.Dispose();
+            _process = null;
+        }
+        _framePipe?.Dispose();
+        _framePipe = null;
     }
 
     public void Dispose()
