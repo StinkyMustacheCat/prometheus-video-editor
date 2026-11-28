@@ -29,6 +29,8 @@ Para guardar un informe del adaptador Direct3D 11, ejecuta `Prometheus.Client.ex
 
 Con el SDK de .NET 8.0.427 y PowerShell, ejecuta `./Build.ps1`. El SDK se fija en `global.json` y los paquetes NuGet mediante `packages.lock.json`. Para incluir multimedia e IA se indican sus carpetas a `-ToolsDirectory` y `-RuntimeDirectory`; las fuentes correspondientes se publican junto con los binarios, según [publicación](docs/PUBLICACION.md). `./Test.ps1` ejecuta las pruebas sin abrir ni cerrar la ventana del editor.
 
+La migración a .NET 10 y la prueba de ProRes por Vulkan figuran en [Pendientes](docs/PENDIENTES.md).
+
 ## Licencias
 
 Prometheus: **GPL-3.0-or-later**, Copyright (C) 2026 Nicolas & Prometheus Contributors. Sin garantía. [Texto completo](LICENSE).

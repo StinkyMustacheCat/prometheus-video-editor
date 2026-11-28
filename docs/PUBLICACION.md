@@ -1,9 +1,13 @@
-# Entrega de revisión — Prometheus 3.22.2
+# Publicación de Prometheus
 
-Primera entrega conjunta de la integración 3.22.0–3.22.2. Incluye portable completo y fuentes para revisar detección, selección y ajustes de procesamiento. La publicación consolidada para NVIDIA/APU/híbridos corresponde a 3.22.4, después de probar este paquete en esos equipos. No se ha subido esta integración automáticamente a GitHub.
+## Código fuente
 
-El estado exacto y los resultados se registran en `release-readiness.json` y `Validacion/`. La base multimedia conserva FFmpeg `9.1-prometheus-3.19.9` y Rubber Band 4.0.0, con sus fuentes y recetas; no incluye el ejecutable Gyan antiguo. La IA conserva CUDA y añade los proveedores y el runtime CPU de la rama AMD, aislados y con sus avisos originales. El inventario adicional figura en `licenses/processing-components.json`.
+El repositorio contiene fuentes, pruebas, documentación y scripts de compilación. Para 3.23.6, publicar la rama `release/3.23.6` y la etiqueta `v3.23.6`. El SDK fijado en `global.json` y los archivos `packages.lock.json` permiten verificar el código desde una copia limpia en Windows.
 
-Los ZIP de revisión comparten una carpeta raíz; extraer Portable y todos los AI-XX juntos. Source y Dependencies son independientes de los binarios. Los ZIP numerados son archivos ZIP autónomos. Se conservan las fuentes correspondientes de terceros de la base y los avisos/procedencia de los nuevos componentes. Antes de una publicación nueva, revisar este inventario junto al cierre multiplataforma previsto en 3.22.4.
+El portable 3.23.6 se generó desde el commit `a104a31`. La documentación de publicación y los pendientes se añadieron después de esa compilación.
 
-La carpeta `GitHub` contiene fuentes, pruebas, documentación y scripts. Dependencias grandes, proyectos personales, credenciales, cookies, ajustes del equipo y carpetas de trabajo se excluyen. Cada paquete tiene una suma SHA-256. Las comprobaciones en un PC no certifican otro modelo de GPU.
+## Distribución del portable
+
+Los binarios, modelos, registros de prueba y paquetes de dependencias se preparan fuera del árbol de código. Antes de distribuirlos, comprobar que cada componente tiene sus avisos, las fuentes correspondientes y la procedencia que le aplica. Los archivos de la entrega se publican con sus sumas SHA-256. [Inventario de terceros](../licenses/TERCEROS.md) · [Fuentes de terceros](FUENTES_TERCEROS.md)
+
+La entrega de integración previa y su matriz de hardware siguen documentadas en [Prometheus 3.22.2](ENTREGA_3_22_2.md).
