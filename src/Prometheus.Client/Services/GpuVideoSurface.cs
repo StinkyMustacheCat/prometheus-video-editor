@@ -702,7 +702,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
         bool ready;
         if (_softwareReader != null)
         {
-            if (!await _softwareReader.ReadPreviewAtAsync(seconds, cancellation) || _disposed) return false;
+            if (!await _softwareReader.ReadPreviewAtAsync(seconds, playing, cancellation) || _disposed) return false;
             cancellation.ThrowIfCancellationRequested();
             ready = DrawSoftwareFrame(_softwareReader, seconds, releaseKey);
         }

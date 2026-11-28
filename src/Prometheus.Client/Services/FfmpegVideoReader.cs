@@ -23,6 +23,8 @@ internal sealed class FfmpegVideoReader : IDisposable
     private readonly string? _decoder;
     private readonly bool _packedMovAlpha;
     private readonly bool _premultiplyPackedAlpha;
+    private readonly int _playbackStride;
+    private int _processStride;
     private Channel<double>? _timestamps;
     private double? _pendingTime;
     private bool _endOfStream;
@@ -52,14 +54,19 @@ internal sealed class FfmpegVideoReader : IDisposable
         _decoder = decoder;
         _packedMovAlpha = packedMovAlpha;
         _premultiplyPackedAlpha = packedMovAlpha && !sourcePremultiplied;
+        // Bound raw transfer for large ProRes frames while the timeline is moving.
+        // Select before scale so skipped frames also skip the color conversion.
+        _playbackStride = packedMovAlpha && decoder == "prores"
+            ? Math.Clamp((int)Math.Ceiling(width * (double)height * _fps / 180_000_000), 1, 8)
+            : 1;
         _frame = GC.AllocateUninitializedArray<byte>(checked(width * height * 4));
         _closing = _lifetime.Token;
     }
 
-    public Task<bool> ReadPreviewAtAsync(double seconds, CancellationToken cancellation) =>
-        Task.Run(() => ReadAt(seconds, cancellation, preview: true), cancellation);
+    public Task<bool> ReadPreviewAtAsync(double seconds, bool playing, CancellationToken cancellation) =>
+        Task.Run(() => ReadAt(seconds, cancellation, preview: true, playing: playing), cancellation);
 
-    public bool ReadAt(double seconds, CancellationToken cancellation = default, bool preview = false)
+    private bool ReadAt(double seconds, CancellationToken cancellation, bool preview, bool playing)
     {
         lock (_readLock)
         {
@@ -74,12 +81,14 @@ internal sealed class FfmpegVideoReader : IDisposable
                 var seek = _timed
                     ? seconds < _frameTime - 0.0001 || seconds > Math.Max(_pendingTime ?? _frameTime, _nextTime) + 1
                     : seconds < _nextTime - 1.5 / _fps || seconds > _nextTime + 0.5;
-                if (_process == null || seek) Restart(seconds, preview);
+                var stride = playing ? _playbackStride : 1;
+                var restart = _process == null || seek || _processStride != stride;
+                if (restart) Restart(seconds, preview, stride);
 
                 var process = _process!;
                 using var cancelRead = cancellation.UnsafeRegister(static state => Kill((Process)state!), process);
                 using var closeRead = _closing.UnsafeRegister(static state => Kill((Process)state!), process);
-                if (_framePipe is { IsConnected: false } pipe) ConnectFramePipe(pipe, process, cancellation);
+                if (restart && _framePipe is { } pipe) ConnectFramePipe(pipe, process, cancellation);
 
                 var frameVersion = FrameVersion;
                 if (_timed) ReadTimedFrames(process, seconds, cancellation);
@@ -107,6 +116,9 @@ internal sealed class FfmpegVideoReader : IDisposable
         }
     }
 
+    public bool ReadAt(double seconds, CancellationToken cancellation = default) =>
+        ReadAt(seconds, cancellation, preview: false, playing: false);
+
     private void ReadTimedFrames(Process process, double seconds, CancellationToken cancellation)
     {
         // The timestamp belongs to the complete raw frame in the other pipe.
@@ -128,7 +140,7 @@ internal sealed class FfmpegVideoReader : IDisposable
 
             var time = double.IsNaN(_pendingTime.Value) ? _nextTime : _pendingTime.Value;
             _pendingTime = time;
-            _nextTime = time + 1 / _fps;
+            _nextTime = time + _processStride / _fps;
             if (!double.IsNaN(_frameTime) && time > seconds + 0.0001) break;
             PublishFrame(time);
             _pendingTime = null;
@@ -161,7 +173,7 @@ internal sealed class FfmpegVideoReader : IDisposable
         FrameVersion++;
     }
 
-    private void Restart(double seconds, bool preview)
+    private void Restart(double seconds, bool preview, int stride)
     {
         Stop();
         string? pipeName = null;
@@ -187,9 +199,10 @@ internal sealed class FfmpegVideoReader : IDisposable
             Add("-threads:v", Math.Clamp(Environment.ProcessorCount, 1, 4).ToString(CultureInfo.InvariantCulture),
                 "-thread_type", "slice");
         if (preview) Add("-filter_threads", Math.Clamp(Environment.ProcessorCount, 1, 4).ToString(CultureInfo.InvariantCulture));
+        var selection = stride == 1 ? "" : $"select=not(mod(n\\,{stride})),";
         Add("-ss", seconds.ToString("0.########", CultureInfo.InvariantCulture), "-i", _path,
             "-map", "0:V:0", "-an", "-sn", "-dn", "-vf",
-            $"scale={_width}:{_height}:flags=fast_bilinear" +
+            selection + $"scale={_width}:{_height}:flags=fast_bilinear" +
             (_alpha && !_packedMovAlpha ? ",format=rgba,premultiply=inplace=1,format=bgra" : ",format=bgra") +
             (_timed ? ",settb=1/1000000,showinfo=checksum=0" : ""),
             "-fps_mode", "passthrough", "-f", "rawvideo", "-pix_fmt", "bgra");
@@ -201,6 +214,7 @@ internal sealed class FfmpegVideoReader : IDisposable
             new UnboundedChannelOptions { SingleReader = true, SingleWriter = true }) : null;
         _ = DrainDiagnosticsAsync(_process.StandardError, _timestamps?.Writer);
         _pendingTime = null;
+        _processStride = stride;
         _endOfStream = false;
         _frameTime = double.NaN;
         _nextTime = seconds;

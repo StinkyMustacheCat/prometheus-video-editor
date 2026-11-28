@@ -59,7 +59,7 @@ public class GpuStability37Tests
 
             using var surface = new GpuVideoSurface(path);
             Assert.True(surface.HasReusableMovAlpha);
-            foreach (var (seconds, frame) in new[] { (2.055, 20), (.45, 4), (.53, 5), (1.75, 17) })
+            foreach (var (seconds, frame) in new[] { (2.055, 20), (.45, 4), (.53, 5), (1.75, 17), (2.75, 27), (2.79, 27) })
             {
                 Assert.True(await surface.PresentAsync(seconds, false, updateVisual: false));
                 using var bitmap = surface.ReadbackBitmap();

@@ -5,6 +5,7 @@
 - El monitor y la exportación leen los tiempos reales de los fotogramas de ProRes 4444 y QuickTime Animation con transparencia.
 - El lector usa un canal local con un búfer mayor para entregar BGRA y prepara el alfa del fotograma que se va a dibujar. La composición permanece en Direct3D.
 - El monitor puede reutilizar un lector de alfa entre cortes y saltos. La resolución elegida en el monitor sigue siendo independiente de la exportación.
+- En reproducción, los ProRes de mayor carga pueden reducir su cadencia para sostener el avance. Al pausar se muestra el fotograma exacto.
 
 ## 3.23.5 | Descargas web y sesiones
 

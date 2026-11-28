@@ -465,7 +465,7 @@ public partial class MonitorPanelView
         if (entry.Mgt != null) return await entry.Mgt.PresentAsync(layer.SourceSeconds,
             layer.Clip.MgtOverrides, exact: initial || _transport?.IsPlaying != true, cancellation: cancellation, updateVisual: updateVisual);
         return entry.Gpu != null && await entry.Gpu.PresentAsync(layer.SourceSeconds,
-            !initial && _transport?.IsPlaying == true,
+            (!initial || entry.Gpu.HasReusableMovAlpha) && _transport?.IsPlaying == true,
             0.5 / Math.Max(1, ProjectController.Instance?.CurrentProject.ActiveSequence?.Fps.Seconds ?? 60),
             updateVisual, cancellation);
     }
