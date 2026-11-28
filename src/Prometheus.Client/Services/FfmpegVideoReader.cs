@@ -57,7 +57,7 @@ internal sealed class FfmpegVideoReader : IDisposable
         // Bound raw transfer for large ProRes frames while the timeline is moving.
         // Select before scale so skipped frames also skip the color conversion.
         _playbackStride = packedMovAlpha && decoder == "prores"
-            ? Math.Clamp((int)Math.Ceiling(width * (double)height * _fps / 180_000_000), 1, 8)
+            ? Math.Clamp((int)Math.Ceiling(width * (double)height * _fps / 150_000_000), 1, 8)
             : 1;
         _frame = GC.AllocateUninitializedArray<byte>(checked(width * height * 4));
         _closing = _lifetime.Token;
@@ -78,10 +78,13 @@ internal sealed class FfmpegVideoReader : IDisposable
 
             try
             {
-                var seek = _timed
-                    ? seconds < _frameTime - 0.0001 || seconds > Math.Max(_pendingTime ?? _frameTime, _nextTime) + 1
-                    : seconds < _nextTime - 1.5 / _fps || seconds > _nextTime + 0.5;
                 var stride = playing ? _playbackStride : 1;
+                // Large intra-frame video can seek directly after a skipped interval.
+                // Draining the backlog here would keep the monitor behind its playback clock.
+                var forwardWindow = stride > 1 ? .15 : 1;
+                var seek = _timed
+                    ? seconds < _frameTime - 0.0001 || seconds > Math.Max(_pendingTime ?? _frameTime, _nextTime) + forwardWindow
+                    : seconds < _nextTime - 1.5 / _fps || seconds > _nextTime + 0.5;
                 var restart = _process == null || seek || _processStride != stride;
                 if (restart) Restart(seconds, preview, stride);
 
