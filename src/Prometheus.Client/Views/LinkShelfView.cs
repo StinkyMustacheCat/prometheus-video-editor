@@ -54,6 +54,7 @@ public sealed class LinkShelfView : UserControl
         });
         var paste = Button("Desde portapapeles", async () => {
             var content = await AdaptiveClipboard.ReadAsync(this);
+            if (content.Error != null) { controller.ReportStatus(content.Error); return; }
             if (LinkShelfService.AddText(controller, content.Files.Length > 0 ? string.Join(Environment.NewLine, content.Files) : content.Text) > 0)
                 _addArea.IsVisible = false;
         });

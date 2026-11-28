@@ -120,14 +120,14 @@ public partial class MediaPoolPanelView
             return;
         }
         var files = e.Data.GetFiles()?.Where(f => f.Path.IsFile).Select(f => f.Path.LocalPath).ToArray();
-        if (BrowserMediaData.TryGetHtmlMediaUrl(e.Data, out var htmlMedia)) await ImportLinkAsync(htmlMedia.ToString());
-        else if (files?.Length > 0) await ImportFilesAsync(files);
+        if (files?.Length > 0) await ImportFilesAsync(files);
         else
         {
-            var image = BrowserMediaData.SaveImage(BrowserMediaData.GetImageData(e.Data));
+            var image = BrowserMediaData.SaveDroppedImage(e.Data);
             if (image != null) await ImportFilesAsync(new[] { image });
             else if (BrowserMediaData.TryGetUrl(e.Data, out var uri)) await ImportLinkAsync(uri.ToString());
-            else _controller?.ReportStatus("El navegador no entregó una imagen, archivo o enlace compatible");
+            else _controller?.ReportStatus(BrowserMediaData.HasHtmlImage(e.Data) ? BrowserMediaData.ImageUnavailable :
+                "El navegador no entregó una imagen, archivo o enlace compatible");
         }
         e.Handled = true;
         }
@@ -136,7 +136,7 @@ public partial class MediaPoolPanelView
 
     private void OnFilesDragOver(object? sender, DragEventArgs e)
     {
-        try { e.DragEffects = e.Data.Get("Prometheus.LinkShelfId") is string || e.Data.GetFiles()?.Any() == true || BrowserMediaData.TryGetUrl(e.Data, out _) || BrowserMediaData.HasImage(e.Data) ? DragDropEffects.Copy : DragDropEffects.None; }
+        try { e.DragEffects = e.Data.Get("Prometheus.LinkShelfId") is string || e.Data.GetFiles()?.Any() == true || BrowserMediaData.HasImage(e.Data) || BrowserMediaData.TryGetUrl(e.Data, out _) ? DragDropEffects.Copy : DragDropEffects.None; }
         catch { e.DragEffects = DragDropEffects.None; }
         e.Handled = true;
     }

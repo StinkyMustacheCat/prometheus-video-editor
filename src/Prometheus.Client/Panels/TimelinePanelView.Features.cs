@@ -110,8 +110,10 @@ public partial class TimelinePanelView
             var placeholderCompatible = targetTrack != null && targetTrack.Role != "subtitle" && !targetTrack.Locked &&
                 (draggedAsset != null ? PlaceholderService.Accepts(_controller!.CurrentProject, placeholder, draggedAsset) :
                 shelf != null ? ShelfSupportsTrack(shelf, targetTrack.Kind) :
-                BrowserMediaData.TryGetUrl(e.Data, out var url) ? WebMediaService.CompatibleWithKnownExtension(url, targetTrack.Kind) :
-                e.Data.GetFiles()?.Count() == 1 || targetTrack.Kind == "video" && BrowserMediaData.HasImage(e.Data));
+                e.Data.GetFiles()?.Count() == 1 ||
+                (BrowserMediaData.HasImage(e.Data) ? targetTrack.Kind == "video" :
+                    BrowserMediaData.TryGetUrl(e.Data, out var url) &&
+                    WebMediaService.CompatibleWithKnownExtension(url, targetTrack.Kind)));
             TimelineCanvas.DropPlaceholderId = placeholderCompatible ? placeholder.Id : null;
             e.DragEffects = placeholderCompatible ? DragDropEffects.Copy : DragDropEffects.None;
             e.Handled = true;
@@ -126,14 +128,15 @@ public partial class TimelinePanelView
         if (autoKind != null && asset != null && !asset.Streams.Any(s => autoKind == "audio" ? s.Kind == "audio" : s.Kind is "video" or "image"))
             autoKind = null;
         if (autoKind != null && shelfItem != null && !ShelfSupportsTrack(shelfItem, autoKind)) autoKind = null;
-        var urlAvailable = BrowserMediaData.TryGetUrl(e.Data, out var dropUrl);
         var hasFiles = e.Data.GetFiles()?.Any() == true;
-        var hasImage = BrowserMediaData.HasImage(e.Data);
-        if (autoKind != null && urlAvailable && !WebMediaService.CompatibleWithKnownExtension(dropUrl, autoKind)) autoKind = null;
+        var hasImage = !hasFiles && BrowserMediaData.HasImage(e.Data);
+        Uri? dropUrl = null;
+        var urlAvailable = !hasFiles && !hasImage && BrowserMediaData.TryGetUrl(e.Data, out dropUrl);
+        if (autoKind != null && urlAvailable && !WebMediaService.CompatibleWithKnownExtension(dropUrl!, autoKind)) autoKind = null;
         var compatible = track != null && track.Role != "subtitle" && !track.Locked &&
             (asset != null ? asset.Streams.Any(s => track.Kind == "audio" ? s.Kind == "audio" : s.Kind is "video" or "image") :
             shelfItem != null ? ShelfSupportsTrack(shelfItem, track.Kind) :
-            urlAvailable ? WebMediaService.CompatibleWithKnownExtension(dropUrl, track.Kind) :
+            urlAvailable ? WebMediaService.CompatibleWithKnownExtension(dropUrl!, track.Kind) :
             hasFiles || track.Kind == "video" && hasImage);
         e.DragEffects = compatible || autoKind != null && (asset != null || shelfItem != null || urlAvailable || hasFiles || hasImage && autoKind == "video")
             ? DragDropEffects.Copy : DragDropEffects.None;
@@ -243,13 +246,6 @@ public partial class TimelinePanelView
             var asset = _controller.CurrentProject.Assets.FirstOrDefault(a => a.Id == id);
             if (asset != null) PlaceAssetAt(asset, targetTrackId, at, autoKind, newVideoArea);
         }
-        else if (BrowserMediaData.TryGetHtmlMediaUrl(e.Data, out var htmlMedia))
-        {
-            if (autoKind != null && !WebMediaService.CompatibleWithKnownExtension(htmlMedia, autoKind))
-            { _controller.ReportStatus("El enlace no corresponde a la zona de pistas"); return; }
-            targetTrackId ??= CreateDropTrack(autoKind!, newVideoArea);
-            await WebMediaService.ImportAsync(_controller, htmlMedia.ToString(), targetTrackId, at);
-        }
         else if (e.Data.GetFiles()?.Any() == true)
         {
             foreach (var file in e.Data.GetFiles()!.Where(f => f.Path.IsFile))
@@ -266,13 +262,14 @@ public partial class TimelinePanelView
         }
         else
         {
-            var image = BrowserMediaData.SaveImage(BrowserMediaData.GetImageData(e.Data));
+            if ((track?.Kind ?? autoKind) == "audio" && BrowserMediaData.HasImage(e.Data))
+            { _controller.ReportStatus("La imagen requiere una pista de vídeo"); return; }
+            var image = BrowserMediaData.SaveDroppedImage(e.Data);
             if (image != null)
             {
                 try
                 {
                     var asset = await LocalMediaService.ProbeAsync(image);
-                    if (autoKind == "audio") { _controller.ReportStatus("La imagen requiere una pista de vídeo"); return; }
                     _controller.UndoRedo.Commit(p => { targetTrackId ??= AddDropTrack(p, autoKind!, newVideoArea); p.Assets.Add(asset); ImportPlacement.PlaceAsset(p, asset.Id, targetTrackId, at); }, "Importar imagen arrastrada");
                 }
                 catch (Exception ex) { _controller.ReportStatus("No se pudo importar imagen: " + ex.Message); }
@@ -284,7 +281,8 @@ public partial class TimelinePanelView
                 targetTrackId ??= CreateDropTrack(autoKind!, newVideoArea);
                 await WebMediaService.ImportAsync(_controller, url.ToString(), targetTrackId, at);
             }
-            else _controller.ReportStatus("El navegador no entregó una imagen, archivo o enlace compatible");
+            else _controller.ReportStatus(BrowserMediaData.HasHtmlImage(e.Data) ? BrowserMediaData.ImageUnavailable :
+                "El navegador no entregó una imagen, archivo o enlace compatible");
         }
         e.Handled = true;
         }
@@ -344,15 +342,17 @@ public partial class TimelinePanelView
                 }, "Conectar medio a reserva");
             return;
         }
-        if (BrowserMediaData.TryGetUrl(data, out var url))
-        {
-            await WebMediaService.ImportIntoPlaceholderAsync(_controller, url.ToString(), clipId);
-            return;
-        }
         var files = data.GetFiles()?.Where(f => f.Path.IsFile).ToArray();
         if (files is { Length: > 1 }) { _controller.ReportStatus("Suelta un solo archivo sobre cada espacio reservado"); return; }
-        var path = files is { Length: 1 } ? files[0].Path.LocalPath : BrowserMediaData.SaveImage(BrowserMediaData.GetImageData(data));
-        if (path == null) { _controller.ReportStatus("No se recibió un medio compatible"); return; }
+        var path = files is { Length: 1 } ? files[0].Path.LocalPath : BrowserMediaData.SaveDroppedImage(data);
+        if (path == null)
+        {
+            if (BrowserMediaData.TryGetUrl(data, out var url))
+                await WebMediaService.ImportIntoPlaceholderAsync(_controller, url.ToString(), clipId);
+            else _controller.ReportStatus(BrowserMediaData.HasHtmlImage(data) ? BrowserMediaData.ImageUnavailable :
+                "No se recibió un medio compatible");
+            return;
+        }
         var imported = await LocalMediaService.ProbeAsync(path);
         _controller.UndoRedo.Commit(p =>
         {

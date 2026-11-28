@@ -202,6 +202,7 @@ public partial class MainWindow : Window
         if (_projectController.AnalysisWork.Active != null) return;
         var content = await AdaptiveClipboard.ReadAsync(this);
         if (_projectController.AnalysisWork.Active != null) return;
+        if (content.Error != null) { _projectController.ReportStatus(content.Error); return; }
         var text = content.Files.Length > 0 ? string.Join(Environment.NewLine, content.Files) : content.Text;
         if (!string.IsNullOrWhiteSpace(text))
         {

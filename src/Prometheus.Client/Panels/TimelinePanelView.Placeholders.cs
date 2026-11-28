@@ -33,6 +33,7 @@ public partial class TimelinePanelView
     {
         if (_controller == null) return;
         var content = await AdaptiveClipboard.ReadAsync(this);
+        if (content.Error != null) { _controller.ReportStatus(content.Error); return; }
         if (content.Files.Length == 0)
         {
             if (WebMediaService.TryUrl(content.Text, out var uri))

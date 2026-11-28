@@ -5,12 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 
 namespace Prometheus.Client.Services;
 
-public sealed record ClipboardMedia(string[] Files, string? Text);
+public sealed record ClipboardMedia(string[] Files, string? Text, string? Error = null);
 
 public static class AdaptiveClipboard
 {
@@ -23,18 +22,28 @@ public static class AdaptiveClipboard
             ?? (data as IEnumerable<string>)?.Where(File.Exists).ToArray()
             ?? Array.Empty<string>();
         if (files.Length > 0) return new ClipboardMedia(files, null);
-        foreach (var format in new[] { "text/html", "HTML Format" })
-            if (BrowserMediaData.TryGetUrl(await clipboard.GetDataAsync(format), out var mediaUrl))
-                return new ClipboardMedia(Array.Empty<string>(), mediaUrl.ToString());
-        foreach (var format in new[] { "Bitmap", "image/png", "PNG", "image/jpeg", "JFIF" })
+        foreach (var format in BrowserMediaData.ImageFormats)
+            if (BrowserMediaData.SaveImage(await clipboard.GetDataAsync(format)) is { } path)
+                return new ClipboardMedia(new[] { path }, null);
+
+        Uri? linkedMedia = null;
+        var hasHtmlImage = false;
+        foreach (var format in BrowserMediaData.HtmlFormats)
         {
-            var path = BrowserMediaData.SaveImage(await clipboard.GetDataAsync(format));
-            if (path != null) return new ClipboardMedia(new[] { path }, null);
+            var html = BrowserMediaData.ReadText(await clipboard.GetDataAsync(format));
+            if (BrowserMediaData.SaveImage(BrowserMediaData.ReadInlineImage(html)) is { } path)
+                return new ClipboardMedia(new[] { path }, null);
+            if (linkedMedia == null && BrowserMediaData.TryGetHtmlMediaUrl(html, out var uri)) linkedMedia = uri;
+            hasHtmlImage |= BrowserMediaData.HasHtmlImage(html);
         }
-        foreach (var format in new[] { "text/uri-list", "URL", "UniformResourceLocatorW", "UniformResourceLocator", "DownloadURL" })
+        if (linkedMedia != null) return new ClipboardMedia(Array.Empty<string>(), linkedMedia.ToString());
+        if (hasHtmlImage) return new ClipboardMedia(Array.Empty<string>(), null, BrowserMediaData.ImageUnavailable);
+
+        foreach (var format in BrowserMediaData.UrlFormats)
             if (BrowserMediaData.TryGetUrl(await clipboard.GetDataAsync(format), out var url))
                 return new ClipboardMedia(Array.Empty<string>(), url.ToString());
         var text = (await clipboard.GetTextAsync())?.Trim();
-        return new ClipboardMedia(Array.Empty<string>(), BrowserMediaData.TryGetUrl(text, out var parsed) ? parsed.ToString() : text);
+        return new ClipboardMedia(Array.Empty<string>(),
+            text?.StartsWith('{') != true && BrowserMediaData.TryGetUrl(text, out var parsed) ? parsed.ToString() : text);
     }
 }

@@ -1,5 +1,11 @@
 # Cambios
 
+## 3.23.3 | Imágenes de Google Docs y del navegador
+
+- Ctrl+V importa las imágenes rasterizadas incrustadas en el HTML del portapapeles, registra el medio y lo coloca en el cabezal.
+- Al pegar o arrastrar, los datos locales de la imagen tienen prioridad sobre un enlace web alternativo.
+- Una referencia exclusiva del navegador muestra un aviso específico cuando su imagen no está disponible para importar.
+
 ## 3.23.2 | Reproducción en proyectos densos
 
 - 3.23.0 incorpora medición opcional de latencia de audio y cadencia de composición mediante el ámbito MCP `playback`.
