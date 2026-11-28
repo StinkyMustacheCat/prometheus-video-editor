@@ -28,6 +28,13 @@ internal sealed class EditorNotifications
         return true;
     }
 
+    internal void Remove(string key)
+    {
+        if (_entries.RemoveAll(entry => entry.Key == key) == 0) return;
+        if (_entries.Count == 0) HasUnread = false;
+        Changed?.Invoke();
+    }
+
     internal void MarkRead()
     {
         HasUnread = false;

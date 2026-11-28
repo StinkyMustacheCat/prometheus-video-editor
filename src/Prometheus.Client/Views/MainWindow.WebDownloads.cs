@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -8,6 +9,7 @@ using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using Prometheus.Client.Services;
+using Prometheus.Client.Dialogs;
 
 namespace Prometheus.Client.Views;
 
@@ -27,10 +29,11 @@ public partial class MainWindow
         var auth = new ComboBox { Name = "WebAuthentication", ItemsSource = new[] { "Sin cuenta (predeterminado)", "Sesión del navegador", "Archivo de cookies" },
             SelectedIndex = !string.IsNullOrWhiteSpace(current.CookieFile) ? 2 : string.IsNullOrWhiteSpace(current.CookieBrowser) ? 0 : 1,
             HorizontalAlignment = HorizontalAlignment.Stretch };
-        var browsers = new[] { "chrome", "edge", "firefox" };
-        var browser = new ComboBox { Name = "WebCookieBrowser", ItemsSource = new[] { "Chrome", "Edge", "Firefox" },
-            SelectedIndex = Math.Max(0, Array.IndexOf(browsers, current.CookieBrowser)), HorizontalAlignment = HorizontalAlignment.Stretch };
-        var profile = new TextBox { Name = "WebCookieProfile", Watermark = "Perfil del navegador (opcional)", Text = current.CookieProfile };
+        var profile = new WebBrowserProfilePicker(current.CookieBrowser, current.CookieProfile);
+        var fallback = new CheckBox { Name = "WebAllowPoTokenFallback",
+            Content = "Permitir un proveedor instalado como alternativa", IsChecked = current.AllowPoTokenFallback,
+            IsEnabled = po.IsChecked == true };
+        po.IsCheckedChanged += (_, _) => fallback.IsEnabled = po.IsChecked == true;
         var file = new TextBox { Name = "WebCookieFile", Text = current.CookieFile, IsReadOnly = true, Watermark = "Selecciona cookies.txt en formato Netscape" };
         var chooseFile = new Button { Content = "Elegir archivo…" };
         chooseFile.Click += async (_, _) => {
@@ -40,7 +43,7 @@ public partial class MainWindow
         };
         void UpdateAuthentication()
         {
-            browser.IsVisible = profile.IsVisible = auth.SelectedIndex == 1;
+            profile.IsVisible = auth.SelectedIndex == 1;
             file.IsVisible = chooseFile.IsVisible = auth.SelectedIndex == 2;
         }
         auth.SelectionChanged += (_, _) => UpdateAuthentication();
@@ -52,6 +55,54 @@ public partial class MainWindow
             catch (Exception ex) when (ex is InvalidOperationException or System.ComponentModel.Win32Exception)
             { error.Text = "No se pudo abrir el navegador. Abre YouTube manualmente."; }
         };
+        WebDownloadSettings ReadSettings()
+        {
+            var picked = auth.SelectedIndex == 1 ? profile.Selection() : null;
+            if (auth.SelectedIndex == 1 && picked == null)
+                throw new ArgumentException("Elige un navegador y su perfil.");
+            if (auth.SelectedIndex == 2 && !File.Exists(file.Text))
+                throw new ArgumentException("Selecciona un archivo de cookies disponible.");
+            return new WebDownloadSettings((WebDownloadQuality)quality.SelectedIndex, po.IsChecked == true,
+                picked?.Id, picked?.Profile, paste.SelectedIndex == 1, auth.SelectedIndex == 2 ? file.Text : null,
+                fallback.IsChecked == true);
+        }
+
+        var testLink = new TextBox { Name = "WebSessionTestLink", Watermark = "Enlace de YouTube para comprobar la sesión" };
+        var test = new Button { Name = "WebTestSession", Content = "Probar sesión" };
+        var testResult = Note("");
+        using var dialogLifetime = new CancellationTokenSource();
+        dialog.Closed += (_, _) => dialogLifetime.Cancel();
+        test.Click += async (_, _) =>
+        {
+            if (!WebMediaService.TryUrl(testLink.Text, out var uri) || !WebDownloadSettings.IsYouTube(uri))
+            { testResult.Text = "Introduce un enlace de YouTube."; return; }
+            test.IsEnabled = false;
+            testResult.Text = "Consultando el enlace…";
+            try
+            {
+                var settings = ReadSettings();
+                await WebSessionProbe.CheckAsync(uri, settings, dialogLifetime.Token);
+                testResult.Text = settings.HasSession
+                    ? "El enlace se pudo consultar con esta selección. Para confirmar el acceso de la cuenta, prueba un enlace que lo requiera."
+                    : "El enlace se pudo consultar sin cuenta.";
+            }
+            catch (WebDownloadFailure failure) when (failure.Kind == WebFailureKind.Verification)
+            {
+                testResult.Text = failure.Message;
+                if (await WebSessionDialogs.ConfirmVerificationAsync(dialog, uri))
+                {
+                    YouTubeRequestQueue.Shared.ResumeAfterVerification();
+                    testResult.Text = "Cola reanudada. Pulsa Probar sesión para volver a consultar.";
+                }
+            }
+            catch (OperationCanceledException) { }
+            catch (TimeoutException) { testResult.Text = "La consulta superó el tiempo de espera."; }
+            catch (Exception failure) when (failure is WebDownloadFailure or FileNotFoundException or ArgumentException)
+            { testResult.Text = failure.Message; }
+            catch (Exception failure) when (failure is IOException or UnauthorizedAccessException or System.ComponentModel.Win32Exception)
+            { testResult.Text = "No se pudo ejecutar la prueba de sesión."; }
+            finally { test.IsEnabled = true; }
+        };
         var save = new Button { Content = "Guardar", MinWidth = 85 };
         var cancel = new Button { Content = "Cancelar", MinWidth = 85 };
         cancel.Click += (_, _) => dialog.Close();
@@ -59,18 +110,12 @@ public partial class MainWindow
         {
             try
             {
-                if (auth.SelectedIndex == 2 && !File.Exists(file.Text))
-                { error.Text = "Selecciona un archivo de cookies disponible."; return; }
-                WebDownloadSettings.Save(new((WebDownloadQuality)quality.SelectedIndex,
-                    po.IsChecked == true, auth.SelectedIndex == 1 ? browsers[Math.Max(0, browser.SelectedIndex)] : null,
-                    auth.SelectedIndex == 1 ? profile.Text?.Trim() : null, paste.SelectedIndex == 1,
-                    auth.SelectedIndex == 2 ? file.Text : null));
+                WebDownloadSettings.Save(ReadSettings());
                 dialog.Close();
             }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
-            {
-                error.Text = "No se pudieron guardar los ajustes de descarga.";
-            }
+            catch (ArgumentException invalid) { error.Text = invalid.Message; }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            { error.Text = "No se pudieron guardar los ajustes de descarga."; }
         };
         dialog.Content = new ScrollViewer { Content = new StackPanel
         {
@@ -81,10 +126,12 @@ public partial class MainWindow
                 Note("La vista completa conserva la calidad disponible y puede ocupar más espacio. La ligera descarga hasta 720p de alto cuando el sitio lo permite."),
                 new TextBlock { Text = "Al pegar un enlace en la línea de tiempo (Ctrl+V)" }, paste,
                 Note("Elegir tramo cambia lo que se inserta. La fuente se descarga completa para permitir ampliar los bordes después."),
-                new TextBlock { Text = "Cuenta de YouTube (opcional)" }, auth, browser, profile, file, chooseFile, login,
+                new TextBlock { Text = "Cuenta de YouTube (opcional)" }, auth, profile, file, chooseFile, login,
                 Note("Inicia sesión en tu navegador habitual. Prometheus no solicita tu contraseña ni guarda la sesión en el proyecto. El archivo de cookies se usa mediante una copia temporal y el original no cambia."),
+                new Expander { Header = "Probar acceso a un enlace", Content = new StackPanel { Spacing = 6, Children = {
+                    testLink, test, testResult } } },
                 new Expander { Header = "Avanzado", Content = new StackPanel { Spacing = 6, Children = {
-                    po, Note("Sin proveedores de PO Token por defecto. Al desactivarlo, yt-dlp puede usar proveedores instalados. Una cuenta no elimina todas las restricciones del sitio.") } } }, error,
+                    po, fallback, Note("Si un intento falla, otra configuración puede probarse solo para ese enlace. El ajuste de proveedores instalados es opcional.") } } }, error,
                 new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right,
                     Spacing = 8, Children = { cancel, save } }
             }

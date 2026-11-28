@@ -1,5 +1,12 @@
 # Cambios
 
+## 3.23.5 | Descargas web y sesiones
+
+- Las descargas de YouTube comienzan con los ajustes elegidos y pueden probar hasta dos variantes compatibles con el error. El permiso para usar otro perfil se aplica a un solo enlace.
+- La cola comparte los límites de solicitudes entre descargas y consultas. Una verificación de YouTube se completa desde el navegador antes de reanudar.
+- Descargas web detecta perfiles compatibles, incluidos Opera y Opera GX, y permite probar el acceso a un enlace.
+- El portable incluye yt-dlp 2026.11.23 con el inventario de origen y los avisos del proveedor.
+
 ## 3.23.4 | Previsualización dinámica
 
 - Dinámica adapta la resolución del compositor del monitor tras detectar carga sostenida y recupera detalle gradualmente cuando hay margen.

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -10,6 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using Prometheus.Client.Dialogs;
 using Prometheus.Core.Model;
 
 namespace Prometheus.Client.Services;
@@ -59,8 +59,19 @@ public static class WebShelfMetadataService
             {
                 UpdateStatus(controller, projectId, itemId, "failed", ex.Message);
                 if (controller.CurrentProject.Id == projectId && controller.CurrentProject.LinkShelf.Any(x => x.Id == itemId))
+                {
+                    var verify = ex is WebDownloadFailure { Kind: WebFailureKind.Verification };
                     controller.ReportNotice("web-info:" + projectId + ":" + itemId, "Error al consultar enlace",
-                        item.Name + " · " + ex.Message, "Reintentar", () => ProbeAsync(controller, itemId));
+                        item.Name + " · " + ex.Message, verify ? "Verificar en el navegador" : "Reintentar", async () =>
+                        {
+                            if (verify)
+                            {
+                                if (!await WebSessionDialogs.ConfirmVerificationAsync(controller.OwnerWindow, uri)) return;
+                                YouTubeRequestQueue.Shared.ResumeAfterVerification();
+                            }
+                            await ProbeAsync(controller, itemId);
+                        });
+                }
             });
         }
         finally { Probes.Release(); InFlight.TryRemove(jobId, out _); }
@@ -96,22 +107,12 @@ public static class WebShelfMetadataService
             return (WebMediaNaming.FromDirectUrl(uri, name), null,
                 directKind == "image" ? uri.ToString() : null, directKind);
         }
-        var tool = LocalMediaService.Tool("yt-dlp");
-        if (!File.Exists(tool)) throw new FileNotFoundException("No se encontró yt-dlp.exe");
-        var start = new ProcessStartInfo(tool) { UseShellExecute = false, CreateNoWindow = true,
-            RedirectStandardOutput = true, RedirectStandardError = true };
-        using var credentials = WebDownloadSettings.Current.Configure(start, uri);
-        foreach (var arg in new[] { "--dump-single-json", "--skip-download", "--no-playlist", "--quiet", "--no-warnings", uri.ToString() })
-            start.ArgumentList.Add(arg);
-        using var process = Process.Start(start) ?? throw new InvalidOperationException("No se pudo consultar yt-dlp");
-        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(45));
-        using var cancel = timeout.Token.Register(() => { try { if (!process.HasExited) process.Kill(true); } catch { } });
-        var stdout = process.StandardOutput.ReadToEndAsync(timeout.Token);
-        var stderr = process.StandardError.ReadToEndAsync(timeout.Token);
-        await process.WaitForExitAsync(timeout.Token);
-        var jsonText = await stdout;
-        var error = await stderr;
-        if (process.ExitCode != 0) throw new InvalidOperationException(WebDownloadSettings.ExplainFailure(error));
+        var settings = WebDownloadSettings.Current;
+        using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(3));
+        var jsonText = WebDownloadSettings.IsYouTube(uri)
+            ? await YouTubeDownloadPolicy.RunAsync(settings, (effective, _, _) => YouTubeRequestQueue.Shared.RunAsync(
+                () => ReadMetadataAsync(effective, uri, timeout.Token), timeout.Token), timeout.Token)
+            : await ReadMetadataAsync(settings, uri, timeout.Token);
         using var document = JsonDocument.Parse(jsonText);
         var root = document.RootElement;
         var metadata = WebMediaNaming.FromYtDlp(root, uri);
@@ -122,6 +123,17 @@ public static class WebShelfMetadataService
         var audioCodec = root.TryGetProperty("acodec", out var a) && a.ValueKind == JsonValueKind.String ? a.GetString() : null;
         var kind = videoCodec == "none" && !string.IsNullOrWhiteSpace(audioCodec) && audioCodec != "none" ? "audio" : "video";
         return (metadata, duration, thumbnail, kind);
+    }
+
+    private static async Task<string> ReadMetadataAsync(WebDownloadSettings settings, Uri uri, CancellationToken token)
+    {
+        var start = WebSessionProbe.CreateProcess();
+        using var credentials = settings.ConfigureAttempt(start, uri);
+        foreach (var arg in new[] { "--dump-single-json", "--skip-download", "--no-playlist", "--quiet", uri.ToString() })
+            start.ArgumentList.Add(arg);
+        var result = await ExternalProcess.RunAsync(start, TimeSpan.FromSeconds(42), token);
+        if (result.ExitCode != 0) throw WebDownloadFailure.FromDiagnostics(result.Error);
+        return result.Output;
     }
 
     private static async Task<string?> DownloadThumbnailAsync(string? url)

@@ -12,7 +12,7 @@ Prometheus usa GPL-3.0-or-later. Cada dependencia conserva sus condiciones, titu
 | .NET autónomo | MIT y avisos originales, en `dotnet/` |
 | Visual C++ Redistributable x64 | Condiciones propias de Microsoft; instalador original firmado en `Prerequisitos/` y avisos en `vendors/` |
 | FFmpeg / ffprobe `9.1-prometheus-3.19.9`, Rubber Band 4.0.0 | GPLv3 o posterior; fuentes, recetas y verificación de la base conservadas |
-| yt-dlp 2026.08.19 | Fuente Unlicense; ejecutable combinado GPLv3 o posterior y avisos adicionales |
+| yt-dlp 2026.11.23 | Fuente Unlicense; ejecutable combinado GPLv3 o posterior y avisos adicionales |
 | Python 3.11 | PSF y avisos de sus bibliotecas, en `python/` |
 | PyTorch 2.8.0 CUDA / torchvision 0.23.0 / torchaudio 2.8.0 | BSD-3-Clause / BSD-3-Clause / BSD-2-Clause y componentes transitivos, en `python/` |
 | Faster Whisper / CTranslate2 / ONNX Runtime de Whisper | MIT y avisos nativos, en `python/` |

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Text.Json;
 using Avalonia.Threading;
+using Prometheus.Client.Dialogs;
 using Prometheus.Core.Model;
 using Prometheus.Core.Primitives;
 using Prometheus.Core.Storage;
@@ -30,7 +31,6 @@ public static class WebMediaService
         States[assetId] = new ImportState(stage, message, percent);
         Dispatcher.UIThread.Post(() => StateChanged?.Invoke(assetId));
     }
-    private static readonly SemaphoreSlim YouTubeDownload = new(1, 1);
     private static readonly HttpClient Client = new() { Timeout = TimeSpan.FromMinutes(10) };
     private static readonly ConcurrentDictionary<string, CancellationTokenSource> Running = new();
     private static readonly string[] DirectExtensions = { ".mp4", ".webm", ".mov", ".mp3", ".m4a", ".wav", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tif", ".tiff", ".avif" };
@@ -50,7 +50,7 @@ public static class WebMediaService
 
     public static async Task<bool> ImportIntoPlaceholderAsync(ProjectController controller, string url, string clipId, double sourceStart = 0, WebDownloadQuality? quality = null)
     {
-        if (PlaceholderJobs.TryGetValue(clipId, out var active) && GetState(active.AssetId)?.Stage is "preparing" or "probing" or "downloading")
+        if (PlaceholderJobs.TryGetValue(clipId, out var active) && Running.ContainsKey(active.AssetId))
         { controller.ReportStatus("Ya se está conectando un enlace a este espacio"); return false; }
         if (!TryUrl(url, out var uri)) { controller.ReportStatus("Pega un enlace HTTP o HTTPS válido"); return false; }
         var project = controller.CurrentProject;
@@ -183,15 +183,22 @@ public static class WebMediaService
             (quality == null || asset.Representations.Any(r => r.Role == Role(requestedQuality) && File.Exists(r.Locator.Path)))) return;
         var token = new CancellationTokenSource();
         if (!Running.TryAdd(assetId, token)) { token.Dispose(); return; }
+        void TrackProject()
+        {
+            if (controller.CurrentProject.Id != projectId || controller.CurrentProject.Assets.All(a => a.Id != assetId))
+                token.Cancel();
+        }
+        controller.StateChanged += TrackProject;
         SetState(assetId, "preparing", "Preparando " + WebDownloadSettings.QualityLabel(requestedQuality) + "…");
         controller.ReportStatus("Preparando enlace: " + uri.Host + " · " + WebDownloadSettings.QualityLabel(requestedQuality));
-        string? downloadedPath = null;
+        string? folder = null;
+        var fileId = Guid.NewGuid().ToString("N");
         try
         {
             if (asset.WebPreferredQuality != WebDownloadSettings.QualityId(requestedQuality))
                 controller.UndoRedo.Commit(p => p.Assets.First(a => a.Id == assetId).WebPreferredQuality =
                     WebDownloadSettings.QualityId(requestedQuality), "Elegir calidad web");
-            var folder = controller.CurrentProjectPath is { Length: > 0 } file
+            folder = controller.CurrentProjectPath is { Length: > 0 } file
                 ? ProjectStorage.GetWebDirectory(file)
                 : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Prometheus", "WebMedia", projectId);
             Directory.CreateDirectory(folder);
@@ -204,11 +211,11 @@ public static class WebMediaService
                 SetState(assetId, "downloading", "Descargando medio…");
             }
             SetState(assetId, "probing", "Obteniendo datos del medio…");
-            var (path, role) = await DownloadAsync(uri, folder, assetId + "-" + Guid.NewGuid().ToString("N")[..8],
-                token.Token, assetId, MetadataReady, settings, requestedQuality);
-            downloadedPath = path;
+            var (path, role) = await DownloadAsync(uri, folder, fileId,
+                token.Token, assetId, MetadataReady, settings, requestedQuality, controller.OwnerWindow,
+                () => NotifyVerification(controller, projectId, assetId, uri));
             SetState(assetId, "probing", "Analizando medio…");
-            var probed = await LocalMediaService.ProbeAsync(path);
+            var probed = await LocalMediaService.ProbeAsync(path, token.Token);
             if (token.IsCancellationRequested || controller.CurrentProject.Id != projectId || controller.CurrentProject.Assets.All(a => a.Id != assetId)) return;
             if (probed.RecommendedDuration is { } sourceDuration && sourceDuration.Seconds > 0 &&
                 controller.CurrentProject.Sequences.SelectMany(s => s.Clips).Any(c => c.AssetId == assetId &&
@@ -281,7 +288,8 @@ public static class WebMediaService
                 target.ContainerFormat = probed.ContainerFormat;
             }, "Resolver medio web", downloadedName +
                 (role == "preview" ? " · vista ligera" : " · vista completa"));
-            downloadedPath = null;
+            CleanDownloadFiles(folder, fileId, path);
+            folder = null;
             controller.ReportStatus("Medio web resuelto: " + controller.CurrentProject.Assets.First(a => a.Id == assetId).Name);
             if (incompatibleClips > 0) controller.ReportStatus($"{incompatibleClips} clip(s) retirados: el medio no corresponde a la pista elegida");
             SetState(assetId, "ready", role == "final" && requestedQuality == WebDownloadQuality.Light
@@ -324,11 +332,24 @@ public static class WebMediaService
         }
         finally
         {
+            controller.StateChanged -= TrackProject;
             Running.TryRemove(assetId, out _);
             token.Dispose();
-            if (downloadedPath != null)
-                try { File.Delete(downloadedPath); } catch (IOException) { } catch (UnauthorizedAccessException) { }
+            if (folder != null) CleanDownloadFiles(folder, fileId, null);
         }
+    }
+
+    private static void CleanDownloadFiles(string folder, string id, string? keep)
+    {
+        try
+        {
+            var keepPath = keep == null ? null : Path.GetFullPath(keep);
+            foreach (var path in Directory.EnumerateFiles(Path.GetFullPath(folder), id + "*"))
+                if (!path.Equals(keepPath, StringComparison.OrdinalIgnoreCase))
+                    try { File.Delete(path); }
+                    catch (Exception error) when (error is IOException or UnauthorizedAccessException) { }
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException) { }
     }
 
     private static string Role(WebDownloadQuality quality) => quality == WebDownloadQuality.Light ? "preview" : "final";
@@ -338,7 +359,8 @@ public static class WebMediaService
         ?? streams.FirstOrDefault(s => s.Kind == stream.Kind);
 
     private static async Task<(string Path, string Role)> DownloadAsync(Uri uri, string folder, string id, CancellationToken token,
-        string assetId, Action<WebMediaMetadata, double?> metadataReady, WebDownloadSettings settings, WebDownloadQuality quality)
+        string assetId, Action<WebMediaMetadata, double?> metadataReady, WebDownloadSettings settings, WebDownloadQuality quality,
+        Avalonia.Controls.Window owner, Action onVerification)
     {
         var extension = Path.GetExtension(uri.AbsolutePath).ToLowerInvariant();
         var youtube = WebDownloadSettings.IsYouTube(uri);
@@ -418,67 +440,111 @@ public static class WebMediaService
                 }
             }
         }
-        if (youtube) await YouTubeDownload.WaitAsync(token);
-        try { return (await DownloadWithYtDlpAsync(uri, folder, id, token, assetId, metadataReady, settings, quality), Role(quality)); }
-        finally { if (youtube) YouTubeDownload.Release(); }
+        if (!youtube)
+            return (await DownloadWithYtDlpAsync(uri, folder, id, token, assetId, metadataReady, settings, quality), Role(quality));
+
+        var downloaded = await YouTubeDownloadPolicy.RunAsync(settings, (effective, variant, label) =>
+        {
+            SetState(assetId, "queued", label + " · en cola");
+            var attemptId = variant == 1 ? id : $"{id}-{variant}";
+            return YouTubeRequestQueue.Shared.RunAsync(async () =>
+            {
+                SetState(assetId, "probing", label + " · consultando vídeo");
+                return await DownloadWithYtDlpAsync(uri, folder, attemptId, token, assetId,
+                    metadataReady, effective, quality, label);
+            }, token, (remaining, limited) => SetState(assetId, "queued",
+                limited ? $"YouTube limitó las solicitudes · en espera {Math.Ceiling(remaining.TotalSeconds):0} s" : label + " · en cola"),
+                onVerification);
+        }, token, async () =>
+        {
+            SetState(assetId, "waiting_session", "Este enlace requiere una sesión autorizada");
+            return await WebSessionDialogs.AskProfileAsync(owner, uri, token);
+        }, onVerification);
+        return (downloaded, Role(quality));
+    }
+
+    private static void NotifyVerification(ProjectController controller, string projectId, string assetId, Uri uri)
+    {
+        SetState(assetId, "waiting_verification", "YouTube solicita verificar la sesión · descarga en espera");
+        if (controller.CurrentProject.Id != projectId) return;
+        const string key = "youtube-verification";
+        controller.ReportNotice(key, "Verificación de YouTube",
+            "La cola de YouTube está en espera. Completa la verificación en el navegador para continuar.",
+            "Verificar en el navegador", async () =>
+            {
+                if (!await WebSessionDialogs.ConfirmVerificationAsync(controller.OwnerWindow, uri)) return;
+                controller.Notifications.Remove(key);
+                YouTubeRequestQueue.Shared.ResumeAfterVerification();
+            });
     }
 
     private static async Task<string> DownloadWithYtDlpAsync(Uri uri, string folder, string id, CancellationToken token,
-        string assetId, Action<WebMediaMetadata, double?> metadataReady, WebDownloadSettings settings, WebDownloadQuality quality)
+        string assetId, Action<WebMediaMetadata, double?> metadataReady, WebDownloadSettings settings, WebDownloadQuality quality,
+        string? attempt = null)
     {
-        var tool = LocalMediaService.Tool("yt-dlp");
-        if (!File.Exists(tool)) throw new FileNotFoundException("No se encontró yt-dlp.exe");
-        var start = new ProcessStartInfo(tool) { UseShellExecute = false, CreateNoWindow = true, RedirectStandardError = true, RedirectStandardOutput = true };
-        using var credentials = settings.Configure(start, uri, quality);
-        foreach (var arg in new[] { "--no-playlist", "--no-simulate", "--no-warnings", "--newline", "--progress",
+        token.ThrowIfCancellationRequested();
+        var start = WebSessionProbe.CreateProcess();
+        using var credentials = settings.ConfigureAttempt(start, uri, quality);
+        foreach (var arg in new[] { "--no-playlist", "--no-simulate", "--newline", "--progress",
                      "--print", "before_dl:PROMETHEUS_META:%()j",
                      "--print", "after_move:PROMETHEUS_FILE:%(filepath)s",
                      "--progress-template", "download:PROMETHEUS_PROGRESS:%(progress._percent_str)s",
                      "--restrict-filenames", "--ffmpeg-location", LocalMediaService.Tool("ffmpeg"),
                      "-o", Path.Combine(folder, id + ".%(ext)s"), uri.ToString() }) start.ArgumentList.Add(arg);
         using var process = Process.Start(start) ?? throw new InvalidOperationException("No se pudo iniciar yt-dlp");
-        using var cancel = token.Register(() => { try { if (!process.HasExited) process.Kill(true); } catch { } });
+        using var cancel = token.Register(() => ExternalProcess.Kill(process));
         var errors = ExternalProcess.ReadDiagnosticsAsync(process.StandardError);
         string? completedPath = null;
         var lastYtPercent = -5;
-        string? line;
-        while ((line = await process.StandardOutput.ReadLineAsync(token)) != null)
+        var prefix = attempt == null ? "" : attempt + " · ";
+        try
         {
-            if (line.StartsWith("PROMETHEUS_META:", StringComparison.Ordinal))
+            string? line;
+            while ((line = await process.StandardOutput.ReadLineAsync(token)) != null)
             {
-                try
+                if (line.StartsWith("PROMETHEUS_META:", StringComparison.Ordinal))
                 {
-                    using var json = JsonDocument.Parse(line["PROMETHEUS_META:".Length..]);
-                    var metadata = WebMediaNaming.FromYtDlp(json.RootElement, uri);
-                    var duration = json.RootElement.TryGetProperty("duration", out var value) &&
-                        value.ValueKind == JsonValueKind.Number && value.TryGetDouble(out var seconds) &&
-                        seconds > 0 ? seconds : (double?)null;
-                    metadataReady(metadata, duration);
-                }
-                catch (JsonException) { /* Some sites omit fields; the file can still download. */ }
-            }
-            else if (line.StartsWith("PROMETHEUS_PROGRESS:", StringComparison.Ordinal))
-            {
-                var value = line["PROMETHEUS_PROGRESS:".Length..].Trim().TrimEnd('%');
-                if (double.TryParse(value, System.Globalization.NumberStyles.Float,
-                        System.Globalization.CultureInfo.InvariantCulture, out var percent))
-                {
-                    var rounded = (int)Math.Clamp(percent, 0, 100);
-                    if (rounded >= lastYtPercent + 5 || rounded == 100 && lastYtPercent < 100)
+                    try
                     {
-                        lastYtPercent = rounded;
-                        SetState(assetId, "downloading", $"Descargando · {rounded}%", rounded);
+                        using var json = JsonDocument.Parse(line["PROMETHEUS_META:".Length..]);
+                        var metadata = WebMediaNaming.FromYtDlp(json.RootElement, uri);
+                        var duration = json.RootElement.TryGetProperty("duration", out var value) &&
+                            value.ValueKind == JsonValueKind.Number && value.TryGetDouble(out var seconds) &&
+                            seconds > 0 ? seconds : (double?)null;
+                        metadataReady(metadata, duration);
+                        SetState(assetId, "downloading", prefix + "descargando medio…");
+                    }
+                    catch (JsonException) { /* Some sites omit fields; the file can still download. */ }
+                }
+                else if (line.StartsWith("PROMETHEUS_PROGRESS:", StringComparison.Ordinal))
+                {
+                    var value = line["PROMETHEUS_PROGRESS:".Length..].Trim().TrimEnd('%');
+                    if (double.TryParse(value, System.Globalization.NumberStyles.Float,
+                            System.Globalization.CultureInfo.InvariantCulture, out var percent))
+                    {
+                        var rounded = (int)Math.Clamp(percent, 0, 100);
+                        if (rounded >= lastYtPercent + 5 || rounded == 100 && lastYtPercent < 100)
+                        {
+                            lastYtPercent = rounded;
+                            SetState(assetId, "downloading", $"{prefix}Descargando · {rounded}%", rounded);
+                        }
                     }
                 }
+                else if (line.StartsWith("PROMETHEUS_FILE:", StringComparison.Ordinal))
+                    completedPath = line["PROMETHEUS_FILE:".Length..].Trim();
             }
-            else if (line.StartsWith("PROMETHEUS_FILE:", StringComparison.Ordinal))
-                completedPath = line["PROMETHEUS_FILE:".Length..].Trim();
+            await process.WaitForExitAsync(token);
+            var diagnostic = await errors;
+            token.ThrowIfCancellationRequested();
+            if (process.ExitCode != 0) throw WebDownloadFailure.FromDiagnostics(diagnostic, quality);
+            if (!string.IsNullOrWhiteSpace(completedPath) && File.Exists(completedPath)) return completedPath;
+            throw new FileNotFoundException("El enlace no produjo un archivo de medios.");
         }
-        await process.WaitForExitAsync(token);
-        if (process.ExitCode != 0) throw new InvalidOperationException(WebDownloadSettings.ExplainFailure(await errors, quality));
-        await errors;
-        if (!string.IsNullOrWhiteSpace(completedPath) && File.Exists(completedPath)) return completedPath;
-        throw new FileNotFoundException("El enlace no produjo un archivo de medios.");
+        finally
+        {
+            ExternalProcess.Kill(process);
+            await process.WaitForExitAsync();
+        }
     }
 
     private static void Place(ProjectController controller, string assetId, string trackId, double at,

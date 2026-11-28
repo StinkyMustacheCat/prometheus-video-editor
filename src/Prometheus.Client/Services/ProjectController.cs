@@ -19,6 +19,7 @@ namespace Prometheus.Client.Services;
 public partial class ProjectController
 {
     private readonly Window _ownerWindow;
+    internal Window OwnerWindow => _ownerWindow;
     private readonly UndoRedoManager _undoRedoManager;
     private readonly DispatcherTimer _autosaveTimer;
     private readonly DispatcherTimer _historyTimer;
