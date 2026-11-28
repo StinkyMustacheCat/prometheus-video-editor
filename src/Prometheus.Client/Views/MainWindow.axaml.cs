@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.VisualTree;
 using Prometheus.Client.Docking;
 using Prometheus.Client.Panels;
 using Prometheus.Client.Services;
@@ -45,7 +46,8 @@ public partial class MainWindow : Window
 
         _projectController = new ProjectController(this);
         AddHandler(KeyDownEvent, TransportKeyDown, RoutingStrategies.Tunnel);
-        AddHandler(KeyUpEvent, TransportKeyUp, RoutingStrategies.Tunnel);
+        AddHandler(KeyUpEvent, TransportKeyUp, RoutingStrategies.Tunnel, handledEventsToo: true);
+        AddHandler(PointerPressedEvent, RestoreTransportFocus, RoutingStrategies.Tunnel);
         Deactivated += (_, _) => _spacePressed = false;
         _projectController.StateChanged += UpdateProjectUI;
         _projectController.StatusMessageRequested += msg => StatusBarStatus.Text = msg;
@@ -156,6 +158,12 @@ public partial class MainWindow : Window
 
     private async void OnMainWindowClosing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
+        if (_projectController.AnalysisWork.Active is { } analysis)
+        {
+            e.Cancel = true;
+            analysis.Cancel();
+            return;
+        }
         if (!_closeApproved && _projectController.IsDirty)
         {
             e.Cancel = true;
@@ -191,7 +199,9 @@ public partial class MainWindow : Window
 
     private async void CaptureSelectionToShelf()
     {
+        if (_projectController.AnalysisWork.Active != null) return;
         var content = await AdaptiveClipboard.ReadAsync(this);
+        if (_projectController.AnalysisWork.Active != null) return;
         var text = content.Files.Length > 0 ? string.Join(Environment.NewLine, content.Files) : content.Text;
         if (!string.IsNullOrWhiteSpace(text))
         {
@@ -328,6 +338,19 @@ public partial class MainWindow : Window
         if (name == null) return;
         try { _projectController.UndoRedo.Commit(p => SequenceOperations.Rename(p, id, name), "Renombrar secuencia"); }
         catch (Exception ex) { _projectController.ReportStatus(ex.Message); }
+    }
+
+    private void RestoreTransportFocus(object? sender, PointerPressedEventArgs e)
+    {
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed ||
+            !SpaceShortcutPolicy.IsTextInput(FocusManager?.GetFocusedElement()) || e.Source is not Visual visual)
+            return;
+        // Blank panel surfaces can leave the last text editor focused. Preserve
+        // normal pointer focus on actual controls and leave popup roots alone.
+        if (!ReferenceEquals(TopLevel.GetTopLevel(visual), this)) return;
+        for (var current = visual; current != null && current != this; current = current.GetVisualParent())
+            if (current is InputElement { Focusable: true }) return;
+        Focus(NavigationMethod.Pointer);
     }
 
     private void TransportKeyDown(object? sender, KeyEventArgs e)

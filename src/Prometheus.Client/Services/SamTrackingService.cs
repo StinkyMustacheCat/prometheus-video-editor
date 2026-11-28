@@ -27,7 +27,7 @@ public static class SamTrackingService
 
     public static SamMaskTrack Track(Project project, string clipId, string sourcePath,
         string projectPath, double anchorSourceSeconds, SamMaskKeyframe seed,
-        IProgress<(int Done, int Total)>? progress, CancellationToken cancellation)
+        IProgress<(int Done, int Total)>? progress, CancellationToken cancellation, Action? loadingModel = null)
     {
         var sequence = project.ActiveSequence ?? throw new InvalidOperationException("No hay montaje activo.");
         var clip = sequence.Clips.FirstOrDefault(item => item.Id == clipId) ??
@@ -56,7 +56,9 @@ public static class SamTrackingService
         var completed = new bool[count];
         var done = 0;
         using var worker = new Sam2VideoBridge();
+        loadingModel?.Invoke();
         worker.Prepare(cancellation);
+        progress?.Report((0, count));
         byte[][] initialSeeds = seed.DecodeObjectAlphas().ToArray();
         var checkpoint = new SamTrackingCheckpoint(projectPath, project, clip,
             sourcePath, seed, fps, count, anchor, CheckpointMode("track", worker.Backend));
@@ -115,6 +117,7 @@ public static class SamTrackingService
                 });
                 for (var local = 0; local < tracked.Count; local++)
                 {
+                    cancellation.ThrowIfCancellationRequested();
                     var index = low + local;
                     var frame = tracked[local];
                     masks[index] = SamMaskKeyframe.Create(start + index / fps,
@@ -154,7 +157,7 @@ public static class SamTrackingService
             FrameCount = count, Width = first.Width, Height = first.Height,
             SourceFileLength = new FileInfo(sourcePath).Length,
             SourceFileWriteUtcTicks = File.GetLastWriteTimeUtc(sourcePath).Ticks };
-        SamMaskTrackStore.Write(projectPath, track, masks.Select(mask => mask!).ToArray());
+        SamMaskTrackStore.Write(projectPath, track, masks.Select(mask => mask!).ToArray(), cancellation);
         checkpoint.Complete();
         return track;
     }
@@ -163,7 +166,7 @@ public static class SamTrackingService
     public static SamMaskTrack Repair(Project project, string clipId, string sourcePath,
         string projectPath, double anchorSourceSeconds, SamMaskKeyframe seed,
         SamMaskTrack previous, IProgress<(int Done, int Total)>? progress,
-        CancellationToken cancellation)
+        CancellationToken cancellation, Action? loadingModel = null)
     {
         var clip = project.ActiveSequence?.Clips.FirstOrDefault(item => item.Id == clipId) ??
             throw new InvalidOperationException("El clip SAM ya no existe.");
@@ -185,7 +188,9 @@ public static class SamTrackingService
         using var video = new GpuVideoSurface(sourcePath,
             initialSeconds: previous.StartSourceSeconds + anchor / fps, exactDecode: true);
         using var worker = new Sam2VideoBridge();
+        loadingModel?.Invoke();
         worker.Prepare(cancellation);
+        progress?.Report((0, total));
         var initialSeeds = seed.DecodeObjectAlphas().ToArray();
         var checkpoint = new SamTrackingCheckpoint(projectPath, project, clip,
             sourcePath, seed, fps, count, anchor, CheckpointMode("repair:" + previous.Id, worker.Backend));
@@ -279,7 +284,7 @@ public static class SamTrackingService
             Width = previous.Width, Height = previous.Height,
             SourceFileLength = previous.SourceFileLength,
             SourceFileWriteUtcTicks = previous.SourceFileWriteUtcTicks };
-        SamMaskTrackStore.WritePatched(projectPath, previous, replacement, changed);
+        SamMaskTrackStore.WritePatched(projectPath, previous, replacement, changed, cancellation);
         checkpoint.Complete();
         return replacement;
     }

@@ -26,6 +26,8 @@ internal sealed class McpMediaWorkService(ProjectController controller)
         public string Path { get; } = path;
         public DateTime LastWrite { get; } = File.GetLastWriteTimeUtc(path);
         public CancellationTokenSource Cancellation { get; } = new();
+        public HeavyAnalysisWork.Session? Work { get; set; }
+        public CancellationToken Token => Work?.Token ?? Cancellation.Token;
         public string State { get; set; } = "running";
         public string Stage { get; set; } = "preparing";
         public double Progress { get; set; }
@@ -57,13 +59,15 @@ internal sealed class McpMediaWorkService(ProjectController controller)
         if (job.State == "running")
         {
             job.State = "cancelling";
-            job.Cancellation.Cancel();
+            if (job.Work is { } work) work.Cancel();
+            else job.Cancellation.Cancel();
         }
         return Describe(job);
     }
 
     private object Start(JsonElement args)
     {
+        controller.AnalysisWork.EnsureIdle();
         var kind = McpJson.String(args, "kind") ?? throw new ArgumentException("Falta kind.");
         var project = controller.CurrentProject;
         if (args.TryGetProperty("expected_revision", out _) && McpJson.Int(args, "expected_revision", -1) != project.Revision)
@@ -97,6 +101,10 @@ internal sealed class McpMediaWorkService(ProjectController controller)
             "sam_track" => PrepareTracking(job, project, args),
             _ => throw new ArgumentException("kind debe ser whisper, silence, sam_seed o sam_track.")
         };
+        if (kind == "whisper")
+            job.Work = controller.AnalysisWork.Begin("Transcripción Whisper", clip, "Preparando el audio…");
+        else if (kind == "sam_track")
+            job.Work = controller.AnalysisWork.Begin("Seguimiento SAM", clip, "Preparando el vídeo…");
         if (_jobs.Count >= 40)
         {
             var old = _jobs.Values.FirstOrDefault(item => item.State is "completed" or "cancelled" or "failed");
@@ -111,7 +119,8 @@ internal sealed class McpMediaWorkService(ProjectController controller)
     {
         try
         {
-            job.Result = await action();
+            await using (job.Work)
+                job.Result = await action();
             job.Progress = 1;
             job.State = "completed";
             job.Stage = "complete";
@@ -127,7 +136,7 @@ internal sealed class McpMediaWorkService(ProjectController controller)
             if (controller.CurrentProject.Id == job.ProjectId)
                 controller.ReportNotice("mcp-analysis:" + job.Id, "Error de análisis MCP", job.Kind + " · " + error.Message);
         }
-        finally { job.Cancellation.Dispose(); }
+        finally { job.Work = null; job.Cancellation.Dispose(); }
     }
 
     private Func<Task<object>> PrepareWhisper(Job job, Asset asset, JsonElement args)
@@ -140,14 +149,8 @@ internal sealed class McpMediaWorkService(ProjectController controller)
             ?? throw new ArgumentException("El medio no contiene la pista de audio seleccionada.");
         return async () =>
         {
-            var progress = new Progress<double>(value =>
-            {
-                if (job.State != "running") return;
-                job.Stage = "transcribing";
-                job.Progress = Math.Max(job.Progress, value);
-            });
             var result = await WhisperTranscriptionService.TranscribeAsync(job.Path, job.Clip,
-                "Whisper · " + asset.Name, job.Cancellation.Token, progress, stream);
+                "Whisper · " + asset.Name, job.Token, job.Work, stream);
             result.Document.CaptionMode = mode;
             job.Stage = "applying";
             IReadOnlyList<string> captions = [];
@@ -254,30 +257,31 @@ internal sealed class McpMediaWorkService(ProjectController controller)
             ? SamMaskKeyframe.At(new Clip { SamMasks = mask.SamMasks }, SourceTime(job.Clip, args), project.Sequences.Single(s => s.Id == job.SequenceId).Fps.Seconds)
             : mask.SamMasks.LastOrDefault();
         if (seed == null) throw new ArgumentException("No hay una máscara inicial en ese fotograma.");
-        var snapshot = ProjectStore.Clone(project);
-        snapshot.ActiveSequenceId = job.SequenceId;
-        var snapshotClip = snapshot.ActiveSequence!.Clips.Single(item => item.Id == job.Clip.Id);
-        snapshotClip.SamMasks = mask.SamMasks;
-        snapshotClip.SamMaskTracks = mask.SamMaskTracks;
-        snapshotClip.ShapeMask = null;
         var repair = McpJson.Bool(args, "repair");
         var previous = repair ? mask.SamMaskTracks.LastOrDefault() : null;
-        if (repair && (previous == null || !SamTrackingService.CanRepair(snapshotClip, previous, seed.SourceSeconds) ||
-            SamMaskTrackValidity.Problem(snapshotClip, previous, job.Path) != null ||
+        if (repair && (previous == null || !SamTrackingService.CanRepair(job.Clip, previous, seed.SourceSeconds) ||
+            SamMaskTrackValidity.Problem(job.Clip, previous, job.Path) != null ||
             !File.Exists(SamMaskTrackStore.PathFor(projectPath, previous.Id))))
             throw new InvalidOperationException("La corrección necesita un seguimiento anterior que cubra el clip.");
         return async () =>
         {
-            job.Stage = "tracking";
-            var progress = new Progress<(int Done, int Total)>(value =>
+            var work = job.Work!;
+            var track = await Task.Run(() =>
             {
-                if (job.State == "running" && value.Total > 0) job.Progress = (double)value.Done / value.Total;
-            });
-            var track = await Task.Run(() => previous != null
-                ? SamTrackingService.Repair(snapshot, job.Clip.Id, job.Path, projectPath, seed.SourceSeconds,
-                    seed, previous, progress, job.Cancellation.Token)
-                : SamTrackingService.Track(snapshot, job.Clip.Id, job.Path, projectPath, seed.SourceSeconds,
-                    seed, progress, job.Cancellation.Token), job.Cancellation.Token);
+                var snapshot = ProjectStore.Clone(project);
+                snapshot.ActiveSequenceId = job.SequenceId;
+                var snapshotClip = snapshot.ActiveSequence!.Clips.Single(item => item.Id == job.Clip.Id);
+                var maskSnapshot = ClipMaskStack.Read(snapshotClip).Single(item => item.Id == mask.Id);
+                snapshotClip.SamMasks = maskSnapshot.SamMasks;
+                snapshotClip.SamMaskTracks = maskSnapshot.SamMaskTracks;
+                snapshotClip.ShapeMask = null;
+                void LoadingModel() => work.Report("loading_model", "Cargando el modelo SAM…");
+                return previous != null
+                    ? SamTrackingService.Repair(snapshot, job.Clip.Id, job.Path, projectPath, seed.SourceSeconds,
+                        seed, previous, work, work.Token, LoadingModel)
+                    : SamTrackingService.Track(snapshot, job.Clip.Id, job.Path, projectPath, seed.SourceSeconds,
+                        seed, work, work.Token, LoadingModel);
+            }, work.Token);
             Commit(job, (_, _, clip) =>
             {
                 var layer = ClipMaskStack.Edit(clip).FirstOrDefault(item => item.Id == mask.Id && item.Kind == "sam" &&
@@ -297,7 +301,8 @@ internal sealed class McpMediaWorkService(ProjectController controller)
 
     private void Commit(Job job, Action<Project, Sequence, Clip> mutation, string description)
     {
-        job.Cancellation.Token.ThrowIfCancellationRequested();
+        job.Token.ThrowIfCancellationRequested();
+        controller.AnalysisWork.EnsureIdle(job.Work);
         if (controller.CurrentProject.Id != job.ProjectId) throw ChangedClip();
         controller.UndoRedo.Commit(project =>
         {
@@ -339,7 +344,13 @@ internal sealed class McpMediaWorkService(ProjectController controller)
     private static InvalidOperationException ChangedClip() =>
         new("El clip, su pista o su archivo cambiaron durante el análisis. Inicia el trabajo de nuevo.");
 
-    private static object Describe(Job job) => new { job_id = job.Id, kind = job.Kind, state = job.State,
-        stage = job.Stage, progress = job.Progress, project_id = job.ProjectId, sequence_id = job.SequenceId,
-        clip_id = job.Clip.Id, error = job.Error, result = job.Result };
+    private static object Describe(Job job)
+    {
+        var state = job.State == "running" && job.Work?.IsCancelling == true ? "cancelling" : job.State;
+        var progress = job.State is "running" or "cancelling" ? job.Work?.Progress : null;
+        return new { job_id = job.Id, kind = job.Kind, state,
+            stage = progress?.Stage ?? job.Stage, progress = progress?.Fraction ?? job.Progress,
+            project_id = job.ProjectId, sequence_id = job.SequenceId,
+            clip_id = job.Clip.Id, error = job.Error, result = job.Result };
+    }
 }

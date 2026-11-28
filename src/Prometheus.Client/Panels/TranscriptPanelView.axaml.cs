@@ -3,7 +3,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Prometheus.Client.Services;
@@ -19,7 +18,6 @@ public partial class TranscriptPanelView : UserControl
         public override string ToString() => Label;
     }
     private ProjectController? _controller;
-    private CancellationTokenSource? _transcribing;
     private string? _documentId;
     private string? _wordId;
     private bool _syncing;
@@ -41,7 +39,6 @@ public partial class TranscriptPanelView : UserControl
         TranscribeButton.Click += async (_, _) => await TranscribeAsync();
         ImportButton.Click += async (_, _) => await ImportAsync();
         FromMediaButton.Click += async (_, _) => await FromMediaAsync();
-        CancelButton.Click += (_, _) => _transcribing?.Cancel();
         SaveWordButton.Click += (_, _) => SaveWord();
         ApplyButton.Click += (_, _) => Apply();
         ExportButton.Click += async (_, _) => await ExportAsync();
@@ -291,7 +288,7 @@ public partial class TranscriptPanelView : UserControl
 
     private async System.Threading.Tasks.Task TranscribeAsync()
     {
-        if (_controller == null || _transcribing != null) return;
+        if (_controller == null) return;
         var controller = _controller;
         var project = controller.CurrentProject;
         var sequence = project.ActiveSequence;
@@ -299,23 +296,17 @@ public partial class TranscriptPanelView : UserControl
         if (selection == null)
         { controller.ReportStatus("Selecciona un clip con audio en la línea de tiempo."); return; }
         var (audio, asset, path) = selection.Value;
-        var token = new CancellationTokenSource();
-        _transcribing = token;
-        TranscribeButton.IsEnabled = false;
-        CancelButton.IsEnabled = true;
-        InfoText.Text = "Preparando la transcripción local…";
         try
         {
+            if (!WhisperTranscriptionService.IsAvailable)
+                throw new InvalidOperationException("El motor Whisper local no está disponible.");
             var stream = LocalMediaService.AudioOrdinal(asset, audio, path);
-            var progress = new Progress<double>(value =>
-            {
-                if (ReferenceEquals(_transcribing, token) && !token.IsCancellationRequested)
-                    InfoText.Text = $"Whisper · {value:P0}";
-            });
+            await using var work = controller.AnalysisWork.Begin("Transcripción Whisper", audio, "Preparando el audio…");
             var result = await WhisperTranscriptionService.TranscribeAsync(path, audio,
-                "Whisper · " + asset.Name, token.Token, progress, stream);
+                "Whisper · " + asset.Name, work.Token, work, stream);
+            work.Token.ThrowIfCancellationRequested();
             if (controller.CurrentProject.Id != project.Id ||
-                controller.CurrentProject.ActiveSequenceId != sequence!.Id || token.IsCancellationRequested)
+                controller.CurrentProject.ActiveSequenceId != sequence!.Id)
                 return;
             var currentAudio = controller.CurrentProject.ActiveSequence!.Clips.FirstOrDefault(clip => clip.Id == audio.Id);
             if (currentAudio == null || currentAudio.AssetId != audio.AssetId || currentAudio.StreamId != audio.StreamId || currentAudio.SourceIn != audio.SourceIn ||
@@ -340,13 +331,6 @@ public partial class TranscriptPanelView : UserControl
             controller.ReportStatus(InfoText.Text);
         }
         catch (Exception ex) { controller.ReportStatus("Whisper: " + ex.Message); InfoText.Text = ex.Message; }
-        finally
-        {
-            _transcribing = null;
-            token.Dispose();
-            TranscribeButton.IsEnabled = true;
-            CancelButton.IsEnabled = false;
-        }
     }
 
     private async System.Threading.Tasks.Task ExportAsync()

@@ -31,6 +31,7 @@ public partial class ProjectController
 
     public UndoRedoManager UndoRedo => _undoRedoManager;
     public PlaybackTransport Transport { get; }
+    internal HeavyAnalysisWork AnalysisWork { get; }
     public Project CurrentProject => _undoRedoManager.CurrentProject;
     public string? CurrentProjectPath => _currentProjectPath;
     public string? ResourceProjectPath => _resourceProjectPath ?? _currentProjectPath;
@@ -222,6 +223,7 @@ public partial class ProjectController
         RecordAction("Crear proyecto");
         _lastAudioPlan = AudioMixPlan.Create(initialProj, 0);
         Transport = new PlaybackTransport(() => CurrentProject);
+        AnalysisWork = new HeavyAnalysisWork(ownerWindow, Transport);
         Transport.AudioError += message =>
         {
             var projectId = CurrentProject.Id;

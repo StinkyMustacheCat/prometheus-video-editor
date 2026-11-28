@@ -41,7 +41,6 @@ public partial class MonitorPanelView
     }
     private readonly List<SamSelectionRegion> _samRegions = new();
     private string? _samRegionsKey;
-    private CancellationTokenSource? _samTrackingCancellation;
     private bool SamToolEnabled => ProjectController.Instance?.SamToolEnabled == true;
 
     private void SetupSamSelection()
@@ -51,8 +50,7 @@ public partial class MonitorPanelView
         ViewportHost.AddHandler(PointerPressedEvent, OnSamMaskPressed, RoutingStrategies.Tunnel, true);
         SamApplyButton.Click += (_, _) => ApplySamMask();
         SamRemoveButton.Click += (_, _) => RemoveSamMask();
-        SamTrackButton.Click += (_, _) => StartSamTracking();
-        SamCancelTrackButton.Click += (_, _) => _samTrackingCancellation?.Cancel();
+        SamTrackButton.Click += async (_, _) => await TrackSamMotionAsync();
         SamRemoveTrackButton.Click += (_, _) => RemoveSamTrack();
     }
 
@@ -115,7 +113,8 @@ public partial class MonitorPanelView
     private void ScheduleSamPreparation()
     {
         CancelSamPreparation();
-        if (!_attached || !SamToolEnabled || _transport?.IsPlaying == true) return;
+        if (!_attached || !SamToolEnabled || _transport?.IsPlaying == true ||
+            ProjectController.Instance?.AnalysisWork.Active != null) return;
         var source = VisibleSamSource();
         if (source == null || source.Value.Key == _samPreparedKey) return;
         var delay = new CancellationTokenSource();
@@ -353,18 +352,18 @@ public partial class MonitorPanelView
         var seed = mask == null ? null : SamMaskKeyframe.At(new Clip { SamMasks = mask.SamMasks },
             layer.SourceSeconds, sequence!.Fps.Seconds);
         if ((hasPending || seed != null) && !StillImageRules.IsStill(controller.CurrentProject, clip) &&
-            _samTrackingCancellation == null)
+            controller.AnalysisWork.Active == null)
         {
             var canTrack = Sam2VideoBridge.IsAvailable && controller.CurrentProjectPath != null;
             var follow = new MenuItem { Header = "Seguir objeto", IsEnabled = canTrack };
             if (!canTrack) ToolTip.SetTip(follow, controller.CurrentProjectPath == null
                 ? "Guarda el proyecto para seguir el movimiento"
                 : "El motor local SAM 2.1 no está disponible");
-            follow.Click += (_, _) =>
+            follow.Click += async (_, _) =>
             {
                 if (hasPending && !ApplySamMask()) return;
                 if (!hasPending) controller.SelectMask(mask!.Id);
-                StartSamTracking();
+                await TrackSamMotionAsync();
             };
             actions.Add(follow);
         }
@@ -468,25 +467,22 @@ public partial class MonitorPanelView
             ? "Quitar la máscara de forma de todo el clip. Se puede deshacer."
             : still ? "Quitar la máscara de toda la imagen fija. Se puede deshacer."
             : "Quitar la máscara de este fotograma. Se puede deshacer.");
-        SamTrackButton.IsVisible = !still && shape == null && manual != null &&
-            _samTrackingCancellation == null;
+        SamTrackButton.IsVisible = !still && shape == null && manual != null;
         var path = controller?.CurrentProject.Assets.FirstOrDefault(asset =>
             asset.Id == clip?.AssetId)?.EffectiveLocator?.Path;
         SamTrackButton.Content = clip != null &&
             layer?.SamMaskTracks.LastOrDefault() is { } existing &&
             SamMaskTrackValidity.Problem(clip, existing, path) == null
             ? "Corregir tramo" : "Seguir movimiento";
-        SamCancelTrackButton.IsVisible = _samTrackingCancellation != null;
-        SamRemoveTrackButton.IsVisible = shape == null && layer?.SamMaskTracks.Count > 0 &&
-            _samTrackingCancellation == null;
+        SamRemoveTrackButton.IsVisible = shape == null && layer?.SamMaskTracks.Count > 0;
         RefreshShapeOutline();
     }
 
-    private void StartSamTracking()
+    private async Task TrackSamMotionAsync()
     {
         var controller = ProjectController.Instance;
         var source = VisibleSamSource();
-        if (_samTrackingCancellation != null || controller == null || source == null) return;
+        if (controller == null || source == null) return;
         if (StillImageRules.IsStill(controller.CurrentProject, source.Value.Layer.Clip))
         {
             controller.ReportStatus("La máscara de esta imagen fija se aplica a todo el clip");
@@ -522,61 +518,45 @@ public partial class MonitorPanelView
             return;
         }
         projectPath = controller.ResourceProjectPath ?? projectPath;
-        var snapshot = ProjectStore.Clone(controller.CurrentProject);
-        var snapshotClip = snapshot.ActiveSequence!.Clips.First(item => item.Id == clip.Id);
-        var snapshotLayer = ClipMaskStack.Read(snapshotClip)
-            .First(item => item.Id == layer.Id);
-        snapshotClip.SamMasks = snapshotLayer.SamMasks;
-        snapshotClip.SamMaskTracks = snapshotLayer.SamMaskTracks;
-        snapshotClip.ShapeMask = null;
-        var cancellation = new CancellationTokenSource();
-        _samTrackingCancellation = cancellation;
-        UpdateSamRemoveButton();
-        controller.ReportStatus("SAM: iniciando seguimiento en segundo plano…");
-        _ = TrackSamMotionAsync(snapshot, clip.Id, layer.Id, assetPath, projectPath,
-            source.Value.Layer.SourceSeconds, seed, cancellation);
-    }
-
-    private async Task TrackSamMotionAsync(Project snapshot, string clipId, string maskLayerId,
-        string assetPath,
-        string projectPath, double sourceSeconds, SamMaskKeyframe seed,
-        CancellationTokenSource cancellation)
-    {
-        var progress = new Progress<(int Done, int Total)>(value =>
-        {
-            if (!cancellation.IsCancellationRequested &&
-                ProjectController.Instance?.CurrentProject.Id == snapshot.Id)
-                ProjectController.Instance.ReportStatus(
-                    $"SAM: seguimiento {value.Done}/{value.Total} fotogramas");
-        });
+        var sourceProject = controller.CurrentProject;
+        var sequenceId = sourceProject.ActiveSequenceId;
+        var sourceSeconds = source.Value.Layer.SourceSeconds;
+        var previous = layer.SamMaskTracks.LastOrDefault();
+        var clipId = clip.Id;
+        var maskLayerId = layer.Id;
         try
         {
-            var existing = snapshot.ActiveSequence?.Clips.FirstOrDefault(item => item.Id == clipId)
-                ?.SamMaskTracks.LastOrDefault();
-            var repairing = existing != null &&
-                SamTrackingService.CanRepair(snapshot.ActiveSequence!.Clips.First(item => item.Id == clipId),
-                    existing, sourceSeconds) &&
-                SamMaskTrackValidity.Problem(snapshot.ActiveSequence.Clips.First(item => item.Id == clipId),
-                    existing, assetPath) == null &&
-                System.IO.File.Exists(SamMaskTrackStore.PathFor(projectPath, existing.Id));
-            var track = await Task.Run(() => repairing
-                ? SamTrackingService.Repair(snapshot, clipId, assetPath, projectPath,
-                    sourceSeconds, seed, existing!, progress, cancellation.Token)
-                : SamTrackingService.Track(snapshot, clipId, assetPath, projectPath,
-                    sourceSeconds, seed, progress, cancellation.Token));
-            cancellation.Token.ThrowIfCancellationRequested();
-            var controller = ProjectController.Instance;
-            var oldClip = snapshot.ActiveSequence?.Clips.FirstOrDefault(item => item.Id == clipId);
-            var currentClip = controller?.CurrentProject.ActiveSequence?.Clips
+            await using var work = controller.AnalysisWork.Begin("Seguimiento SAM", clip, "Preparando el vídeo…");
+            CancelSamPreparation();
+            var (track, repairing) = await Task.Run(() =>
+            {
+                var snapshot = ProjectStore.Clone(sourceProject);
+                var snapshotClip = snapshot.ActiveSequence!.Clips.Single(item => item.Id == clipId);
+                var snapshotLayer = ClipMaskStack.Read(snapshotClip).Single(item => item.Id == maskLayerId);
+                snapshotClip.SamMasks = snapshotLayer.SamMasks;
+                snapshotClip.SamMaskTracks = snapshotLayer.SamMaskTracks;
+                snapshotClip.ShapeMask = null;
+                var repair = previous != null && SamTrackingService.CanRepair(snapshotClip, previous, sourceSeconds) &&
+                    SamMaskTrackValidity.Problem(snapshotClip, previous, assetPath) == null &&
+                    System.IO.File.Exists(SamMaskTrackStore.PathFor(projectPath, previous.Id));
+                void LoadingModel() => work.Report("loading_model", "Cargando el modelo SAM…");
+                var result = repair
+                    ? SamTrackingService.Repair(snapshot, clipId, assetPath, projectPath, sourceSeconds, seed,
+                        previous!, work, work.Token, LoadingModel)
+                    : SamTrackingService.Track(snapshot, clipId, assetPath, projectPath, sourceSeconds, seed,
+                        work, work.Token, LoadingModel);
+                return (result, repair);
+            }, work.Token);
+            work.Token.ThrowIfCancellationRequested();
+            var currentClip = controller.CurrentProject.ActiveSequence?.Clips
                 .FirstOrDefault(item => item.Id == clipId);
-            if (!_attached || controller == null || controller.CurrentProject.Id != snapshot.Id ||
-                controller.CurrentProject.ActiveSequenceId != snapshot.ActiveSequenceId ||
-                currentClip == null || oldClip == null || currentClip.AssetId != oldClip.AssetId ||
-                currentClip.SourceIn != oldClip.SourceIn || currentClip.Duration != oldClip.Duration ||
-                currentClip.Speed != oldClip.Speed)
+            if (controller.CurrentProject.Id != sourceProject.Id || controller.CurrentProject.ActiveSequenceId != sequenceId ||
+                currentClip == null || currentClip.AssetId != clip.AssetId || currentClip.SourceIn != clip.SourceIn ||
+                currentClip.Duration != clip.Duration || currentClip.Speed != clip.Speed)
                 throw new InvalidOperationException("El clip cambió durante SAM. Inicia de nuevo el seguimiento.");
-            if (!ClipMaskStack.Read(currentClip).Any(layer => layer.Id == maskLayerId &&
-                layer.Kind == "sam"))
+            if (!ClipMaskStack.Read(currentClip).Any(item => item.Id == maskLayerId &&
+                item.Kind == "sam" && item.SamMasks.Any(mask => mask.Id == seed.Id) &&
+                (!repairing || item.SamMaskTracks.LastOrDefault()?.Id == previous!.Id)))
                 throw new InvalidOperationException("La máscara seleccionada cambió durante SAM.");
             if (controller.CurrentProjectPath is not { } currentPath)
                 throw new InvalidOperationException("Guarda el proyecto antes de aplicar el seguimiento.");
@@ -585,9 +565,9 @@ public partial class MonitorPanelView
             controller.UndoRedo.Commit(project =>
             {
                 var target = project.ActiveSequence!.Clips.First(item => item.Id == clipId);
-                var layer = ClipMaskStack.Edit(target).First(item => item.Id == maskLayerId);
-                layer.SamMaskTracks.Clear();
-                layer.SamMaskTracks.Add(track);
+                var targetLayer = ClipMaskStack.Edit(target).First(item => item.Id == maskLayerId);
+                targetLayer.SamMaskTracks.Clear();
+                targetLayer.SamMaskTracks.Add(track);
             }, "Seguir máscara SAM");
             controller.ReportStatus(repairing
                 ? "SAM: tramo corregido · seguimiento conservado"
@@ -603,9 +583,6 @@ public partial class MonitorPanelView
         }
         finally
         {
-            if (ReferenceEquals(_samTrackingCancellation, cancellation))
-                _samTrackingCancellation = null;
-            cancellation.Dispose();
             if (_attached) UpdateSamRemoveButton();
         }
     }
@@ -678,7 +655,6 @@ public partial class MonitorPanelView
 
     private void StopSamSelection()
     {
-        _samTrackingCancellation?.Cancel();
         CancelSamPreparation();
         ++_samRequest;
         ClearSamMaskOverlay();

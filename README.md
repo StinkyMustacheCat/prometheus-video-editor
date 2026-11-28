@@ -1,13 +1,14 @@
-# Prometheus 3.22.2
+# Prometheus 3.22.3
 
 Editor de vídeo no lineal para Windows, con cliente Avalonia, composición Direct3D 11, gráficos MGT en vivo y automatización local mediante MCP.
 
-Esta es la distribución del cliente actual. La interfaz WinForms de las versiones antiguas no forma parte de esta entrega. El nombre histórico `Prometheus.V2.sln` se conserva para compilar las fuentes; la versión del programa es 3.22.2.
+Esta es la distribución del cliente actual. La interfaz WinForms de las versiones antiguas no forma parte de esta entrega. El nombre histórico `Prometheus.V2.sln` se conserva para compilar las fuentes; la versión del programa es 3.22.3.
 
 ## Funciones
 
 - Edición multipista de vídeo, audio, imágenes y textos; vínculos, grupos, velocidad y fotogramas clave.
 - Subtítulos con transcripción Whisper y estilos animados MGT; máscaras de forma y SAM 2.1.
+- Seguimiento SAM y transcripción Whisper con progreso y cancelación en una ventana propia. La edición se pausa hasta que termine el cálculo o la cancelación.
 - Composiciones MGT HTML/CSS/JavaScript en vivo con CEF y texturas compartidas Direct3D 11; doce transiciones GPU incluidas.
 - Descarga web con yt-dlp, calidad configurable y cookies de navegador opcionales.
 - Exportación H.264/HEVC en MP4, ProRes 422/4444 en MOV y audio WAV. ProRes y algunas tareas de decodificación usan CPU; no se promete un flujo enteramente en GPU.

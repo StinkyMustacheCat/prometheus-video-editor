@@ -7,7 +7,6 @@
             <Button Name="TranscribeButton" Classes="nle-accent" Content="Transcribir clip" Height="27" Padding="8,0" />
             <Button Name="ImportButton" Classes="nle-btn" Content="Importar" Height="27" Padding="8,0" />
             <Button Name="FromMediaButton" Classes="nle-btn" Content="Del medio" Height="27" Padding="8,0" />
-            <Button Name="CancelButton" Classes="nle-btn" Content="Cancelar" Height="27" Padding="8,0" IsEnabled="False" />
         </StackPanel>
         <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="8,0,8,5">
             <ComboBox Name="DocumentBox" Height="28" />

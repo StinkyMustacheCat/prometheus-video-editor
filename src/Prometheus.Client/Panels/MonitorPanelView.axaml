@@ -85,7 +85,6 @@
             <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center" HorizontalAlignment="Right">
                     <Button Name="SamApplyButton" Classes="nle-btn" Content="Aplicar máscara" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Guardar la máscara de este fotograma en el proyecto; se verá también al exportarlo." />
                     <Button Name="SamTrackButton" Classes="nle-btn" Content="Seguir movimiento" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Seguir la máscara de este fotograma por el clip en segundo plano." />
-                    <Button Name="SamCancelTrackButton" Classes="nle-btn" Content="Cancelar SAM" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Detener el seguimiento de movimiento sin cambiar el proyecto." />
                     <Button Name="SamRemoveButton" Classes="nle-btn" Content="Quitar máscara" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Quitar la máscara guardada en este fotograma. Se puede deshacer." />
                     <Button Name="SamRemoveTrackButton" Classes="nle-btn" Content="Quitar seguimiento" Height="24" Margin="0,0,6,0" IsVisible="False" ToolTip.Tip="Quitar el seguimiento del clip; se puede deshacer." />
                     <Button Name="CaptureFrameButton" Classes="nle-btn" Content="Capturar ▾" Height="24" Margin="0,0,6,0" ToolTip.Tip="Acciones y ajustes de captura del fotograma" />

@@ -63,7 +63,8 @@ internal sealed class ProcessingSettingsDialog : Window
             try
             {
                 var target = await StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions {
-                    Title = "Guardar diagnóstico de procesamiento", SuggestedFileName = "Prometheus-procesamiento-3.22.2.json",
+                    Title = "Guardar diagnóstico de procesamiento",
+                    SuggestedFileName = $"Prometheus-procesamiento-{typeof(ProcessingSettingsDialog).Assembly.GetName().Version!.ToString(3)}.json",
                     FileTypeChoices = [new FilePickerFileType("JSON") { Patterns = ["*.json"] }] });
                 if (target == null) return;
                 await using var output = await target.OpenWriteAsync();

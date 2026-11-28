@@ -40,7 +40,7 @@ def main():
         python=root/'Runtime/whisper/python/python.exe'
         env['PATH']=str(python.parent/'Lib/site-packages/torch/lib')+os.pathsep+env.get('PATH','')
         script='import sys,torch,faster_whisper,ctranslate2;sys.path.insert(0,sys.argv[1]);import sam2;from faster_whisper import WhisperModel;m=WhisperModel(sys.argv[2],device="cpu",compute_type="int8",local_files_only=True);print("AI-OK cuda="+str(torch.cuda.is_available()))'
-        result=subprocess.run([str(python),'-I','-c',script,str(root/'Runtime/sam2/repo'),str(root/'Runtime/whisper/model')],capture_output=True,text=True,timeout=180,env=env,cwd=root)
+        result=subprocess.run([str(python),'-I','-B','-c',script,str(root/'Runtime/sam2/repo'),str(root/'Runtime/whisper/model')],capture_output=True,text=True,timeout=180,env=env,cwd=root)
         assert result.returncode==0,(result.stdout,result.stderr)
         assert 'AI-OK' in result.stdout,result.stdout
         assert (root/'Runtime/sam2/sam2.1_hiera_small.pt').is_file()

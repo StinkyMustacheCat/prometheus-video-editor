@@ -65,13 +65,17 @@ internal sealed class McpLiveHost : IDisposable
                     var tool = McpJson.String(request.RootElement, "tool") ?? "";
                     var client = await Dispatcher.UIThread.InvokeAsync(() => RegisterClient(request.RootElement));
                     var args = request.RootElement.TryGetProperty("arguments", out var a) ? a : default;
+                    await Dispatcher.UIThread.InvokeAsync(() => EnsureToolAvailable(tool, args));
                     var prepared = tool is "evaluate_changelist" or "apply_changelist"
                         ? await McpChangeService.PrepareAssetsAsync(args) : null;
                     if (tool == "client_connected") response = new { connected = true };
                     else if (tool == "capture_frame")
                     {
                         var capture = await Dispatcher.UIThread.InvokeAsync<Task<object>>(() =>
-                            ProjectHistory.WithOrigin(client, () => CaptureAsync(args)));
+                        {
+                            EnsureToolAvailable(tool, args);
+                            return ProjectHistory.WithOrigin(client, () => CaptureAsync(args));
+                        });
                         response = await capture;
                     }
                     else if (tool == "project_file")
@@ -79,13 +83,19 @@ internal sealed class McpLiveHost : IDisposable
                         using var deadline = CancellationTokenSource.CreateLinkedTokenSource(_stop.Token);
                         deadline.CancelAfter(TimeSpan.FromSeconds(40));
                         var operation = await Dispatcher.UIThread.InvokeAsync<Task<object>>(() =>
-                            ProjectHistory.WithOrigin(client, () => McpProjectFileService.ExecuteAsync(_controller, args, deadline.Token)));
+                        {
+                            EnsureToolAvailable(tool, args);
+                            return ProjectHistory.WithOrigin(client, () => McpProjectFileService.ExecuteAsync(_controller, args, deadline.Token));
+                        });
                         response = await operation;
                     }
                     else if (tool == "export_sequence")
                     {
                         var operation = await Dispatcher.UIThread.InvokeAsync<Task<object>>(() =>
-                            ProjectHistory.WithOrigin(client, () => _export.ExecuteAsync(args, _stop.Token)));
+                        {
+                            EnsureToolAvailable(tool, args);
+                            return ProjectHistory.WithOrigin(client, () => _export.ExecuteAsync(args, _stop.Token));
+                        });
                         response = await operation;
                         await Dispatcher.UIThread.InvokeAsync(() => LogMessage?.Invoke(tool + " · correcto"));
                     }
@@ -122,6 +132,7 @@ internal sealed class McpLiveHost : IDisposable
     {
         try
         {
+            EnsureToolAvailable(tool, args);
             var result = tool switch
             {
                 "get_state" => McpReadService.GetState(_controller, args),
@@ -145,6 +156,16 @@ internal sealed class McpLiveHost : IDisposable
         }
     }
 
+    private void EnsureToolAvailable(string tool, JsonElement args)
+    {
+        if (_controller.AnalysisWork.Active == null) return;
+        var operation = McpJson.String(args, "operation");
+        if (tool is "client_connected" or "get_state" or "inspect_clip" or "get_catalog" ||
+            tool is ("media_analysis" or "export_sequence") && operation is ("status" or "cancel") ||
+            tool == "project_file" && operation == "recoveries") return;
+        _controller.AnalysisWork.EnsureIdle();
+    }
+
     private object Review(JsonElement args,
         System.Collections.Generic.IReadOnlyDictionary<string, Prometheus.Core.Model.Asset>? prepared)
     {
@@ -158,7 +179,11 @@ internal sealed class McpLiveHost : IDisposable
         var prepared = await McpChangeService.PrepareAssetsAsync(args);
         return await Dispatcher.UIThread.InvokeAsync(() => _changes.Evaluate(args, prepared));
     }
-    public object ApplyLocal(JsonElement args) => _changes.Apply(args);
+    public object ApplyLocal(JsonElement args)
+    {
+        _controller.AnalysisWork.EnsureIdle();
+        return _changes.Apply(args);
+    }
 
     private Task<object> CaptureAsync(JsonElement args)
     {

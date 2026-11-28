@@ -1,5 +1,11 @@
 # Cambios
 
+## 3.22.3 — Seguimiento y transcripción cancelables
+
+- Seguimiento SAM y Whisper comparten una ventana de progreso que pausa el transporte, bloquea la edición y permite cancelar la tarea activa. Los trabajos iniciados mediante MCP utilizan la misma ventana y respetan su cancelación.
+- El seguimiento muestra la carga del modelo y los fotogramas procesados. Whisper distingue la preparación del audio, el inicio del modelo y la transcripción. Si se cancela, se conservan los resultados que ya estaban aplicados.
+- Un clic en una zona neutra devuelve el control de Espacio al transporte después de escribir en un campo, sin seleccionar la línea de tiempo.
+
 ## 3.22.2 — ajustes de procesamiento y entrega unificada
 
 - Ajustes → Procesamiento: inventario ligero de CPU, RAM y adaptadores; selección por función, preferencias manuales, restauración automática y diagnóstico exportable.

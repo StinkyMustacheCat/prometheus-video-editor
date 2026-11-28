@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Prometheus.Core.Model;
 
 namespace Prometheus.Core.Storage;
@@ -23,8 +24,9 @@ public static class SamMaskTrackStore
     }
 
     public static void Write(string projectPath, SamMaskTrack track,
-        IReadOnlyList<SamMaskKeyframe> frames)
+        IReadOnlyList<SamMaskKeyframe> frames, CancellationToken cancellation = default)
     {
+        cancellation.ThrowIfCancellationRequested();
         if (track.FrameCount < 1 || frames.Count != track.FrameCount ||
             track.Width < 1 || track.Height < 1 || (long)track.Width * track.Height > 8_000_000)
             throw new ArgumentException("El seguimiento SAM está incompleto.");
@@ -49,6 +51,7 @@ public static class SamMaskTrackStore
                 var offsets = new (long Offset, int Length)[frames.Count];
                 for (var i = 0; i < frames.Count; i++)
                 {
+                    cancellation.ThrowIfCancellationRequested();
                     var frame = frames[i];
                     if (frame.Width != track.Width || frame.Height != track.Height ||
                         frame.AlphaDeflate.Length is < 1 or > 8_000_000)
@@ -60,6 +63,7 @@ public static class SamMaskTrackStore
                 foreach (var entry in offsets) { writer.Write(entry.Offset); writer.Write(entry.Length); }
                 stream.Flush(true);
             }
+            cancellation.ThrowIfCancellationRequested();
             File.Move(temporary, path);
         }
         finally { if (File.Exists(temporary)) File.Delete(temporary); }
@@ -67,14 +71,14 @@ public static class SamMaskTrackStore
 
     /// <summary>Writes a new immutable track while streaming unchanged frames from the old one.</summary>
     public static void WritePatched(string projectPath, SamMaskTrack previous,
-        SamMaskTrack replacement, IReadOnlyDictionary<int, SamMaskKeyframe> changed)
+        SamMaskTrack replacement, IReadOnlyDictionary<int, SamMaskKeyframe> changed, CancellationToken cancellation = default)
     {
         if (previous.FrameCount != replacement.FrameCount ||
             previous.Width != replacement.Width || previous.Height != replacement.Height ||
             previous.StartSourceSeconds != replacement.StartSourceSeconds ||
             previous.FramesPerSecond != replacement.FramesPerSecond)
             throw new ArgumentException("El seguimiento SAM cambió de formato durante la corrección.");
-        Write(projectPath, replacement, new PatchedFrames(projectPath, previous, changed));
+        Write(projectPath, replacement, new PatchedFrames(projectPath, previous, changed), cancellation);
     }
 
     private sealed class PatchedFrames(string projectPath, SamMaskTrack previous,

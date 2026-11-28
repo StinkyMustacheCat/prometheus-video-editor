@@ -4,6 +4,7 @@
         xmlns:dock="using:Prometheus.Client.Docking"
         x:Class="Prometheus.Client.Views.MainWindow"
         Title="Prometheus"
+        Focusable="True"
         Icon="/Assets/app.ico"
         Width="1400" Height="900"
         MinWidth="900" MinHeight="600"
