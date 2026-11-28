@@ -40,14 +40,16 @@ public partial class MonitorPanelView : UserControl
     private bool _refreshAgain;
     private bool _warmupRetryQueued;
     private bool _releaseWhenIdle;
-    private int PreviewLongEdge => PreviewQualityBox.SelectedIndex switch { 0 => 320, 1 => 640, _ => 0 };
-    private int PreviewFps => PreviewFpsBox.SelectedIndex switch { 0 => 15, 1 => 30, _ => 60 };
+    private int PreviewLongEdge => PreviewUserSettings.QualityIndex switch { 0 => 320, 1 => 640, _ => 0 };
+    private int PreviewFps => PreviewUserSettings.RefreshRates[PreviewUserSettings.RefreshIndex];
+    private bool UsesDynamicPreview => PreviewUserSettings.QualityIndex == PreviewUserSettings.DynamicQualityIndex;
+    private readonly Stopwatch _previewClock = Stopwatch.StartNew();
+    private (string? SequenceId, int Width, int Height, double Fps) _previewCanvas;
+    private int _previewRevision;
 
     public MonitorPanelView()
     {
         InitializeComponent();
-        PreviewQualityBox.SelectedIndex = PreviewUserSettings.QualityIndex;
-        PreviewFpsBox.SelectedIndex = PreviewUserSettings.RefreshIndex;
         SetupMonitorContextMenu();
         var controller = ProjectController.Instance;
         _transport = controller?.Transport;
@@ -75,19 +77,12 @@ public partial class MonitorPanelView : UserControl
             _transport.PlayingChanged += playing =>
             {
                 _nextPlaybackRefreshTimestamp = 0;
+                ResetDynamicPreview();
                 if (playing) CancelSamPreparation();
                 else if (_attached) ShowTime(_transport.PositionSeconds);
             };
         }
         MonitorFitButton.Click += (_, _) => FitView();
-        PreviewQualityBox.SelectionChanged += (_, _) =>
-        {
-            PreviewUserSettings.Set(PreviewQualityBox.SelectedIndex, PreviewFpsBox.SelectedIndex);
-            if (_busy) { _qualityRefreshPending = true; return; }
-            if (_attached) ShowTime(_transport?.PositionSeconds ?? _requestedTime);
-        };
-        PreviewFpsBox.SelectionChanged += (_, _) => PreviewUserSettings.Set(PreviewQualityBox.SelectedIndex, PreviewFpsBox.SelectedIndex);
-        PreviewUserSettings.Changed += SyncPreviewSettings;
         CaptureFrameButton.Click += (_, _) => ShowCaptureButtonMenu();
         MonitorZoomSlider.ValueChanged += (_, e) =>
         {
@@ -131,6 +126,7 @@ public partial class MonitorPanelView : UserControl
         AttachedToVisualTree += (_, _) =>
         {
             _attached = true;
+            PreviewUserSettings.Changed += SyncPreviewSettings;
             ChromaColorPicker.StateChanged += UpdateChromaPickState;
             UpdateChromaPickState();
             _anchorInputRoot = TopLevel.GetTopLevel(this);
@@ -142,6 +138,8 @@ public partial class MonitorPanelView : UserControl
         DetachedFromVisualTree += (_, _) =>
         {
             _attached = false;
+            PreviewUserSettings.Changed -= SyncPreviewSettings;
+            ResetDynamicPreview();
             CancelGizmoGesture();
             ChromaColorPicker.StateChanged -= UpdateChromaPickState;
             _anchorInputRoot?.RemoveHandler(KeyDownEvent, OnAnchorKeyDown);
@@ -210,10 +208,12 @@ public partial class MonitorPanelView : UserControl
 
     private void SyncPreviewSettings()
     {
-        if (PreviewQualityBox.SelectedIndex != PreviewUserSettings.QualityIndex)
-            PreviewQualityBox.SelectedIndex = PreviewUserSettings.QualityIndex;
-        if (PreviewFpsBox.SelectedIndex != PreviewUserSettings.RefreshIndex)
-            PreviewFpsBox.SelectedIndex = PreviewUserSettings.RefreshIndex;
+        ResetDynamicPreview();
+        _previewLoad.Observe(false, false, TimeSpan.Zero, PreviewFps);
+        _nextPlaybackRefreshTimestamp = 0;
+        UpdateDynamicResolutionLabel();
+        if (_busy) { _qualityRefreshPending = true; return; }
+        if (_attached) ShowTime(_transport?.PositionSeconds ?? _requestedTime);
     }
 
     public void ShowTime(double timelineSeconds)
@@ -434,6 +434,14 @@ public partial class MonitorPanelView : UserControl
                 ReleaseNestedLayers();
                 _layerProjectId = project?.Id;
             }
+            var canvas = (sequence?.Id, sequence?.Width ?? 0, sequence?.Height ?? 0, sequence?.Fps.Seconds ?? 0);
+            if (_previewCanvas != canvas)
+            {
+                _previewCanvas = canvas;
+                ResetDynamicPreview();
+            }
+            var previewRevision = _previewRevision;
+            var renderStarted = Stopwatch.GetTimestamp();
             NestedLayerHost.IsVisible = true;
             SyncPrewarmPosition(project, time);
             var layers = project == null ? Array.Empty<NestedRenderLayer>() : SubtitleRenderPlan.At(project, time, "video");
@@ -447,7 +455,12 @@ public partial class MonitorPanelView : UserControl
                         _ = RetryNestedWarmupAsync();
                     return;
                 }
-                measurement?.Present(time, sequence!.Fps.Seconds, PreviewLongEdge, PreviewFps);
+                measurement?.Present(time, sequence!.Fps.Seconds, PreviewLongEdge, PreviewFps,
+                    _groupLayer?.Gpu.Width ?? 0, _groupLayer?.Gpu.Height ?? 0,
+                    _groupLayer?.Gpu.LastCompositionWork ?? TimeSpan.Zero);
+                if (UsesDynamicPreview && _transport?.IsPlaying == true && _nestedLayers.Count > 0 &&
+                    previewRevision == _previewRevision)
+                    ObserveDynamicPreview(renderStarted, sequence!.Fps.Seconds);
                 _nestedWarmupRetries = 0;
                 PreviewImage.IsVisible = false;
                 SetImage(null, null);
@@ -455,6 +468,7 @@ public partial class MonitorPanelView : UserControl
             else
             {
                 _previewLoad.Observe(false, false, TimeSpan.Zero, PreviewFps);
+                _dynamicPreview.ResetEvidence();
                 ReleaseActiveLayers(retainSources: true);
                 PreviewImage.IsVisible = true;
                 SetImage(null, "Sin imagen en esta posición");

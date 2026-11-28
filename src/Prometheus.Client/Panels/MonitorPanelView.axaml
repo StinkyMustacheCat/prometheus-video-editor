@@ -5,23 +5,10 @@
         <!-- BARRA SUPERIOR DE PARÁMETROS DEL MONITOR -->
         <Border Name="MonitorTopBar" Grid.Row="0" Background="{StaticResource BackgroundPanelHeaderBrush}" Padding="8,4" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,0,0,1">
             <Grid ColumnDefinitions="*,Auto,Auto">
-                <!-- SELECTOR DE CALIDAD -->
-                <StackPanel Grid.Column="0" IsVisible="False">
-                    <ComboBox Name="PreviewQualityBox" SelectedIndex="2">
-                        <ComboBoxItem Content="Baja (320 px)" />
-                        <ComboBoxItem Content="Media (640 px)" />
-                        <ComboBoxItem Content="Alta (original)" />
-                    </ComboBox>
-                </StackPanel>
-
-                <!-- SELECTOR DE FPS -->
-                <StackPanel Grid.Column="0" IsVisible="False">
-                    <ComboBox Name="PreviewFpsBox" SelectedIndex="2">
-                        <ComboBoxItem Content="15 FPS" />
-                        <ComboBoxItem Content="30 FPS" />
-                        <ComboBoxItem Content="60 FPS" />
-                    </ComboBox>
-                </StackPanel>
+                <TextBlock Grid.Column="0" Name="DynamicResolutionLabel" IsVisible="False"
+                           FontSize="10" Foreground="{StaticResource TextSecondaryBrush}"
+                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                           Margin="0,0,8,0" ToolTip.Tip="Resolución efectiva de la previsualización dinámica" />
 
                 <ToggleButton Grid.Column="1" Name="AnchorGizmoToggle" IsChecked="False" Height="24" Padding="8,2" FontSize="10" Margin="0,0,7,0" Background="{StaticResource BackgroundSurfaceSecondaryBrush}" BorderBrush="{StaticResource BorderSubtleBrush}" ToolTip.Tip="Mostrar y mover el anclaje; Ctrl lo muestra temporalmente">
                     <StackPanel Orientation="Horizontal" Spacing="4">

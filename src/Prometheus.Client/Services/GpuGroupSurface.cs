@@ -211,6 +211,8 @@ public sealed class GpuGroupSurface : IDisposable
         }
     }
 
+    internal TimeSpan LastCompositionWork { get; private set; }
+
     public async Task RenderAsync(IReadOnlyList<NestedRenderNode> nodes,
         Func<string, GpuFrameReference?> sourceForClip)
     {
@@ -218,7 +220,9 @@ public sealed class GpuGroupSurface : IDisposable
         lock (_gpuGate)
         {
             if (_disposed || _imported == null || _drawingSurface == null) return;
+            var started = System.Diagnostics.Stopwatch.GetTimestamp();
             Render(nodes, sourceForClip, 1);
+            LastCompositionWork = System.Diagnostics.Stopwatch.GetElapsedTime(started);
             presentation = _pendingPresentation = _drawingSurface.UpdateWithKeyedMutexAsync(_imported, 1, 0);
         }
         await presentation.WaitAsync(TimeSpan.FromSeconds(3));

@@ -310,11 +310,12 @@ public partial class MonitorPanelView
             catch (Exception ex)
             {
                 allReady = false;
-                ReleaseGroupLayer();
+                // A rejected dynamic resolution change leaves the last published surface visible.
+                if (!UsesDynamicPreview) ReleaseGroupLayer();
                 ProjectController.Instance?.ReportPlaybackFailure(project.Id, "gpu", "Composición GPU · " + ex.Message);
             }
         }
-        _previewLoad.Observe(_transport?.IsPlaying == true && PreviewLongEdge == 0 &&
+        _previewLoad.Observe(_transport?.IsPlaying == true && PreviewUserSettings.QualityIndex == PreviewUserSettings.HighQualityIndex &&
             renderLayers.Length >= 3, allReady, System.Diagnostics.Stopwatch.GetElapsedTime(started), PreviewFps);
         SetImage(null, valid.Count == 0 ? "Sin imagen en esta posición" : null);
         return allReady;
@@ -473,6 +474,7 @@ public partial class MonitorPanelView
     private void ReleaseNestedLayers()
     {
         ResetPrewarm();
+        ResetDynamicPreview();
         ReleaseActiveLayers();
         foreach (var scene in _idleMgtScenes) RetireMgt(scene.Surface);
         _idleMgtScenes.Clear();

@@ -1,8 +1,8 @@
-# Prometheus 3.23.3
+# Prometheus 3.23.4
 
 Editor de vídeo no lineal para Windows, con cliente Avalonia, composición Direct3D 11, gráficos MGT en vivo y automatización local mediante MCP.
 
-Esta es la distribución del cliente actual. La interfaz WinForms de las versiones antiguas no forma parte de esta entrega. El nombre histórico `Prometheus.V2.sln` se conserva para compilar las fuentes; la versión del programa es 3.23.3.
+Esta es la distribución del cliente actual. La interfaz WinForms de las versiones antiguas no forma parte de esta entrega. El nombre histórico `Prometheus.V2.sln` se conserva para compilar las fuentes; la versión del programa es 3.23.4.
 
 ## Funciones
 
@@ -23,7 +23,7 @@ Esta entrega reúne la base NVIDIA 3.19.10 y la adaptación AMD APU 3.21.2. En *
 
 La rama AMD previa se probó en Ryzen 3 7320U / Radeon 610M. La integración 3.22.2 se comprueba en Ryzen 9 3900 / RTX 3060; la revisión manual de este paquete unificado en APU y equipos híbridos está pendiente. No se extrapola el rendimiento entre equipos. Consulta [procesamiento y comprobaciones](docs/PROCESAMIENTO_3_22.md).
 
-Para guardar un informe del adaptador Direct3D 11, ejecuta `Prometheus.Client.exe --graphics-diagnostics diagnostico.json`. Las opciones de previsualización del monitor se guardan independientemente de la resolución de exportación.
+Para guardar un informe del adaptador Direct3D 11, ejecuta `Prometheus.Client.exe --graphics-diagnostics diagnostico.json`. En **Calidad del monitor**, Dinámica ajusta la resolución durante la reproducción. La calidad y el refresco se guardan como preferencias del monitor, independientes de la resolución de exportación.
 
 ## Compilación
 

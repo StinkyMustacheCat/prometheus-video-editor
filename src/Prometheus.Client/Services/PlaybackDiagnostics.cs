@@ -31,11 +31,14 @@ internal sealed class PlaybackDiagnostics
         private readonly long _started = Stopwatch.GetTimestamp();
         private readonly List<double> _frameIntervals = new();
         private readonly Dictionary<string, int> _counts = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, int> _compositionSizes = new(StringComparer.Ordinal);
+        private readonly List<object> _resolutionChanges = new();
+        private (int Width, int Height) _lastSize;
         private double? _audio, _firstFrame, _lastFrame, _stopped;
         private long _lastFrameNumber = long.MinValue;
         private int _frames, _quality, _targetFps;
         private readonly double _start;
-        private double _maxGap, _position;
+        private double _maxGap, _position, _totalCompositionWorkMs;
 
         internal Run(double start)
         {
@@ -54,7 +57,8 @@ internal sealed class PlaybackDiagnostics
                 if (_stopped == null) _audio ??= Elapsed();
         }
 
-        internal void Present(double position, double sequenceFps, int quality, int targetFps)
+        internal void Present(double position, double sequenceFps, int quality, int targetFps, int width, int height,
+            TimeSpan compositionWork)
         {
             lock (_gate)
             {
@@ -72,9 +76,18 @@ internal sealed class PlaybackDiagnostics
                 _firstFrame ??= now;
                 _lastFrame = now;
                 _frames++;
+                _totalCompositionWorkMs += compositionWork.TotalMilliseconds;
                 _quality = quality;
                 _targetFps = targetFps;
                 _position = position;
+                if (width > 0 && height > 0)
+                {
+                    var resolution = $"{width}x{height}";
+                    _compositionSizes[resolution] = _compositionSizes.GetValueOrDefault(resolution) + 1;
+                    if (_lastSize != (width, height) && _resolutionChanges.Count < 64)
+                        _resolutionChanges.Add(new { timeline_seconds = position, elapsed_ms = now, width, height });
+                    _lastSize = (width, height);
+                }
             }
         }
 
@@ -96,7 +109,10 @@ internal sealed class PlaybackDiagnostics
                     composition_fps = _frames > 1 && _lastFrame > _firstFrame
                         ? (_frames - 1) * 1000 / (_lastFrame - _firstFrame) : null,
                     p95_composition_gap_ms = gaps.Length == 0 ? (double?)null : gaps[(int)Math.Ceiling(gaps.Length * .95) - 1],
-                    longest_composition_gap_ms = _maxGap, counts = new Dictionary<string, int>(_counts)
+                    longest_composition_gap_ms = _maxGap, counts = new Dictionary<string, int>(_counts),
+                    mean_composition_work_ms = _frames == 0 ? (double?)null : _totalCompositionWorkMs / _frames,
+                    composition_sizes = new Dictionary<string, int>(_compositionSizes),
+                    resolution_changes = _resolutionChanges.ToArray()
                 };
             }
         }

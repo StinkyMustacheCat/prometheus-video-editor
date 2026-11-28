@@ -51,7 +51,10 @@ public partial class MonitorPanelView
         var edge = PreviewLongEdge;
         if (_prewarmEdge != edge ||
             !double.IsNaN(_lastPrewarmTime) && (time < _lastPrewarmTime - 0.1 || time > _lastPrewarmTime + 0.75))
+        {
             ResetPrewarm();
+            _dynamicPreview.ResetEvidence();
+        }
         _prewarmEdge = edge;
         _lastPrewarmTime = time;
     }

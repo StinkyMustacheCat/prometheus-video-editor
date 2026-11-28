@@ -30,7 +30,7 @@ public static async Task Main()
                             ? requested.GetString()! : "2025-11-25",
                     capabilities = new { tools = new { listChanged = false } },
                     serverInfo = new { name = "prometheus-v3-2",
-                        version = typeof(Program).Assembly.GetName().Version?.ToString(3) ?? "3.23.3" }
+                        version = typeof(Program).Assembly.GetName().Version?.ToString(3) ?? "3.23.4" }
                 }),
                 "ping" => Result(id, new { }),
                 "tools/list" => Result(id, new { tools = Tools.Select(t => new

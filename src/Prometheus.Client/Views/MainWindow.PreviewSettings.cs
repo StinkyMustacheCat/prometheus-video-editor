@@ -28,9 +28,9 @@ public partial class MainWindow
             .Append((Name: "Personalizada", Width: 0, Height: 0)).ToArray();
         var dialog = new Window { Title = "Previsualización y lienzo", Width = 460, Height = 540,
             MinWidth = 380, CanResize = false, WindowStartupLocation = WindowStartupLocation.CenterOwner };
-        var quality = new ComboBox { ItemsSource = new[] { "Baja (320 px)", "Media (640 px)", "Alta (original)" },
+        var quality = new ComboBox { ItemsSource = PreviewUserSettings.QualityLabels,
             SelectedIndex = PreviewUserSettings.QualityIndex };
-        var refresh = new ComboBox { ItemsSource = new[] { "15 FPS", "30 FPS", "60 FPS" },
+        var refresh = new ComboBox { ItemsSource = PreviewUserSettings.RefreshRates.Select(fps => $"{fps} FPS").ToArray(),
             SelectedIndex = PreviewUserSettings.RefreshIndex };
         var aspectIndex = Array.FindIndex(presets, p => CanvasResolutions.SameAspect(p.Width, p.Height, sequence.Width, sequence.Height));
         var ratio = new ComboBox { Name = "CanvasAspect", ItemsSource = presets.Select(p => p.Name).ToArray(),
@@ -101,6 +101,11 @@ public partial class MainWindow
         var body = new StackPanel { Margin = new Thickness(16), Spacing = 8 };
         body.Children.Add(new TextBlock { Text = "Calidad de la previsualización" });
         body.Children.Add(quality);
+        var dynamicNote = new TextBlock { Text = "Dinámica adapta la resolución durante la reproducción y vuelve al tamaño del lienzo al pausar.",
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap, Opacity = .75,
+            IsVisible = quality.SelectedIndex == PreviewUserSettings.DynamicQualityIndex };
+        quality.SelectionChanged += (_, _) => dynamicNote.IsVisible = quality.SelectedIndex == PreviewUserSettings.DynamicQualityIndex;
+        body.Children.Add(dynamicNote);
         body.Children.Add(new TextBlock { Text = "Refresco de la previsualización (independiente de los FPS del montaje)" });
         body.Children.Add(refresh);
         body.Children.Add(new TextBlock { Text = "Proporción del lienzo" });

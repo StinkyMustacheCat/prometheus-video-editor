@@ -39,18 +39,55 @@ public partial class MonitorPanelView
 
     private GroupLayer? _groupLayer;
     private readonly PreviewLoadBudget _previewLoad = new();
+    private readonly DynamicPreviewBudget _dynamicPreview = new();
+    private (int Width, int Height) _lastReportedResolution;
+
+    private void ResetDynamicPreview()
+    {
+        _previewRevision++;
+        _dynamicPreview.Reset();
+    }
+
+    private void ObserveDynamicPreview(long renderStarted, double sequenceFps)
+    {
+        var previous = _dynamicPreview.Level;
+        if (_groupLayer == null) return;
+        _dynamicPreview.Observe(_previewClock.Elapsed, System.Diagnostics.Stopwatch.GetElapsedTime(renderStarted),
+            _groupLayer.Gpu.LastCompositionWork, Math.Min(PreviewFps, sequenceFps));
+        if (previous != _dynamicPreview.Level)
+            _transport?.Diagnostics.Current?.Count(previous < _dynamicPreview.Level ? "dynamic_lowered" : "dynamic_raised");
+    }
+
+    private void UpdateDynamicResolutionLabel()
+    {
+        if (!UsesDynamicPreview || _groupLayer == null)
+        {
+            DynamicResolutionLabel.IsVisible = false;
+            return;
+        }
+        var size = (_groupLayer.Gpu.Width, _groupLayer.Gpu.Height);
+        if (size != _lastReportedResolution)
+        {
+            _lastReportedResolution = size;
+            DynamicResolutionLabel.Text = $"Dinámica · {size.Width}×{size.Height}";
+        }
+        DynamicResolutionLabel.IsVisible = true;
+    }
 
     private async Task RenderGroupAsync(Project project, IReadOnlyList<NestedRenderLayer> layers)
     {
         var sequence = project.ActiveSequence ?? throw new InvalidOperationException("No hay montaje activo.");
+        var longEdge = Math.Max(sequence.Width, sequence.Height);
         var edge = PreviewLongEdge;
-        if (edge == 0 && _previewLoad.Reduce && _transport?.IsPlaying == true && layers.Count >= 3)
+        if (UsesDynamicPreview && _transport?.IsPlaying == true)
+            edge = _dynamicPreview.OutputLongEdge(longEdge);
+        else if (PreviewUserSettings.QualityIndex == PreviewUserSettings.HighQualityIndex &&
+                 _previewLoad.Reduce && _transport?.IsPlaying == true && layers.Count >= 3)
         {
             var rasterScale = TopLevel.GetTopLevel(this)?.RenderScaling ?? 1;
             var screenEdge = Math.Max(NestedLayerHost.Bounds.Width, NestedLayerHost.Bounds.Height) * rasterScale;
             edge = (int)Math.Clamp(Math.Ceiling(screenEdge / 64) * 64, 640, 1280);
         }
-        var longEdge = Math.Max(sequence.Width, sequence.Height);
         var scale = edge > 0 && edge < longEdge ? (double)edge / longEdge : 1;
         var width = Math.Max(1, (int)Math.Round(sequence.Width * scale));
         var height = Math.Max(1, (int)Math.Round(sequence.Height * scale));
@@ -126,6 +163,7 @@ public partial class MonitorPanelView
             ReleaseGroupLayer();
             _groupLayer = current;
         }
+        UpdateDynamicResolutionLabel();
         foreach (var layer in _nestedLayers) if (layer.Visual != null) layer.Visual.Opacity = 0;
     }
 
@@ -136,6 +174,7 @@ public partial class MonitorPanelView
         _groupLayer = null;
         group.Dispose();
         NestedLayerHost.Children.Remove(group.Host);
+        UpdateDynamicResolutionLabel();
     }
 
     private bool _gizmoGroupRendering;

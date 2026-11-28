@@ -106,13 +106,13 @@ public partial class MonitorPanelView
             }
             var capture = CaptureActionsMenu();
             var quality = new MenuItem { Header = "Calidad del monitor" };
-            quality.ItemsSource = new[] { "Baja (320 px)", "Media (640 px)", "Alta (original)" }
-                .Select((label, index) => Item((PreviewQualityBox.SelectedIndex == index ? "✓  " : "    ") + label,
-                    () => PreviewQualityBox.SelectedIndex = index)).ToArray();
+            quality.ItemsSource = PreviewUserSettings.QualityLabels
+                .Select((label, index) => Item((PreviewUserSettings.QualityIndex == index ? "✓  " : "    ") + label,
+                    () => PreviewUserSettings.Set(index, PreviewUserSettings.RefreshIndex))).ToArray();
             var fps = new MenuItem { Header = "Refresco del monitor" };
-            fps.ItemsSource = new[] { 15, 30, 60 }
-                .Select((value, index) => Item((PreviewFpsBox.SelectedIndex == index ? "✓  " : "    ") + value + " FPS",
-                    () => PreviewFpsBox.SelectedIndex = index)).ToArray();
+            fps.ItemsSource = PreviewUserSettings.RefreshRates
+                .Select((value, index) => Item((PreviewUserSettings.RefreshIndex == index ? "✓  " : "    ") + value + " FPS",
+                    () => PreviewUserSettings.Set(PreviewUserSettings.QualityIndex, index))).ToArray();
             menu.ItemsSource = new object[]
             {
                 capture, new Separator(), quality, fps,

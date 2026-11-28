@@ -1,5 +1,11 @@
 # Cambios
 
+## 3.23.4 | Previsualización dinámica
+
+- Dinámica adapta la resolución del compositor del monitor tras detectar carga sostenida y recupera detalle gradualmente cuando hay margen.
+- Los lectores y las escenas MGT siguen abiertos durante los cambios. Al pausar, el monitor vuelve a la resolución del lienzo.
+- La calidad elegida y el refresco se guardan como preferencias locales. El diagnóstico de reproducción registra los tamaños efectivos de composición.
+
 ## 3.23.3 | Imágenes de Google Docs y del navegador
 
 - Ctrl+V importa las imágenes rasterizadas incrustadas en el HTML del portapapeles, registra el medio y lo coloca en el cabezal.
