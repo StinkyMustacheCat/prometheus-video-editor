@@ -13,6 +13,7 @@ public sealed class PlaybackTransport
     private readonly Stopwatch _clock = new();
     private readonly AudioPreviewService _audio = new();
     private double _playStart;
+    internal PlaybackDiagnostics Diagnostics { get; } = new();
 
     public double PositionSeconds { get; private set; }
     public bool IsPlaying { get; private set; }
@@ -47,7 +48,7 @@ public sealed class PlaybackTransport
         _clock.Restart();
         _timer.Start();
         PlayingChanged?.Invoke(true);
-        _audio.PlayAt(_project(), PositionSeconds, PreviewSpeed);
+        _audio.PlayAt(_project(), PositionSeconds, PreviewSpeed, Diagnostics.Start(PositionSeconds));
     }
 
     public void Pause()
@@ -57,6 +58,7 @@ public sealed class PlaybackTransport
         _clock.Stop();
         IsPlaying = false;
         _audio.Stop();
+        Diagnostics.Current?.Stop();
         PlayingChanged?.Invoke(false);
     }
 
@@ -67,7 +69,7 @@ public sealed class PlaybackTransport
         {
             _playStart = position;
             _clock.Restart();
-            _audio.PlayAt(_project(), position, PreviewSpeed);
+            _audio.PlayAt(_project(), position, PreviewSpeed, Diagnostics.Start(position));
         }
         PublishPosition(position);
     }
@@ -105,8 +107,19 @@ public sealed class PlaybackTransport
     private void OnTick(object? sender, EventArgs e)
     {
         if (!IsPlaying) return;
-        var next = _audio.IsStarting ? _playStart : _audio.HasEnded ? EndSeconds :
-            _audio.PlaybackSeconds ?? _playStart + _clock.Elapsed.TotalSeconds * PreviewSpeed;
+        double next;
+        if (_audio.IsStarting)
+        {
+            _clock.Restart();
+            next = _playStart;
+        }
+        else if (_audio.HasEnded) next = EndSeconds;
+        else if (_audio.PlaybackSeconds is { } audioPosition)
+        {
+            next = _playStart = audioPosition;
+            _clock.Restart();
+        }
+        else next = _playStart + _clock.Elapsed.TotalSeconds * PreviewSpeed;
         if (next >= EndSeconds)
         {
             if (LoopEnabled && EndSeconds > 0) Seek(0);

@@ -22,6 +22,7 @@ internal static class McpReadService
         var project = controller.CurrentProject;
         var scope = McpJson.String(args, "scope") ?? "summary";
         if (scope == "processing") return ProcessingService.Describe();
+        if (scope == "playback") return controller.Transport.Diagnostics.Describe();
         var sequence = project.ActiveSequence;
         var offset = Math.Max(0, McpJson.Int(args, "offset", 0));
         var limit = Math.Clamp(McpJson.Int(args, "limit", 250), 1, 1000);

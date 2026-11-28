@@ -32,6 +32,7 @@ public sealed class MgtLiveGpuSurface : IGpuFrameSource, IDisposable
     public IntPtr SharedHandle { get; }
     public SubtitleSceneRequest? SubtitleScene { get; set; }
     private string? _sentSubtitleSignature;
+    private bool _resetScene;
 
     private MgtLiveGpuSurface(Process worker, int width, int height, int frameCount, IntPtr handle, long generation)
     {
@@ -142,6 +143,12 @@ public sealed class MgtLiveGpuSurface : IGpuFrameSource, IDisposable
         _drawingSurface = null;
     }
 
+    internal void ResetSceneForClip()
+    {
+        _resetScene = true;
+        _sentSubtitleSignature = null;
+    }
+
     public async Task<bool> PresentAsync(double seconds, IReadOnlyDictionary<string, JsonElement> overrides,
         bool exact = true, CancellationToken cancellation = default, bool updateVisual = true)
     {
@@ -179,15 +186,16 @@ public sealed class MgtLiveGpuSurface : IGpuFrameSource, IDisposable
             var frame = Math.Clamp((int)Math.Round(Math.Max(0, seconds) * 60,
                 MidpointRounding.AwayFromZero), 0, _frameCount - 1);
             var scene = SubtitleScene;
-            var command = JsonSerializer.Serialize(new { frame, overrides, exact,
+            var command = JsonSerializer.Serialize(new { frame, overrides, exact, reset = _resetScene,
                 subtitleData = scene?.Signature != _sentSubtitleSignature ? scene?.Data : null,
                 clock = scene == null ? null : new { time = seconds, fps = scene.Fps, duration = scene.Duration } });
             await _worker.StandardInput.WriteLineAsync(command.AsMemory(), cancellation);
             await _worker.StandardInput.FlushAsync(cancellation);
-            var response = await _worker.StandardOutput.ReadLineAsync(cancellation).AsTask().WaitAsync(TimeSpan.FromSeconds(5), cancellation);
+            var response = await _worker.StandardOutput.ReadLineAsync(cancellation).AsTask().WaitAsync(TimeSpan.FromSeconds(_resetScene ? 15 : 5), cancellation);
             if (response?.StartsWith($"FRAME {frame} ", StringComparison.Ordinal) != true ||
                 !long.TryParse(response.AsSpan($"FRAME {frame} ".Length), out var generation))
                 throw new InvalidOperationException("MGT: " + (response ?? "sin respuesta"));
+            _resetScene = false;
             _generation = generation;
             _sourceSeconds = scene == null ? frame / 60.0 : seconds;
             _sentSubtitleSignature = scene?.Signature;

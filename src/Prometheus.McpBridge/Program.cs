@@ -30,7 +30,7 @@ public static async Task Main()
                             ? requested.GetString()! : "2025-11-25",
                     capabilities = new { tools = new { listChanged = false } },
                     serverInfo = new { name = "prometheus-v3-2",
-                        version = typeof(Program).Assembly.GetName().Version?.ToString(3) ?? "3.22.3" }
+                        version = typeof(Program).Assembly.GetName().Version?.ToString(3) ?? "3.23.2" }
                 }),
                 "ping" => Result(id, new { }),
                 "tools/list" => Result(id, new { tools = Tools.Select(t => new
@@ -128,7 +128,7 @@ static object Error(JsonElement? id, int code, string message) => new
 static readonly (string name, string description, object inputSchema)[] Tools =
 [
     ("get_state", "Consulta el estado compacto del proyecto abierto en Prometheus Avalonia.",
-        Schema(new { scope = new { type = "string", @enum = new[] { "summary", "project", "media_pool", "sequence", "selection", "io", "tracks", "links", "transcriptions", "processing" } },
+        Schema(new { scope = new { type = "string", @enum = new[] { "summary", "project", "media_pool", "sequence", "selection", "io", "tracks", "links", "transcriptions", "processing", "playback" } },
             track_ids = new { type = "array", items = new { type = "string" } },
             folder_id = new { type = new[] { "string", "null" }, description = "En media_pool: omitir para todos, null para Sin carpeta, o ID de carpeta." },
             document_id = new { type = "string" }, offset = new { type = "integer" }, limit = new { type = "integer" } })),

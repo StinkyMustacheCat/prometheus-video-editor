@@ -26,7 +26,8 @@ public partial class MonitorPanelView
         public required DateTime SourceWriteTimeUtc { get; init; }
         public required Control Host { get; init; }
         public required int SourceIndex { get; set; }
-        public GpuVideoSurface? Gpu { get; init; }
+        public GpuVideoSurface? Gpu { get; set; }
+        public required string AssetId { get; init; }
         public MgtLiveGpuSurface? Mgt { get; set; }
         public CompositionDrawingSurface? Drawing { get; init; }
         public CompositionSurfaceVisual? Visual { get; init; }
@@ -69,50 +70,76 @@ public partial class MonitorPanelView
         {
             ElementComposition.SetElementChildVisual(Host, null);
             Gpu?.Dispose();
-            Mgt?.Dispose();
+            if (Mgt != null) RetireMgt(Mgt);
             Drawing?.Dispose();
         }
     }
 
     private readonly List<NestedLayer> _nestedLayers = new();
-    private readonly List<(string ClipId, string Path, int Edge, DateTime SourceWriteTimeUtc,
-        MgtLiveGpuSurface Surface)> _idleMgtScenes = new();
+    private readonly record struct SourceKey(string AssetId, string Path, int Edge, bool FrameLocked, DateTime Modified);
+    private readonly List<(string ClipId, SourceKey Key, MgtLiveGpuSurface Surface)> _idleMgtScenes = new();
+    private readonly List<(SourceKey Key, GpuVideoSurface Surface)> _idleVideoReaders = new();
     private readonly Dictionary<string, DateTime> _sourceRetryAfter = new(StringComparer.Ordinal);
     private string? _nestedSignature;
 
-    private void RetainMgtScene(NestedLayer layer)
+    private static void RetireMgt(MgtLiveGpuSurface surface)
     {
-        if (layer.Mgt == null || layer.Failed) return;
-        var surface = layer.Mgt;
-        layer.Mgt = null;
         surface.Detach();
-        _idleMgtScenes.RemoveAll(item =>
+        _ = Task.Run(surface.Dispose);
+    }
+
+    private void RetainLayerSource(NestedLayer layer)
+    {
+        if (layer.Failed || File.GetLastWriteTimeUtc(layer.Path) != layer.SourceWriteTimeUtc) return;
+        var key = new SourceKey(layer.AssetId, layer.Path, layer.PreviewEdge, layer.FrameLocked, layer.SourceWriteTimeUtc);
+        if (layer.Mgt is { } mgt)
         {
-            if (item.ClipId != layer.ClipId) return false;
-            item.Surface.Dispose();
-            return true;
-        });
-        _idleMgtScenes.Add((layer.ClipId, layer.Path, layer.PreviewEdge,
-            layer.SourceWriteTimeUtc, surface));
-        while (_idleMgtScenes.Count > 2)
-        {
-            _idleMgtScenes[0].Surface.Dispose();
+            layer.Mgt = null;
+            mgt.Detach();
+            var previous = _idleMgtScenes.FindIndex(item => item.Key == key);
+            if (previous >= 0)
+            {
+                RetireMgt(_idleMgtScenes[previous].Surface);
+                _idleMgtScenes.RemoveAt(previous);
+            }
+            _idleMgtScenes.Add((layer.ClipId, key, mgt));
+            if (_idleMgtScenes.Count <= 3) return;
+            RetireMgt(_idleMgtScenes[0].Surface);
             _idleMgtScenes.RemoveAt(0);
+        }
+        else if (layer.Gpu is { } gpu && gpu.PrepareForReuse())
+        {
+            layer.Gpu = null;
+            var previous = _idleVideoReaders.FindIndex(item => item.Key == key);
+            if (previous >= 0)
+            {
+                _idleVideoReaders[previous].Surface.Dispose();
+                _idleVideoReaders.RemoveAt(previous);
+            }
+            _idleVideoReaders.Add((key, gpu));
+            if (_idleVideoReaders.Count <= 3) return;
+            _idleVideoReaders[0].Surface.Dispose();
+            _idleVideoReaders.RemoveAt(0);
         }
     }
 
-    private MgtLiveGpuSurface? TakeMgtScene(string clipId, string path, int edge,
-        DateTime sourceWriteTimeUtc)
+    private MgtLiveGpuSurface? TakeMgtScene(string clipId, SourceKey key)
     {
-        var index = _idleMgtScenes.FindIndex(item => item.ClipId == clipId &&
-            item.Path == path && item.Edge == edge);
+        var index = _idleMgtScenes.FindIndex(item => item.Key == key);
         if (index < 0) return null;
-        var surface = _idleMgtScenes[index].Surface;
-        var current = _idleMgtScenes[index].SourceWriteTimeUtc == sourceWriteTimeUtc;
+        var cached = _idleMgtScenes[index];
         _idleMgtScenes.RemoveAt(index);
-        if (current) return surface;
-        surface.Dispose();
-        return null;
+        if (cached.ClipId != clipId) cached.Surface.ResetSceneForClip();
+        return cached.Surface;
+    }
+
+    private GpuVideoSurface? TakeVideoReader(SourceKey key)
+    {
+        var index = _idleVideoReaders.FindIndex(item => item.Key == key);
+        if (index < 0) return null;
+        var surface = _idleVideoReaders[index].Surface;
+        _idleVideoReaders.RemoveAt(index);
+        return surface;
     }
 
     private static void ConfigureLayerEffects(GpuVideoSurface gpu, Clip clip, double time,
@@ -145,6 +172,20 @@ public partial class MonitorPanelView
         }
         if (_nestedSignature != signature)
         {
+            if (_transport?.IsPlaying == true)
+            {
+                // The last complete frame lives in the separate group surface.
+                // Readers from clips that left the scene can be lent to the next cut.
+                var currentClips = valid.Select(item => item.Layer.Clip.Id).ToHashSet();
+                foreach (var old in _nestedLayers.Where(layer => !currentClips.Contains(layer.ClipId)).ToArray())
+                {
+                    RetainLayerSource(old);
+                    old.Dispose();
+                    NestedLayerHost.Children.Remove(old.Host);
+                    _nestedLayers.Remove(old);
+                }
+                _nestedSignature = null;
+            }
             // Start every missing input for this position together. A late source should
             // not keep the subsequent sources from opening.
             if (_transport?.IsPlaying == true && valid.Count <= MaxPreparedLayers)
@@ -208,10 +249,12 @@ public partial class MonitorPanelView
                 var next = await Task.WhenAll(pending);
                 foreach (var entry in next)
                     _sourceRetryAfter.Remove(entry.ClipId);
-                if (!IsCurrentScene(project, renderLayers))
+                if (!IsCurrentScene(project, layers))
                 {
                     foreach (var task in created.Where(task => task.IsCompletedSuccessfully))
                     {
+                        if (ReferenceEquals(ProjectController.Instance?.CurrentProject, project))
+                            RetainLayerSource(task.Result);
                         task.Result.Dispose();
                         NestedLayerHost.Children.Remove(task.Result.Host);
                     }
@@ -220,8 +263,7 @@ public partial class MonitorPanelView
                 foreach (var entry in usedPrepared) _preparedLayers.Remove(entry);
                 foreach (var old in _nestedLayers.Where(item => !next.Contains(item)))
                 {
-                    if (File.Exists(old.Path) && File.GetLastWriteTimeUtc(old.Path) == old.SourceWriteTimeUtc)
-                        RetainMgtScene(old);
+                    RetainLayerSource(old);
                     old.Dispose();
                     NestedLayerHost.Children.Remove(old.Host);
                 }
@@ -244,7 +286,7 @@ public partial class MonitorPanelView
                     entry.Dispose();
                     NestedLayerHost.Children.Remove(entry.Host);
                 }
-                if (!IsCurrentScene(project, renderLayers)) return false;
+                if (!IsCurrentScene(project, layers)) return false;
                 var failedIndex = Array.FindIndex(pending, task => task?.IsFaulted == true);
                 var failed = failedIndex >= 0 ? valid[failedIndex].Layer : null;
                 ProjectController.Instance?.ReportPlaybackFailure(project.Id, failed?.Clip.Id ?? "layer", ex.Message,
@@ -261,7 +303,7 @@ public partial class MonitorPanelView
             results[index] = PresentEntryAsync(entry, layer);
         }
         var allReady = (await Task.WhenAll(results)).All(ready => ready);
-        if (allReady && !IsCurrentScene(project, renderLayers)) return false;
+        if (allReady && !IsCurrentScene(project, layers)) return false;
         if (allReady)
         {
             try { await RenderGroupAsync(project, renderLayers); }
@@ -302,7 +344,7 @@ public partial class MonitorPanelView
                     _sourceRetryAfter[entry.ClipId] = DateTime.UtcNow.AddSeconds(1);
                     _nestedSignature = null;
                     if (entry.Visual != null) entry.Visual.Opacity = 0;
-                    if (IsCurrentScene(project, renderLayers))
+                    if (IsCurrentScene(project, layers))
                         ProjectController.Instance?.ReportPlaybackFailure(project.Id, layer.Clip.Id, ex.Message,
                             layer.Containers.FirstOrDefault()?.Id ?? layer.Clip.Id);
                 }
@@ -333,10 +375,28 @@ public partial class MonitorPanelView
         {
             var sourceWriteTime = File.GetLastWriteTimeUtc(path);
             var asset = SubtitleRenderPlan.Asset(project, layer.Clip) ?? throw new InvalidOperationException("Falta la fuente visual.");
+            var measurement = _transport?.Diagnostics.Current;
+            var sourceKey = new SourceKey(asset.Id, path, edge, frameLocked, sourceWriteTime);
             if (asset.Source.Kind == "mgt")
-                mgt = TakeMgtScene(layer.Clip.Id, path, edge, File.GetLastWriteTimeUtc(path)) ??
-                    await MgtLiveGpuSurface.StartAsync(asset, edge, cancellation, path);
-            else gpu = await Task.Run(() => new GpuVideoSurface(path, IsStill(path), edge, layer.SourceSeconds, exactDecode: frameLocked), cancellation);
+            {
+                mgt = TakeMgtScene(layer.Clip.Id, sourceKey);
+                if (mgt == null)
+                {
+                    measurement?.Count("mgt_opened");
+                    mgt = await MgtLiveGpuSurface.StartAsync(asset, edge, cancellation, path);
+                }
+                else measurement?.Count("mgt_reused");
+            }
+            else
+            {
+                gpu = TakeVideoReader(sourceKey);
+                if (gpu == null)
+                {
+                    measurement?.Count("reader_opened");
+                    gpu = await Task.Run(() => new GpuVideoSurface(path, IsStill(path), edge, layer.SourceSeconds, exactDecode: frameLocked), cancellation);
+                }
+                else measurement?.Count("reader_reused");
+            }
             cancellation.ThrowIfCancellationRequested();
             gpu?.PauseForWarmup();
             var element = ElementComposition.GetElementVisual(host);
@@ -354,7 +414,7 @@ public partial class MonitorPanelView
             if (gpu != null) await gpu.AttachAsync(compositor, drawing);
             else await mgt!.AttachAsync(compositor, drawing);
             if (mgt != null) mgt.SubtitleScene = SubtitleRenderPlan.Request(project, layer.Clip);
-            var entry = new NestedLayer { Path = path, ClipId = layer.Clip.Id, PreviewEdge = edge, FrameLocked = frameLocked,
+            var entry = new NestedLayer { Path = path, AssetId = asset.Id, ClipId = layer.Clip.Id, PreviewEdge = edge, FrameLocked = frameLocked,
                 SourceWriteTimeUtc = sourceWriteTime,
                 Host = host, SourceIndex = sourceIndex, Gpu = gpu, Mgt = mgt, Drawing = drawing, Visual = visual };
             entry.Fit(DynamicMotionEffect.Evaluate(layer.Clip, layer.LocalTimelineSeconds));
@@ -377,7 +437,7 @@ public partial class MonitorPanelView
         {
             ElementComposition.SetElementChildVisual(host, null);
             gpu?.Dispose();
-            mgt?.Dispose();
+            if (mgt != null) RetireMgt(mgt);
             drawing?.Dispose();
             NestedLayerHost.Children.Remove(host);
             throw;
@@ -414,19 +474,21 @@ public partial class MonitorPanelView
     {
         ResetPrewarm();
         ReleaseActiveLayers();
-        foreach (var scene in _idleMgtScenes) scene.Surface.Dispose();
+        foreach (var scene in _idleMgtScenes) RetireMgt(scene.Surface);
         _idleMgtScenes.Clear();
+        foreach (var reader in _idleVideoReaders) reader.Surface.Dispose();
+        _idleVideoReaders.Clear();
         _sourceRetryAfter.Clear();
         NestedLayerHost.Children.Clear();
         _layerProjectId = null;
     }
 
-    private void ReleaseActiveLayers(bool retainMgt = false)
+    private void ReleaseActiveLayers(bool retainSources = false)
     {
         ReleaseGroupLayer();
         foreach (var layer in _nestedLayers)
         {
-            if (retainMgt) RetainMgtScene(layer);
+            if (retainSources) RetainLayerSource(layer);
             layer.Dispose();
             NestedLayerHost.Children.Remove(layer.Host);
         }

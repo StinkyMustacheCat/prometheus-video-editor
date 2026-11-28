@@ -1,8 +1,8 @@
-# Prometheus 3.22.3
+# Prometheus 3.23.2
 
 Editor de vídeo no lineal para Windows, con cliente Avalonia, composición Direct3D 11, gráficos MGT en vivo y automatización local mediante MCP.
 
-Esta es la distribución del cliente actual. La interfaz WinForms de las versiones antiguas no forma parte de esta entrega. El nombre histórico `Prometheus.V2.sln` se conserva para compilar las fuentes; la versión del programa es 3.22.3.
+Esta es la distribución del cliente actual. La interfaz WinForms de las versiones antiguas no forma parte de esta entrega. El nombre histórico `Prometheus.V2.sln` se conserva para compilar las fuentes; la versión del programa es 3.23.2.
 
 ## Funciones
 

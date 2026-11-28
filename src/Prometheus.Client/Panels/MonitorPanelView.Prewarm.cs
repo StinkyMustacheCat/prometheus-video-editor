@@ -40,24 +40,31 @@ public partial class MonitorPanelView
         _lastPrewarmTime = _lastPrewarmScan = double.NaN;
     }
 
-    private void UpdatePrewarm(Project? project, double time)
+    private void SyncPrewarmPosition(Project? project, double time)
     {
-        if (!_attached || project?.ActiveSequence == null || _transport?.IsPlaying != true)
+        if (project?.ActiveSequence == null || _transport?.IsPlaying != true)
         {
-            ResetPrewarm();
+            if (!double.IsNaN(_lastPrewarmTime) || _warmingLayers.Count > 0 || _preparedLayers.Count > 0)
+                ResetPrewarm();
             return;
         }
         var edge = PreviewLongEdge;
-        if (_layerProjectId != project.Id || _prewarmEdge != edge ||
+        if (_prewarmEdge != edge ||
             !double.IsNaN(_lastPrewarmTime) && (time < _lastPrewarmTime - 0.1 || time > _lastPrewarmTime + 0.75))
             ResetPrewarm();
-        _layerProjectId = project.Id;
         _prewarmEdge = edge;
         _lastPrewarmTime = time;
+    }
+
+    private void UpdatePrewarm(Project project, double time, IReadOnlyList<NestedRenderLayer> active)
+    {
+        if (!_attached || project.ActiveSequence == null || _transport?.IsPlaying != true ||
+            !ReferenceEquals(ProjectController.Instance?.CurrentProject, project)) return;
+        var edge = PreviewLongEdge;
         if (time >= _lastPrewarmScan && time - _lastPrewarmScan < 0.12) return;
         _lastPrewarmScan = time;
 
-        var lead = Math.Clamp((_measuredWarmupSeconds + 0.35) * _transport.PreviewSpeed, 0.75, 4.5);
+        var lead = Math.Clamp((_measuredWarmupSeconds + 0.35) * _transport.PreviewSpeed, 2.25, 4.5);
         var horizon = time + lead;
         var frameSeconds = 1.0 / Math.Max(1, project.ActiveSequence.Fps.Seconds);
         var times = NestedRenderPlan.UpcomingStarts(project, time, horizon, "video", includeSubtitles: !SubtitleRenderPlan.Enabled(project))
@@ -66,14 +73,17 @@ public partial class MonitorPanelView
         times.Add(horizon);
 
         var candidates = times.SelectMany(future => SubtitleRenderPlan.At(project, future, "video"))
+            .DistinctBy(layer => (layer.Clip.Id, UsesFrameLockedPreview(project, layer)))
             .Select(layer => (Layer: layer, Path: TextMediaService.Resolve(project, layer.Clip), FrameLocked: UsesFrameLockedPreview(project, layer)))
             .Where(item => !string.IsNullOrWhiteSpace(item.Path) && File.Exists(item.Path)).ToList();
         var needed = candidates.Select(item => LayerKey(item.Layer.Clip.Id, item.Path!, edge, item.FrameLocked)).ToHashSet();
-        foreach (var layer in SubtitleRenderPlan.At(project, time, "video"))
+        foreach (var layer in active)
         {
             var path = TextMediaService.Resolve(project, layer.Clip);
             if (!string.IsNullOrWhiteSpace(path)) needed.Add(LayerKey(layer.Clip.Id, path, edge, UsesFrameLockedPreview(project, layer)));
         }
+        foreach (var expired in _warmupFailures.Where(pair => pair.Value <= DateTime.UtcNow).ToArray())
+            _warmupFailures.Remove(expired.Key);
         foreach (var obsolete in _preparedLayers.Where(item => !needed.Contains(LayerKey(item))).ToArray())
         {
             obsolete.Dispose();
@@ -88,11 +98,18 @@ public partial class MonitorPanelView
 
         foreach (var item in candidates)
         {
-            if (_preparedLayers.Count + _warmingLayers.Count >= MaxPreparedLayers) break;
+            // Only the current position can start more than one preparation at a time.
+            if (_warmingLayers.Count > 0 || _preparedLayers.Count >= MaxPreparedLayers) break;
             var key = LayerKey(item.Layer.Clip.Id, item.Path!, edge, item.FrameLocked);
             if (_nestedLayers.Any(layer => LayerKey(layer) == key) ||
                 _preparedLayers.Any(layer => LayerKey(layer) == key) || _warmingLayers.ContainsKey(key) ||
                 _warmupFailures.TryGetValue(key, out var until) && DateTime.UtcNow < until) continue;
+            // Nonoverlapping uses can borrow the worker after the current clip leaves.
+            if (IsMgt(project, item.Layer.Clip) && active.Any(current =>
+                    current.Containers.Count == 0 && item.Layer.Containers.Count == 0 &&
+                    current.Clip.AssetId == item.Layer.Clip.AssetId &&
+                    current.Clip.EndSeconds <= item.Layer.Clip.TimelineStart.Seconds))
+                continue;
             StartPrewarm(project, item.Layer, item.Path!, edge, item.FrameLocked);
         }
     }

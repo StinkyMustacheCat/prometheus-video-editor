@@ -15,6 +15,90 @@ namespace Prometheus.UnitTests;
 
 public class AudioMixPlanTests
 {
+    [Theory]
+    [InlineData(48_000)]
+    [InlineData(44_100)]
+    public async Task PreviewWindowsPreserveSamplesAndFadeAcrossTheBoundary(int sampleRate)
+    {
+        var path = Path.Combine(Path.GetTempPath(), $"prometheus-window-{Guid.NewGuid():N}.wav");
+        try
+        {
+            var dataBytes = sampleRate * 7 * 2;
+            using (var writer = new BinaryWriter(File.Create(path)))
+            {
+                writer.Write("RIFF"u8); writer.Write(36 + dataBytes);
+                writer.Write("WAVEfmt "u8); writer.Write(16);
+                writer.Write((short)1); writer.Write((short)1); writer.Write(sampleRate); writer.Write(sampleRate * 2);
+                writer.Write((short)2); writer.Write((short)16); writer.Write("data"u8); writer.Write(dataBytes);
+                for (var sample = 0; sample < sampleRate * 7; sample++)
+                    writer.Write((short)(12_000 * Math.Sin(sample * 2 * Math.PI * 437 / sampleRate)));
+            }
+            var project = ProjectStore.CreateNew();
+            var sequence = project.ActiveSequence!;
+            var stream = new StreamInfo { Kind = "audio" };
+            var asset = new Asset { Source = new MediaSource { Kind = "local", Uri = path }, Streams = [stream] };
+            var clip = new Clip { TrackId = sequence.Tracks.First(t => t.Kind == "audio").Id,
+                AssetId = asset.Id, StreamId = stream.Id, SourceIn = Rational.Time(.1875), Duration = Rational.Time(6.1) };
+            project.Assets.Add(asset);
+            sequence.Clips.Add(clip);
+            sequence.AudioTransitions.Add(new AudioTransition { ClipId = clip.Id,
+                Kind = AudioTransitionOperations.FadeOut, DurationSeconds = 2.3 });
+
+            const double start = .21875;
+            var end = sequence.DurationSeconds;
+            var windows = AudioPreviewWindows.At(start, end).ToArray();
+            Assert.Equal(2, windows.Length);
+            Assert.True(AudioPreviewWindows.CanSplit(sequence, 1));
+            var length = windows.Sum(window => window.Samples);
+            Assert.Equal((int)Math.Round((end - start) * 48_000), length);
+            var whole = await Render(new(start, end, 0, length));
+            var joined = new List<byte>();
+            foreach (var window in windows) joined.AddRange(await Render(window));
+            Assert.Equal(whole.Length, joined.Count);
+            var bytes = joined.ToArray();
+            var center = windows[0].Samples * 8;
+            var difference = 0f;
+            for (var offset = center - 4800 * 8; offset < center + 4800 * 8; offset += 4)
+                difference = Math.Max(difference, Math.Abs(BitConverter.ToSingle(whole, offset) - BitConverter.ToSingle(bytes, offset)));
+            Assert.InRange(difference, 0f, .00005f);
+            AudioEffects.Add(clip, AudioEffects.HighPassId);
+            Assert.False(AudioPreviewWindows.CanSplit(sequence, 1));
+            Assert.False(AudioPreviewWindows.CanSplit(sequence, 1.25));
+
+            async Task<byte[]> Render(AudioPreviewWindows.Window window)
+            {
+                using var command = AudioMixPlan.Create(project, window.RenderStart, window.RenderEnd, null).PreparePreviewWindow(window);
+                using var process = Process.Start(command.StartInfo)!;
+                var errors = process.StandardError.ReadToEndAsync();
+                using var output = new MemoryStream();
+                await process.StandardOutput.BaseStream.CopyToAsync(output);
+                await process.WaitForExitAsync();
+                Assert.True(process.ExitCode == 0, await errors);
+                Assert.Equal((long)window.Samples * 8, output.Length);
+                return output.ToArray();
+            }
+        }
+        finally { File.Delete(path); }
+    }
+
+    [Fact]
+    public void PreviewClockExcludesDevicePaddingDuringUnderruns()
+    {
+        var provider = new AudioPreviewService.PcmPipeProvider(_ => { });
+        var bytes = new byte[32];
+        provider.Add(bytes, 16);
+        Assert.Equal(32, provider.Read(bytes, 0, 32));
+        provider.Add(bytes, 32);
+        provider.Complete();
+        Assert.Equal(32, provider.Read(bytes, 0, 32));
+        Assert.Equal(0, provider.Read(bytes, 0, 32));
+        Assert.Equal(8, provider.MediaBytesAt(8));
+        Assert.Equal(16, provider.MediaBytesAt(24));
+        Assert.Equal(16, provider.MediaBytesAt(32));
+        Assert.Equal(24, provider.MediaBytesAt(40));
+        Assert.Equal(48, provider.MediaBytesAt(64));
+    }
+
     [Fact]
     public void PreviewSpeed_TwoTimesHalvesOutputDurationAndTempo()
     {

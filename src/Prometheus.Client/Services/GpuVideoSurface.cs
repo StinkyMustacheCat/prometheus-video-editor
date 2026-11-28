@@ -139,6 +139,32 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
         if (_frameGeneration == 0) _pendingSeekSeconds = double.NaN;
     }
 
+    internal bool PrepareForReuse()
+    {
+        lock (_gpuGate)
+        {
+            if (_disposed || _softwareReader != null) return false;
+            PauseForWarmup();
+            if (_engine != null)
+            {
+                _pendingSeekSeconds = double.NaN;
+                _presentedTime = double.NegativeInfinity;
+            }
+            DetachDrawingSurface();
+            return true;
+        }
+    }
+
+    private void DetachDrawingSurface()
+    {
+        var imported = _imported as IDisposable;
+        _imported = null;
+        if (_pendingPresentation.IsCompleted) imported?.Dispose();
+        else _ = _pendingPresentation.ContinueWith(_ => imported?.Dispose(), TaskScheduler.Default);
+        _drawingSurface = null;
+        _surfaceFrameGeneration = 0;
+    }
+
     private const string ColorShader = """
         Texture2D sourceTexture : register(t0);
         Texture2D glowTexture : register(t1);
@@ -1323,10 +1349,7 @@ public sealed class GpuVideoSurface : IGpuFrameSource, IDisposable
         {
             if (_disposed) return;
             _disposed = true;
-            var imported = _imported as IDisposable;
-            _imported = null;
-            if (_pendingPresentation.IsCompleted) imported?.Dispose();
-            else _ = _pendingPresentation.ContinueWith(_ => imported?.Dispose(), TaskScheduler.Default);
+            DetachDrawingSurface();
             _resource?.Dispose(); _dxgiSurface?.Dispose(); _mutex?.Dispose(); _texture?.Dispose();
             _decodeSurface?.Dispose(); _decodeView?.Dispose(); _decodeTexture?.Dispose(); _targetView?.Dispose();
             _vertexShader?.Dispose(); _pixelShader?.Dispose(); _sampler?.Dispose(); _colorBuffer?.Dispose();

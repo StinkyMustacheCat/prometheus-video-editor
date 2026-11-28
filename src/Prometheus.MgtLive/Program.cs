@@ -147,20 +147,8 @@ internal static class Program
             using var browserSettings = new BrowserSettings { WindowlessFrameRate = 120 };
             browser.CreateBrowser(window, browserSettings);
             if (!ready.Task.Wait(TimeSpan.FromSeconds(15))) throw new TimeoutException("CEF no abrió MGT.");
-            browser.LoadHtml(page, "https://mgt.prometheus.invalid/live");
-            var deadline = DateTime.UtcNow.AddSeconds(15);
-            var scriptReady = false;
-            while (DateTime.UtcNow < deadline)
-            {
-                if (!browser.CanExecuteJavascriptInMainFrame) { Thread.Sleep(20); continue; }
-                var result = browser.EvaluateScriptAsync("window.mgtSceneReady === true").GetAwaiter().GetResult();
-                if (result.Success && result.Result is bool readyFlag && readyFlag) { scriptReady = true; break; }
-                Thread.Sleep(20);
-            }
-            if (!scriptReady) throw new TimeoutException("La escena MGT no se inicializó.");
-            browser.GetBrowserHost().Invalidate(PaintElementType.View);
-            while (paint.Generation == 0 && DateTime.UtcNow < deadline) Thread.Sleep(10);
-            if (paint.Generation == 0) throw new TimeoutException("MGT no entregó el primer fotograma.");
+            long sceneSequence = 0;
+            LoadScene();
             Console.WriteLine($"READY {paint.SharedHandle.ToInt64()} {paint.Generation}");
             Console.Out.Flush();
             long requestSequence = 0;
@@ -175,7 +163,8 @@ internal static class Program
                     var frame = root.GetProperty("frame").GetInt32();
                     var overrides = root.TryGetProperty("overrides", out var parameters) ? parameters.GetRawText() : "{}";
                     var exact = root.TryGetProperty("exact", out var exactValue) && exactValue.ValueKind == JsonValueKind.True;
-                    var previous = paint.Generation;
+                    if (root.TryGetProperty("reset", out var reset) && reset.ValueKind == JsonValueKind.True)
+                        LoadScene();
                     var token = ++requestSequence;
                     var update = root.TryGetProperty("subtitleData", out var subtitles) && subtitles.ValueKind == JsonValueKind.Object
                         ? $"window.mgtSetSubtitles({subtitles.GetRawText()});" : "";
@@ -183,7 +172,7 @@ internal static class Program
                     var script = update + $"window.renderAt({frame},{overrides},{token},{clock})";
                     var result = browser.EvaluateScriptAsync(script).GetAwaiter().GetResult();
                     if (!result.Success) throw new InvalidOperationException(result.Message);
-                    deadline = DateTime.UtcNow.AddSeconds(3);
+                    var deadline = DateTime.UtcNow.AddSeconds(3);
                     var acknowledged = false;
                     while (DateTime.UtcNow < deadline)
                     {
@@ -193,7 +182,7 @@ internal static class Program
                         Thread.Sleep(2);
                     }
                     if (!acknowledged) throw new TimeoutException("MGT no confirmó el cambio de escena.");
-                    previous = paint.Generation;
+                    var previous = paint.Generation;
                     browser.GetBrowserHost().Invalidate(PaintElementType.View);
                     deadline = DateTime.UtcNow.AddSeconds(3);
                     while (paint.Generation == previous && DateTime.UtcNow < deadline) Thread.Sleep(2);
@@ -212,6 +201,34 @@ internal static class Program
                 Console.Out.Flush();
             }
             return 0;
+
+            void LoadScene()
+            {
+                // A fresh document isolates user script, DOM and GPU state between clips.
+                // The worker and its shared output texture stay in place.
+                var address = "https://mgt.prometheus.invalid/live";
+                if (sceneSequence++ > 0) address += $"?scene={sceneSequence}";
+                browser.LoadHtml(page, address);
+                var deadline = DateTime.UtcNow.AddSeconds(10);
+                var script = $"location.href === {JsonSerializer.Serialize(address)} && window.mgtSceneReady === true";
+                while (DateTime.UtcNow < deadline)
+                {
+                    if (browser.CanExecuteJavascriptInMainFrame)
+                    {
+                        var result = browser.EvaluateScriptAsync(script).GetAwaiter().GetResult();
+                        if (result.Success && result.Result is true)
+                        {
+                            var previous = paint.Generation;
+                            browser.GetBrowserHost().Invalidate(PaintElementType.View);
+                            while (paint.Generation == previous && DateTime.UtcNow < deadline) Thread.Sleep(10);
+                            if (paint.Generation == previous) throw new TimeoutException("MGT no entregó el primer fotograma.");
+                            return;
+                        }
+                    }
+                    Thread.Sleep(20);
+                }
+                throw new TimeoutException("La escena MGT no se inicializó.");
+            }
         });
     }
 
@@ -287,6 +304,22 @@ internal static class Program
                         throw new InvalidDataException($"El parámetro de color no actualizó la textura: verde={green}");
                     Console.WriteLine($"alpha-ok corner={transparentAlpha} center={visibleAlpha}");
                     Console.WriteLine($"parameter-ok green={green}");
+                }
+                finally { context.Unmap(readback, 0); }
+                process.StandardInput.WriteLine("{\"frame\":1,\"reset\":true,\"overrides\":{\"color\":\"#ff0000\",\"title\":\"Prueba\"},\"exact\":true}");
+                var reset = process.StandardOutput.ReadLine();
+                if (reset?.StartsWith("FRAME 1 ", StringComparison.Ordinal) != true)
+                    throw new IOException("No se pudo reiniciar la escena: " + reset);
+                mutex.AcquireSync(0, 1000);
+                try { context.CopyResource(readback, texture); context.Flush(); }
+                finally { mutex.ReleaseSync(0); }
+                mapped = context.Map(readback, 0, MapMode.Read, Vortice.Direct3D11.MapFlags.None);
+                try
+                {
+                    var colorOffset = (int)(height / 2 * mapped.RowPitch + width / 4 * 4);
+                    var red = Marshal.ReadByte(mapped.DataPointer, colorOffset + 2);
+                    if (red < 200) throw new InvalidDataException($"El documento reiniciado no actualizó la textura: rojo={red}");
+                    Console.WriteLine("scene-reset-gpu-ok");
                 }
                 finally { context.Unmap(readback, 0); }
                 Console.WriteLine("cross-process-gpu-ok " + response);

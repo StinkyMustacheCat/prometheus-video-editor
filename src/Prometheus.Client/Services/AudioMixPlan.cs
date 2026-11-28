@@ -162,7 +162,14 @@ public sealed class AudioMixPlan
     internal AudioMixCommand PrepareProcess(double previewSpeed = 1, string? waveOutput = null, bool floatingPoint = false) =>
         new(BuildProcess(previewSpeed, waveOutput, floatingPoint));
 
-    public ProcessStartInfo BuildProcess(double previewSpeed = 1, string? waveOutput = null, bool floatingPoint = false)
+    internal AudioMixCommand PreparePreviewWindow(AudioPreviewWindows.Window window) =>
+        new(BuildProcess(1, null, true, window));
+
+    public ProcessStartInfo BuildProcess(double previewSpeed = 1, string? waveOutput = null, bool floatingPoint = false) =>
+        BuildProcess(previewSpeed, waveOutput, floatingPoint, null);
+
+    private ProcessStartInfo BuildProcess(double previewSpeed, string? waveOutput, bool floatingPoint,
+        AudioPreviewWindows.Window? previewWindow)
     {
         previewSpeed = Math.Clamp(previewSpeed, 0.5, 3);
         var info = new ProcessStartInfo(LocalMediaService.Tool("ffmpeg"))
@@ -177,7 +184,7 @@ public sealed class AudioMixPlan
         for (var i = 0; i < Inputs.Count; i++)
         {
             var input = Inputs[i];
-            var tempo = input.Speed == 1 && input.Envelope != default ? "" : TempoFilters(input.Speed);
+            var tempo = input.Speed == 1 && (input.Envelope != default || previewWindow.HasValue) ? "" : TempoFilters(input.Speed);
             var rampFilters = EnvelopeFilters(input.Envelope, StartSeconds + input.TimelineDelay);
             var limit = $",atrim=end_sample={Math.Max(1, (long)Math.Round(input.SourceDuration / input.Speed * SampleRate))}";
             var left = input.Balance > 0 ? 1 - input.Balance : 1;
@@ -208,9 +215,12 @@ public sealed class AudioMixPlan
                 groupLabels.ContainsKey(group.Id)).Select(group => groupLabels[group.Id])).ToArray();
         var labels = "[base]" + string.Concat(rootInputs);
         var previewTempo = Math.Abs(previewSpeed - 1) < 0.001 ? "" : "," + TempoFilters(previewSpeed).TrimEnd(',');
+        var windowTrim = previewWindow is { } window
+            ? $",atrim=start_sample={window.DiscardSamples}:end_sample={window.DiscardSamples + window.Samples},asetpts=PTS-STARTPTS" : "";
         parts.Add($"{labels}amix=inputs={rootInputs.Length + 1}:duration=first:dropout_transition=0:normalize=0," +
-            $"volume={N(Math.Clamp(MasterGainDb, -120, 24))}dB{previewTempo}[mix]");
-        Add("-filter_complex", string.Join(';', parts), "-map", "[mix]", "-t", N(DurationSeconds / previewSpeed),
+            $"volume={N(Math.Clamp(MasterGainDb, -120, 24))}dB{previewTempo}{windowTrim}[mix]");
+        var outputDuration = previewWindow is { } sliced ? sliced.Samples / (double)SampleRate : DurationSeconds / previewSpeed;
+        Add("-filter_complex", string.Join(';', parts), "-map", "[mix]", "-t", N(outputDuration),
             "-f", waveOutput == null ? floatingPoint ? "f32le" : "s16le" : "wav",
             "-acodec", floatingPoint ? "pcm_f32le" : "pcm_s16le", "-ac", "2", "-ar", "48000");
         if (waveOutput == null) Add("pipe:1");

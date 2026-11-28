@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <Authors>Nicolas &amp; Prometheus Contributors</Authors>
-    <Version>3.22.3</Version>
+    <Version>3.23.2</Version>
     <Copyright>Copyright (C) 2026 Nicolas &amp; Prometheus Contributors</Copyright>
     <RepositoryUrl>https://github.com/StinkyMustacheCat/prometheus-video-editor</RepositoryUrl>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>

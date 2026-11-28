@@ -34,7 +34,7 @@ public partial class MonitorPanelView : UserControl
     private IPointer? _panPointer;
     private Point _panStart;
     private Vector _panOrigin;
-    private long _lastPlaybackRefreshTimestamp;
+    private long _nextPlaybackRefreshTimestamp;
     private bool _qualityRefreshPending;
     private bool _refreshQueued;
     private bool _refreshAgain;
@@ -74,8 +74,9 @@ public partial class MonitorPanelView : UserControl
             _transport.PositionChanged += OnTransportPositionChanged;
             _transport.PlayingChanged += playing =>
             {
-                _lastPlaybackRefreshTimestamp = 0;
-                if (!playing && _attached) ShowTime(_transport.PositionSeconds);
+                _nextPlaybackRefreshTimestamp = 0;
+                if (playing) CancelSamPreparation();
+                else if (_attached) ShowTime(_transport.PositionSeconds);
             };
         }
         MonitorFitButton.Click += (_, _) => FitView();
@@ -223,7 +224,7 @@ public partial class MonitorPanelView : UserControl
             ClearSamMaskOverlay();
         }
         _requestedTime = timelineSeconds;
-        FitSequenceFrame();
+        if (_transport?.IsPlaying != true) FitSequenceFrame();
         if (_gizmoPointer != null) UpdateGizmo();
         QueueRefresh();
     }
@@ -405,13 +406,14 @@ public partial class MonitorPanelView : UserControl
         if (_transport?.IsPlaying == true)
         {
             var now = Stopwatch.GetTimestamp();
-            if (_lastPlaybackRefreshTimestamp != 0 &&
-                Stopwatch.GetElapsedTime(_lastPlaybackRefreshTimestamp, now).TotalSeconds < 1.0 / PreviewFps)
+            var interval = Stopwatch.Frequency / PreviewFps;
+            if (now + Stopwatch.Frequency / 1000 < _nextPlaybackRefreshTimestamp)
             {
                 _requestedTime = time;
                 return;
             }
-            _lastPlaybackRefreshTimestamp = now;
+            _nextPlaybackRefreshTimestamp = _nextPlaybackRefreshTimestamp == 0
+                ? now + interval : Math.Max(now, _nextPlaybackRefreshTimestamp + interval);
         }
         ShowTime(time);
     }
@@ -423,6 +425,7 @@ public partial class MonitorPanelView : UserControl
         var time = _requestedTime;
         var project = ProjectController.Instance?.CurrentProject;
         var sequence = project?.ActiveSequence;
+        var measurement = _transport?.IsPlaying == true ? _transport.Diagnostics.Current : null;
         var completed = false;
         try
         {
@@ -432,17 +435,19 @@ public partial class MonitorPanelView : UserControl
                 _layerProjectId = project?.Id;
             }
             NestedLayerHost.IsVisible = true;
-            UpdatePrewarm(project, time);
+            SyncPrewarmPosition(project, time);
             var layers = project == null ? Array.Empty<NestedRenderLayer>() : SubtitleRenderPlan.At(project, time, "video");
             if (layers.Count > 0)
             {
                 if (!await ShowNestedLayersAsync(project!, layers))
                 {
+                    measurement?.Count("not_ready");
                     _compositeIncomplete = true;
                     if (!_warmupRetryQueued && _nestedWarmupRetries++ < (_transport?.IsPlaying == true ? 8 : 75))
                         _ = RetryNestedWarmupAsync();
                     return;
                 }
+                measurement?.Present(time, sequence!.Fps.Seconds, PreviewLongEdge, PreviewFps);
                 _nestedWarmupRetries = 0;
                 PreviewImage.IsVisible = false;
                 SetImage(null, null);
@@ -450,10 +455,11 @@ public partial class MonitorPanelView : UserControl
             else
             {
                 _previewLoad.Observe(false, false, TimeSpan.Zero, PreviewFps);
-                ReleaseActiveLayers(retainMgt: true);
+                ReleaseActiveLayers(retainSources: true);
                 PreviewImage.IsVisible = true;
                 SetImage(null, "Sin imagen en esta posición");
             }
+            if (project != null) UpdatePrewarm(project, time, layers);
             _compositeIncomplete = false;
             _displayedTime = time;
             completed = true;
@@ -473,7 +479,9 @@ public partial class MonitorPanelView : UserControl
                 ReleaseNestedLayers();
                 if (_attached) QueueRefresh();
             }
-            UpdateGizmo();
+            if (_transport?.IsPlaying != true || _gizmoPointer != null || _temporaryAnchorVisible ||
+                TransformGizmoToggle.IsChecked == true || AnchorGizmoToggle.IsChecked == true)
+                UpdateGizmo();
             if (_gizmoGroupPending && _gizmoPointer != null) _ = RefreshGizmoGroupAsync();
             if (_qualityRefreshPending)
             {
@@ -483,8 +491,11 @@ public partial class MonitorPanelView : UserControl
             if (completed && Math.Abs(_requestedTime - time) >= 0.25 / Math.Max(1, sequence?.Fps.Seconds ?? 60))
                 QueueRefresh();
             if (_refreshAgain) QueueRefresh();
-            ScheduleSamPreparation();
-            UpdateSamRemoveButton();
+            if (_transport?.IsPlaying != true || SamToolEnabled)
+            {
+                ScheduleSamPreparation();
+                UpdateSamRemoveButton();
+            }
         }
     }
 

@@ -1,5 +1,11 @@
 # Cambios
 
+## 3.23.2 | Reproducción en proyectos densos
+
+- 3.23.0 incorpora medición opcional de latencia de audio y cadencia de composición mediante el ámbito MCP `playback`.
+- 3.23.1 prepara la mezcla compatible por tramos mientras mantiene un solo reloj de audio. Las mezclas con efectos de audio o cambios de velocidad conservan el procesamiento continuo.
+- 3.23.2 da prioridad a las capas visibles y reutiliza lectores compatibles y trabajadores MGT con un límite fijo. Las distintas instancias MGT abren documentos independientes dentro del trabajador.
+
 ## 3.22.3 — Seguimiento y transcripción cancelables
 
 - Seguimiento SAM y Whisper comparten una ventana de progreso que pausa el transporte, bloquea la edición y permite cancelar la tarea activa. Los trabajos iniciados mediante MCP utilizan la misma ventana y respetan su cancelación.
